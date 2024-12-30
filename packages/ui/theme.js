@@ -9,6 +9,9 @@ const theme = createTheme({
     secondary: {
       main: "#9c27b0", // Secondary color
     },
+    error: {
+      main: "D20000",
+    },
   },
   typography: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
