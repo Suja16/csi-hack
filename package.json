@@ -1,0 +1,24 @@
+{
+  "name": "csi-hack",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Suja16/csi-hack.git",
+  "author": "Suja16 <sujal16@somaiya.edu>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^6.3.0"
+  },
+  "scripts": {
+    "dev": "yarn workspace csi-hack dev",
+    "dev:admin": "yarn workspace admin dev"
+  },
+  "devDependencies": {
+    "vite": "^6.0.6"
+  }
+}
