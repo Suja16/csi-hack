@@ -46,7 +46,11 @@ const About = () => {
             marginBottom: 2,
           }}
         >
-          KJSCE Devopia is an exciting event that promises to bring together the brightest minds in the country. It&apos;s a national-level offline Hackathon where you can showcase your skills in both hardware and software domains. Apart from the Hackathon, the event offers a wide range of entertaining games, unique and trendy gifts, and stylish swag items that you can get your hands on.
+          Welcome to IDEA, the Union Bank of India Hackathon, a groundbreaking initiative presented by Union Bank of India in collaboration with KJ Somaiya School of Engineering (KJSSE), Somaiya Vidyavihar University (SVU), the Indian Banks’ Association (IBA), and the Department of Financial Services (DFS). This hackathon represents a concerted effort under the Ministry of Finance’s vision to foster innovation and excellence in the realms of financial technology (fintech) and cybersecurity.
+
+This edition marks the first-ever partnership with the prestigious KJ Somaiya School of Engineering, bringing together bright minds from across the nation to solve real-world challenges. Over an intense 24-hour period, participants will tackle problem statements meticulously curated and vetted by Union Bank of India, ensuring their relevance to the current and future needs of the financial sector.
+
+We invite you to join us in this journey of innovation and discovery, where ideas become solutions and potential meets opportunity.
         </Typography>
 
         {/* Add Image */}
@@ -126,12 +130,11 @@ const About = () => {
               fontWeight: 300,
             }}
           >
-            KJSCE Devopia is an exciting event that promises to bring together
-            the brightest minds in the country. It&apos;s a national-level
-            offline Hackathon where you can showcase your skills in both
-            hardware and software domains. Apart from the Hackathon, the event
-            offers a wide range of entertaining games, unique and trendy gifts,
-            and stylish swag items that you can get your hands on.
+            Welcome to IDEA, the Union Bank of India Hackathon, a groundbreaking initiative presented by Union Bank of India in collaboration with KJ Somaiya School of Engineering (KJSSE), Somaiya Vidyavihar University (SVU), the Indian Banks’ Association (IBA), and the Department of Financial Services (DFS). This hackathon represents a concerted effort under the Ministry of Finance’s vision to foster innovation and excellence in the realms of financial technology (fintech) and cybersecurity.
+
+This edition marks the first-ever partnership with the prestigious KJ Somaiya School of Engineering, bringing together bright minds from across the nation to solve real-world challenges. Over an intense 24-hour period, participants will tackle problem statements meticulously curated and vetted by Union Bank of India, ensuring their relevance to the current and future needs of the financial sector.
+
+We invite you to join us in this journey of innovation and discovery, where ideas become solutions and potential meets opportunity.
           </Typography>
           <Typography
             variant="h1"
