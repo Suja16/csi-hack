@@ -1,9 +1,15 @@
-import { Box, Typography } from "@mui/material";
-import React from "react";
+import { Box, Typography, Button } from "@mui/material";
+import React, {useState} from "react";
+import { useGoogleLogin } from '@react-oauth/google';
+import ModalForm from "./ModalForm";
 import Logo from "../../assets/CroppedfinalLogo.png";
 import UnionBankLogo from "../../assets/unionBankLogo.jpeg";
 
 function Component1_whitecard(props) {
+  const [formOpen, setFormOpen] = useState(false);
+  const login = useGoogleLogin({
+    onSuccess: tokenResponse => { console.log(tokenResponse); setFormOpen(true); },
+  });
   return (
     <Box
       width={"100vw"}
@@ -70,7 +76,24 @@ function Component1_whitecard(props) {
         >
           <img src={UnionBankLogo} width={"304px"} alt="" />
         </Box>
-        <Typography variant="button" position={"absolute"} top={"70%"} right={"25%"} bgcolor="#2846AA" color="white" padding={"6px 20px"} borderRadius="10px" fontSize="28px">Register</Typography>
+        <Button
+          variant="contained"
+          onClick={() => login()}
+          style={{
+            position: "absolute",
+            top: "70%",
+            right: "25%",
+            color: "white",
+            padding: "6px 20px",
+            borderRadius: "10px",
+            fontSize: "28px",
+            zIndex: 10
+          }}
+        >
+          Register
+        </Button>
+        <ModalForm open={formOpen} setOpen={setFormOpen} />
+
       </Box>
     </Box>
   );
