@@ -75,9 +75,9 @@ const ProblemStatements = () => {
         "Many times, it is observed that not all domain registrars or hosting providers are cooperative when it comes to requests for phishing domain takedowns, especially if they operate in jurisdictions where state actors/threat actors are not strictly regulated or where cyber security laws are relaxed. We, as a Public Sector Bank (PSB) in India, would like to highlight a significant real-life challenge we face in the timely takedown of suspicious, malicious, or phishing domains impersonating PSB entities. In several instances, our third-party takedown service providers have been unable to successfully remove such phishing domains or fraudulent applications.Furthermore, there is an absence of a well-defined, centralized mechanism provided by the Government of India to address these issues. Specifically, we encounter difficulties in identifying a single point of contact or department within the government responsible for handling such cases, as well as a lack of clear guidelines on how to proceed with these requests. This often leads to delays in resolving these threats, potentially compromising the security of our customers.We suggest that a dedicated and clearly outlined framework, along with a designated government authority or contact point, be established to streamline the process for takedown requests related to phishing or malicious domains. This would enable PSBs and other financial institutions to effectively respond to such threats in a timely and coordinated manner.",
     },
     {
-      title: "New Customer Handling",
+      title: "Bank accounts are being used as Money Mules for purpose laundering perpetrating Crimes. of Money and Financial",
       description:
-        "This is the detailed description for problem statement 3. It includes background and solutions.",
+        " Application of Al: How Al can be put to use to address the following challenges being faced by banking industry at present to control this menace and provide solution which work in real time 1. Customer profilling and Onboarding 2. Complex Transaction Network 3. Cross-Bordier Transactions 4. Short Lifespan of Accounts 5. High Falise Positives 6. Advanced Evasion Techniques",
     },
   ];
 
