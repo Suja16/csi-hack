@@ -2,6 +2,8 @@ import { Box, Button } from "@mui/material";
 import HomePage from "./components/HomePage/HomePage";
 import Navbar from "./components/Navbar";
 import BottomBar from "./components/bottom_bar";
+import Banner from "./components/sponsor_banner";
+import FAQSection from "./components/faq";
 function App() {
   return (
     <Box
@@ -16,8 +18,24 @@ function App() {
       bottom={0}
     >
       <Navbar />
-      <Box position={"relative"} marginTop={15} height={"100vh"} maxHeight={"800px"} >
+      <Box
+        position={"relative"}
+        marginTop={15}
+        height={"100vh"}
+        maxHeight={"800px"}
+      >
         <HomePage />
+      </Box>
+      <Box marginBottom={5}>
+        <Banner />
+      </Box>
+      <Box
+        height={"100vh"}
+        sx={{
+          marginBottom: { xs: 25, md: 0 },
+        }}
+      >
+        <FAQSection />
       </Box>
       <BottomBar />
     </Box>
