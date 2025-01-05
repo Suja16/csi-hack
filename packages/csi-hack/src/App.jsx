@@ -8,6 +8,9 @@ import EventTimeline from "./components/LgTimeline/LgTimeLine";
 import MobileEventTimeline from "./components/MobileTimeLine/mobile_event_timeline";
 import SponsorsMobileBanner from "./components/SponsorsMobileBanner";
 import UnderGuiDanceOfMobile from "./components/UnderGuiDanceOfMobile";
+import About from "./components/About";
+import PrizePool from "./components/PrizePool";
+import ProblemStatements from "./components/ProblemStatements";
 function App() {
   return (
     <Box
@@ -35,7 +38,16 @@ function App() {
       </Box>
       <Box marginBottom={5} sx={{ display: { xs: "block", md: "none" } }}>
         <SponsorsMobileBanner />
-        <UnderGuiDanceOfMobile/>
+        <UnderGuiDanceOfMobile />
+      </Box>
+      <Box>
+        <About />
+      </Box>
+      <Box width="86%" marginTop={10} marginBottom={10} marginX={"auto"}>
+        <PrizePool />
+      </Box>
+      <Box width="86%" marginX="auto" marginTop={10} marginBottom={10}>
+        <ProblemStatements/>
       </Box>
       <Box width={"100%"} sx={{ display: { xs: "none", md: "block" } }}>
         <EventTimeline />

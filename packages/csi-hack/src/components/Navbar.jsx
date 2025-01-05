@@ -113,14 +113,14 @@ const Navbar = () => {
         top={"85px"}
         borderRadius="15px"
         zIndex={10}
-        gap={4}
+        gap={3.5}
         sx={{
           left: {xs:"9px", md:"5px"},
           display: { xs: "flex", lg: "none" }, // Always display as flex on mobile but control visibility using opacity and transform
           flexDirection: "column",
           padding: "20px",
           paddingLeft: "30px",
-          width:{xs:"83%" , md: "95%"}, 
+          width:{xs:"95.5%" , md: "95%"}, 
           opacity: hamMenu ? 1 : 0, // Fade in/out
           transform: hamMenu ? "translateY(0)" : "translateY(-20px)", // Slide in/out
           pointerEvents: hamMenu ? "auto" : "none", // Disable interaction when hidden
