@@ -1,7 +1,8 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import useMediaQuery from '@mui/material/useMediaQuery';
+import useMediaQuery from "@mui/material/useMediaQuery";
+
 const About = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -42,10 +43,24 @@ const About = () => {
             textAlign: "center",
             lineHeight: "24px",
             maxWidth: "90%",
+            marginBottom: 2,
           }}
         >
           KJSCE Devopia is an exciting event that promises to bring together the brightest minds in the country. It&apos;s a national-level offline Hackathon where you can showcase your skills in both hardware and software domains. Apart from the Hackathon, the event offers a wide range of entertaining games, unique and trendy gifts, and stylish swag items that you can get your hands on.
         </Typography>
+
+        {/* Add Image */}
+        <Box
+          component="img"
+          src="/grp.png"
+          alt="Group"
+          sx={{
+            width: "90%", // Adjust width for mobile
+            height: "auto", // Maintain aspect ratio
+            borderRadius: 8, // Optional: Add rounded corners
+            marginTop: 2,
+          }}
+        />
       </Box>
     );
   }
