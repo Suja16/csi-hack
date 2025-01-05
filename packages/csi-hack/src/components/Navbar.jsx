@@ -29,22 +29,22 @@ const Navbar = () => {
         gap={10}
         width={"90%"}
       >
-        <Typography variant="h6" fontWeight={"bold"} fontSize={"16px"}>
+        <Typography variant="h6" component="a" href="/" sx={{textDecoration:"none"}} color="black" fontWeight={"bold"} fontSize={"16px"}>
           HOME
         </Typography>
-        <Typography variant="h6" fontWeight={"bold"} fontSize={"16px"}>
+        <Typography variant="h6" component="a" href="/" sx={{textDecoration:"none"}} color="black" fontWeight={"bold"} fontSize={"16px"}>
           PROBLEM STATEMENTS
         </Typography>
-        <Typography variant="h6" fontWeight={"bold"} fontSize={"16px"}>
+        <Typography variant="h6" component="a" href="/" sx={{textDecoration:"none"}} color="black" fontWeight={"bold"} fontSize={"16px"}>
           GUIDELINES
         </Typography>
-        <Typography variant="h6" fontWeight={"bold"} fontSize={"16px"}>
+        <Typography variant="h6" component="a" href="/" sx={{textDecoration:"none"}} color="black" fontWeight={"bold"} fontSize={"16px"}>
           FAQs
         </Typography>
-        <Typography variant="h6" fontWeight={"bold"} fontSize={"16px"}>
+        <Typography variant="h6" component="a" href="/" sx={{textDecoration:"none"}} color="black" fontWeight={"bold"} fontSize={"16px"}>
           PRIZES
         </Typography>
-        <Typography variant="h6" fontWeight={"bold"} fontSize={"16px"}>
+        <Typography variant="h6" component="a" href="/" sx={{textDecoration:"none"}} color="black" fontWeight={"bold"} fontSize={"16px"}>
           CONTACT US
         </Typography>
       </Box>
