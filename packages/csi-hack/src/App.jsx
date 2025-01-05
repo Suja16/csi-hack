@@ -5,6 +5,9 @@ import BottomBar from "./components/bottom_bar";
 import Banner from "./components/sponsor_banner";
 import FAQSection from "./components/faq";
 import EventTimeline from "./components/LgTimeline/LgTimeLine";
+import MobileEventTimeline from "./components/MobileTimeLine/mobile_event_timeline";
+import SponsorsMobileBanner from "./components/SponsorsMobileBanner";
+import UnderGuiDanceOfMobile from "./components/UnderGuiDanceOfMobile";
 function App() {
   return (
     <Box
@@ -27,11 +30,22 @@ function App() {
       >
         <HomePage />
       </Box>
-      <Box marginBottom={5}>
+      <Box marginBottom={5} sx={{ display: { xs: "none", md: "block" } }}>
         <Banner />
       </Box>
-      <Box width={"100%"}>
-        <EventTimeline/>
+      <Box marginBottom={5} sx={{ display: { xs: "block", md: "none" } }}>
+        <SponsorsMobileBanner />
+        <UnderGuiDanceOfMobile/>
+      </Box>
+      <Box width={"100%"} sx={{ display: { xs: "none", md: "block" } }}>
+        <EventTimeline />
+      </Box>
+      <Box
+        width={"100%"}
+        paddingLeft={1}
+        sx={{ display: { xs: "block", md: "none" } }}
+      >
+        <MobileEventTimeline />
       </Box>
       <Box
         height={"100vh"}
