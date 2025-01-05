@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import BottomBar from "./components/bottom_bar";
 import Banner from "./components/sponsor_banner";
 import FAQSection from "./components/faq";
+import EventTimeline from "./components/LgTimeline/LgTimeLine";
 function App() {
   return (
     <Box
@@ -28,6 +29,9 @@ function App() {
       </Box>
       <Box marginBottom={5}>
         <Banner />
+      </Box>
+      <Box width={"100%"}>
+        <EventTimeline/>
       </Box>
       <Box
         height={"100vh"}
