@@ -13,7 +13,7 @@ const Navbar = () => {
         alignItems={"center"}
         position={"fixed"}
         width={"100%"}
-        zIndex={10}
+        zIndex={30}
         bgcolor="white"
         paddingY={"10px"}
         sx={{
@@ -112,7 +112,7 @@ const Navbar = () => {
         position={"fixed"}
         top={"85px"}
         borderRadius="15px"
-        zIndex={10}
+        zIndex={30}
         gap={3.5}
         sx={{
           left: {xs:"9px", md:"5px"},

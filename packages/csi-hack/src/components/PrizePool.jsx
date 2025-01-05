@@ -1,6 +1,7 @@
 import { Box, Grid, Typography } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 import prizepool from "../assets/prizepool.png";
+import Carousel from "react-material-ui-carousel";
 
 const PrizePool = () => {
   const scrollContainerRef = useRef(null);
@@ -14,7 +15,10 @@ const PrizePool = () => {
       if (scrollContainer) {
         // Calculate new scroll position
         scrollAmount += 2; // Adjust the speed (higher value = faster scrolling)
-        if (scrollAmount >= scrollContainer.scrollWidth - scrollContainer.clientWidth) {
+        if (
+          scrollAmount >=
+          scrollContainer.scrollWidth - scrollContainer.clientWidth
+        ) {
           scrollAmount = 0; // Reset to the beginning when reaching the end
         }
         scrollContainer.scrollTo({
@@ -118,8 +122,8 @@ const PrizePool = () => {
         sx={{
           width: "100%",
           backgroundColor: "white",
-          borderRadius:8,
-          display: { xs: "flex", md: "none" }, // Show only on small screens
+          borderRadius: 5,
+          display: { xs: "flex", md: "none" },
           flexDirection: "column",
           alignItems: "center",
           padding: 3,
@@ -142,7 +146,7 @@ const PrizePool = () => {
 
         {/* Horizontal Scrollable Container */}
         <Box
-          ref={scrollContainerRef}
+          // ref={scrollContainerRef}
           sx={{
             display: "flex",
             gap: 2,
@@ -161,10 +165,10 @@ const PrizePool = () => {
               key={index}
               sx={{
                 flex: "0 0 auto", // Ensures horizontal scrolling
-                width: 200,
+                width: 270,
                 height: 150,
                 backgroundColor: "#e41d22",
-                borderRadius: 8,
+                borderRadius: 4,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",

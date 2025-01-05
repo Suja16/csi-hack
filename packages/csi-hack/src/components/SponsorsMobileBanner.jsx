@@ -7,7 +7,7 @@ import euclidLogo from "../assets/Euclid_logo.png";
 function SponsorsMobileBanner(props) {
   const items = [somaiyaLogo, euclidLogo];
   return (
-    <Box>
+    <Box position={"relative"} zIndex={10}>
       <Typography variant="h4" align="center" color="white" marginBottom={3}>
         In Association with
       </Typography>

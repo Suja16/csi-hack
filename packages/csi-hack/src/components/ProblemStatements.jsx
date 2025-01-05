@@ -130,6 +130,7 @@ const ProblemStatements = () => {
           flexDirection: "column",
           alignItems: "center",
           padding: 2,
+          borderRadius:8,
           gap: 3, // Added gap for spacing between boxes
         }}
       >

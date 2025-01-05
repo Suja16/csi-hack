@@ -9,7 +9,7 @@ const BottomBar = () => {
   return (
     <Box
       sx={{
-        padding: {xs:2, lg:10},
+        padding: { xs: 2, lg: 10 },
         backgroundColor: "#2846AA",
         color: "#fff",
         border: "2px solid white",
@@ -19,7 +19,11 @@ const BottomBar = () => {
       <Typography
         variant="h2"
         gutterBottom
-        sx={{ fontWeight: "bold", textAlign: { xs: "center", lg: "start" } , fontSize:{xs:"30px", lg:"64px"} }}
+        sx={{
+          fontWeight: "bold",
+          textAlign: { xs: "center", lg: "start" },
+          fontSize: { xs: "30px", lg: "64px" },
+        }}
       >
         Contact Us
       </Typography>
@@ -46,8 +50,8 @@ const BottomBar = () => {
             >
               <Avatar
                 sx={{
-                  width: {xs:150 , lg:200},
-                  height: {xs:150 , lg:200},
+                  width: { xs: 150, lg: 200 },
+                  height: { xs: 150, lg: 200 },
                   backgroundColor: "#F5F5F5",
                   marginBottom: { xs: "16px", md: "0" }, // Add margin bottom on small screens
                 }}
@@ -56,14 +60,14 @@ const BottomBar = () => {
               <Box
                 sx={{
                   marginTop: { xs: "px", lg: "0" },
-                  marginLeft:5
+                  // marginLeft:5
                 }}
               >
                 <Box display="flex" alignItems="center" mb={2}>
                   <Phone sx={{ marginRight: "12px", fontSize: 30 }} />
                   <Typography
                     variant="body1"
-                    sx={{ fontSize: "20px" , textAlign:"start" }}
+                    sx={{ fontSize: "20px", textAlign: "start" }}
                   >
                     1234567890
                   </Typography>

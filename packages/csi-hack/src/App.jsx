@@ -27,8 +27,8 @@ function App() {
       <Navbar />
       <Box
         position={"relative"}
-        marginTop={15}
-        height={"100vh"}
+        marginTop={{ xs: 12, md: 15 }}
+        height={{ xs: "40vh", md: "100vh" }}
         maxHeight={"800px"}
       >
         <HomePage />

@@ -7,7 +7,7 @@ import dfsLogo from "../assets/DFS_Logo.png";
 function UnderGuiDanceOfMobile(props) {
   const items = [ibaLogo, dfsLogo];
   return (
-    <Box>
+    <Box position={"relative"} zIndex={10}>
       <Typography variant="h4" align="center" color="white" marginBottom={3}>
         In Guidance Of
       </Typography>
