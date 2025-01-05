@@ -1,12 +1,14 @@
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Grid, Paper, Typography, Modal, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
-// eslint-disable-next-line react/prop-types
-const ProblemStatement = ({ title, description }) => (
+const ProblemStatement = ({ title, description, onClick }) => (
   <Paper
     elevation={3}
     sx={{
-      width: 350,
+      width: { xs: "90%", sm: 350 },
       padding: 3,
       backgroundColor: "#e41d22",
       borderRadius: 3,
@@ -15,7 +17,9 @@ const ProblemStatement = ({ title, description }) => (
       flexDirection: "column",
       alignItems: "center",
       gap: 2,
+      cursor: "pointer", // Makes the box look clickable
     }}
+    onClick={onClick}
   >
     <Typography
       variant="h4"
@@ -46,6 +50,115 @@ const ProblemStatement = ({ title, description }) => (
 
 const ProblemStatements = () => {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  // State for managing modal
+  const [open, setOpen] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: "", description: "" });
+
+  const handleOpen = (title, description) => {
+    setModalContent({ title, description });
+    setOpen(true);
+  };
+
+  const handleClose = () => setOpen(false);
+
+  const problemDetails = [
+    {
+      title: "Problem statement 1",
+      description:
+        "This is the detailed description for problem statement 1. It explains the challenges and context.",
+    },
+    {
+      title: "Problem statement 2",
+      description:
+        "This is the detailed description for problem statement 2. It provides insights and specifics.",
+    },
+    {
+      title: "Problem statement 3",
+      description:
+        "This is the detailed description for problem statement 3. It includes background and solutions.",
+    },
+  ];
+
+  const renderModal = () => (
+    <Modal open={open} onClose={handleClose}>
+      <Box
+        sx={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: 400,
+          bgcolor: "white",
+          boxShadow: 24,
+          borderRadius: 2,
+          p: 4,
+          position: "relative", // To position the close icon
+        }}
+      >
+        <IconButton
+          onClick={handleClose}
+          sx={{
+            position: "absolute",
+            top: 8,
+            right: 8,
+            color: "#e41d22",
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold", color: "#e41d22" }}>
+          {modalContent.title}
+        </Typography>
+        <Typography variant="body1" sx={{ mb: 3 }}>
+          {modalContent.description}
+        </Typography>
+      </Box>
+    </Modal>
+  );
+
+  if (isMobile) {
+    // Mobile UI
+    return (
+      <Box
+        sx={{
+          width: "100%",
+          minHeight: "100vh",
+          backgroundColor: "white",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          padding: 2,
+          gap: 3, // Added gap for spacing between boxes
+        }}
+      >
+        <Typography
+          variant="h4"
+          sx={{
+            fontFamily: theme.typography.h4.fontFamily,
+            fontWeight: "normal",
+            color: "#e41d22",
+            marginBottom: 2,
+            textAlign: "center",
+          }}
+        >
+          PROBLEM STATEMENTS
+        </Typography>
+        {problemDetails.map((problem, index) => (
+          <ProblemStatement
+            key={index}
+            title={problem.title}
+            description={problem.description.substring(0, 50) + "..."} // Shortened description
+            onClick={() => handleOpen(problem.title, problem.description)}
+          />
+        ))}
+        {renderModal()}
+      </Box>
+    );
+  }
+
+  // Desktop UI
   return (
     <Box
       sx={{
@@ -80,25 +193,17 @@ const ProblemStatements = () => {
           justifyContent: "center",
         }}
       >
-        <Grid item>
-          <ProblemStatement
-            title="Problem statement "
-            description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard"
-          />
-        </Grid>
-        <Grid item>
-          <ProblemStatement
-            title="Problem statement"
-            description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard"
-          />
-        </Grid>
-        <Grid item>
-          <ProblemStatement
-            title="problem statement"
-            description="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard"
-          />
-        </Grid>
+        {problemDetails.map((problem, index) => (
+          <Grid item key={index}>
+            <ProblemStatement
+              title={problem.title}
+              description={problem.description.substring(0, 50) + "..."} // Shortened description
+              onClick={() => handleOpen(problem.title, problem.description)}
+            />
+          </Grid>
+        ))}
       </Grid>
+      {renderModal()}
     </Box>
   );
 };
