@@ -46,7 +46,6 @@ function Component1_whitecard(props) {
           variant="p"
           color="#0166B3"
           fontWeight={"Bold"}
-          fontSize={"25px"}
           right={0}
           position={"absolute"}
           zIndex={2}
@@ -70,7 +69,7 @@ function Component1_whitecard(props) {
         >
           <img src={UnionBankLogo} width={"304px"} alt="" />
         </Box>
-        <Typography variant="button" position={"absolute"} top={"70%"} right={"25%"} bgcolor="#2846AA" color="white" padding={"6px 20px"} borderRadius="10px" fontSize="28px">Register</Typography>
+        <Typography variant="h4" component="button" position={"absolute"} top={"70%"} right={"25%"} bgcolor="#2846AA" color="white" padding={"6px 20px"} borderRadius="10px">Register</Typography>
       </Box>
     </Box>
   );

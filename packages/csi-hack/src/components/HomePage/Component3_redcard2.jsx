@@ -28,13 +28,12 @@ function Component3_redcard2(props) {
           width={"307px"}
           height={"max-content"}
           textAlign={"center"}
-          fontSize={"52px"}
           fontWeight={400}
           letterSpacing={"-0.205"}
           fontFamily={"Archigadget"}
           color={"white"}
         >
-          PRIZE POOL WORTH ₹11L
+          <Typography variant="h3">PRIZE POOL WORTH ₹11L</Typography>
         </Box>
       </Box>
     </Box>

@@ -33,8 +33,7 @@ function Component2_redCard1(props) {
           />
         </svg>
         <Typography
-          variant="p"
-          fontSize={"36px"}
+          variant="h4"
           letterSpacing={"-0.205px"}
           color="white"
           align="right"
@@ -49,9 +48,8 @@ function Component2_redCard1(props) {
           Feb 28 2024
         </Typography>
         <Typography
-          variant="p"
-          fontWeight={400}
-          fontSize={"64px"}
+          variant="h2"
+          fontWeight={400}  
           letterSpacing={"-0.205px"}
           fontFamily={"Archigadget"}
           color="white"
