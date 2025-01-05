@@ -108,7 +108,11 @@ const ModalForm = ({ open, setOpen, methods }) => {
         localStorage.setItem("inviteCode", inviteCode);
         localStorage.setItem("teamName", data.team_name);
         console.log(teamResponse);
-        setOpen(false);
+        setSnackbarMessage("Registration Successful");
+        setShowSnackbar(true);
+
+        setTimeout(() => { setShowSnackbar(false); setOpen(false) }, 3000);
+
       } catch (e) {
         console.error(e);
         if (e.response && e.response.data && e.response.data.message) {
@@ -138,7 +142,10 @@ const ModalForm = ({ open, setOpen, methods }) => {
             },
           },
         );
-        setOpen(false);
+        setSnackbarMessage("Registration Successful");
+        setShowSnackbar(true);
+
+        setTimeout(() => { setShowSnackbar(false); setOpen(false) }, 3000);
       } catch (e) {
         console.error(e);
         if (e.response && e.response.data && e.response.data.message) {
