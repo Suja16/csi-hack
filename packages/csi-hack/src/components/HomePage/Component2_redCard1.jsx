@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
+import csiLogo from "../../assets/csi_logo.png";
 
 function Component2_redCard1(props) {
   return (
@@ -33,10 +34,8 @@ function Component2_redCard1(props) {
         </svg>
         <Typography
           variant="p"
-          fontWeight={800}
           fontSize={"36px"}
           letterSpacing={"-0.205px"}
-          fontFamily={"DM Sans"}
           color="white"
           align="right"
           marginRight={"18px"}
@@ -52,7 +51,7 @@ function Component2_redCard1(props) {
         <Typography
           variant="p"
           fontWeight={400}
-          fontSize={"75px"}
+          fontSize={"64px"}
           letterSpacing={"-0.205px"}
           fontFamily={"Archigadget"}
           color="white"
@@ -64,6 +63,9 @@ function Component2_redCard1(props) {
         >
           INDIA’S LARGEST HACKATHON
         </Typography>
+        <Box position={"absolute"} top={"50%"} right={"17%"}>
+          <img src={csiLogo} alt="" />
+        </Box>
       </Box>
     </Box>
   );

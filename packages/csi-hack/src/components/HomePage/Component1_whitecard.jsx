@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import Logo from "../../assets/finalLogo.png";
+import Logo from "../../assets/CroppedfinalLogo.png";
 import UnionBankLogo from "../../assets/unionBankLogo.jpeg";
 
 function Component1_whitecard(props) {
@@ -33,43 +33,44 @@ function Component1_whitecard(props) {
           />
         </svg>
         <Box
-          marginTop={"-600px"}
-          marginLeft={"-60px"}
           width={"max-content"}
           position={"absolute"}
           zIndex={1}
           left={"0"}
           height={"max-content"}
+          top={"10%"}
         >
-          <img height={"600px"} width={"700px"} src={Logo} alt="" />
+          <img width={"400px"} src={Logo} alt="" />
         </Box>
         <Typography
           variant="p"
           color="#0166B3"
           fontWeight={"Bold"}
-          fontSize={"20px"}
+          fontSize={"25px"}
           right={0}
           position={"absolute"}
           zIndex={2}
           height={"max-content"}
           marginTop={"10%"}
-          marginRight={"4%"}
+          textAlign={"center"}
+          marginRight={"10%"}
         >
           PRESENTED BY
         </Typography>
         <Box
           top={"30%"}
-          marginLeft={"-60px"}
+          // marginLeft={"-60px"}
           position={"absolute"}
           zIndex={1}
           width={"max-content"}
           marginTop={2}
           marginX={"68%"}
-          left={"0"}
+          left={"-60px"}
           height={"max-content"}
         >
-          <img src={UnionBankLogo} width={"244px"} height={"62px"} alt="" />
+          <img src={UnionBankLogo} width={"304px"} alt="" />
         </Box>
+        <Typography variant="button" position={"absolute"} top={"70%"} right={"25%"} bgcolor="#2846AA" color="white" padding={"6px 20px"} borderRadius="10px" fontSize="28px">Register</Typography>
       </Box>
     </Box>
   );

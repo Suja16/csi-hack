@@ -13,13 +13,14 @@ const BottomBar = () => {
         px: 10,
         backgroundColor: "#2846AA",
         color: "#fff",
-        border: "3px solid white",
+        border: "2px solid white",
+        marginLeft: "1px",
       }}
     >
       <Typography
         variant="h2"
         gutterBottom
-        sx={{ fontWeight: "bold", textAlign: { xs: "center", lg: "start" } }}
+        sx={{ fontWeight: "bold", textAlign: { xs: "center", lg: "start" } , fontSize:{xs:"40px", lg:"64px"} }}
       >
         Contact Us
       </Typography>
@@ -47,8 +48,8 @@ const BottomBar = () => {
             >
               <Avatar
                 sx={{
-                  width: 250,
-                  height: 250,
+                  width: 200,
+                  height: 200,
                   backgroundColor: "#F5F5F5",
                   marginBottom: { xs: "16px", md: "0" }, // Add margin bottom on small screens
                 }}
@@ -63,7 +64,7 @@ const BottomBar = () => {
                   <Phone sx={{ marginRight: "12px", fontSize: 40 }} />
                   <Typography
                     variant="body1"
-                    sx={{ fontSize: "35px", marginX: { xs: "auto", lg: "0" } }}
+                    sx={{ fontSize: "30px", marginX: { xs: "auto", lg: "0" } }}
                   >
                     1234567890
                   </Typography>
@@ -72,7 +73,7 @@ const BottomBar = () => {
                   <Email sx={{ marginRight: "12px", fontSize: 40 }} />
                   <Typography
                     variant="body1"
-                    sx={{ fontSize: "35px", marginX: { xs: "auto", lg: "0" } }}
+                    sx={{ fontSize: "30px", marginX: { xs: "auto", lg: "0" } }}
                   >
                     ABCDEF@gmail.com
                   </Typography>
@@ -81,7 +82,7 @@ const BottomBar = () => {
                   <LocationOn sx={{ marginRight: "12px", fontSize: 40 }} />
                   <Typography
                     variant="body1"
-                    sx={{ fontSize: "35px", marginX: { xs: "auto", lg: "0" } }}
+                    sx={{ fontSize: "30px", marginX: { xs: "auto", lg: "0" } }}
                   >
                     123, XXX, abc-0000
                   </Typography>
@@ -95,13 +96,13 @@ const BottomBar = () => {
               }}
             >
               <IconButton sx={{ color: "#fff" }}>
-                <LinkedInIcon sx={{ fontSize: 70 }} />
+                <LinkedInIcon sx={{ fontSize: 50 }} />
               </IconButton>
               <IconButton sx={{ color: "#fff" }}>
-                <TwitterIcon sx={{ fontSize: 70 }} />
+                <TwitterIcon sx={{ fontSize: 50 }} />
               </IconButton>
               <IconButton sx={{ color: "#fff" }}>
-                <GitHubIcon sx={{ fontSize: 70 }} />
+                <GitHubIcon sx={{ fontSize: 50 }} />
               </IconButton>
             </Box>
           </Box>
