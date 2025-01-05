@@ -1,15 +1,41 @@
 import { Box, Typography, Button } from "@mui/material";
 import React, {useState} from "react";
 import { useGoogleLogin } from '@react-oauth/google';
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import registrationSchema from "./validation";
 import ModalForm from "./ModalForm";
 import Logo from "../../assets/CroppedfinalLogo.png";
 import UnionBankLogo from "../../assets/unionBankLogo.jpeg";
 
 function Component1_whitecard(props) {
   const [formOpen, setFormOpen] = useState(false);
-  const login = useGoogleLogin({
-    onSuccess: tokenResponse => { console.log(tokenResponse); setFormOpen(true); },
+  const methods = useForm({
+    resolver: yupResolver(registrationSchema),
+    mode: "onTouched",
   });
+  const login = useGoogleLogin({
+    onSuccess: async ({ code }) => {
+      const response = await axios.post('/api/v1/auth/googleToken', {code}, {baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS});
+      console.log(response);
+      localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.refreshToken);
+      localStorage.setItem("user", response.data.user)
+      const user = response.data.user;
+      methods.reset({
+        degree: user.degree,
+        college: user.college,
+        branch: user.branch,
+        year: user.year,
+        gender: user.gender,
+        phone_number: user.phone_number,
+      })
+      setFormOpen(true);
+    },
+    flow: 'auth-code',
+  });
+  // const login = () => {setFormOpen(true)};
   return (
     <Box
       width={"100vw"}
@@ -92,7 +118,7 @@ function Component1_whitecard(props) {
         >
           Register
         </Button>
-        <ModalForm open={formOpen} setOpen={setFormOpen} />
+        <ModalForm open={formOpen} setOpen={setFormOpen} methods={methods} />
 
       </Box>
     </Box>
