@@ -26,7 +26,7 @@ const MobileTimelineCard = ({ number, text }) => {
             <Box
                 sx={{
                     position: "absolute",
-                    left: -3,
+                    left: 3,
                     top: "50%",
                     transform: "translate(-50%, -50%)",
                     fontWeight: "bold",
@@ -36,6 +36,7 @@ const MobileTimelineCard = ({ number, text }) => {
                     alignItems: "center",
                     justifyContent: "center",
                     fontSize: "6rem",
+                    bgcolor: "#2846AA",
                 }}
             >
                 <span>{number}</span>

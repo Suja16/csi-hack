@@ -47,7 +47,7 @@ function App() {
         <PrizePool />
       </Box>
       <Box width="86%" marginX="auto" marginTop={10} marginBottom={10}>
-        <ProblemStatements/>
+        <ProblemStatements />
       </Box>
       <Box width={"100%"} sx={{ display: { xs: "none", md: "block" } }}>
         <EventTimeline />
@@ -59,12 +59,7 @@ function App() {
       >
         <MobileEventTimeline />
       </Box>
-      <Box
-        height={"100vh"}
-        sx={{
-          marginBottom: { xs: 25, md: 0 },
-        }}
-      >
+      <Box height={"100vh"}>
         <FAQSection />
       </Box>
       <BottomBar />

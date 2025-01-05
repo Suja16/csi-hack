@@ -9,8 +9,7 @@ const BottomBar = () => {
   return (
     <Box
       sx={{
-        py: 10,
-        px: 10,
+        padding: {xs:2, lg:10},
         backgroundColor: "#2846AA",
         color: "#fff",
         border: "2px solid white",
@@ -20,7 +19,7 @@ const BottomBar = () => {
       <Typography
         variant="h2"
         gutterBottom
-        sx={{ fontWeight: "bold", textAlign: { xs: "center", lg: "start" } , fontSize:{xs:"40px", lg:"64px"} }}
+        sx={{ fontWeight: "bold", textAlign: { xs: "center", lg: "start" } , fontSize:{xs:"30px", lg:"64px"} }}
       >
         Contact Us
       </Typography>
@@ -43,13 +42,12 @@ const BottomBar = () => {
               alignItems="center"
               sx={{
                 flexDirection: { xs: "column", lg: "row" },
-                marginTop: { xs: "20px", lg: "0" },
               }}
             >
               <Avatar
                 sx={{
-                  width: 200,
-                  height: 200,
+                  width: {xs:150 , lg:200},
+                  height: {xs:150 , lg:200},
                   backgroundColor: "#F5F5F5",
                   marginBottom: { xs: "16px", md: "0" }, // Add margin bottom on small screens
                 }}
@@ -57,32 +55,33 @@ const BottomBar = () => {
 
               <Box
                 sx={{
-                  marginTop: { xs: "20px", lg: "0" },
+                  marginTop: { xs: "px", lg: "0" },
+                  marginLeft:5
                 }}
               >
                 <Box display="flex" alignItems="center" mb={2}>
-                  <Phone sx={{ marginRight: "12px", fontSize: 40 }} />
+                  <Phone sx={{ marginRight: "12px", fontSize: 30 }} />
                   <Typography
                     variant="body1"
-                    sx={{ fontSize: "30px", marginX: { xs: "auto", lg: "0" } }}
+                    sx={{ fontSize: "20px" , textAlign:"start" }}
                   >
                     1234567890
                   </Typography>
                 </Box>
                 <Box display="flex" alignItems="center" mb={2}>
-                  <Email sx={{ marginRight: "12px", fontSize: 40 }} />
+                  <Email sx={{ marginRight: "12px", fontSize: 30 }} />
                   <Typography
                     variant="body1"
-                    sx={{ fontSize: "30px", marginX: { xs: "auto", lg: "0" } }}
+                    sx={{ fontSize: "20px", marginX: { xs: "auto", lg: "0" } }}
                   >
                     ABCDEF@gmail.com
                   </Typography>
                 </Box>
                 <Box display="flex" alignItems="center">
-                  <LocationOn sx={{ marginRight: "12px", fontSize: 40 }} />
+                  <LocationOn sx={{ marginRight: "12px", fontSize: 30 }} />
                   <Typography
                     variant="body1"
-                    sx={{ fontSize: "30px", marginX: { xs: "auto", lg: "0" } }}
+                    sx={{ fontSize: "20px", marginX: { xs: "auto", lg: "0" } }}
                   >
                     123, XXX, abc-0000
                   </Typography>
@@ -96,13 +95,13 @@ const BottomBar = () => {
               }}
             >
               <IconButton sx={{ color: "#fff" }}>
-                <LinkedInIcon sx={{ fontSize: 50 }} />
+                <LinkedInIcon sx={{ fontSize: 30 }} />
               </IconButton>
               <IconButton sx={{ color: "#fff" }}>
-                <TwitterIcon sx={{ fontSize: 50 }} />
+                <TwitterIcon sx={{ fontSize: 30 }} />
               </IconButton>
               <IconButton sx={{ color: "#fff" }}>
-                <GitHubIcon sx={{ fontSize: 50 }} />
+                <GitHubIcon sx={{ fontSize: 30 }} />
               </IconButton>
             </Box>
           </Box>
