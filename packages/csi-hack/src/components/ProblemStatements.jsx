@@ -65,17 +65,17 @@ const ProblemStatements = () => {
 
   const problemDetails = [
     {
-      title: "Problem statement 1",
+      title: "Customer Service Improvement",
       description:
-        "This is the detailed description for problem statement 1. It explains the challenges and context.",
+        "Build a business analytics based Appointment Management System for efficient customer service.The objective is to design and implement a highly accurate facial recognition system that can authenticate and accept customer service queries via video/audio recordings and create appointments. This solution should integrate with the bank’s mobile application and utilize AADHAAR-based authentication for fraud prevention. The system should include:Analytical Snapshot : The system will generate an analytical snapshot of the customer’s profile based on their existing data with the bank, ensuring personalized and efficient service.New Customer Handling: For new customers, the system will direct them to the correct business unit to ensure their situation is appropriately addressed. The data from Aadhaar and PAN will be used to fetch relevant information to better understand their financial needs and mitigate potential risks.Additionally the solution should include a face training model built into the app to store data and perform edge processing. A feedback module should generate AI-based suggestions for the branch and individual staff, enhancing customer service. The solution must be cost-effective and deployable to rural branches, ensuring accessibility for all customers.",
     },
     {
-      title: "Problem statement 2",
+      title: "Analytical Snapshot",
       description:
         "This is the detailed description for problem statement 2. It provides insights and specifics.",
     },
     {
-      title: "Problem statement 3",
+      title: "New Customer Handling",
       description:
         "This is the detailed description for problem statement 3. It includes background and solutions.",
     },
