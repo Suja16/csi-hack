@@ -1,0 +1,42 @@
+[
+  {
+    "question": "What is a hackathon?",
+    "answer": "A hackathon is a social coding event where programmers, designers, and developers collaborate to solve problems and compete against other teams for prizes."
+  },
+  {
+    "question": "How long is the hackathon?",
+    "answer": "The duration of the hackathon will be for 24 hours."
+  },
+  {
+    "question": "How many members can be in a team?",
+    "answer": "Teams must consist of 4 members only, with at least one female member."
+  },
+  {
+    "question": "Is there a registration fee for the event?",
+    "answer": "The event is complimentary, including all amenities, catering services, and resources required for participation."
+  },
+  {
+    "question": "What do the participants need to bring?",
+    "answer": "Participants are expected to carry their laptop, chargers, and college identity cards. All other facilities will be provided by the organisers."
+  },
+  {
+    "question": "Is it only open to students, or can working professionals also join?",
+    "answer": "Participants must be Undergraduate Students attending a recognised university."
+  },
+  {
+    "question": "Will food and rest spaces be provided?",
+    "answer": "Yes. All meals, drinks, and snacks will be provided throughout the event along with designated resting spaces and leisure activities."
+  },
+  {
+    "question": "Can I attend virtually?",
+    "answer": "No. This is a fully in-person event and participants must be present at the venue throughout the hackathon."
+  },
+  {
+    "question": "Is Jain food and vegetarian food being provided?",
+    "answer": "Yes. Vegetarian and Jain food will be served in all meals and snacks during the course of the hackathon."
+  },
+  {
+    "question": "Does a team need to qualify first?",
+    "answer": "Yes. The teams will first have to submit an idea submission presentation based on the problem statement chosen. Once evaluated, the final shortlisted teams will be announced in due course of time."
+  }
+]
