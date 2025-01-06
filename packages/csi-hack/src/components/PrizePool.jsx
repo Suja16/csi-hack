@@ -19,7 +19,7 @@ const PrizePool = () => {
         <Box
           sx={{
             width: 1309,
-            height: 613,
+            height: 690,
             position: "absolute",
             top: 151,
             left: 0,
@@ -33,7 +33,7 @@ const PrizePool = () => {
           alt="Group"
           sx={{
             width: 404,
-            height: 330,
+            // height: 330,
             position: "absolute",
             top: 0,
             left: 142,
@@ -57,14 +57,14 @@ const PrizePool = () => {
         <Grid
           container
           spacing={2}
-          sx={{ position: "absolute", top: 382, left: 155 }}
+          sx={{ position: "absolute", top: 382, left: 120 }}
         >
           {["₹5L", "₹3L", "₹2L", "₹1L"].map((prize, index) => (
             <Grid item key={index}>
               <Box
                 sx={{
-                  width: 238,
-                  height: 200,
+                  width: 258,
+                  height: 250,
                   backgroundColor: "#e41d22",
                   borderRadius: 8,
                   display: "flex",
@@ -78,7 +78,7 @@ const PrizePool = () => {
                     fontFamily: "Montserrat-Bold, Helvetica",
                     fontWeight: "bold",
                     color: "white",
-                    fontSize: "4rem",
+                    fontSize: "5rem",
                     textAlign: "center",
                     letterSpacing: "-0.20px",
                   }}

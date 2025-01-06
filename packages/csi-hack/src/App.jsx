@@ -46,7 +46,7 @@ function App() {
       <Box>
         <About />
       </Box>
-      <Box width="86%" marginTop={10} marginBottom={10} marginX={"auto"}>
+      <Box width="86%" marginTop={10} marginBottom={20} marginX={"auto"}>
         <PrizePool />
       </Box>
       <Box width="86%" marginX="auto" marginTop={10} marginBottom={10}>
