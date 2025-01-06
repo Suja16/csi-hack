@@ -1,13 +1,14 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import React from "react";
 import csiLogo from "../../assets/csi_logo.png";
 
 function Component2_redCard1(props) {
+  const isMid = useMediaQuery("(max-width:900px) ,(max-width:1462px)");
   return (
     <Box
-      top={"6%"}
+      top={isMid ? "8.5rem" : "2.5rem"}
       // right={"12%"}
-      left={"-10%"}
+      left={isMid ? "-3rem" : "-10rem"}
       marginTop={5}
       position={"absolute"}
       width={"100%"}
@@ -19,8 +20,8 @@ function Component2_redCard1(props) {
     >
       <Box width="861px" left={"10%"} marginX={"7%"} position={"absolute"}>
         <svg
-          width="753"
-          height="541"
+          width={isMid ? "600" : "753"}
+          // height="541"
           viewBox="0 0 753 541"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -38,31 +39,31 @@ function Component2_redCard1(props) {
           color="white"
           align="right"
           marginRight={"18px"}
-          left={200}
+          left={isMid ? "8rem" : "12rem"}
           width={"165px"}
           marginTop={"32px"}
           position={"absolute"}
-          top={"0"}
+          top={isMid ? "-0.5rem" : "0"}
           zIndex={3}
         >
           Feb 28 2024
         </Typography>
         <Typography
-          variant="h2"
-          fontWeight={400}  
+          variant={isMid?"h3":"h2"}
+          fontWeight={400}
           letterSpacing={"-0.205px"}
           fontFamily={"Archigadget"}
           color="white"
-          left={"9%"}
+          left={isMid?"3rem":"4rem"}
           position={"absolute"}
-          top={"45%"}
+          top={isMid ? "14rem" : "16.6rem"}
           zIndex={3}
-          width={"500px"}
+          width={isMid?"300px":"500px"}
         >
           INDIA’S LARGEST HACKATHON
         </Typography>
-        <Box position={"absolute"} top={"50%"} right={"17%"}>
-          <img src={csiLogo} alt="" />
+        <Box position={"absolute"} top={isMid ? "14rem" : "16.6rem"} right={isMid?"19rem":"9rem"}>
+          <img src={csiLogo} width={isMid?"160px":null} alt="" />
         </Box>
       </Box>
     </Box>

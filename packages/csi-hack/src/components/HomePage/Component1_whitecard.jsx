@@ -1,9 +1,10 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import React from "react";
 import Logo from "../../assets/CroppedfinalLogo.png";
 import UnionBankLogo from "../../assets/unionBankLogo.jpeg";
 
 function Component1_whitecard(props) {
+  const isMid = useMediaQuery("(max-width:900px) ,(max-width:1462px)");
   return (
     <Box
       width={"100vw"}
@@ -14,13 +15,13 @@ function Component1_whitecard(props) {
     >
       <Box
         width="max-content"
-        left={"36%"}
+        left={isMid ? "11rem" : "35rem"}
         height="387px"
         position={"absolute"}
       >
         <svg
-          width="861"
-          height="387"
+          width={isMid ? "730" : "861"}
+          height={isMid ? "300" : "387"}
           viewBox="0 0 861 387"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -36,11 +37,11 @@ function Component1_whitecard(props) {
           width={"max-content"}
           position={"absolute"}
           zIndex={1}
-          left={"0"}
+          left={isMid ? "4rem" : "0.6rem"}
           height={"max-content"}
-          top={"10%"}
+          top={"1.3rem"}
         >
-          <img width={"400px"} src={Logo} alt="" />
+          <img width={isMid ? "250" : "400px"} src={Logo} alt="" />
         </Box>
         <Typography
           variant="p"
@@ -52,7 +53,7 @@ function Component1_whitecard(props) {
           height={"max-content"}
           marginTop={"10%"}
           textAlign={"center"}
-          marginRight={"10%"}
+          marginRight={"10rem"}
         >
           PRESENTED BY
         </Typography>
@@ -63,13 +64,25 @@ function Component1_whitecard(props) {
           zIndex={1}
           width={"max-content"}
           marginTop={2}
-          marginX={"68%"}
+          marginX={isMid ? "28rem" : "34rem"}
           left={"-60px"}
           height={"max-content"}
         >
-          <img src={UnionBankLogo} width={"304px"} alt="" />
+          <img src={UnionBankLogo} width={isMid ? "260px" : "304px"} alt="" />
         </Box>
-        <Typography variant="h4" component="button" position={"absolute"} top={"70%"} right={"25%"} bgcolor="#2846AA" color="white" padding={"6px 20px"} borderRadius="10px">Register</Typography>
+        <Typography
+          variant={isMid ? "subtitle1" : "h4"}
+          component="button"
+          position={"absolute"}
+          top={isMid ? "13rem" : "17rem"}
+          right={isMid ? "11.5rem" : "13rem"}
+          bgcolor="#2846AA"
+          color="white"
+          padding={isMid ? "8px 17px" : "6px 20px"}
+          borderRadius="10px"
+        >
+          Register
+        </Typography>
       </Box>
     </Box>
   );

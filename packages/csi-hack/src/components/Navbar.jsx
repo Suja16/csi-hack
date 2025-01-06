@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import Logo from "../assets/CroppedfinalLogo.png";
 import MenuIcon from "@mui/icons-material/Menu";
 
 const Navbar = () => {
   const [hamMenu, setHamMenu] = useState(false);
+  const isMid = useMediaQuery("(max-width:900px) ,(max-width:1462px)");
   return (
     <Box>
       <Box
@@ -99,7 +100,7 @@ const Navbar = () => {
         <Box
           onClick={() => setHamMenu(!hamMenu)}
           sx={{
-            paddingRight: { xs: "30px", md: "90px" },
+            paddingRight: { xs: "30px", md: isMid?"40px":"90px" },
             display: { xs: "block", lg: "none" },
           }}
         >
@@ -120,7 +121,7 @@ const Navbar = () => {
           flexDirection: "column",
           padding: "20px",
           paddingLeft: "30px",
-          width:{xs:"95.5%" , md: "95%"}, 
+          width:{xs:"95.5%" , md: isMid?"99%":"95%"}, 
           opacity: hamMenu ? 1 : 0, // Fade in/out
           transform: hamMenu ? "translateY(0)" : "translateY(-20px)", // Slide in/out
           pointerEvents: hamMenu ? "auto" : "none", // Disable interaction when hidden

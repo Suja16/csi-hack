@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, useMediaQuery } from "@mui/material";
 import HomePage from "./components/HomePage/HomePage";
 import Navbar from "./components/Navbar";
 import BottomBar from "./components/bottom_bar";
@@ -12,6 +12,7 @@ import About from "./components/About";
 import PrizePool from "./components/PrizePool";
 import ProblemStatements from "./components/ProblemStatements";
 function App() {
+  const isMid = useMediaQuery("(max-width:900px) ,(max-width:1462px)");
   return (
     <Box
       sx={{ overflowX: "hidden", scrollbarWidth: "none" }}
@@ -30,6 +31,7 @@ function App() {
         marginTop={{ xs: 12, md: 15 }}
         height={{ xs: "40vh", md: "100vh" }}
         maxHeight={"800px"}
+        marginBottom={isMid?"5.5rem":null}
       >
         <HomePage />
       </Box>

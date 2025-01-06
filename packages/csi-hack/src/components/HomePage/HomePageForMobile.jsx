@@ -63,7 +63,7 @@ function HomePageForMobile(props) {
             Register
           </Typography>
         </Box>
-        <Box position={"absolute"} top={"18%"} right={10}>
+        <Box position={"absolute"} top={"8.5rem"} right={"1rem"}>
           <svg
             width="120"
             height="138"
@@ -113,7 +113,7 @@ function HomePageForMobile(props) {
             </defs>
           </svg>
         </Box>
-        <Box position={"absolute"} top={"22.3%"} left={5}>
+        <Box position={"absolute"} top={"11rem"} left={5}>
           <Box width="232.96px" height="100px" borderRadius="10px" display={"flex"} flexDirection={"column"} justifyContent="center" bgcolor="#E41D22">
             <Typography variant="h6" color="white" textAlign="center">CASH PRIZE WORTH</Typography>
             <Typography variant="h4" color="white" textAlign="center">11L</Typography>

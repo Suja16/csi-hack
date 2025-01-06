@@ -1,7 +1,8 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import React from "react";
 
 function Component3_redcard2(props) {
+  const isMid = useMediaQuery("(max-width:900px) ,(max-width:1462px)");
   return (
     <Box
       width={"100%"}
@@ -11,13 +12,13 @@ function Component3_redcard2(props) {
       height="201px"
     >
       <Box
-        width="492px"
+        width={isMid?"792px":"492px"}
         height="201px"
         borderRadius={"30px"}
         position={"absolute"}
-        marginTop={4}
+        marginTop={isMid?"35rem":"2rem"}
         marginLeft={4}
-        left={"56.5%"}
+        left={isMid?"3.6rem":"54rem"}
         bgcolor={"#E41D22"}
         display={"flex"}
         flexDirection={"column"}
@@ -25,7 +26,7 @@ function Component3_redcard2(props) {
         alignItems={"center"}
       >
         <Box
-          width={"307px"}
+          width={isMid?"90%":"307px"}
           height={"max-content"}
           textAlign={"center"}
           fontWeight={400}
@@ -33,7 +34,7 @@ function Component3_redcard2(props) {
           fontFamily={"Archigadget"}
           color={"white"}
         >
-          <Typography variant="h3">PRIZE POOL WORTH ₹11L</Typography>
+          <Typography variant={isMid?"h2":"h3"}>PRIZE POOL WORTH <Typography fontWeight={"bold"} variant={isMid?"h2":"h3"}>₹11L</Typography> </Typography>
         </Box>
       </Box>
     </Box>

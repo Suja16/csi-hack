@@ -6,10 +6,10 @@ import HomePageForMobile from "./HomePageForMobile";
 function HomePage() {
   return (
     <Box top={0} left={0} right={0} bottom={0} position="absolute" height={"100vh"} width={"100vw"} display={"flex"}justifyContent={"center"}>
-      <Box sx={({display:{xs:"none", lg:"block"}})} >
+      <Box sx={({display:{xs:"none", md:"block"}})} >
       <HomePageWrapperForLg />
       </Box>
-      <Box sx={({display:{xs:"block", lg:"none"}})} width={"100vw"} >
+      <Box sx={({display:{xs:"block", md:"none"}})} width={"100vw"} >
       <HomePageForMobile/>
       </Box>
     </Box>
