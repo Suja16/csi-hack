@@ -32,7 +32,7 @@ function App() {
         marginTop={{ xs: 12, md: 15 }}
         height={{ xs: "40vh", md: "100vh" }}
         maxHeight={"800px"}
-        marginBottom={isMid?"5.5rem":null}
+        marginBottom={isMid ? "5.5rem" : null}
       >
         <HomePage />
       </Box>
@@ -46,14 +46,26 @@ function App() {
       <Box>
         <About />
       </Box>
-      <Box width="86%" marginTop={10} marginBottom={20} marginX={"auto"}>
+      <Box
+        width="86%"
+        marginTop={10}
+        marginBottom={20}
+        marginX={"auto"}
+        id="prizes"
+      >
         <PrizePool />
       </Box>
-      <Box width="86%" marginX="auto" marginTop={10} marginBottom={10}>
+      <Box
+        width="86%"
+        marginX="auto"
+        marginTop={10}
+        marginBottom={10}
+        id="problems"
+      >
         <ProblemStatements />
       </Box>
-      <Box>
-        <HackathonGuidelines/>
+      <Box id="guidelines">
+        <HackathonGuidelines />
       </Box>
       <Box width={"100%"} sx={{ display: { xs: "none", md: "block" } }}>
         <EventTimeline />
@@ -65,10 +77,12 @@ function App() {
       >
         <MobileEventTimeline />
       </Box>
-      <Box height={"100vh"}>
+      <Box height={"100vh"} id="faq">
         <FAQSection />
       </Box>
-      <BottomBar />
+      <Box id="contact">
+        <BottomBar id="contact" />
+      </Box>
     </Box>
   );
 }

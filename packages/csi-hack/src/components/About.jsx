@@ -123,7 +123,21 @@ const About = () => {
               maxHeight: 500,
               left: 73,
               color: "black",
-              overflowY: "scroll"
+              overflowY: "scroll",
+              "&::-webkit-scrollbar": {
+                width: "4px", // Thin scrollbar width
+              },
+              "&::-webkit-scrollbar-thumb": {
+                backgroundColor: "gray", // Thumb color
+                borderRadius: "10px", // Rounded corners
+              },
+              "&::-webkit-scrollbar-thumb:hover": {
+                backgroundColor: "darkgray", // Hover color
+              },
+              "&::-webkit-scrollbar-track": {
+                backgroundColor: "transparent", // Track color
+              },
+              scrollbarWidth: "thin", // For Firefox
             }}
           >
             Welcome to IDEA, the Union Bank of India Hackathon, a groundbreaking

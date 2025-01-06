@@ -49,7 +49,7 @@ const Navbar = () => {
           <Typography
             variant="h6"
             component="a"
-            href="/"
+            href="#problems"
             sx={{ textDecoration: "none" }}
             color="black"
             fontSize={"16px"}
@@ -59,7 +59,7 @@ const Navbar = () => {
           <Typography
             variant="h6"
             component="a"
-            href="/"
+            href="#guidelines"
             sx={{ textDecoration: "none" }}
             color="black"
             fontSize={"16px"}
@@ -69,7 +69,7 @@ const Navbar = () => {
           <Typography
             variant="h6"
             component="a"
-            href="/"
+            href="#faq"
             sx={{ textDecoration: "none" }}
             color="black"
             fontSize={"16px"}
@@ -79,7 +79,7 @@ const Navbar = () => {
           <Typography
             variant="h6"
             component="a"
-            href="/"
+            href="#prizes"
             sx={{ textDecoration: "none" }}
             color="black"
             fontSize={"16px"}
@@ -89,7 +89,7 @@ const Navbar = () => {
           <Typography
             variant="h6"
             component="a"
-            href="/"
+            href="#contact"
             sx={{ textDecoration: "none" }}
             color="black"
             fontSize={"16px"}
@@ -100,7 +100,7 @@ const Navbar = () => {
         <Box
           onClick={() => setHamMenu(!hamMenu)}
           sx={{
-            paddingRight: { xs: "30px", md: isMid?"40px":"90px" },
+            paddingRight: { xs: "30px", md: isMid ? "40px" : "90px" },
             display: { xs: "block", lg: "none" },
           }}
         >
@@ -116,12 +116,12 @@ const Navbar = () => {
         zIndex={30}
         gap={3.5}
         sx={{
-          left: {xs:"9px", md:"5px"},
+          left: { xs: "9px", md: "5px" },
           display: { xs: "flex", lg: "none" }, // Always display as flex on mobile but control visibility using opacity and transform
           flexDirection: "column",
           padding: "20px",
           paddingLeft: "30px",
-          width:{xs:"95.5%" , md: isMid?"99%":"95%"}, 
+          width: { xs: "95.5%", md: isMid ? "99%" : "95%" },
           opacity: hamMenu ? 1 : 0, // Fade in/out
           transform: hamMenu ? "translateY(0)" : "translateY(-20px)", // Slide in/out
           pointerEvents: hamMenu ? "auto" : "none", // Disable interaction when hidden
