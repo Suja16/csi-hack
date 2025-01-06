@@ -34,6 +34,7 @@ function App() {
         height={{ xs: "40vh", md: "100vh" }}
         maxHeight={"800px"}
         marginBottom={isMid ? "5.5rem" : null}
+        id="home"
       >
         <HomePage />
       </Box>
@@ -44,7 +45,7 @@ function App() {
         <SponsorsMobileBanner />
         <UnderGuiDanceOfMobile />
       </Box>
-      <Box id="home">
+      <Box>
         <About />
       </Box>
       <Box
