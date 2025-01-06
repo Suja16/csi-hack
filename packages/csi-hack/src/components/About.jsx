@@ -114,15 +114,16 @@ const About = () => {
               }}
             />
           </Box>
-
           <Typography
             variant="body3"
             sx={{
               position: "absolute",
               width: 552,
               top: 160,
+              maxHeight: 500,
               left: 73,
               color: "black",
+              overflowY: "scroll"
             }}
           >
             Welcome to IDEA, the Union Bank of India Hackathon, a groundbreaking

@@ -4,6 +4,7 @@ import { Phone, Email, LocationOn } from "@mui/icons-material";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import csiLogoCircle from "../assets/csiLogoCircle.png"
 
 const BottomBar = () => {
   return (
@@ -55,6 +56,7 @@ const BottomBar = () => {
                   backgroundColor: "#F5F5F5",
                   marginBottom: { xs: "16px", md: "0" }, // Add margin bottom on small screens
                 }}
+                src={csiLogoCircle}
               />
 
               <Box

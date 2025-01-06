@@ -108,6 +108,7 @@ const ModalForm = ({ open, setOpen, methods }) => {
         localStorage.setItem("inviteCode", inviteCode);
         localStorage.setItem("teamName", data.team_name);
         console.log(teamResponse);
+        alert("Your team code is - " + inviteCode)
         setSnackbarMessage("Registration Successful");
         setShowSnackbar(true);
 
