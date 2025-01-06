@@ -80,17 +80,16 @@ function Component1_whitecard(props) {
           <img width={isMid ? "250" : "400px"} src={Logo} alt="" />
         </Box>
         <Box
-          top={"30%"}
+          top={"25%"}
           // marginLeft={"-60px"}
           position={"absolute"}
           zIndex={1}
           width={"max-content"}
-          marginTop={2}
           marginX={isMid ? "28rem" : "34rem"}
-          left={"-60px"}
+          left={"-100px"}
           height={"max-content"}
         >
-          <img src={UnionBankLogo} width={isMid ? "260px" : "304px"} alt="" />
+          <img src={UnionBankLogo} width={isMid ? "260px" : "400px"} alt="" />
         </Box>
         <Button
           variant="contained"
