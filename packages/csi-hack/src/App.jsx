@@ -11,6 +11,7 @@ import UnderGuiDanceOfMobile from "./components/UnderGuiDanceOfMobile";
 import About from "./components/About";
 import PrizePool from "./components/PrizePool";
 import ProblemStatements from "./components/ProblemStatements";
+import HackathonGuidelines from "./components/guidelines";
 function App() {
   const isMid = useMediaQuery("(max-width:900px) ,(max-width:1462px)");
   return (
@@ -50,6 +51,9 @@ function App() {
       </Box>
       <Box width="86%" marginX="auto" marginTop={10} marginBottom={10}>
         <ProblemStatements />
+      </Box>
+      <Box>
+        <HackathonGuidelines/>
       </Box>
       <Box width={"100%"} sx={{ display: { xs: "none", md: "block" } }}>
         <EventTimeline />

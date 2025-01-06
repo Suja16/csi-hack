@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material/styles";
-import './fonts/fonts.css';
+import "./fonts/fonts.css";
 
 const theme = createTheme({
   palette: {
@@ -83,6 +83,12 @@ const theme = createTheme({
       fontWeight: 600,
       fontSize: "18px",
       lineHeight: "18px",
+    },
+    body3: {
+      fontFamily: "Bai Jamjuree",
+      fontWeight: 300,
+      fontSize: "20px",
+      lineHeight: "24px",
     },
   },
 });
