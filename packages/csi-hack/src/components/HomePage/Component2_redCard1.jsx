@@ -39,14 +39,14 @@ function Component2_redCard1(props) {
           color="white"
           align="right"
           marginRight={"18px"}
-          left={isMid ? "8rem" : "12rem"}
+          left={isMid ? "9rem" : "13rem"}
           width={"165px"}
           marginTop={"32px"}
           position={"absolute"}
           top={isMid ? "-0.5rem" : "0"}
           zIndex={3}
         >
-          Feb 28 2024
+          Feb 26th - 27th 2024
         </Typography>
         <Typography
           variant={isMid?"h3":"h2"}

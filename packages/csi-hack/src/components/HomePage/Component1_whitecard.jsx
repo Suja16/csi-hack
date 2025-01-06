@@ -79,20 +79,6 @@ function Component1_whitecard(props) {
         >
           <img width={isMid ? "250" : "400px"} src={Logo} alt="" />
         </Box>
-        <Typography
-          variant="p"
-          color="#0166B3"
-          fontWeight={"Bold"}
-          right={0}
-          position={"absolute"}
-          zIndex={2}
-          height={"max-content"}
-          marginTop={"10%"}
-          textAlign={"center"}
-          marginRight={"10rem"}
-        >
-          PRESENTED BY
-        </Typography>
         <Box
           top={"30%"}
           // marginLeft={"-60px"}
