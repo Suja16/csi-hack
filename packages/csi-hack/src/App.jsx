@@ -25,6 +25,7 @@ function App() {
       left={0}
       right={0}
       bottom={0}
+      scrollbarWidth
     >
       <Navbar />
       <Box
@@ -43,7 +44,7 @@ function App() {
         <SponsorsMobileBanner />
         <UnderGuiDanceOfMobile />
       </Box>
-      <Box>
+      <Box id="home">
         <About />
       </Box>
       <Box
