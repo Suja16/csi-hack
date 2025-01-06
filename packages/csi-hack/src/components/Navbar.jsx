@@ -6,6 +6,16 @@ import MenuIcon from "@mui/icons-material/Menu";
 const Navbar = () => {
   const [hamMenu, setHamMenu] = useState(false);
   const isMid = useMediaQuery("(max-width:900px) ,(max-width:1462px)");
+
+  // Smooth scroll handler
+  const handleSmoothScroll = (e, targetId) => {
+    e.preventDefault();
+    const target = document.querySelector(targetId);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   return (
     <Box>
       <Box
@@ -24,7 +34,7 @@ const Navbar = () => {
         }}
       >
         <Box width={"10%"}>
-          <img height="55px" width="110px" src={Logo} alt="" />
+          <img height="55px" width="110px" src={Logo} alt="Logo" />
         </Box>
         <Box
           display={"flex"}
@@ -39,7 +49,8 @@ const Navbar = () => {
           <Typography
             variant="h6"
             component="a"
-            href="/"
+            href="#home"
+            onClick={(e) => handleSmoothScroll(e, "#home")}
             sx={{ textDecoration: "none" }}
             color="black"
             fontSize={"16px"}
@@ -50,6 +61,7 @@ const Navbar = () => {
             variant="h6"
             component="a"
             href="#problems"
+            onClick={(e) => handleSmoothScroll(e, "#problems")}
             sx={{ textDecoration: "none" }}
             color="black"
             fontSize={"16px"}
@@ -60,6 +72,7 @@ const Navbar = () => {
             variant="h6"
             component="a"
             href="#guidelines"
+            onClick={(e) => handleSmoothScroll(e, "#guidelines")}
             sx={{ textDecoration: "none" }}
             color="black"
             fontSize={"16px"}
@@ -70,6 +83,7 @@ const Navbar = () => {
             variant="h6"
             component="a"
             href="#faq"
+            onClick={(e) => handleSmoothScroll(e, "#faq")}
             sx={{ textDecoration: "none" }}
             color="black"
             fontSize={"16px"}
@@ -80,6 +94,7 @@ const Navbar = () => {
             variant="h6"
             component="a"
             href="#prizes"
+            onClick={(e) => handleSmoothScroll(e, "#prizes")}
             sx={{ textDecoration: "none" }}
             color="black"
             fontSize={"16px"}
@@ -90,6 +105,7 @@ const Navbar = () => {
             variant="h6"
             component="a"
             href="#contact"
+            onClick={(e) => handleSmoothScroll(e, "#contact")}
             sx={{ textDecoration: "none" }}
             color="black"
             fontSize={"16px"}
@@ -117,22 +133,23 @@ const Navbar = () => {
         gap={3.5}
         sx={{
           left: { xs: "9px", md: "5px" },
-          display: { xs: "flex", lg: "none" }, // Always display as flex on mobile but control visibility using opacity and transform
+          display: { xs: "flex", lg: "none" },
           flexDirection: "column",
           padding: "20px",
           paddingLeft: "30px",
           width: { xs: "95.5%", md: isMid ? "99%" : "95%" },
-          opacity: hamMenu ? 1 : 0, // Fade in/out
-          transform: hamMenu ? "translateY(0)" : "translateY(-20px)", // Slide in/out
-          pointerEvents: hamMenu ? "auto" : "none", // Disable interaction when hidden
+          opacity: hamMenu ? 1 : 0,
+          transform: hamMenu ? "translateY(0)" : "translateY(-20px)",
+          pointerEvents: hamMenu ? "auto" : "none",
           transition:
-            "opacity 500ms cubic-bezier(0.4, 0, 0.2, 1), transform 500ms cubic-bezier(0.4, 0, 0.2, 1)", // Apply transition to opacity and transform
+            "opacity 500ms cubic-bezier(0.4, 0, 0.2, 1), transform 500ms cubic-bezier(0.4, 0, 0.2, 1)",
         }}
       >
         <Typography
           variant="h6"
           component="a"
-          href="/"
+          href="#home"
+          onClick={(e) => handleSmoothScroll(e, "#home")}
           sx={{ textDecoration: "none" }}
           color="black"
           fontWeight={"semi-bold"}
@@ -143,7 +160,8 @@ const Navbar = () => {
         <Typography
           variant="h6"
           component="a"
-          href="/"
+          href="#problems"
+          onClick={(e) => handleSmoothScroll(e, "#problems")}
           sx={{ textDecoration: "none" }}
           color="black"
           fontWeight={"semi-bold"}
@@ -154,7 +172,8 @@ const Navbar = () => {
         <Typography
           variant="h6"
           component="a"
-          href="/"
+          href="#guidelines"
+          onClick={(e) => handleSmoothScroll(e, "#guidelines")}
           sx={{ textDecoration: "none" }}
           color="black"
           fontWeight={"semi-bold"}
@@ -165,7 +184,8 @@ const Navbar = () => {
         <Typography
           variant="h6"
           component="a"
-          href="/"
+          href="#faq"
+          onClick={(e) => handleSmoothScroll(e, "#faq")}
           sx={{ textDecoration: "none" }}
           color="black"
           fontWeight={"semi-bold"}
@@ -176,7 +196,8 @@ const Navbar = () => {
         <Typography
           variant="h6"
           component="a"
-          href="/"
+          href="#prizes"
+          onClick={(e) => handleSmoothScroll(e, "#prizes")}
           sx={{ textDecoration: "none" }}
           color="black"
           fontWeight={"semi-bold"}
@@ -187,7 +208,8 @@ const Navbar = () => {
         <Typography
           variant="h6"
           component="a"
-          href="/"
+          href="#contact"
+          onClick={(e) => handleSmoothScroll(e, "#contact")}
           sx={{ textDecoration: "none" }}
           color="black"
           fontWeight={"semi-bold"}
