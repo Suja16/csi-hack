@@ -41,7 +41,7 @@ const BottomBar = () => {
           >
             <Box
               display="flex"
-              width={"50%"}
+              width={"70%"}
               justifyContent={"space-between"}
               alignItems="center"
               sx={{
@@ -69,7 +69,7 @@ const BottomBar = () => {
                     variant="body1"
                     sx={{ fontSize: "20px", textAlign: "start" }}
                   >
-                    1234567890
+                    8657432101
                   </Typography>
                 </Box>
                 <Box display="flex" alignItems="center" mb={2}>
@@ -78,7 +78,7 @@ const BottomBar = () => {
                     variant="body1"
                     sx={{ fontSize: "20px", marginX: { xs: "auto", lg: "0" } }}
                   >
-                    ABCDEF@gmail.com
+                    csi-kjsce@somaiya.edu
                   </Typography>
                 </Box>
                 <Box display="flex" alignItems="center">
@@ -87,7 +87,7 @@ const BottomBar = () => {
                     variant="body1"
                     sx={{ fontSize: "20px", marginX: { xs: "auto", lg: "0" } }}
                   >
-                    123, XXX, abc-0000
+                    KJSSE, Somaiya Vidyavihar University, Mumbai
                   </Typography>
                 </Box>
               </Box>

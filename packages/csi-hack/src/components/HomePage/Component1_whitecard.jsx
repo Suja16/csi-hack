@@ -1,9 +1,45 @@
-import { Box, Typography, useMediaQuery } from "@mui/material";
-import React from "react";
+import { Box, Typography, Button, useMediaQuery } from "@mui/material";
+import React, { useState } from "react";
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import registrationSchema from "./validation";
+import ModalForm from "./ModalForm";
 import Logo from "../../assets/CroppedfinalLogo.png";
 import UnionBankLogo from "../../assets/unionBankLogo.jpeg";
 
 function Component1_whitecard(props) {
+  const [formOpen, setFormOpen] = useState(false);
+  const methods = useForm({
+    resolver: yupResolver(registrationSchema),
+    mode: "onTouched",
+  });
+  const login = useGoogleLogin({
+    onSuccess: async ({ code }) => {
+      const response = await axios.post(
+        "/api/v1/auth/googleToken",
+        { code },
+        { baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS }
+      );
+      console.log(response);
+      localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.refreshToken);
+      localStorage.setItem("user", response.data.user);
+      const user = response.data.user;
+      methods.reset({
+        degree: user.degree,
+        college: user.college,
+        branch: user.branch,
+        year: user.year,
+        gender: user.gender,
+        phone_number: user.phone_number,
+      });
+      setFormOpen(true);
+    },
+    flow: "auth-code",
+  });
+  // const login = () => {setFormOpen(true)};
   const isMid = useMediaQuery("(max-width:900px) ,(max-width:1462px)");
   return (
     <Box
@@ -70,7 +106,24 @@ function Component1_whitecard(props) {
         >
           <img src={UnionBankLogo} width={isMid ? "260px" : "304px"} alt="" />
         </Box>
-        <Typography
+        <Button
+          variant="contained"
+          onClick={() => login()}
+          style={{
+            position: "absolute",
+            top: "70%",
+            right: "25%",
+            color: "white",
+            padding: "15px 20px",
+            borderRadius: "10px",
+            fontSize: "28px",
+            zIndex: 10,
+          }}
+        >
+          Register
+        </Button>
+        <ModalForm open={formOpen} setOpen={setFormOpen} methods={methods} />
+        {/* <Button
           variant={isMid ? "subtitle1" : "h4"}
           component="button"
           position={"absolute"}
@@ -82,7 +135,7 @@ function Component1_whitecard(props) {
           borderRadius="10px"
         >
           Register
-        </Typography>
+        </Button> */}
       </Box>
     </Box>
   );
