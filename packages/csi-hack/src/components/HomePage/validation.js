@@ -37,7 +37,7 @@ const registrationSchema =
 
     github: yup.string().required("GitHub is required")
           .matches(
-            /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_]{1,25}$/gim,
+            /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_-]{1,25}$/gim,
             "Please enter a valid GitHub URL",
           ),
 
