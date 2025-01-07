@@ -44,30 +44,30 @@ export default function Info() {
                   fontFamily: "Arial, sans-serif"
                 }}
               >
-              
+
               <Typography sx={{ mt: 2, padding: '8px' }}>
-  <span style={{ color: 'blue' }}><strong>Registration Deadline:</strong></span> 
-  <span style={{ color: 'red' }}>5th Feb</span>
+  <span style={{ color: 'blue' }}><strong>Registration Deadline:</strong></span>
+  <span style={{ color: 'red' }}>26th Feb</span>
 </Typography>
 
 <Typography sx={{ padding: '8px' }}>
   <span style={{ color: 'blue' }}><strong>PPT Submission Deadline:</strong></span>
-  <span style={{ color: 'red' }}>5th Feb</span>
+  <span style={{ color: 'red' }}>26th Feb</span>
 </Typography>
 
 <Typography sx={{ padding: '8px' }}>
-  <span style={{ color: 'blue' }}><strong>Round 1 Results:</strong></span> 
-  <span style={{ color: 'red' }}>5th Feb</span>
+  <span style={{ color: 'blue' }}><strong>Round 1 Results:</strong></span>
+  <span style={{ color: 'red' }}>26th Feb</span>
 </Typography>
 
 <Typography sx={{ padding: '8px' }}>
-  <span style={{ color: 'blue' }}><strong>Hackathon Commences:</strong></span> 
-  <span style={{ color: 'red' }}>5th Feb</span>
+  <span style={{ color: 'blue' }}><strong>Hackathon Commences:</strong></span>
+  <span style={{ color: 'red' }}>26th Feb</span>
 </Typography>
 
 <Typography sx={{ padding: '8px' }}>
-  <span style={{ color: 'blue' }}><strong>Hackathon Results:</strong></span> 
-  <span style={{ color: 'red' }}>5th Feb</span>
+  <span style={{ color: 'blue' }}><strong>Hackathon Results:</strong></span>
+  <span style={{ color: 'red' }}>26th Feb</span>
 </Typography>
 
 

@@ -166,6 +166,8 @@ const ProblemStatements = () => {
       sx={{
         width: 1309,
         height: 702,
+        left: "50%",
+        transform: "translateX(-50%)",
         backgroundImage: "url(/Vector.svg)",
         backgroundSize: "100% 100%",
         position: "relative",

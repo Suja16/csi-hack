@@ -19,10 +19,11 @@ const PrizePool = () => {
         <Box
           sx={{
             width: 1309,
-            height: 690,
+            height: 720,
             position: "absolute",
             top: 151,
-            left: 0,
+            left: "50%",
+            transform: "translateX(-50%)",
             backgroundImage: "url(/Vector.svg)",
             backgroundSize: "100% 100%",
           }}
@@ -36,7 +37,7 @@ const PrizePool = () => {
             // height: 330,
             position: "absolute",
             top: 0,
-            left: 142,
+            left: 220,
           }}
         />
         <Typography
@@ -52,12 +53,12 @@ const PrizePool = () => {
             letterSpacing: "-0.20px",
           }}
         >
-          PRIZE POOL
+          CASH PRIZES
         </Typography>
         <Grid
           container
           spacing={2}
-          sx={{ position: "absolute", top: 382, left: 120 }}
+          sx={{ position: "absolute", top: 382, left: 200 }}
         >
           {["₹5L", "₹3L", "₹2L", "₹1L"].map((prize, index) => (
             <Grid item key={index}>

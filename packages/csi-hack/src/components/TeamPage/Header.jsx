@@ -7,24 +7,25 @@ import MobileEventTimeLine from "../MobileTimeLine/mobile_event_timeline";
 import PrizePool from "../PrizePool";
 import Info from "./Info";
 import TeamCard from "./TeamCard";
+import axios from "axios";
 
 const HackathonPage = () => {
-  
+
   const [teamData, setTeamData] = useState(null);
+  const [userData, setUserData] = useState(null);
+  const [timeLeft, setTimeLeft] = useState({});
 
   useEffect(() => {
     // Fetch team data from the API
     const fetchTeamData = async () => {
       try {
-        const response = await axios.post(
-          `https://api.csi-kjsce.org/api/v1/event/p/get/${id}`,
-          {},
-          {
-            
+        const response = await axios.post(`https://api.csi-kjsce.org/api/v1/event/p/get/47`, {}, {
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTA5NDU0NzI3OTIyNzY4NDA0NzQxIiwiaWF0IjoxNzM2MjcxNjc4LCJleHAiOjE3MzYyODk2Nzh9.IbPsBAD_BQD94BKxYXd1-LwyBibQQpxdPAxVK-WWAvk",
           },
-          { headers }
-        );
-        setTeamData(response.data); // Set the team data to state
+        });
+        setTeamData(response.data.event.Participant.team); // Set the team data to state
       } catch (error) {
         console.error("Error fetching team data:", error);
       }
@@ -37,15 +38,13 @@ const HackathonPage = () => {
 // Fetch user data
 const fetchUserData = async () => {
   try {
-    const response = await axios.get(`https://api.csi-kjsce.org/api/v1/user/p/${id}`, {
+    const response = await axios.post(`https://api.csi-kjsce.org/api/v1/user/p/me`, {}, {
       headers: {
         Authorization:
           "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTA5NDU0NzI3OTIyNzY4NDA0NzQxIiwiaWF0IjoxNzM2MjcxNjc4LCJleHAiOjE3MzYyODk2Nzh9.IbPsBAD_BQD94BKxYXd1-LwyBibQQpxdPAxVK-WWAvk",
-        Cookie:
-          "connect.sid=s%3ALl4D3ZgmTIB8FXN5YePOmeB5346hVQGB.dnLCyRDT9M1JuKwMGq%2FXLMZeqJsCKxVuN1rymFRDmAo",
       },
     });
-    setUserData(response.data); // Set the user data to state
+    setUserData(response.data.user); // Set the user data to state
   } catch (error) {
     console.error("Error fetching user data:", error);
   }
@@ -56,19 +55,17 @@ fetchUserData();
 }, [])
 
 // If the data is not yet loaded, show a loading message
-if (!teamData || !userData) {
-return <Typography>Loading...</Typography>;
-}
-    
+
+
       useEffect(() => {
         // Set the target date for the hackathon (23rd February 2025)
         const hackathonStartDate = new Date("February 23, 2025 00:00:00").getTime();
-    
+
         // Function to update the countdown
         const updateCountdown = () => {
           const now = new Date().getTime();
           const distance = hackathonStartDate - now;
-    
+
           if (distance <= 0) {
             // If the countdown ends, stop updating
             setTimeLeft({
@@ -79,30 +76,34 @@ return <Typography>Loading...</Typography>;
             });
             return;
           }
-    
+
           // Calculate remaining days, hours, minutes, and seconds
           const days = Math.floor(distance / (1000 * 60 * 60 * 24));
           const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
           const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
           const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    
+
           setTimeLeft({ days, hours, minutes, seconds });
         };
-    
+
         // Update the countdown every second
         const intervalId = setInterval(updateCountdown, 1000);
-    
+
         // Clean up the interval on component unmount
         return () => clearInterval(intervalId);
       }, []);
+
+      if (!teamData || !userData) {
+      return <Typography>Loading...</Typography>;
+      }
   return (
     <Box
       sx={{
         backgroundColor: "#003d99",
         color: "#fff",
         padding: "1.25rem", // 20px
-        
-        
+
+
       }}
     >
       <Box
@@ -154,7 +155,7 @@ return <Typography>Loading...</Typography>;
                 },
               }}
             >
-              WELCOME {user} TO {teamData.teamName}
+              WELCOME {userData.name} TO {teamData.name}
             </Typography>
             <Typography
               variant="subtitle1"
@@ -227,7 +228,7 @@ return <Typography>Loading...</Typography>;
       >
         <TeamCard />
         <Info />
-        
+
       </Box>
       <Box
          width="86%"

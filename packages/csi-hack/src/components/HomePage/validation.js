@@ -28,18 +28,18 @@ const registrationSchema =
 
     degree: yup.string().required("Degree is required"),
 
-    linkedin: yup.string().required("LinkedIn is required")
-          .matches(
-            /^https?:\/\/((www|\w\w)\.)?linkedin\.com\/((in\/[^/]+\/?)|(pub\/[^/]+\/((\w|\d)+\/?){3}))$/,
-            "Please enter a valid LinkedIn URL",
-          ),
+    linkedin: yup.string().required("LinkedIn is required"),
+          // .matches(
+          //   /^https?:\/\/((www|\w\w)\.)?linkedin\.com\/((in\/[^/]+\/?)|(pub\/[^/]+\/((\w|\d)+\/?){3}))$/,
+          //   "Please enter a valid LinkedIn URL",
+          // ),
 
 
-    github: yup.string().required("GitHub is required")
-          .matches(
-            /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_-]{1,25}$/gim,
-            "Please enter a valid GitHub URL",
-          ),
+    github: yup.string().required("GitHub is required"),
+          // .matches(
+          //   /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_-]{1,25}$/gim,
+          //   "Please enter a valid GitHub URL",
+          // ),
 
     tech_stack: yup.string().required("Tech Stack is required"),
           // .test(

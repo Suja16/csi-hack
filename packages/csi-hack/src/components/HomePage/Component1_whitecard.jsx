@@ -14,6 +14,9 @@ function Component1_whitecard(props) {
   const methods = useForm({
     resolver: yupResolver(registrationSchema),
     mode: "onTouched",
+    defaultValues: {
+      gender: "MALE"
+    }
   });
   const login = useGoogleLogin({
     onSuccess: async ({ code }) => {

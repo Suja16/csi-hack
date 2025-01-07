@@ -10,15 +10,13 @@ const TeamText = () => {
     // Fetch team data from the API
     const fetchTeamData = async () => {
       try {
-        const response = await axios.post(
-          "https://api.csi-kjsce.org/api/v1/event/p/get/47",
-          {},
-          {
-            
+        const response = await axios.post(`https://api.csi-kjsce.org/api/v1/event/p/get/47`, {}, {
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTA5NDU0NzI3OTIyNzY4NDA0NzQxIiwiaWF0IjoxNzM2MjcxNjc4LCJleHAiOjE3MzYyODk2Nzh9.IbPsBAD_BQD94BKxYXd1-LwyBibQQpxdPAxVK-WWAvk",
           },
-          { headers }
-        );
-        setTeamData(response.data); // Set the team data to state
+        });
+        setTeamData(response.data.event.Participant.team); // Set the team data to state
       } catch (error) {
         console.error("Error fetching team data:", error);
       }
@@ -38,7 +36,7 @@ const TeamText = () => {
         display: "flex",
         flexDirection: "column",
         maxWidth: "50em", // Ensures responsiveness
-        
+
       }}
     >
       {/* Header Section */}
@@ -55,7 +53,7 @@ const TeamText = () => {
           fontWeight="bold"
           sx={{ fontSize: "1.2em" }}
         >
-          {teamData.teamName} 
+          {teamData.name}
         </Typography>
         {/* Submit PPT Button */}
         <Button
@@ -128,7 +126,7 @@ const TeamText = () => {
 
       {/* Team Members List */}
       <Stack spacing={1.5}>
-        {teamData.members.map((member, index) => (
+        {teamData.Participant.map((member, index) => (
           <Box
             key={index}
             sx={{
@@ -145,7 +143,7 @@ const TeamText = () => {
               variant="body1"
               sx={{ fontSize: "0.9em", fontWeight: "500" }}
             >
-              {member}
+              {member.user.name}
             </Typography>
             {/* RSVP Status */}
             <Typography
