@@ -13,6 +13,7 @@ const HackathonPage = () => {
   const [teamData, setTeamData] = useState(null);
   const [userData, setUserData] = useState(null);
   const [timeLeft, setTimeLeft] = useState({});
+  console.log("teamData", teamData);
 
   useEffect(() => {
     // Fetch team data from the API
