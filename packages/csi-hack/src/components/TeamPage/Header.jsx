@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import BottomBar from "../bottom_bar";
 import FAQSection from "../faq";
@@ -7,13 +8,13 @@ import MobileEventTimeLine from "../MobileTimeLine/mobile_event_timeline";
 import PrizePool from "../PrizePool";
 import Info from "./Info";
 import TeamCard from "./TeamCard";
-import axios from "axios";
 
 const HackathonPage = () => {
 
   const [teamData, setTeamData] = useState(null);
   const [userData, setUserData] = useState(null);
   const [timeLeft, setTimeLeft] = useState({});
+  
 
   useEffect(() => {
     // Fetch team data from the API
@@ -22,7 +23,7 @@ const HackathonPage = () => {
         const response = await axios.post(`https://api.csi-kjsce.org/api/v1/event/p/get/47`, {}, {
           headers: {
             Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTA5NDU0NzI3OTIyNzY4NDA0NzQxIiwiaWF0IjoxNzM2MjcxNjc4LCJleHAiOjE3MzYyODk2Nzh9.IbPsBAD_BQD94BKxYXd1-LwyBibQQpxdPAxVK-WWAvk",
+               `Bearer ${localStorage.getItem("accessToken")}`,
           },
         });
         setTeamData(response.data.event.Participant.team); // Set the team data to state
@@ -41,7 +42,7 @@ const fetchUserData = async () => {
     const response = await axios.post(`https://api.csi-kjsce.org/api/v1/user/p/me`, {}, {
       headers: {
         Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTA5NDU0NzI3OTIyNzY4NDA0NzQxIiwiaWF0IjoxNzM2MjcxNjc4LCJleHAiOjE3MzYyODk2Nzh9.IbPsBAD_BQD94BKxYXd1-LwyBibQQpxdPAxVK-WWAvk",
+           `Bearer ${localStorage.getItem("accessToken")}`,
       },
     });
     setUserData(response.data.user); // Set the user data to state

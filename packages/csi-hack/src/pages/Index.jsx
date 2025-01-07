@@ -1,17 +1,17 @@
-import { Box, Button, useMediaQuery } from "@mui/material";
-import HomePage from "./pages/HomePage";
-import Navbar from "./components/Navbar";
-import BottomBar from "./components/bottom_bar";
-import Banner from "./components/sponsor_banner";
-import FAQSection from "./components/faq";
-import EventTimeline from "./components/LgTimeline/LgTimeLine";
-import MobileEventTimeline from "./components/MobileTimeLine/mobile_event_timeline";
-import SponsorsMobileBanner from "./components/SponsorsMobileBanner";
-import UnderGuiDanceOfMobile from "./components/UnderGuiDanceOfMobile";
-import About from "./components/About";
-import PrizePool from "./components/PrizePool";
-import ProblemStatements from "./components/ProblemStatements";
-import HackathonGuidelines from "./components/guidelines";
+import { Box, useMediaQuery } from "@mui/material";
+import About from "../components/About";
+import BottomBar from "../components/bottom_bar";
+import FAQSection from "../components/faq";
+import HackathonGuidelines from "../components/guidelines";
+import EventTimeline from "../components/LgTimeline/LgTimeLine";
+import MobileEventTimeline from "../components/MobileTimeLine/mobile_event_timeline";
+import Navbar from "../components/Navbar";
+import PrizePool from "../components/PrizePool";
+import ProblemStatements from "../components/ProblemStatements";
+import Banner from "../components/sponsor_banner";
+import SponsorsMobileBanner from "../components/SponsorsMobileBanner";
+import UnderGuiDanceOfMobile from "../components/UnderGuiDanceOfMobile";
+import HomePage from "./HomePage";
 function Index() {
   const isMid = useMediaQuery("(max-width:900px) ,(max-width:1462px)");
   return (

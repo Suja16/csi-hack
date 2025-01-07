@@ -13,7 +13,7 @@ const TeamText = () => {
         const response = await axios.post(`https://api.csi-kjsce.org/api/v1/event/p/get/47`, {}, {
           headers: {
             Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTA5NDU0NzI3OTIyNzY4NDA0NzQxIiwiaWF0IjoxNzM2MjcxNjc4LCJleHAiOjE3MzYyODk2Nzh9.IbPsBAD_BQD94BKxYXd1-LwyBibQQpxdPAxVK-WWAvk",
+              `Bearer ${localStorage.getItem("accessToken")}`,
           },
         });
         setTeamData(response.data.event.Participant.team); // Set the team data to state

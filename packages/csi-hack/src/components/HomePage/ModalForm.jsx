@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import { Box, Typography, Modal, Fade, Backdrop, TextField, Button } from "@mui/material";
-import { Controller } from "react-hook-form";
-import axios from "axios";
+import { Backdrop, Box, Button, Fade, Modal, TextField, Typography } from "@mui/material";
 import Snackbar from '@mui/material/Snackbar';
+import axios from "axios";
+import React, { useState } from "react";
+import { Controller } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const ModalForm = ({ open, setOpen, methods }) => {
+  const navigate = useNavigate();
   const modalStyle = {
     position: "absolute",
     top: "50%",
@@ -109,10 +111,15 @@ const ModalForm = ({ open, setOpen, methods }) => {
         localStorage.setItem("teamName", data.team_name);
         console.log(teamResponse);
         alert("Your team code is - " + inviteCode)
+        localStorage.setItem("status", "true")
         setSnackbarMessage("Registration Successful");
+        
+     
+        navigate("/header");
         setShowSnackbar(true);
-
+        
         setTimeout(() => { setShowSnackbar(false); setOpen(false) }, 3000);
+        
 
       } catch (e) {
         console.error(e);
@@ -143,9 +150,13 @@ const ModalForm = ({ open, setOpen, methods }) => {
             },
           },
         );
+        localStorage.setItem("status" , "true")
         setSnackbarMessage("Registration Successful");
-        setShowSnackbar(true);
+        
+        navigate("/header");
 
+        setShowSnackbar(true);
+        
         setTimeout(() => { setShowSnackbar(false); setOpen(false) }, 3000);
       } catch (e) {
         console.error(e);
