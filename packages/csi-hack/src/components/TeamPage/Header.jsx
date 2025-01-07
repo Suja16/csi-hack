@@ -178,6 +178,9 @@ const HackathonPage = () => {
             >
               YOU&apos;RE ALL SET TO ATTEND THIS HACKATHON
             </Typography>
+            <Typography variant="subtitle1" sx={{ color: "#555555" }}>
+              Invite code : {teamData.invite_code}
+            </Typography>
           </Box>
         </Box>
 
