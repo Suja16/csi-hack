@@ -1,10 +1,36 @@
-import CancelIcon from "@mui/icons-material/Cancel";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import InsertLinkIcon from "@mui/icons-material/InsertLink";
-import { Box, Button, IconButton, Stack, Typography } from "@mui/material";
-import React from "react";
+import { Box, Button, Stack, Typography } from "@mui/material";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const TeamText = () => {
+  const [teamData, setTeamData] = useState(null);
+
+  useEffect(() => {
+    // Fetch team data from the API
+    const fetchTeamData = async () => {
+      try {
+        const response = await axios.post(
+          "https://api.csi-kjsce.org/api/v1/event/p/get/47",
+          {},
+          {
+            
+          },
+          { headers }
+        );
+        setTeamData(response.data); // Set the team data to state
+      } catch (error) {
+        console.error("Error fetching team data:", error);
+      }
+    };
+
+    fetchTeamData();
+  }, []);
+
+  // If the team data is not yet loaded, show a loading message
+  if (!teamData) {
+    return <Typography>Loading team data...</Typography>;
+  }
   return (
     <Box
       sx={{
@@ -29,7 +55,7 @@ const TeamText = () => {
           fontWeight="bold"
           sx={{ fontSize: "1.2em" }}
         >
-          TEAM NAME
+          {teamData.teamName} 
         </Typography>
         {/* Submit PPT Button */}
         <Button
@@ -68,14 +94,14 @@ const TeamText = () => {
       </Box>
 
       {/* RSVP Section */}
-      <Typography
+      {/* <Typography
         variant="h6"
         fontWeight="bold"
         sx={{ color: "#1F3A93", fontSize: "1em" }}
       >
         WILL YOU ATTEND THE HACKATHON?
-      </Typography>
-      <Box
+      </Typography> */}
+      {/* <Box
         sx={{
           display: "flex",
           gap: "0.4em",
@@ -98,11 +124,11 @@ const TeamText = () => {
         >
           <CancelIcon fontSize="medium" />
         </IconButton>
-      </Box>
+      </Box> */}
 
       {/* Team Members List */}
       <Stack spacing={1.5}>
-        {["Member 1", "Member 2", "Member 3", "Member 4"].map((member, index) => (
+        {teamData.members.map((member, index) => (
           <Box
             key={index}
             sx={{

@@ -2,16 +2,63 @@ import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import BottomBar from "../bottom_bar";
 import FAQSection from "../faq";
+import EventTimeline from "../LgTimeline/LgTimeLine";
+import MobileEventTimeLine from "../MobileTimeLine/mobile_event_timeline";
+import PrizePool from "../PrizePool";
 import Info from "./Info";
 import TeamCard from "./TeamCard";
 
 const HackathonPage = () => {
-    const [timeLeft, setTimeLeft] = useState({
-        days: 0,
-        hours: 0,
-        minutes: 0,
-        seconds: 0,
-      });
+  
+  const [teamData, setTeamData] = useState(null);
+
+  useEffect(() => {
+    // Fetch team data from the API
+    const fetchTeamData = async () => {
+      try {
+        const response = await axios.post(
+          `https://api.csi-kjsce.org/api/v1/event/p/get/${id}`,
+          {},
+          {
+            
+          },
+          { headers }
+        );
+        setTeamData(response.data); // Set the team data to state
+      } catch (error) {
+        console.error("Error fetching team data:", error);
+      }
+    };
+
+    fetchTeamData();
+  }, []);
+
+  useEffect(() => {
+// Fetch user data
+const fetchUserData = async () => {
+  try {
+    const response = await axios.get(`https://api.csi-kjsce.org/api/v1/user/p/${id}`, {
+      headers: {
+        Authorization:
+          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiMTA5NDU0NzI3OTIyNzY4NDA0NzQxIiwiaWF0IjoxNzM2MjcxNjc4LCJleHAiOjE3MzYyODk2Nzh9.IbPsBAD_BQD94BKxYXd1-LwyBibQQpxdPAxVK-WWAvk",
+        Cookie:
+          "connect.sid=s%3ALl4D3ZgmTIB8FXN5YePOmeB5346hVQGB.dnLCyRDT9M1JuKwMGq%2FXLMZeqJsCKxVuN1rymFRDmAo",
+      },
+    });
+    setUserData(response.data); // Set the user data to state
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+  }
+};
+
+
+fetchUserData();
+}, [])
+
+// If the data is not yet loaded, show a loading message
+if (!teamData || !userData) {
+return <Typography>Loading...</Typography>;
+}
     
       useEffect(() => {
         // Set the target date for the hackathon (23rd February 2025)
@@ -107,7 +154,7 @@ const HackathonPage = () => {
                 },
               }}
             >
-              WELCOME ONI TO TEAM BYTEME
+              WELCOME {user} TO {teamData.teamName}
             </Typography>
             <Typography
               variant="subtitle1"
@@ -182,9 +229,32 @@ const HackathonPage = () => {
         <Info />
         
       </Box>
-      
-      <FAQSection/>
-      <BottomBar/>
+      <Box
+         width="86%"
+         marginTop={10}
+         marginBottom={20}
+         marginX={"auto"}
+         id="prizes"
+       >
+      <PrizePool/>
+      </Box>
+      <Box width={"100%"} sx={{ display: { xs: "none", md: "block" } }}>
+         <EventTimeline/>
+    </Box>
+    <Box
+         width={"100%"}
+         paddingLeft={1}
+         sx={{ display: { xs: "block", md: "none" } }}
+       >
+         <MobileEventTimeLine/>
+      </Box>
+      <Box height={"100vh"} id="faq">
+       <FAQSection />
+      </Box>
+      <Box id="contact">
+      <BottomBar id="contact" />
+      </Box>
+
     </Box>
   );
 };

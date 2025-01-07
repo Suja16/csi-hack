@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Box, Grid, Paper, Typography, Modal, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { Box, Grid, IconButton, Modal, Paper, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import React, { useState } from "react";
 
 const ProblemStatement = ({ title, description, onClick }) => (
   <Paper
@@ -84,19 +84,20 @@ const ProblemStatements = () => {
   const renderModal = () => (
     <Modal open={open} onClose={handleClose}>
       <Box
-        sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: 800,
-          bgcolor: "white",
-          boxShadow: 24,
-          borderRadius: 2,
-          p: 4,
-          position: "relative", // To position the close icon
-        }}
-      >
+  sx={{
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "90%", // Make it responsive
+    maxWidth: 800,
+    bgcolor: "white",
+    boxShadow: 24,
+    borderRadius: 2,
+    p: 4,
+  }}
+>
+
         <IconButton
           onClick={handleClose}
           sx={{
