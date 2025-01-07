@@ -1,5 +1,5 @@
 import { Box, Button, useMediaQuery } from "@mui/material";
-import HomePage from "./components/HomePage/HomePage";
+import HomePage from "./pages/HomePage";
 import Navbar from "./components/Navbar";
 import BottomBar from "./components/bottom_bar";
 import Banner from "./components/sponsor_banner";
