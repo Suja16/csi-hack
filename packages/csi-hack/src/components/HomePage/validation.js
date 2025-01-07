@@ -41,16 +41,16 @@ const registrationSchema =
             "Please enter a valid GitHub URL",
           ),
 
-    tech_stack: yup.string().required("Tech Stack is required")
-          .test(
-            "is-valid-tech-stack",
-            "Each item must be a non-empty string and must not contain spaces or commas",
-            (value) => {
-              if (!value) return false; // Required validation
-              const tags = value.split(",").map((tag) => tag.trim());
-              return tags.every((tag) => tag.length > 0 && !tag.includes(" "));
-            },
-          ),
+    tech_stack: yup.string().required("Tech Stack is required"),
+          // .test(
+          //   "is-valid-tech-stack",
+          //   "Each item must be a non-empty string separated by commas",
+          //   (value) => {
+          //     if (!value) return false; // Required validation
+          //     const tags = value.split(",").map((tag) => tag.trim());
+          //     return tags.every((tag) => tag.length > 0 && !tag.includes(" "));
+          //   },
+          // ),
 
     why_this_hackathon: yup.string().required("'Why this hackathon' is required")
           .min(100, "At least 100 characters are required"),
