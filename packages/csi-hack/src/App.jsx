@@ -1,5 +1,4 @@
 import { useMediaQuery } from "@mui/material";
-import HackathonPage from "./components/TeamPage/Header.jsx";
 function App() {
   const isMid = useMediaQuery("(max-width:900px) ,(max-width:1462px)");
   return (
