@@ -1,23 +1,12 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
+import { Box } from "@mui/material";
+import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import Typography from "@mui/material/Typography";
-import { Box } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  "& .MuiDialogContent-root": {
-    padding: theme.spacing(2),
-  },
-  "& .MuiDialogActions-root": {
-    padding: theme.spacing(1),
-  },
-}));
+import Popup from "../elements/popup"; // Import the Popup component
 
 export default function CustomizedDialogs({ title, description, fullContent }) {
   const [open, setOpen] = React.useState(false);
@@ -26,6 +15,7 @@ export default function CustomizedDialogs({ title, description, fullContent }) {
   const handleClickOpen = () => {
     setOpen(true);
   };
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -37,7 +27,6 @@ export default function CustomizedDialogs({ title, description, fullContent }) {
         sx={{
           width: "390px",
           height: "450px",
-          // bgcolor:"#ebd18d",
           borderRadius: "20px",
         }}
         onClick={handleClickOpen}
@@ -50,7 +39,6 @@ export default function CustomizedDialogs({ title, description, fullContent }) {
             alignItems: "center",
             flexDirection: "column",
             justifyContent: "center",
-            // paddingY: "3rem",
             gap: 2,
             paddingX: "1rem",
             boxShadow:
@@ -112,18 +100,20 @@ export default function CustomizedDialogs({ title, description, fullContent }) {
               ></path>
             </svg>
           </Box>
-            <Box sx={{
-                height:"180px",
-                // border:"1px solid red"
-            }}>
+          <Box
+            sx={{
+              height: "180px",
+            }}
+          >
             <Typography variant="subtitle1" textAlign="center">
-            {title}
-          </Typography>
-            </Box>
-          <Box sx={{
-            height:"120px",
-            // border:"1px solid red"
-          }}>
+              {title}
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              height: "120px",
+            }}
+          >
             <Typography variant="body3" textAlign="center">
               {description}
             </Typography>
@@ -142,40 +132,48 @@ export default function CustomizedDialogs({ title, description, fullContent }) {
           </Button>
         </Box>
       </Button>
-      <BootstrapDialog
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        open={open}
+
+      {/* Replace BootstrapDialog with Popup */}
+      <Popup
+        dialogProps={{
+          open: open,
+          onClose: handleClose, // onClose handler to close the dialog
+        }}
       >
-        <DialogTitle
-          variant={isMobile ? "subtitle1" : "h4"}
-          sx={{ m: 0, p: 2 }}
-          id="customized-dialog-title"
-        >
-          {title}
-        </DialogTitle>
-        <Typography variant="subtitle2" sx={{ m: 0, p: 2 }}>
-          {description}
-        </Typography>
-        <IconButton
-          aria-label="close"
-          onClick={handleClose}
-          sx={(theme) => ({
-            position: "absolute",
-            right: 8,
-            top: 8,
-            color: theme.palette.grey[500],
-          })}
-        >
-          <CloseIcon />
-        </IconButton>
-        <DialogContent dividers>
+        <Box sx={{ position: "relative" }}>
+          <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            sx={(theme) => ({
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: theme.palette.grey[500],
+            })}
+          >
+            <CloseIcon />
+          </IconButton>
+
+          <Typography
+            variant={isMobile ? "subtitle1" : "h4"}
+            sx={{ m: 0, py:2 }}
+            id="customized-dialog-title"
+          >
+            {title}
+          </Typography>
+          <Typography variant="subtitle2" sx={{ m: 0, py: 1 }}>
+            {description}
+          </Typography>
+
           <Box
             component="div"
+            sx={{
+                letterSpacing:"1px"
+            }}
             dangerouslySetInnerHTML={{ __html: fullContent }}
           />
-        </DialogContent>
-      </BootstrapDialog>
+        </Box>
+      </Popup>
     </React.Fragment>
   );
 }

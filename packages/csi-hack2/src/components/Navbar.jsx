@@ -3,10 +3,12 @@ import { Box, Typography, useMediaQuery } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../assets/CroppedfinalLogo.png";
 import { Button } from "@mui/material";
+import RegistrationForm from "./registrationFrom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMid = useMediaQuery("(max-width:900px), (max-width:1462px)");
+  const [open, setopen] = useState(false);
 
   const navItems = [
     { label: "HOME", href: "#home" },
@@ -24,7 +26,7 @@ const Navbar = () => {
       target.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
-
+  console.log(open);
   return (
     <Box>
       {/* Main Navbar */}
@@ -72,15 +74,13 @@ const Navbar = () => {
               ))}
             </Box>
 
-            <Button
-              variant="contained"
-              onclick={() => {
-                console.log("Register Now");
-              }}
-            >
+            <Button variant="contained" onClick={() => setopen(true)}>
               Register Now
             </Button>
           </>
+        )}
+        {open && (
+          <RegistrationForm open={open} onClose={() => setopen(false)} />
         )}
         {/* Menu Button */}
         {isMid && (
