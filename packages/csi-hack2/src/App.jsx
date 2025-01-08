@@ -1,13 +1,8 @@
-import { Box } from "@mui/material";
-import "./App.css";
-import CarouselHomePage from "./components/Carousel";
+import { RouterProvider } from "react-router-dom";
+import router from "./routes/router"
 
 function App() {
-  return (
-    <>
-      <CarouselHomePage />
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
