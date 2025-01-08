@@ -8,7 +8,7 @@ export default function FooterLayout() {
     <>
       <Navbar />
       <Box
-        paddingTop={"3.3rem"}
+        paddingTop={"5rem"}
       >
         <Outlet />
       </Box>
