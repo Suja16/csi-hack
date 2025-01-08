@@ -3,6 +3,7 @@ import { Card, CardContent, Typography, Box, List, ListItem, ListItemText, Butto
 
 const HackathonGuidelines = () => {
   const [expanded, setExpanded] = useState(false);
+  const showReadMore = true;
 
   const sections = [
     {
@@ -95,8 +96,8 @@ const HackathonGuidelines = () => {
         </Typography>
 
         <Box sx={{
-          maxHeight: expanded ? 'none' : 600,
-          overflow: expanded ? 'auto' : 'hidden',
+          maxHeight: showReadMore && !expanded ? 600 : 'none',
+          overflow: showReadMore && !expanded ? 'hidden' : 'auto',
         }}>
           {sections.map((section, index) => (
             <Box key={index} sx={{ marginBottom: 2 }}>
@@ -143,7 +144,7 @@ const HackathonGuidelines = () => {
           ))}
         </Box>
 
-        {!expanded && (
+        {showReadMore && !expanded && (
           <Box
             sx={{
               position: 'absolute',
@@ -157,32 +158,34 @@ const HackathonGuidelines = () => {
         )}
       </CardContent>
 
-      <Button
-        onClick={() => setExpanded(!expanded)}
-        sx={{
-          width: '100%',
-          textTransform: 'none',
-          fontWeight: 'bold',
-          fontSize: '1rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }}
-      >
-        {expanded ? "Show Less" : "Read More"}
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          style={{
-            transform: expanded ? 'rotate(180deg)' : 'none',
-            transition: 'transform 0.2s',
-            marginLeft: '4px'
+      {showReadMore && (
+        <Button
+          onClick={() => setExpanded(!expanded)}
+          sx={{
+            width: '100%',
+            textTransform: 'none',
+            fontWeight: 'bold',
+            fontSize: '1rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
           }}
         >
-          <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" fill="currentColor" />
-        </svg>
-      </Button>
+          {expanded ? "Show Less" : "Read More"}
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            style={{
+              transform: expanded ? 'rotate(180deg)' : 'none',
+              transition: 'transform 0.2s',
+              marginLeft: '4px'
+            }}
+          >
+            <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" fill="currentColor" />
+          </svg>
+        </Button>
+      )}
     </Card>
   );
 };
