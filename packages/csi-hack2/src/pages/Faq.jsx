@@ -38,7 +38,8 @@ const Faq = () => {
     ];
 
     return (
-        <Container maxWidth="md" sx={{ padding: { xs: 2, sm: 2 } }}>
+        <Container maxWidth="md" sx={{ padding: { xs: 2, sm: 2 } , height:"70vh", display
+        :"flex" , flexDirection:"column" , justifyContent:"center"}}>
             <Typography 
                 variant="h4" 
                 align="start" 
