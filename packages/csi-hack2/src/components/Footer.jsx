@@ -11,6 +11,7 @@ const Footer = () => {
 
   return (
     <Box
+      id="contact"
       component="footer"
       sx={{
         bgcolor: 'primary.main',

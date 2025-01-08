@@ -7,7 +7,7 @@ import goodies from "../assets/goodies.png";
 import timeline from "../assets/timeline.png";
 
 function CarouselHomePage(props) {
-  var items = [main, domain, timeline , goodies];
+  var items = [main, domain, timeline, goodies];
 
   return (
     <Carousel
@@ -29,16 +29,20 @@ function Item(props) {
   return (
     <Box
       sx={{
-        display:"flex",
-        justifyContent:"center",
+        display: "flex",
+        justifyContent: "center",
         width: "100vw",
         height: isMobile ? "max-content" : "100vh",
         maxHeight: isMobile ? null : "43rem",
         border: 0,
-
       }}
     >
-      <img sx={{objectFit : "cover"}} src={props.item} width="100%" alt="Idea" />
+      <img
+        sx={{ objectFit: "cover" }}
+        src={props.item}
+        width="100%"
+        alt="Idea"
+      />
     </Box>
   );
 }
