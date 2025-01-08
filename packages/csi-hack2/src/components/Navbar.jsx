@@ -10,7 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const isMid = useMediaQuery("(max-width:900px), (max-width:1462px)");
+  const isMid = useMediaQuery("(max-width:1146px)");
   const [open, setopen] = useState(false);
   const [userData, setUserData] = useState({});
   const navigate = useNavigate();
@@ -91,7 +91,13 @@ const Navbar = () => {
           padding: 2,
         }}
       >
-        <img height="40vw" width="140vw" src={Logo} alt="Logo" style={{ scale: "1.5", paddingLeft: "1rem" }} />
+        <img
+          height="40vw"
+          width="140vw"
+          src={Logo}
+          alt="Logo"
+          style={{ scale: "1.5", paddingLeft: "1rem" }}
+        />
         {!isMid && (
           <>
             <Box
@@ -100,7 +106,6 @@ const Navbar = () => {
               alignItems="center"
               gap={7}
               width="90%"
-              sx={{ display: { xs: "none", lg: "flex" } }}
             >
               {navItems.map((item) => (
                 <Typography
@@ -126,7 +131,11 @@ const Navbar = () => {
           </>
         )}
         {open && (
-          <RegistrationForm open={open} onClose={() => setopen(false)} userData={userData} />
+          <RegistrationForm
+            open={open}
+            onClose={() => setopen(false)}
+            userData={userData}
+          />
         )}
         {/* Menu Button */}
         {isMid && (
