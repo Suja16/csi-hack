@@ -13,9 +13,11 @@ function Timeline(props) {
             flexDirection:"column",
             gap:4,
             marginTop:"2rem",
+            paddingLeft:2,
+            objectFit:"cover",
         }}>
-            <Typography variant={isMobile?'subtitle1':"h1"} sx={{textAlign:"center",letterSpacing:"1px" }}>PROCESS FLOW + TIMELINE</Typography>
-            <img width="99%" src={timeline} alt="" />
+            <Typography variant={isMobile?'subtitle1':"h1"} sx={{textAlign:"center",letterSpacing:"1px" , marginBottom:6 }}>Timeline</Typography>
+            <img width="100%" src={timeline} alt="" />
         </Box>
     );
 }

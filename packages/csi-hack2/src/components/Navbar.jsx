@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import Logo from "../assets/CroppedfinalLogo.png";
+import Logo from "../assets/idea.svg";
 import { Button } from "@mui/material";
-import RegistrationForm from "./RegistrationFrom";
+import RegistrationForm from "./registrationFrom";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMid = useMediaQuery("(max-width:900px), (max-width:1462px)");
   const [open, setopen] = useState(false);
   const [userData, setUserData] = useState({});
+  const navigate = useNavigate();
 
   const login = useGoogleLogin({
     onSuccess: async ({ code }) => {
@@ -51,22 +53,26 @@ const Navbar = () => {
   });
 
   const navItems = [
-    { label: "HOME", href: "#home" },
+    { label: "HOME", href: "/" },
     { label: "PROBLEM STATEMENTS", href: "#problems" },
-    { label: "GUIDELINES", href: "#guidelines" },
-    { label: "FAQs", href: "#faq" },
+    { label: "GUIDELINES", href: "/guidelines" },
+    { label: "FAQs", href: "/faq" },
     { label: "PRIZES", href: "#prizes" },
     { label: "CONTACT US", href: "#contact" },
   ];
 
   const handleSmoothScroll = (e, targetId) => {
     e.preventDefault();
-    const target = document.querySelector(targetId);
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (targetId === "/" || targetId === "/guidelines" || targetId === "/faq") {
+      navigate(targetId);
+    } else {
+      const target = document.querySelector(targetId);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     }
   };
-  console.log(open);
+
   return (
     <Box>
       {/* Main Navbar */}
@@ -85,7 +91,7 @@ const Navbar = () => {
           padding: 2,
         }}
       >
-        <img height="50vw" width="100vw" src={Logo} alt="Logo" />
+        <img height="40vw" width="140vw" src={Logo} alt="Logo" style={{ scale: "1.5", paddingLeft: "1rem" }} />
         {!isMid && (
           <>
             <Box
@@ -100,8 +106,8 @@ const Navbar = () => {
                 <Typography
                   key={item.href}
                   variant="h6"
-                  component="a"
-                  href={item.href}
+                  component={Link}
+                  to={item.href}
                   onClick={(e) => handleSmoothScroll(e, item.href)}
                   sx={{
                     textDecoration: "none",
@@ -157,8 +163,8 @@ const Navbar = () => {
           <Typography
             key={item.href}
             variant="h6"
-            component="a"
-            href={item.href}
+            component={Link}
+            to={item.href}
             onClick={(e) => handleSmoothScroll(e, item.href)}
             sx={{
               textDecoration: "none",
