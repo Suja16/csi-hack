@@ -126,7 +126,7 @@ const Navbar = () => {
         height="400px"
         bgcolor="white"
         position={"fixed"}
-        top={"85px"}
+        top={"65px"}
         borderRadius="15px"
         zIndex={30}
         gap={3.5}
