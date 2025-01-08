@@ -1,13 +1,23 @@
-import  { useState } from 'react';
-import { Accordion, AccordionSummary, AccordionDetails, Typography, Container, Box } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { Accordion, AccordionSummary, AccordionDetails, Typography, Container, Box, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 
-const Faq = () => {
+// set the isExpanded to false to use the read more button
+const Faq = ({ isExpanded = false }) => {
     const [expanded, setExpanded] = useState(false);
+    const [showFullContent, setShowFullContent] = useState(isExpanded);
+
+    useEffect(() => {
+        setShowFullContent(isExpanded);
+    }, [isExpanded]);
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
+    };
+
+    const handleReadMore = () => {
+        setShowFullContent(true);
     };
 
     const faqCategories = [
@@ -131,80 +141,114 @@ const Faq = () => {
     ];
 
     return (
-        <Container maxWidth="md" sx={{ padding: { xs: 2, sm: 2 } , display:"flex" , flexDirection:"column" , justifyContent:"center"}}>
-            {faqCategories.map((category, catIndex) => (
-                <Box key={catIndex}>
-                    <Typography 
-                        variant="h4" 
-                        align="start" 
-                        gutterBottom
-                        sx={{ fontWeight: 'bold', marginBottom: 3, color: '#f15a24', marginTop: 3 }}
-                    >
-                        {category.title}
-                    </Typography>
-                    {category.questions.map((item, index) => (
-                        <Accordion 
-                            key={index} 
-                            expanded={expanded === `${catIndex}-${index}`} 
-                            onChange={handleChange(`${catIndex}-${index}`)}
-                            disableGutters 
-                            sx={{
-                                boxShadow: 'none',
-                                backgroundColor: 'transparent',
-                                '&:before': {
-                                    display: 'none',
-                                },
-                            }}
-                        >
-                            <AccordionSummary
-                                expandIcon={
-                                    <Box 
-                                        sx={{ 
-                                            backgroundColor: '#5d73d1', 
-                                            borderRadius: '50%', 
-                                            width: 32, 
-                                            height: 32, 
-                                            display: 'flex', 
-                                            alignItems: 'center', 
-                                            justifyContent: 'center' 
-                                        }}
-                                    >
-                                        {expanded === `${catIndex}-${index}` ? (
-                                            <RemoveIcon sx={{ color: '#fff', fontSize: '1.7rem' }} />
-                                        ) : (
-                                            <AddIcon sx={{ color: '#fff', fontSize: '1.7rem' }} />
-                                        )}
-                                    </Box>
-                                }
-                                sx={{
-                                    padding: { xs: 1, sm: 1 },
-                                    backgroundColor: '#fff',
-                                    borderRadius: 1,
+        <Container 
+    maxWidth="md" 
+    sx={{ 
+        padding: { xs: 2, sm: 2 }, 
+        display: "flex", 
+        flexDirection: "column", 
+        justifyContent: "flex-start", 
+        height: showFullContent ? "auto" : "530px", 
+        overflow: "hidden", 
+        position: "relative",
+        marginTop: 1,
+    }}
+>
+    {faqCategories.map((category, catIndex) => (
+        <Box key={catIndex}>
+            <Typography 
+                variant="h4" 
+                align="start" 
+                gutterBottom
+                sx={{ fontWeight: 'bold', marginBottom: 3, color: '#f15a24', marginTop: 3 }}
+            >
+                {category.title}
+            </Typography>
+            {category.questions.map((item, index) => (
+                <Accordion 
+                    key={index} 
+                    expanded={expanded === `${catIndex}-${index}`} 
+                    onChange={handleChange(`${catIndex}-${index}`)}
+                    disableGutters 
+                    sx={{
+                        boxShadow: 'none',
+                        backgroundColor: 'transparent',
+                        '&:before': {
+                            display: 'none',
+                        },
+                    }}
+                >
+                    <AccordionSummary
+                        expandIcon={
+                            <Box 
+                                sx={{ 
+                                    backgroundColor: '#5d73d1', 
+                                    borderRadius: '50%', 
+                                    width: 32, 
+                                    height: 32, 
+                                    display: 'flex', 
+                                    alignItems: 'center', 
+                                    justifyContent: 'center' 
                                 }}
                             >
-                                <Typography 
-                                    variant="body2" 
-                                    sx={{ 
-                                        color: 'black', 
-                                        textDecoration: 'none',
-                                        '&:hover': {
-                                            textDecoration: 'underline',
-                                        } 
-                                    }}
-                                >
-                                    Q{index + 1}. {item.question}
-                                </Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <Typography variant="body1" sx={{ color: 'black' }}>
-                                    {item.answer}
-                                </Typography>
-                            </AccordionDetails>
-                        </Accordion>
-                    ))}
-                </Box>
+                                {expanded === `${catIndex}-${index}` ? (
+                                    <RemoveIcon sx={{ color: '#fff', fontSize: '1.7rem' }} />
+                                ) : (
+                                    <AddIcon sx={{ color: '#fff', fontSize: '1.7rem' }} />
+                                )}
+                            </Box>
+                        }
+                        sx={{
+                            padding: { xs: 1, sm: 1 },
+                            backgroundColor: '#fff',
+                            borderRadius: 1,
+                        }}
+                    >
+                        <Typography 
+                            variant="body2" 
+                            sx={{ 
+                                color: 'black', 
+                                textDecoration: 'none',
+                                '&:hover': {
+                                    textDecoration: 'underline',
+                                } 
+                            }}
+                        >
+                            Q{index + 1}. {item.question}
+                        </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <Typography variant="body1" sx={{ color: 'black' }}>
+                            {item.answer}
+                        </Typography>
+                    </AccordionDetails>
+                </Accordion>
             ))}
-        </Container>
+        </Box>
+    ))}
+    {!showFullContent && (
+        <Box 
+            sx={{ 
+                position: "absolute", 
+                bottom: 12, 
+                width: "100%", 
+                textAlign: "center", 
+                backgroundColor: "rgba(255, 255, 255, 0.9)",
+                py: 1,
+            }}
+        >
+            <Button 
+                variant="contained" 
+                color="primary" 
+                onClick={handleReadMore}
+            >
+                Read More
+            </Button>
+        </Box>
+    )}
+</Container>
+
+
     );
 };
 
