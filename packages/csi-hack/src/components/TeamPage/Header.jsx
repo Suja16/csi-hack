@@ -8,12 +8,14 @@ import MobileEventTimeLine from "../MobileTimeLine/mobile_event_timeline";
 import PrizePool from "../PrizePool";
 import Info from "./Info";
 import TeamCard from "./TeamCard";
+import { useNavigate } from "react-router-dom";
 
 const HackathonPage = () => {
   const [teamData, setTeamData] = useState(null);
   const [userData, setUserData] = useState(null);
   const [timeLeft, setTimeLeft] = useState({});
-  console.log("teamData", teamData);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch team data from the API
@@ -31,6 +33,7 @@ const HackathonPage = () => {
         setTeamData(response.data.event.Participant.team); // Set the team data to state
       } catch (error) {
         console.error("Error fetching team data:", error);
+        navigate("/");
       }
     };
 

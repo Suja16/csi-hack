@@ -11,8 +11,35 @@ import ProblemStatements from "../components/ProblemStatements";
 import Banner from "../components/sponsor_banner";
 import SponsorsMobileBanner from "../components/SponsorsMobileBanner";
 import UnderGuiDanceOfMobile from "../components/UnderGuiDanceOfMobile";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
 import HomePage from "./HomePage";
+
 function Index() {
+  const navigate = useNavigate();
+  // const status = localStorage.getItem("status");
+  useEffect(() => {
+    // const accessToken = localStorage.getItem("accessToken");
+    const getData = async () => {
+      const response = await axios.post(
+        `https://api.csi-kjsce.org/api/v1/event/p/get/47`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+      // setTeamData(response.data.event.Participant.team);
+      console.log(response.data);
+      if (response.data.event.Participant) {
+        navigate("/header")
+      }
+    }
+    getData();
+  }, [navigate]);
+
   const isMid = useMediaQuery("(max-width:900px) ,(max-width:1462px)");
   return (
     <Box

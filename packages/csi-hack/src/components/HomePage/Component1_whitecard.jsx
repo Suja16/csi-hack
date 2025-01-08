@@ -8,6 +8,7 @@ import registrationSchema from "./validation";
 import ModalForm from "./ModalForm";
 import Logo from "../../assets/CroppedfinalLogo.png";
 import UnionBankLogo from "../../assets/unionBankLogo.jpeg";
+import { useNavigate } from "react-router-dom";
 
 function Component1_whitecard(props) {
   const [formOpen, setFormOpen] = useState(false);
@@ -18,6 +19,7 @@ function Component1_whitecard(props) {
       gender: "MALE"
     }
   });
+  const navigate = useNavigate();
   const login = useGoogleLogin({
     onSuccess: async ({ code }) => {
       const response = await axios.post(
@@ -29,6 +31,18 @@ function Component1_whitecard(props) {
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
       localStorage.setItem("user", response.data.user);
+      const participantResponse = await axios.post(
+        `https://api.csi-kjsce.org/api/v1/event/p/get/47`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+      if (participantResponse.data.event.Participant) {
+        navigate("/header");
+      }
       const user = response.data.user;
       methods.reset({
         degree: user.degree,
