@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Typography, IconButton, Link, Container, Divider, useTheme, useMediaQuery } from "@mui/material";
 import { Facebook, Twitter, Instagram, LinkedIn, ArrowUpward, Mail, Phone } from "@mui/icons-material";
 
@@ -34,25 +33,25 @@ const Footer = () => {
           }}
         >
           <Box sx={{ flex: { xs: '1 1 100%', sm: '1 1 calc(33.33% - 32px)' } }}>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
               About Us
             </Typography>
-            <Typography variant="body2">
+            <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
               Computer Society of India KJSCE is dedicated to advancing the theory and practice of Computer Science and IT among students.
             </Typography>
           </Box>
 
           <Box sx={{ flex: { xs: '1 1 100%', sm: '1 1 calc(33.33% - 32px)' } }}>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
               Contact Us
             </Typography>
             <Link href="mailto:csi-kjsce@somaiya.edu" color="inherit" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
               <Mail fontSize="small" sx={{ mr: 1 }} />
-              <Typography variant="body2">csi-kjsce@somaiya.edu</Typography>
+              <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>csi-kjsce@somaiya.edu</Typography>
             </Link>
             <Link href="tel:+918657432101" color="inherit" sx={{ display: 'flex', alignItems: 'center' }}>
               <Phone fontSize="small" sx={{ mr: 1 }} />
-              <Typography variant="body2">+91 8657432101</Typography>
+              <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>+91 8657432101</Typography>
             </Link>
           </Box>
 

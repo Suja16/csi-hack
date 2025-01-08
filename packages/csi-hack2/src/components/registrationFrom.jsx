@@ -228,7 +228,7 @@ export default function RegistrationForm({ open, onClose, userData }) {
         sx={{
           position: "absolute",
           top: 8,
-          right: 8,
+          right: 25,
         }}
       >
         <CloseIcon />
