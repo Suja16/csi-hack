@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Box, Typography, useMediaQuery } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import Logo from "../assets/idea.svg";
+import Logo from "../assets/idea.png";
 import { Button } from "@mui/material";
 import RegistrationForm from "./registrationFrom";
 import { useGoogleLogin } from "@react-oauth/google";

@@ -168,12 +168,13 @@ function ProblemStatements(props) {
 
   return (
     <Box
+      id="problems"
       sx={{
         marginTop: "1rem",
         height: "max-content",
         marginY: 10,
-        paddingBottom:10,
-        borderBottom:"1px solid grey",
+        paddingBottom: 10,
+        borderBottom: "1px solid grey",
       }}
     >
       <Typography
