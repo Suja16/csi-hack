@@ -5,7 +5,7 @@ import CarouselHomePage from "./components/Carousel";
 function App() {
   return (
     <>
-
+      <CarouselHomePage />
     </>
   );
 }
