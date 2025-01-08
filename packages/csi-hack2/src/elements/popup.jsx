@@ -1,6 +1,6 @@
 import { Dialog, DialogContent } from "@mui/material";
 
-export default function Popup(children, dialogProps) {
+export default function Popup({ children, dialogProps }) {
   return (
     <Dialog
       fullWidth
