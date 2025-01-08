@@ -8,13 +8,18 @@ import registrationSchema from "./validation";
 import ModalForm from "./ModalForm";
 import Logo from "../../assets/CroppedfinalLogo.png";
 import UnionBankLogo from "../../assets/unionBankLogo.jpeg";
+import { useNavigate } from "react-router-dom";
 
 function Component1_whitecard(props) {
   const [formOpen, setFormOpen] = useState(false);
   const methods = useForm({
     resolver: yupResolver(registrationSchema),
     mode: "onTouched",
+    defaultValues: {
+      gender: "MALE"
+    }
   });
+  const navigate = useNavigate();
   const login = useGoogleLogin({
     onSuccess: async ({ code }) => {
       const response = await axios.post(
@@ -26,6 +31,18 @@ function Component1_whitecard(props) {
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
       localStorage.setItem("user", response.data.user);
+      const participantResponse = await axios.post(
+        `https://api.csi-kjsce.org/api/v1/event/p/get/47`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+      if (participantResponse.data.event.Participant) {
+        navigate("/header");
+      }
       const user = response.data.user;
       methods.reset({
         degree: user.degree,
@@ -79,32 +96,17 @@ function Component1_whitecard(props) {
         >
           <img width={isMid ? "250" : "400px"} src={Logo} alt="" />
         </Box>
-        <Typography
-          variant="p"
-          color="#0166B3"
-          fontWeight={"Bold"}
-          right={0}
-          position={"absolute"}
-          zIndex={2}
-          height={"max-content"}
-          marginTop={"10%"}
-          textAlign={"center"}
-          marginRight={"10rem"}
-        >
-          PRESENTED BY
-        </Typography>
         <Box
-          top={"30%"}
+          top={"25%"}
           // marginLeft={"-60px"}
           position={"absolute"}
           zIndex={1}
           width={"max-content"}
-          marginTop={2}
           marginX={isMid ? "28rem" : "34rem"}
-          left={"-60px"}
+          left={"-100px"}
           height={"max-content"}
         >
-          <img src={UnionBankLogo} width={isMid ? "260px" : "304px"} alt="" />
+          <img src={UnionBankLogo} width={isMid ? "260px" : "400px"} alt="" />
         </Box>
         <Button
           variant="contained"

@@ -5,7 +5,6 @@ import Grid from '@mui/material/Grid2';
 import data from "../assets/faqs.json"
 
 const FAQSection = () => {
-  console.log(data)
 return (
     <Box sx={{ backgroundColor: "white", py: 5, px: 3, mx: { xs: 1, md: 5 }, borderRadius: "40px" }}>
         <Grid container spacing={4} justifyContent="start">

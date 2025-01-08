@@ -1,8 +1,8 @@
+import { Box, Container, Divider } from "@mui/material";
 import "react";
 import MobileTimelineCard from "./mobile_timeline_card";
-import { Box, Container, Divider } from "@mui/material";
 
-const MobileEventTimeline = () => {
+const MobileEventTimeLine = () => {
     return (
         <Container maxWidth="sm" sx={{ bgcolor: '#2846AA', py: 4, position: 'relative' }}>
             <Box sx={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -39,4 +39,4 @@ const MobileEventTimeline = () => {
     );
 };
 
-export default MobileEventTimeline;
+export default MobileEventTimeLine;

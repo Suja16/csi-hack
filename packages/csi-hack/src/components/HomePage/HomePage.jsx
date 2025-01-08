@@ -1,7 +1,7 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
-import HomePageWrapperForLg from "./HomePageWrapper";
 import HomePageForMobile from "./HomePageForMobile";
+import HomePageWrapperForLg from "./HomePageWrapper";
 
 function HomePage() {
   return (

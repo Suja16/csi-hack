@@ -1,10 +1,48 @@
 import { Box, Button, Typography } from "@mui/material";
-import React from "react";
+import React, {useState} from "react";
 import csiLogo from "../../assets/csi_logo.png";
 import finalLogo from "../../assets/finalLogo.png";
 import unionBankLogo from "../../assets/unionBankLogo.jpeg";
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import registrationSchema from "./validation";
+import ModalForm from "./ModalForm";
 
 function HomePageForMobile(props) {
+  const [formOpen, setFormOpen] = useState(false);
+  const methods = useForm({
+    resolver: yupResolver(registrationSchema),
+    mode: "onTouched",
+    defaultValues: {
+      gender: "MALE"
+    }
+  });
+  const login = useGoogleLogin({
+    onSuccess: async ({ code }) => {
+      const response = await axios.post(
+        "/api/v1/auth/googleToken",
+        { code },
+        { baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS }
+      );
+      console.log(response);
+      localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.refreshToken);
+      localStorage.setItem("user", response.data.user);
+      const user = response.data.user;
+      methods.reset({
+        degree: user.degree,
+        college: user.college,
+        branch: user.branch,
+        year: user.year,
+        gender: user.gender,
+        phone_number: user.phone_number,
+      });
+      setFormOpen(true);
+    },
+    flow: "auth-code",
+  });
   return (
     <Box
       display={"flex"}
@@ -52,6 +90,7 @@ function HomePageForMobile(props) {
           </Box>
           <Typography
             variant="button"
+            onClick={() => login()}
             position={"absolute"}
             top={"62%"}
             right={"45%"}
@@ -63,6 +102,7 @@ function HomePageForMobile(props) {
             Register
           </Typography>
         </Box>
+        <ModalForm open={formOpen} setOpen={setFormOpen} methods={methods} />
         <Box position={"absolute"} top={"8.5rem"} right={"1rem"}>
           <svg
             width="120"

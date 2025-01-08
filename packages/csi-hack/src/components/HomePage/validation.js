@@ -28,29 +28,29 @@ const registrationSchema =
 
     degree: yup.string().required("Degree is required"),
 
-    linkedin: yup.string().required("LinkedIn is required")
-          .matches(
-            /^https?:\/\/((www|\w\w)\.)?linkedin\.com\/((in\/[^/]+\/?)|(pub\/[^/]+\/((\w|\d)+\/?){3}))$/,
-            "Please enter a valid LinkedIn URL",
-          ),
+    linkedin: yup.string().required("LinkedIn is required"),
+          // .matches(
+          //   /^https?:\/\/((www|\w\w)\.)?linkedin\.com\/((in\/[^/]+\/?)|(pub\/[^/]+\/((\w|\d)+\/?){3}))$/,
+          //   "Please enter a valid LinkedIn URL",
+          // ),
 
 
-    github: yup.string().required("GitHub is required")
-          .matches(
-            /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_]{1,25}$/gim,
-            "Please enter a valid GitHub URL",
-          ),
+    github: yup.string().required("GitHub is required"),
+          // .matches(
+          //   /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9_-]{1,25}$/gim,
+          //   "Please enter a valid GitHub URL",
+          // ),
 
-    tech_stack: yup.string().required("Tech Stack is required")
-          .test(
-            "is-valid-tech-stack",
-            "Each item must be a non-empty string and must not contain spaces or commas",
-            (value) => {
-              if (!value) return false; // Required validation
-              const tags = value.split(",").map((tag) => tag.trim());
-              return tags.every((tag) => tag.length > 0 && !tag.includes(" "));
-            },
-          ),
+    tech_stack: yup.string().required("Tech Stack is required"),
+          // .test(
+          //   "is-valid-tech-stack",
+          //   "Each item must be a non-empty string separated by commas",
+          //   (value) => {
+          //     if (!value) return false; // Required validation
+          //     const tags = value.split(",").map((tag) => tag.trim());
+          //     return tags.every((tag) => tag.length > 0 && !tag.includes(" "));
+          //   },
+          // ),
 
     why_this_hackathon: yup.string().required("'Why this hackathon' is required")
           .min(100, "At least 100 characters are required"),
@@ -71,6 +71,8 @@ const registrationSchema =
     //           value.length > 0 && value[0] && value[0].size <= 2 * 1024 * 1024
     //         ); // 2MB in bytes
     //       }),
+
+    resume: yup.string().required("Resume is required"),
 
     team_choice: yup.string().required("Team choice is required")
           .oneOf(
