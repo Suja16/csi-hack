@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, IconButton, Link, Container, Grid, Divider, useTheme, useMediaQuery } from "@mui/material";
+import { Box, Typography, IconButton, Link, Container, Divider, useTheme, useMediaQuery } from "@mui/material";
 import { Facebook, Twitter, Instagram, LinkedIn, ArrowUpward, Mail, Phone } from "@mui/icons-material";
 
 const Footer = () => {
@@ -23,16 +23,25 @@ const Footer = () => {
       }}
     >
       <Container maxWidth="lg">
-        <Grid container spacing={4} sx={{ py: 6 }}>
-          <Grid item xs={12} sm={6} md={4}>
+        <Box
+          sx={{
+            py: 6,
+            display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
+            flexWrap: 'wrap',
+            gap: 4,
+          }}
+        >
+          <Box sx={{ flex: { xs: '1 1 100%', sm: '1 1 calc(33.33% - 32px)' } }}>
             <Typography variant="h6" gutterBottom>
               About Us
             </Typography>
             <Typography variant="body2">
               Computer Society of India KJSCE is dedicated to advancing the theory and practice of Computer Science and IT among students.
             </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
+          </Box>
+
+          <Box sx={{ flex: { xs: '1 1 100%', sm: '1 1 calc(33.33% - 32px)' } }}>
             <Typography variant="h6" gutterBottom>
               Contact Us
             </Typography>
@@ -44,8 +53,9 @@ const Footer = () => {
               <Phone fontSize="small" sx={{ mr: 1 }} />
               <Typography variant="body2">+91 8657432101</Typography>
             </Link>
-          </Grid>
-          <Grid item xs={12} md={4}>
+          </Box>
+
+          <Box sx={{ flex: { xs: '1 1 100%', sm: '1 1 calc(33.33% - 32px)' } }}>
             <Typography variant="h6" gutterBottom>
               Follow Us
             </Typography>
@@ -63,9 +73,11 @@ const Footer = () => {
                 <LinkedIn />
               </IconButton>
             </Box>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
+
         <Divider sx={{ my: 4, bgcolor: 'rgba(255, 255, 255, 0.2)' }} />
+
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', pb: 2 }}>
           <Typography variant="body2" sx={{ mr: 2 }}>
             © 2024-25 Computer Society of India KJSCE. All rights reserved
@@ -83,6 +95,7 @@ const Footer = () => {
           </IconButton>
         </Box>
       </Container>
+
       {!isMobile && (
         <Box
           sx={{
@@ -100,4 +113,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
