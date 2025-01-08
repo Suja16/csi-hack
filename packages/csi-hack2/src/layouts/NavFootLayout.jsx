@@ -5,14 +5,36 @@ import { Outlet } from 'react-router';
 
 export default function FooterLayout() {
   return (
-    <>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh'
+      }}
+    >
       <Navbar />
       <Box
-        paddingTop={"5rem"}
+        sx={{
+          paddingTop: "5rem",
+          flexGrow: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100%'
+        }}
       >
-        <Outlet />
+        <Box
+          sx={{
+            flexGrow: 1,
+            marginBottom: {
+              xs: '26rem',
+              sm: '22rem'
+            }
+          }}
+        >
+          <Outlet />
+        </Box>
+        <Footer />
       </Box>
-      <Footer />
-    </>
+    </Box>
   );
 }
