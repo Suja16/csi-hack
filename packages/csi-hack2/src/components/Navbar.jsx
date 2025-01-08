@@ -29,6 +29,8 @@ const Navbar = () => {
         bgcolor="white"
         paddingY={"10px"}
         sx={{
+          borderBottomRightRadius: "25px",
+          borderBottomLeftRadius: "25px",
           paddingLeft: { xs: "10px", md: "50px" },
         }}
       >
