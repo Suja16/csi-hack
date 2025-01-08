@@ -4,7 +4,7 @@ import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { v4 } from 'uuid';
 import { Box, Typography } from '@mui/material';
 
-const DragDrop = () => {
+const DragDrop = ({setValue}) => {
     const [fileDisplayed, setFileDisplayed] = useState(false);
 
     const handleDrop = (e) => {
@@ -56,6 +56,7 @@ const DragDrop = () => {
         uploadBytes(fileRef, file).then(() => {
             getDownloadURL(fileRef).then((url) => {
                 console.log("File uploaded successfully. URL:", url);
+                setValue("resume", url);
             });
         });
     };

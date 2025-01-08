@@ -72,6 +72,8 @@ const registrationSchema =
     //         ); // 2MB in bytes
     //       }),
 
+    resume: yup.string().required("Resume is required"),
+
     team_choice: yup.string().required("Team choice is required")
           .oneOf(
             ["create", "join"],

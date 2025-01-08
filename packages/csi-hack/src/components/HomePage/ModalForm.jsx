@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import DragDrop from "../drag_drop";
 
 const ModalForm = ({ open, setOpen, methods }) => {
   const navigate = useNavigate();
@@ -113,13 +114,13 @@ const ModalForm = ({ open, setOpen, methods }) => {
         alert("Your team code is - " + inviteCode)
         localStorage.setItem("status", "true")
         setSnackbarMessage("Registration Successful");
-        
-     
+
+
         navigate("/header");
         setShowSnackbar(true);
-        
+
         setTimeout(() => { setShowSnackbar(false); setOpen(false) }, 3000);
-        
+
 
       } catch (e) {
         console.error(e);
@@ -152,11 +153,11 @@ const ModalForm = ({ open, setOpen, methods }) => {
         );
         localStorage.setItem("status" , "true")
         setSnackbarMessage("Registration Successful");
-        
+
         navigate("/header");
 
         setShowSnackbar(true);
-        
+
         setTimeout(() => { setShowSnackbar(false); setOpen(false) }, 3000);
       } catch (e) {
         console.error(e);
@@ -426,6 +427,13 @@ const ModalForm = ({ open, setOpen, methods }) => {
                 />
               )}
             />
+            <Box sx={{ gridColumn: "span 2" }}>
+            <DragDrop setValue={setValue}/>
+            <Typography variant="caption" sx={{ color: "#D20000" }}>
+              {errors.resume?.message}
+            </Typography>
+            </Box>
+
             <Box sx={{ gridColumn: "span 2", display: "flex", justifyContent: "start", gap: "10px" , width:"100%"}}>
               <Button
                 variant={teamChoice==="create" ? "contained" : "outlined"}

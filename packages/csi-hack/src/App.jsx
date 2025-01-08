@@ -8,11 +8,11 @@ function App() {
   const navigate = useNavigate();
   const status = localStorage.getItem("status");
   const accessToken = localStorage.getItem("accessToken");
-  useEffect(() => {
-    if (accessToken) {
-      navigate("/header");
-    }
-  }, [accessToken, navigate]);
+  // useEffect(() => {
+  //   if (accessToken) {
+  //     navigate("/header");
+  //   }
+  // }, [accessToken, navigate]);
   return (
     <Routes>
       <Route path="/" element={<Index />} />
