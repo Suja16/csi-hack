@@ -142,113 +142,118 @@ const Faq = ({ isExpanded = false }) => {
 
     return (
         <Container 
-    maxWidth="md" 
-    sx={{ 
-        padding: { xs: 2, sm: 2 }, 
-        display: "flex", 
-        flexDirection: "column", 
-        justifyContent: "flex-start", 
-        height: showFullContent ? "auto" : "530px", 
-        overflow: "hidden", 
-        position: "relative",
-        marginTop: 1,
-    }}
->
-    {faqCategories.map((category, catIndex) => (
-        <Box key={catIndex}>
-            <Typography 
-                variant="h4" 
-                align="start" 
-                gutterBottom
-                sx={{ fontWeight: 'bold', marginBottom: 3, color: '#f15a24', marginTop: 3 }}
-            >
-                {category.title}
-            </Typography>
-            {category.questions.map((item, index) => (
-                <Accordion 
-                    key={index} 
-                    expanded={expanded === `${catIndex}-${index}`} 
-                    onChange={handleChange(`${catIndex}-${index}`)}
-                    disableGutters 
-                    sx={{
-                        boxShadow: 'none',
-                        backgroundColor: 'transparent',
-                        '&:before': {
-                            display: 'none',
-                        },
-                    }}
-                >
-                    <AccordionSummary
-                        expandIcon={
-                            <Box 
-                                sx={{ 
-                                    backgroundColor: '#5d73d1', 
-                                    borderRadius: '50%', 
-                                    width: 32, 
-                                    height: 32, 
-                                    display: 'flex', 
-                                    alignItems: 'center', 
-                                    justifyContent: 'center' 
-                                }}
-                            >
-                                {expanded === `${catIndex}-${index}` ? (
-                                    <RemoveIcon sx={{ color: '#fff', fontSize: '1.7rem' }} />
-                                ) : (
-                                    <AddIcon sx={{ color: '#fff', fontSize: '1.7rem' }} />
-                                )}
-                            </Box>
-                        }
-                        sx={{
-                            padding: { xs: 1, sm: 1 },
-                            backgroundColor: '#fff',
-                            borderRadius: 1,
-                        }}
-                    >
-                        <Typography 
-                            variant="body2" 
-                            sx={{ 
-                                color: 'black', 
-                                textDecoration: 'none',
-                                '&:hover': {
-                                    textDecoration: 'underline',
-                                } 
-                            }}
-                        >
-                            Q{index + 1}. {item.question}
-                        </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography variant="body1" sx={{ color: 'black' }}>
-                            {item.answer}
-                        </Typography>
-                    </AccordionDetails>
-                </Accordion>
-            ))}
-        </Box>
-    ))}
-    {!showFullContent && (
-        <Box 
+            maxWidth="md" 
             sx={{ 
-                position: "absolute", 
-                bottom: 12, 
-                width: "100%", 
-                textAlign: "center", 
-                backgroundColor: "rgba(255, 255, 255, 0.9)",
-                py: 1,
+                padding: { xs: 2, sm: 2 }, 
+                display: "flex", 
+                flexDirection: "column", 
+                justifyContent: "flex-start", 
+                height: showFullContent ? "auto" : "530px", 
+                overflow: "hidden", 
+                position: "relative",
+                marginTop: 1,
             }}
         >
-            <Button 
-                variant="contained" 
-                color="primary" 
-                onClick={handleReadMore}
-            >
-                Read More
-            </Button>
-        </Box>
-    )}
-</Container>
-
-
+            {faqCategories.map((category, catIndex) => (
+                <Box key={catIndex}>
+                    <Typography 
+                        variant="h4" 
+                        align="start" 
+                        gutterBottom
+                        sx={{ 
+                            fontWeight: 'bold', 
+                            marginBottom: 3, 
+                            color: '#f15a24', 
+                            marginTop: 3, 
+                            zIndex: showFullContent ? 1 : 0, 
+                        }}
+                    >
+                        {category.title}
+                    </Typography>
+                    {category.questions.map((item, index) => (
+                        <Accordion 
+                            key={index} 
+                            expanded={expanded === `${catIndex}-${index}`} 
+                            onChange={handleChange(`${catIndex}-${index}`)}
+                            disableGutters 
+                            sx={{
+                                boxShadow: 'none',
+                                backgroundColor: 'transparent',
+                                '&:before': {
+                                    display: 'none',
+                                },
+                            }}
+                        >
+                            <AccordionSummary
+                                expandIcon={
+                                    <Box 
+                                        sx={{ 
+                                            backgroundColor: '#5d73d1', 
+                                            borderRadius: '50%', 
+                                            width: 32, 
+                                            height: 32, 
+                                            display: 'flex', 
+                                            alignItems: 'center', 
+                                            justifyContent: 'center' 
+                                        }}
+                                    >
+                                        {expanded === `${catIndex}-${index}` ? (
+                                            <RemoveIcon sx={{ color: '#fff', fontSize: '1.7rem' }} />
+                                        ) : (
+                                            <AddIcon sx={{ color: '#fff', fontSize: '1.7rem' }} />
+                                        )}
+                                    </Box>
+                                }
+                                sx={{
+                                    padding: { xs: 1, sm: 1 },
+                                    backgroundColor: '#fff',
+                                    borderRadius: 1,
+                                }}
+                            >
+                                <Typography 
+                                    variant="body2" 
+                                    sx={{ 
+                                        color: 'black', 
+                                        textDecoration: 'none',
+                                        '&:hover': {
+                                            textDecoration: 'underline',
+                                        } 
+                                    }}
+                                >
+                                    Q{index + 1}. {item.question}
+                                </Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <Typography variant="body1" sx={{ color: 'black' }}>
+                                    {item.answer}
+                                </Typography>
+                            </AccordionDetails>
+                        </Accordion>
+                    ))}
+                </Box>
+            ))}
+            {!showFullContent && (
+                <Box 
+                    sx={{ 
+                        position: "absolute", 
+                        bottom: 0, 
+                        width: "100%", 
+                        textAlign: "center", 
+                        backgroundColor: "rgba(255, 255, 255, 1)",
+                        py: 2,
+                        zIndex: 2,
+                    }}
+                >
+                    <Button 
+                        variant="contained" 
+                        color="primary" 
+                        onClick={handleReadMore}
+                    >
+                        Read More
+                    </Button>
+                </Box>
+            )}
+        </Container>
     );
 };
 
