@@ -1,13 +1,23 @@
-import  { useState } from 'react';
-import { Accordion, AccordionSummary, AccordionDetails, Typography, Container, Box } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { Accordion, AccordionSummary, AccordionDetails, Typography, Container, Box, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 
-const Faq = () => {
+// set the isExpanded to false to use the read more button
+const Faq = ({ isExpanded = false }) => {
     const [expanded, setExpanded] = useState(false);
+    const [showFullContent, setShowFullContent] = useState(isExpanded);
+
+    useEffect(() => {
+        setShowFullContent(isExpanded);
+    }, [isExpanded]);
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
+    };
+
+    const handleReadMore = () => {
+        setShowFullContent(true);
     };
 
     const faqCategories = [
@@ -41,6 +51,23 @@ const Faq = () => {
             ]
         },
         {
+            title: "Registration FAQ's",
+            questions: [
+                {
+                    question: "Is there a registration fee for the event?",
+                    answer: "The event is complimentary, including all amenities, catering services, and resources required for participation."
+                },
+                {
+                    question: "Is it only open to students, or can working professionals also join?",
+                    answer: "Participants must be Undergraduate Students attending a recognised university."
+                },
+                {
+                    question: "Can I attend virtually?",
+                    answer: "No. This is a fully in-person event and participants must be present at the venue throughout the hackathon."
+                }
+            ]
+        },
+        {
             title: "Team FAQ's",
             questions: [
                 {
@@ -62,23 +89,6 @@ const Faq = () => {
                 {
                     question: "Will there be mentors?",
                     answer: "Yes, mentors will be available during the event to provide guidance and support."
-                }
-            ]
-        },
-        {
-            title: "Registration FAQ's",
-            questions: [
-                {
-                    question: "Is there a registration fee for the event?",
-                    answer: "The event is complimentary, including all amenities, catering services, and resources required for participation."
-                },
-                {
-                    question: "Is it only open to students, or can working professionals also join?",
-                    answer: "Participants must be Undergraduate Students attending a recognised university."
-                },
-                {
-                    question: "Can I attend virtually?",
-                    answer: "No. This is a fully in-person event and participants must be present at the venue throughout the hackathon."
                 }
             ]
         },
@@ -131,14 +141,32 @@ const Faq = () => {
     ];
 
     return (
-        <Container maxWidth="md" sx={{ padding: { xs: 2, sm: 2 } , display:"flex" , flexDirection:"column" , justifyContent:"center"}}>
+        <Container 
+            maxWidth="md" 
+            sx={{ 
+                padding: { xs: 2, sm: 2 }, 
+                display: "flex", 
+                flexDirection: "column", 
+                justifyContent: "flex-start", 
+                height: showFullContent ? "auto" : "530px", 
+                overflow: "hidden", 
+                position: "relative",
+                marginTop: 1,
+            }}
+        >
             {faqCategories.map((category, catIndex) => (
                 <Box key={catIndex}>
                     <Typography 
                         variant="h4" 
                         align="start" 
                         gutterBottom
-                        sx={{ fontWeight: 'bold', marginBottom: 3, color: '#f15a24', marginTop: 3 }}
+                        sx={{ 
+                            fontWeight: 'bold', 
+                            marginBottom: 3, 
+                            color: '#f15a24', 
+                            marginTop: 3, 
+                            zIndex: showFullContent ? 1 : 0, 
+                        }}
                     >
                         {category.title}
                     </Typography>
@@ -204,6 +232,27 @@ const Faq = () => {
                     ))}
                 </Box>
             ))}
+            {!showFullContent && (
+                <Box 
+                    sx={{ 
+                        position: "absolute", 
+                        bottom: 0, 
+                        width: "100%", 
+                        textAlign: "center", 
+                        backgroundColor: "rgba(255, 255, 255, 1)",
+                        py: 2,
+                        zIndex: 2,
+                    }}
+                >
+                    <Button 
+                        variant="contained" 
+                        color="primary" 
+                        onClick={handleReadMore}
+                    >
+                        Read More
+                    </Button>
+                </Box>
+            )}
         </Container>
     );
 };

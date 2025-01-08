@@ -4,13 +4,15 @@ import "./index.css";
 import App from "./App.jsx";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "../../ui/theme.js";
-import { BrowserRouter } from "react-router-dom";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <App />
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+        <App />
+      </GoogleOAuthProvider>
     </ThemeProvider>
   </StrictMode>
 );
