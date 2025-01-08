@@ -37,7 +37,7 @@ const Footer = () => {
               About Us
             </Typography>
             <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
-              Computer Society of India KJSCE is dedicated to advancing the theory and practice of Computer Science and IT among students.
+              The Computer Society of India - K.J. Somaiya College of Engineering Students' chapter is the largest student network in the college. Boasting a legacy of 20 years, the CSI-KJSCE is committed to providing tech enthusiasts an avenue to explore and collaborate with one another. With various workshops, hackathons, and competitions, we strive hard each time, to deliver on our motto - "We Develop to Inspire".
             </Typography>
           </Box>
 
