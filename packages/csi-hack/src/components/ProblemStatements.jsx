@@ -263,7 +263,7 @@ const ProblemStatements = () => {
         sx={{
           fontFamily: theme.typography.h4.fontFamily,
           fontWeight: "normal",
-          color: "blue",
+          color: "white",
           marginBottom: 4,
           textAlign: "center",
         }}
