@@ -1,15 +1,12 @@
 import React from "react";
 import Carousel from "react-material-ui-carousel";
-import { Paper, Button, Box, colors } from "@mui/material";
+import { Paper, useMediaQuery, Button, Box, colors } from "@mui/material";
+import main from "../assets/nodatebanner.png";
+import domain from "../assets/ps.png";
+import timeline from "../assets/timeline.png";
 
 function CarouselHomePage(props) {
-  var items = [
-    "https://www.sih.gov.in/img1/slider/PM-Banner-Website-Hindi.png",
-    "https://www.sih.gov.in/img1/slider/sih2024-winner-slider-banner.png",
-    "https://www.sih.gov.in/img1/slider/sih-warning-slider.png",
-    "https://www.sih.gov.in/img1/slider/banner-4.png",
-    "https://www.sih.gov.in/img1/slider/banner-3.png",
-  ];
+  var items = [main, domain, timeline];
 
   return (
     <Carousel
@@ -27,12 +24,19 @@ function CarouselHomePage(props) {
 }
 
 function Item(props) {
+  const isMobile = useMediaQuery("(max-width:500px)");
   return (
-    <Paper>
-      <Box width="100%" height="max-content">
-        <img src={props.item} width="100%" alt="Idea" />
-      </Box>
-    </Paper>
+    <Box
+      sx={{
+        width: "100%",
+        marginTop: isMobile ? "0.5rem" : null,
+        height: isMobile ? "230px" : "100vh",
+        maxHeight: isMobile ? null : "780px",
+        border: 0,
+      }}
+    >
+      <img src={props.item} width="100%" alt="Idea" />
+    </Box>
   );
 }
 

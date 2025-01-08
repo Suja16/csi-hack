@@ -47,7 +47,7 @@ const Banner = () => {
           src={somaiyaLogo}
           alt="Somaiya University"
           style={{
-            maxWidth: "150px",
+            width: "200px",
             height: "auto",
             marginLeft: isMobile ? "0" : "8px",
             marginRight: "10px",
@@ -58,7 +58,7 @@ const Banner = () => {
           src={euclidLogo}
           alt="IBA"
           style={{
-            maxWidth: "100px",
+            maxWidth: "200px",
             height: "auto",
             marginLeft: isMobile ? "0" : "8px",
           }}
@@ -98,7 +98,7 @@ const Banner = () => {
           <img
             src={ibaLogo}
             alt="IBA"
-            style={{ maxWidth: "80px", height: "auto" }}
+            style={{ width: "80px", height: "auto" }}
           />
           <img
             src={dfsLogo}
