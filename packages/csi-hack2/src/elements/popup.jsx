@@ -1,6 +1,6 @@
 import { Dialog, DialogContent } from "@mui/material";
 
-export default function Popup(children, dialogProps) {
+export default function Popup({ children, dialogProps }) {
   return (
     <Dialog
       fullWidth
@@ -18,7 +18,14 @@ export default function Popup(children, dialogProps) {
         }
       }}
     >
-      <DialogContent dividers sx={{ p: 0 }}>
+      <DialogContent
+        dividers
+        sx={{
+          paddingY: { xs: 2, md: 2 },
+          overflowY: "scroll",
+          maxHeight: "85vh",
+        }}
+      >
         {children}
       </DialogContent>
     </Dialog>
