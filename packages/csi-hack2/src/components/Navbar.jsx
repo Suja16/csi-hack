@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Box, Typography, useMediaQuery } from "@mui/material";
+import Logo from "../assets/CroppedfinalLogo.png";
+
 import MenuIcon from "@mui/icons-material/Menu";
 
 const Navbar = () => {
@@ -27,14 +29,12 @@ const Navbar = () => {
         bgcolor="white"
         paddingY={"10px"}
         sx={{
-          borderBottomRightRadius: "25px",
-          borderBottomLeftRadius: "25px",
           paddingLeft: { xs: "10px", md: "50px" },
         }}
       >
-        {/* <Box width={"10%"}> */}
-        {/*   <img height="55px" width="110px" src={Logo} alt="Logo" /> */}
-        {/* </Box> */}
+        <Box width={"10%"}>
+          <img height="55px" width="110px" src={Logo} alt="Logo" />
+        </Box>
         <Box
           display={"flex"}
           justifyContent={"center"}
@@ -42,7 +42,7 @@ const Navbar = () => {
           gap={7}
           width={"90%"}
           sx={{
-            display: { xs: "none", md: "flex" },
+            display: { xs: "none", lg: "flex" },
           }}
         >
           <Typography
@@ -116,7 +116,7 @@ const Navbar = () => {
           onClick={() => setHamMenu(!hamMenu)}
           sx={{
             paddingRight: { xs: "30px", md: isMid ? "40px" : "90px" },
-            display: { xs: "block", md: "none" },
+            display: { xs: "block", lg: "none" },
           }}
         >
           <MenuIcon />
@@ -132,7 +132,7 @@ const Navbar = () => {
         gap={3.5}
         sx={{
           left: { xs: "9px", md: "5px" },
-          display: { xs: "flex", md: "none" },
+          display: { xs: "flex", lg: "none" },
           flexDirection: "column",
           padding: "20px",
           paddingLeft: "30px",
