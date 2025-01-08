@@ -1,12 +1,13 @@
 import React from "react";
 import Carousel from "react-material-ui-carousel";
 import { Paper, useMediaQuery, Button, Box, colors } from "@mui/material";
-import main from "../assets/nodatebanner.png";
+import main from "../assets/main.png";
 import domain from "../assets/ps.png";
+import goodies from "../assets/goodies.png";
 import timeline from "../assets/timeline.png";
 
 function CarouselHomePage(props) {
-  var items = [main, domain, timeline];
+  var items = [main, domain, timeline , goodies];
 
   return (
     <Carousel
@@ -28,14 +29,16 @@ function Item(props) {
   return (
     <Box
       sx={{
-        width: "100%",
-        marginTop: isMobile ? "0.5rem" : null,
-        height: isMobile ? "230px" : "100vh",
-        maxHeight: isMobile ? null : "780px",
+        display:"flex",
+        justifyContent:"center",
+        width: "100vw",
+        height: isMobile ? "max-content" : "100vh",
+        maxHeight: isMobile ? null : "43rem",
         border: 0,
+
       }}
     >
-      <img src={props.item} width="100%" alt="Idea" />
+      <img sx={{objectFit : "cover"}} src={props.item} width="100%" alt="Idea" />
     </Box>
   );
 }
