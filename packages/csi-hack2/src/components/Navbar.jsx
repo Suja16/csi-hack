@@ -39,10 +39,10 @@ const Navbar = () => {
           display={"flex"}
           justifyContent={"center"}
           alignItems={"center"}
-          gap={10}
+          gap={7}
           width={"90%"}
           sx={{
-            display: { xs: "none", lg: "flex" },
+            display: { xs: "none", md: "flex" },
           }}
         >
           <Typography
@@ -116,7 +116,7 @@ const Navbar = () => {
           onClick={() => setHamMenu(!hamMenu)}
           sx={{
             paddingRight: { xs: "30px", md: isMid ? "40px" : "90px" },
-            display: { xs: "block", lg: "none" },
+            display: { xs: "block", md: "none" },
           }}
         >
           <MenuIcon />
@@ -132,7 +132,7 @@ const Navbar = () => {
         gap={3.5}
         sx={{
           left: { xs: "9px", md: "5px" },
-          display: { xs: "flex", lg: "none" },
+          display: { xs: "flex", md: "none" },
           flexDirection: "column",
           padding: "20px",
           paddingLeft: "30px",
