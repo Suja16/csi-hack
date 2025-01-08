@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Box, Typography, useMediaQuery } from "@mui/material";
+import Logo from "../assets/CroppedfinalLogo.png";
+
 import MenuIcon from "@mui/icons-material/Menu";
 
 const Navbar = () => {
@@ -27,19 +29,17 @@ const Navbar = () => {
         bgcolor="white"
         paddingY={"10px"}
         sx={{
-          borderBottomRightRadius: "25px",
-          borderBottomLeftRadius: "25px",
           paddingLeft: { xs: "10px", md: "50px" },
         }}
       >
-        {/* <Box width={"10%"}> */}
-        {/*   <img height="55px" width="110px" src={Logo} alt="Logo" /> */}
-        {/* </Box> */}
+        <Box width={"10%"}>
+          <img height="55px" width="110px" src={Logo} alt="Logo" />
+        </Box>
         <Box
           display={"flex"}
           justifyContent={"center"}
           alignItems={"center"}
-          gap={10}
+          gap={7}
           width={"90%"}
           sx={{
             display: { xs: "none", lg: "flex" },
@@ -126,7 +126,7 @@ const Navbar = () => {
         height="400px"
         bgcolor="white"
         position={"fixed"}
-        top={"85px"}
+        top={"65px"}
         borderRadius="15px"
         zIndex={30}
         gap={3.5}
