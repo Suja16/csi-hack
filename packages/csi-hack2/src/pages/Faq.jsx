@@ -3,8 +3,7 @@ import { Accordion, AccordionSummary, AccordionDetails, Typography, Container, B
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 
-// set the isExpanded to false to use the read more button
-const Faq = ({ isExpanded = false }) => {
+const Faq = ({ isExpanded }) => {
     const [expanded, setExpanded] = useState(false);
     const [showFullContent, setShowFullContent] = useState(isExpanded);
 

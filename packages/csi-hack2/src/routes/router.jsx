@@ -18,8 +18,9 @@ const router = createBrowserRouter(
       <Route Component={NavFootLayout}>
         <Route index Component={HomePage} />
         <Route path="guidelines" Component={Guidelines} />
-        <Route path="faq" Component={Faq} />
+        <Route path="faq" Component={() => <Faq isExpanded={true} />} />
         <Route path="team" Component={Team} />
+
       </Route>
     </Route>
   ),

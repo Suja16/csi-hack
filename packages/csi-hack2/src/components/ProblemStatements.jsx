@@ -2,6 +2,9 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 import CustomizedDialogs from "./ProbLemStatementCards";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import fintech from "../assets/fintech.png";
+import cybersecurity from "../assets/cybersecurity.png";
+import genai from "../assets/genai.png";
 
 function ProblemStatements(props) {
   const isMobile = useMediaQuery("(max-width:500px)");
@@ -48,7 +51,8 @@ function ProblemStatements(props) {
       `,
     },
     {
-      title: "Cybersecurity: Advanced Fraud Detection Mechanisms",
+      title:
+        "Need for Government Agencies Assistance for takedown of Malicious/Phishing domain",
       description:
         "Challenges in phishing domain takedowns and expected solutions.",
       fullContent: `
@@ -85,8 +89,8 @@ function ProblemStatements(props) {
         <div style="padding-left:3px;">
         ${
           isMobile
-            ? "<h3 style='color: #634647; letter-spacing: 4px;'>Financial Institutions Struggle With:</h3>"
-            : "<h2 style='color: #634647; letter-spacing: 4px;'>Financial Institutions Struggle With:</h2>"
+            ? "<h3 style='color: #634647; letter-spacing: 3px;'>Financial Institutions Struggle With:</h3>"
+            : "<h2 style='color: #634647; letter-spacing: 3px;'>Financial Institutions Struggle With:</h2>"
         }
         </div>
         <ul>
@@ -160,11 +164,16 @@ function ProblemStatements(props) {
     },
   ];
 
+  const imgList = [fintech, cybersecurity, genai];
+
   return (
     <Box
       sx={{
         marginTop: "1rem",
-        height: "100vh",
+        height: "max-content",
+        marginY: 10,
+        paddingBottom:10,
+        borderBottom:"1px solid grey",
       }}
     >
       <Typography
@@ -194,6 +203,7 @@ function ProblemStatements(props) {
               title={value.title}
               description={value.description}
               fullContent={value.fullContent}
+              imgValue={imgList[key]}
             />
           );
         })}
