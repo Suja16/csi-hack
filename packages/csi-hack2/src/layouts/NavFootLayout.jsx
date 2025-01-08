@@ -25,10 +25,6 @@ export default function FooterLayout() {
         <Box
           sx={{
             flexGrow: 1,
-            marginBottom: {
-              xs: '26rem',
-              sm: '22rem'
-            }
           }}
         >
           <Outlet />
