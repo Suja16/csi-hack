@@ -146,8 +146,7 @@ export default function CustomizedDialogs({ title, description, fullContent }) {
             onClick={handleClose}
             sx={(theme) => ({
               position: "absolute",
-              right: 8,
-              top: 8,
+              right: 0,
               color: theme.palette.grey[500],
             })}
           >
@@ -156,7 +155,7 @@ export default function CustomizedDialogs({ title, description, fullContent }) {
 
           <Typography
             variant={isMobile ? "subtitle1" : "h4"}
-            sx={{ m: 0, py:2 }}
+            sx={{ m: 0, py:2 , pt:5 }}
             id="customized-dialog-title"
           >
             {title}

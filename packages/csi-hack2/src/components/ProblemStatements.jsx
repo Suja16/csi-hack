@@ -48,7 +48,8 @@ function ProblemStatements(props) {
       `,
     },
     {
-      title: "Cybersecurity: Advanced Fraud Detection Mechanisms",
+      title:
+        "Need for Government Agencies Assistance for takedown of Malicious/Phishing domain",
       description:
         "Challenges in phishing domain takedowns and expected solutions.",
       fullContent: `
@@ -164,7 +165,8 @@ function ProblemStatements(props) {
     <Box
       sx={{
         marginTop: "1rem",
-        height: "100vh",
+        height: "max-content",
+        marginY: 10,
       }}
     >
       <Typography
