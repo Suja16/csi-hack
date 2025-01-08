@@ -41,6 +41,23 @@ const Faq = () => {
             ]
         },
         {
+            title: "Registration FAQ's",
+            questions: [
+                {
+                    question: "Is there a registration fee for the event?",
+                    answer: "The event is complimentary, including all amenities, catering services, and resources required for participation."
+                },
+                {
+                    question: "Is it only open to students, or can working professionals also join?",
+                    answer: "Participants must be Undergraduate Students attending a recognised university."
+                },
+                {
+                    question: "Can I attend virtually?",
+                    answer: "No. This is a fully in-person event and participants must be present at the venue throughout the hackathon."
+                }
+            ]
+        },
+        {
             title: "Team FAQ's",
             questions: [
                 {
@@ -62,23 +79,6 @@ const Faq = () => {
                 {
                     question: "Will there be mentors?",
                     answer: "Yes, mentors will be available during the event to provide guidance and support."
-                }
-            ]
-        },
-        {
-            title: "Registration FAQ's",
-            questions: [
-                {
-                    question: "Is there a registration fee for the event?",
-                    answer: "The event is complimentary, including all amenities, catering services, and resources required for participation."
-                },
-                {
-                    question: "Is it only open to students, or can working professionals also join?",
-                    answer: "Participants must be Undergraduate Students attending a recognised university."
-                },
-                {
-                    question: "Can I attend virtually?",
-                    answer: "No. This is a fully in-person event and participants must be present at the venue throughout the hackathon."
                 }
             ]
         },
