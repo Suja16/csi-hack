@@ -17,6 +17,7 @@ const Footer = () => {
         bgcolor: 'primary.main',
         color: 'white',
         bottom: 0,
+        position: 'relative',
         left: 0,
         right: 0,
         boxShadow: '0px -2px 4px rgba(0,0,0,0.1)',
