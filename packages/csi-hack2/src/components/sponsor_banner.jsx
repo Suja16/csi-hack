@@ -9,19 +9,21 @@ const Banner = () => {
   const isMobile = useMediaQuery("(max-width:792px)");
 
   return (
-    <Box sx={{
-      width:"100vw",
-      height:"100px",
-      display:"flex",
-      flexDirection: isMobile ? "column" : "row",
-      alignItems: "center",
-      justifyContent: "space-evenly",
-      paddingX: "30px",
-      paddingY: "20px",
-      
-    }}>
-{/* "In Association With" wala section */}
-<Box
+    <Box
+      sx={{
+        width: "100vw",
+        height: "max-content",
+        display: "flex",
+        flexDirection: isMobile ? "column" : "row",
+        alignItems: "center",
+        justifyContent: "space-evenly",
+        paddingX: "30px",
+        paddingY: "20px",
+        borderBottom: "1px solid #3f4147",
+      }}
+    >
+      {/* "In Association With" wala section */}
+      <Box
         sx={{
           display: "flex",
           flexDirection: isMobile ? "column" : "row",

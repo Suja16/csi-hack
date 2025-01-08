@@ -95,7 +95,7 @@ const HackathonGuidelines = () => {
         </Typography>
 
         <Box sx={{
-          maxHeight: expanded ? 'none' : 400,
+          maxHeight: expanded ? 'none' : 600,
           overflow: expanded ? 'auto' : 'hidden',
         }}>
           {sections.map((section, index) => (
