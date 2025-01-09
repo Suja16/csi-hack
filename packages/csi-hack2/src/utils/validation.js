@@ -52,7 +52,7 @@ const registrationSchema =
           //   },
           // ),
 
-    why_this_hackathon: yup.string().required("'Why this hackathon' is required")
+    why_this_hackathon: yup.string().notRequired()
           .min(100, "At least 100 characters are required"),
 
     resume: yup.mixed().required("Resume is required")
