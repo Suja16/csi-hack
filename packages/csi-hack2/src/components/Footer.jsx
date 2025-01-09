@@ -21,6 +21,7 @@ const Footer = () => {
         left: 0,
         right: 0,
         boxShadow: '0px -2px 4px rgba(0,0,0,0.1)',
+        justifyContent: 'center',
       }}
     >
       <Container maxWidth="lg">
@@ -38,7 +39,7 @@ const Footer = () => {
               About Us
             </Typography>
             <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
-              The Computer Society of India - K.J. Somaiya College of Engineering Students' chapter is the largest student network in the college. Boasting a legacy of 20 years, the CSI-KJSCE is committed to providing tech enthusiasts an avenue to explore and collaborate with one another. With various workshops, hackathons, and competitions, we strive hard each time, to deliver on our motto - "We Develop to Inspire".
+              The Computer Society of India - K.J. Somaiya College of Engineering Students&apos; chapter is the largest student network in the college. Boasting a legacy of 20 years, the CSI-KJSCE is committed to providing tech enthusiasts an avenue to explore and collaborate with one another. With various workshops, hackathons, and competitions, we strive hard each time, to deliver on our motto - &quot;We Develop to Inspire&quot;.
             </Typography>
           </Box>
 
