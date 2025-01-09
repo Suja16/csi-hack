@@ -21,16 +21,17 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
 
   const navItems = [
     { label: "HOME", href: "/" },
-    { label: "PROBLEM STATEMENTS", href: "#problems" },
+    // { label: "PROBLEM STATEMENTS", href: "#problems" },
     { label: "GUIDELINES", href: "/guidelines" },
     { label: "FAQs", href: "/faq" },
     // { label: "PRIZES", href: "#prizes" },
     { label: "CONTACT US", href: "#contact" },
+    ...(eventData && eventData.Participant ? [{ label: "TEAM", href: "/team" }] : [])
   ];
 
   const handleSmoothScroll = (e, targetId) => {
     e.preventDefault();
-    if (targetId === "/" || targetId === "/guidelines" || targetId === "/faq") {
+    if (targetId === "/" || targetId === "/guidelines" || targetId === "/faq" || targetId === "/team") {
       navigate(targetId);
     } else {
       const target = document.querySelector(targetId);
@@ -66,13 +67,15 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
           padding: 2,
         }}
       >
-        <img
-          height="40vw"
-          width="140vw"
-          src={Logo}
-          alt="Logo"
-          style={{ scale: "1.5", paddingLeft: "1rem" }}
-        />
+        <Link to="/">
+          <img
+            height="40vw"
+            width="140vw"
+            src={Logo}
+            alt="Logo"
+            style={{ scale: "1.5", paddingLeft: "1rem" }}
+          />
+        </Link>
         {!isMid && (
           <>
             <Box

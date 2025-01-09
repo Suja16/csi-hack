@@ -34,31 +34,33 @@ const Footer = () => {
             justifyContent: 'space-between',
           }}
         >
-          <Box sx={{ flex: { xs: '1 1 100%', sm: '1 1 calc(33.33% - 32px)' } }}>
+          <Box sx={{ flex: { xs: '1 1 100%', sm: '0 1 45%' } }}>
             <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', textAlign: 'justify' }}>
               About Us
             </Typography>
             <Typography variant="body2" sx={{ fontSize: '0.875rem', textAlign: 'justify' }}>
-              Welcome to iDEA, the Union Bank of India Hackathon, a groundbreaking initiative of the Union Bank of India in collaboration with KJ Somaiya School of Engineering (KJSSE), Somaiya Vidyavihar University (SVU) and under the guidance of the Indian Banks’ Association (IBA), and the Department of Financial Services (DFS). This hackathon represents a concerted effort under the Ministry of Finance’s vision to foster innovation and excellence in the realms of financial technology (fintech) and cybersecurity.
+              Welcome to iDEA, the Union Bank of India Hackathon, a groundbreaking initiative of the Union Bank of India in collaboration with KJ Somaiya School of Engineering (KJSSE), Somaiya Vidyavihar University (SVU) and under the guidance of the Indian Banks' Association (IBA), and the Department of Financial Services (DFS). This hackathon represents a concerted effort under the Ministry of Finance's vision to foster innovation and excellence in the realms of financial technology (fintech) and cybersecurity.
             </Typography>
           </Box>
 
-          <Box sx={{ flex: { xs: '1 1 100%', sm: '1 1 calc(33.33% - 32px)' } }}>
+          <Box sx={{ flex: { xs: '1 1 100%', sm: '0 0 auto' } }}>
             <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold', textAlign: 'justify' }}>
               Contact Us
             </Typography>
-            <Link href="mailto:csi-kjsce@somaiya.edu" color="inherit" sx={{ display: 'flex', alignItems: 'center', mb: 1, justifyContent: 'flex-start' }}>
-              <Mail fontSize="small" sx={{ mr: 1 }} />
-              <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>csi-kjsce@somaiya.edu</Typography>
-            </Link>
-            <Link href="tel:+918657432101" color="inherit" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
-              <Phone fontSize="small" sx={{ mr: 1 }} />
-              <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>+91 8657432101</Typography>
-            </Link>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              <Link href="mailto:csi-kjsce@somaiya.edu" color="inherit" sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                <Mail fontSize="small" sx={{ mr: 1 }} />
+                <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>csi-kjsce@somaiya.edu</Typography>
+              </Link>
+              <Link href="tel:+918657432101" color="inherit" sx={{ display: 'flex', alignItems: 'center' }}>
+                <Phone fontSize="small" sx={{ mr: 1 }} />
+                <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>+91 8657432101</Typography>
+              </Link>
+            </Box>
           </Box>
 
-          <Box sx={{ flex: { xs: '1 1 100%', sm: '1 1 calc(33.33% - 32px)' } }}>
-            <Typography variant="h6" gutterBottom sx={{ textAlign: 'justify' }}>
+          <Box sx={{ flex: { xs: '1 1 100%', sm: '0 0 auto' } }}>
+            <Typography paddingLeft="0.6rem" variant="h5" gutterBottom sx={{ fontWeight: 'bold', textAlign: 'justify' }}>
               Follow Us
             </Typography>
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', gap: 1 }}>

@@ -87,10 +87,9 @@ function ProblemStatements(props) {
       fullContent: `
         <p>With the rise of digital banking, financial institutions face an increasing threat of financial crimes like money laundering and fraud. This document explores how Generative AI (GenAI) can help address these challenges through large-scale data analysis to provide real-time, actionable insights. Hypothetical use cases involving individuals like Naman and Arnav illustrate practical applications.</p>
         <div style="padding-left:3px;">
-        ${
-          isMobile
-            ? "<h3 style='color: #634647; letter-spacing: 3px;'>Financial Institutions Struggle With:</h3>"
-            : "<h2 style='color: #634647; letter-spacing: 3px;'>Financial Institutions Struggle With:</h2>"
+        ${isMobile
+          ? "<h3 style='color: #634647; letter-spacing: 3px;'>Financial Institutions Struggle With:</h3>"
+          : "<h2 style='color: #634647; letter-spacing: 3px;'>Financial Institutions Struggle With:</h2>"
         }
         </div>
         <ul>
@@ -199,17 +198,25 @@ function ProblemStatements(props) {
       >
         {data.map((value, key) => {
           return (
-            <CustomizedDialogs
-              title={value.title}
-              description={value.description}
-              fullContent={value.fullContent}
-              imgValue={imgList[key]}
+            <Box
               key={key}
-            />
+              sx={{
+                transform: 'scale(1)',
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  transform: 'scale(1.09)',
+                }
+              }}
+            >
+              <CustomizedDialogs
+                title={value.title}
+                description={value.description}
+                fullContent={value.fullContent}
+                imgValue={imgList[key]}
+              />
+            </Box>
           );
         })}
-        {/* <CustomizedDialogs />
-        <CustomizedDialogs /> */}
       </Box>
     </Box>
   );
