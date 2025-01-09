@@ -198,6 +198,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
               borderRadius="10px"
               marginY="0.5rem"
               display="flex"
+              gap={2}
               justifyContent="space-between"
               alignItems="center"
             >
