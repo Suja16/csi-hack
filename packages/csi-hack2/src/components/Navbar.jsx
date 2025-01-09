@@ -8,11 +8,11 @@ import { Link, useNavigate } from "react-router-dom";
 import LoadingButton from '@mui/lab/LoadingButton';
 import UserDataContext from "../contexts/userDataContext";
 
-const Navbar = ({ userData, login, open, setopen, isLoading }) => {
+const Navbar = ({ login, open, setopen, isLoading }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMid = useMediaQuery("(max-width:1146px)");
   const navigate = useNavigate();
-  const { userData: userData2, setUserData, eventData } = useContext(UserDataContext);
+  const { userData, setUserData, eventData } = useContext(UserDataContext);
 
   const navItems = [
     { label: "HOME", href: "/" },
@@ -94,7 +94,7 @@ const Navbar = ({ userData, login, open, setopen, isLoading }) => {
                 </Typography>
               ))}
             </Box>
-            {!userData2 ? (
+            {!userData ? (
               <LoadingButton onClick={() => login()} loading={isLoading} variant="contained" color="primary">
                 Register Now
               </LoadingButton>

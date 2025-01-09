@@ -209,7 +209,7 @@ export default function RegistrationForm({ open, onClose }) {
           }
         );
         localStorage.setItem("status", "true");
-        const eventResponse = await axios.post("/api/v1/event/get/47", {}, {
+        const eventResponse = await axios.post("/api/v1/event/p/get/47", {}, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
