@@ -32,7 +32,7 @@ export default function FooterLayout() {
       localStorage.setItem("user", response.data.user);
       setUserData(response.data.user);
       const participantResponse = await axios.post(
-        `/api/v1/event/p/get/47`,
+        `/api/v1/event/p/get/`+import.meta.env.VITE_EVENT_ID,
         {},
         {
           headers: {

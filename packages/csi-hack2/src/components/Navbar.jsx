@@ -14,12 +14,17 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
   const navigate = useNavigate();
   const { userData, setUserData, eventData } = useContext(UserDataContext);
 
+  useEffect(() => {
+    console.log("USER", userData);
+    console.log("EVENT", eventData);
+  }, [userData, eventData]);
+
   const navItems = [
     { label: "HOME", href: "/" },
     { label: "PROBLEM STATEMENTS", href: "#problems" },
     { label: "GUIDELINES", href: "/guidelines" },
     { label: "FAQs", href: "/faq" },
-    { label: "PRIZES", href: "#prizes" },
+    // { label: "PRIZES", href: "#prizes" },
     { label: "CONTACT US", href: "#contact" },
   ];
 
@@ -94,19 +99,21 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
                 </Typography>
               ))}
             </Box>
+            <Box width="15rem">
             {!userData ? (
-              <LoadingButton onClick={() => login()} loading={isLoading} variant="contained" color="primary">
+              <LoadingButton onClick={() => login()} loading={isLoading} variant="contained" color="primary" paddingY="2rem" >
                 Register Now
               </LoadingButton>
             ) : eventData?.Particiapant ? (
-              <LoadingButton onClick={() => logout()} loading={isLoading} variant="contained" color="primary">
+              <LoadingButton onClick={() => logout()} loading={isLoading} variant="contained" color="primary" paddingY="2rem" >
                 Logout
               </LoadingButton>
             ) : (
-              <LoadingButton onClick={() => setopen(true)} loading={isLoading} variant="contained" color="primary">
+              <LoadingButton onClick={() => setopen(true)} loading={isLoading} variant="contained" color="primary" paddingY="2rem" >
                 Register Now
               </LoadingButton>
             )}
+            </Box>
           </>
         )}
         {open && (

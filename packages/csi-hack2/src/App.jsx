@@ -34,7 +34,7 @@ function App() {
     const getParticipantData = async () => {
       try {
         const response = await axios.post(
-          `/api/v1/event/p/get/47`,
+          `/api/v1/event/p/get/`+import.meta.env.VITE_EVENT_ID,
           {},
           {
             headers: {

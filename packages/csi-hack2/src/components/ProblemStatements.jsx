@@ -198,7 +198,6 @@ function ProblemStatements(props) {
         }}
       >
         {data.map((value, key) => {
-          console.log(value);
           return (
             <CustomizedDialogs
               title={value.title}

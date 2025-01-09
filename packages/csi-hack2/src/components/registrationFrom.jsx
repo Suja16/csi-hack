@@ -157,7 +157,7 @@ export default function RegistrationForm({ open, onClose }) {
         localStorage.setItem("teamName", data.team_name);
         console.log(teamResponse);
 
-        const eventResponse = await axios.post("/api/v1/event/p/get/47", {}, {
+        const eventResponse = await axios.post("/api/v1/event/p/get/"+import.meta.env.VITE_EVENT_ID, {}, {
           baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
