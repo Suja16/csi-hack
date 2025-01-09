@@ -104,7 +104,7 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
               <LoadingButton onClick={() => login()} loading={isLoading} variant="contained" color="primary" paddingY="2rem" >
                 Register Now
               </LoadingButton>
-            ) : eventData?.Particiapant ? (
+            ) : eventData?.Participant ? (
               <LoadingButton onClick={() => logout()} loading={isLoading} variant="contained" color="primary" paddingY="2rem" >
                 Logout
               </LoadingButton>
