@@ -254,7 +254,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
           Leave Team
         </Button> */}
       </Grid2>
-      {!eventData.Participant.team.submissions ? (
+      {!eventData.Participant.team.submissions && userData.id === eventData.Participant.team.leader_id ? (
         <>
           <Grid2
             item
@@ -379,7 +379,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
             </Button>
           </Grid2>
           <Typography variant="caption" color="error" sx={{ paddingY: 2 }}>
-            *All team members are required to submit attachment
+            *Only team leader is required to submit attachments
           </Typography>
         </>
       ) : (
@@ -393,7 +393,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
         >
           <Typography variant="h5">Your Submission</Typography>
           <Typography variant="body1">
-            Your submission has been recorded.
+            {eventData.Participant.team.submissions ? "Your submission has been recorded." : "Your team leader has not submitted the project yet."}
           </Typography>
         </Grid2>
       )}
