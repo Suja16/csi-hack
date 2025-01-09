@@ -68,7 +68,7 @@ export default function FooterLayout() {
       />
       <Box
         sx={{
-          paddingTop: "6rem",
+          paddingTop: "5rem",
           flexGrow: 1,
           display: "flex",
           flexDirection: "column",

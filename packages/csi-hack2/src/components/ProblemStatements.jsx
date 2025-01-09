@@ -171,9 +171,13 @@ function ProblemStatements(props) {
       id="problems"
       sx={{
         marginTop: "1rem",
-        height: "max-content",
+        height: { xs: "max-content", lg: "100vh" },
         marginY: 10,
-        paddingBottom: 10,
+        paddingY: 10,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-around",
+        alignItems: "center",
         borderBottom: "1px solid grey",
       }}
     >
@@ -188,12 +192,12 @@ function ProblemStatements(props) {
       <Box
         sx={{
           width: "100%",
-          height: "70vh",
+          height: "max-content",
           marginTop: "4rem",
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-evenly",
-          flexDirection: { xs: "column", md: "row" },
+          justifyContent: "center",
+          flexDirection: { xs: "column", lg: "row" },
           gap: 5,
           cursor: "pointer",
         }}

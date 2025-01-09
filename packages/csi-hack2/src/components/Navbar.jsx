@@ -74,8 +74,6 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
         bgcolor="white"
         paddingY={2}
         sx={{
-          borderBottomRightRadius: "25px",
-          borderBottomLeftRadius: "25px",
           padding: 2,
         }}
       >
@@ -124,7 +122,14 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
                   color="primary"
                   paddingY="2rem"
                 >
-                  Register Now
+                  <Typography
+                    variant="body3"
+                    sx={{
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Register Now
+                  </Typography>
                 </LoadingButton>
               ) : eventData?.Participant ? (
                 <LoadingButton
@@ -196,7 +201,10 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
             variant="h6"
             component={Link}
             to={item.href}
-            onClick={(e) => handleSmoothScroll(e, item.href)}
+            onClick={(e) => {
+              handleSmoothScroll(e, item.href);
+              setIsMenuOpen(!isMenuOpen);
+            }}
             sx={{
               textDecoration: "none",
               color: "black",

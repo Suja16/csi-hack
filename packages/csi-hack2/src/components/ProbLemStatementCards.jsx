@@ -31,13 +31,13 @@ export default function CustomizedDialogs({
         onClick={handleClickOpen}
         sx={{
           width: "100%",
-          height: "100%",
+          height: "max-content",
           display: "flex",
           alignItems: "center",
           flexDirection: "column",
           justifyContent: "center",
           gap: 2,
-          paddingX: "4rem",
+          paddingX: { xs: "5rem", md: "10rem", lg: "4rem" },
           // boxShadow:
           //   "rgba(60, 64, 67, 0.3) 0 1px 2px 0, rgba(60, 64, 67, 0.15) 0 2px 6px 2px",
         }}
@@ -52,7 +52,7 @@ export default function CustomizedDialogs({
           onClose: handleClose, // onClose handler to close the dialog
         }}
       >
-        <Box sx={{ position: "relative" }}>
+        <Box sx={{ position: "relative", p: 2, pl: 4, pr: 7 }}>
           <IconButton
             aria-label="close"
             onClick={handleClose}
@@ -64,10 +64,29 @@ export default function CustomizedDialogs({
           >
             <CloseIcon />
           </IconButton>
-
+          <Typography
+            variant={isMobile ? "body2" : "h4"}
+            component="h3"
+            sx={{
+              textAlign: "justify",
+              textDecoration: "unerline",
+              color: "red",
+              letterSpacing: "0.2px",
+              width: "max-content",
+              fontWeight: "bold",
+              // borderBottom: "1px solid black",
+              m: 0,
+              mt: 3,
+              mb: 2,
+              pt: 2,
+            }}
+            id="customized-dialog-title"
+          >
+            Problem Statement :
+          </Typography>
           <Typography
             variant={isMobile ? "subtitle1" : "h4"}
-            component="h2"
+            component={isMobile ? "subtitle1" : "h4"}
             sx={{
               textAlign: "justify",
               fontWeight: "bold",
@@ -76,7 +95,7 @@ export default function CustomizedDialogs({
               letterSpacing: "0.2px",
               m: 0,
               py: 2,
-              pt: 5,
+              pt: 2,
             }}
             id="customized-dialog-title"
           >
