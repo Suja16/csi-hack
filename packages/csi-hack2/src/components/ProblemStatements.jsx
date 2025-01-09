@@ -20,33 +20,33 @@ function ProblemStatements(props) {
         <p>The goal is to design and implement a highly accurate facial recognition system that can authenticate and accept customer service queries via video/audio recordings and create appointments for customer support. The system should streamline the process for both new and existing customers, while enhancing security, fraud prevention, and customer experience. The solution needs to provide a service ticket with a detailed analytical snapshot of the customer's profile and direct customers to the right business unit based on their needs.</p>
         <h3 style='color: #634647;'>Core Components of the Solution:</h3>
         <ul>
-          <li><h4>Facial Recognition Authentication</h4></li>
-          <li><h4>Video/Audio Query Acceptance</h4></li>
-          <li><h4>Service Ticket Creation</h4></li>
-          <li><h4>Customer Redirection for New Customers</h4></li>
-          <li><h4>AI-Powered Risk Mitigation and Data Gathering</h4></li>
-          <li><h4>Feedback Module for Continuous Improvement</h4></li>
-          <li><h4>Cost-Effective and Deployable to Rural Branches</h4></li>
+          <li><p>Facial Recognition Authentication</p></li>
+          <li><p>Video/Audio Query Acceptance</p></li>
+          <li><p>Service Ticket Creation</p></li>
+          <li><p>Customer Redirection for New Customers</p></li>
+          <li><p>AI-Powered Risk Mitigation and Data Gathering</p></li>
+          <li><p>Feedback Module for Continuous Improvement</p></li>
+          <li><p>Cost-Effective and Deployable to Rural Branches</p></li>
         </ul>
         <h3 style='color: #634647; margin-top:2rem;'>Real-Life Use Case: Vatsalya’s Interaction with the System</h3>
         <p><strong>Scenario 1: Existing Customer (Vatsalya)</strong></p>
         <ul>
-          <li><h4>Vatsalya is an existing customer of the Union Bank Of India and needs assistance with a loan query. He opens the mobile banking app of Union Bank, Vyom and is prompted by the Union Bank’s Chatbot UVA to record a short video explaining his question.</h4></li>
-          <li><h4>The facial recognition system authenticates his identity using the facial model stored in the app, along with his Aadhaar-based authentication.</h4></li>
-          <li><h4>The system creates a service ticket and pulls an analytical snapshot of Vatsalya’s financial profile, highlighting his credit score, previous loan applications, and spending habits. Based on this data, the system suggests a loan option with the relevant details.</h4></li>
-          <li><h4>Vatsalya receives an appointment confirmation for a video call with a customer service representative to discuss the loan options further.</h4></li>
+          <li><p>Vatsalya is an existing customer of the Union Bank Of India and needs assistance with a loan query. He opens the mobile banking app of Union Bank, Vyom and is prompted by the Union Bank’s Chatbot UVA to record a short video explaining his question.</p></li>
+          <li><p>The facial recognition system authenticates his identity using the facial model stored in the app, along with his Aadhaar-based authentication.</p></li>
+          <li><p>The system creates a service ticket and pulls an analytical snapshot of Vatsalya’s financial profile, highlighting his credit score, previous loan applications, and spending habits. Based on this data, the system suggests a loan option with the relevant details.</p></li>
+          <li><p>Vatsalya receives an appointment confirmation for a video call with a customer service representative to discuss the loan options further.</p></li>
         </ul>
         <p><strong>Scenario 2: New Customer</strong></p>
         <ul>
-          <li><h4>A new customer, Ravi, downloads the Union Bank Of India’s mobile app Vyom and begins the onboarding process. He uploads his Aadhaar and PAN card details.</h4></li>
-          <li><h4>The system fetches information from these records, assesses Ravi’s financial background, and routes him to the loan department because his profile indicates he is interested in a housing loan.</h4></li>
-          <li><h4>Ravi’s service ticket is generated with an analytical snapshot that includes his credit score, income, and potential eligibility for various loan options.</h4></li>
-          <li><h4>Ravi is then directed to the loan officer, who receives the ticket with personalized suggestions for Ravi based on the data.</h4></li>
+          <li><p>A new customer, Ravi, downloads the Union Bank Of India’s mobile app Vyom and begins the onboarding process. He uploads his Aadhaar and PAN card details.</p></li>
+          <li><p>The system fetches information from these records, assesses Ravi’s financial background, and routes him to the loan department because his profile indicates he is interested in a housing loan.</p></li>
+          <li><p>Ravi’s service ticket is generated with an analytical snapshot that includes his credit score, income, and potential eligibility for various loan options.</p></li>
+          <li><p>Ravi is then directed to the loan officer, who receives the ticket with personalized suggestions for Ravi based on the data.</p></li>
         </ul>
         <h2 style='color: #634647;'>Expected Solution:</h2>
         <ul>
-          <li><h4>The solution should integrate a face training model within the Union bank of India’s mobile app Vyom for fraud prevention, utilizing AADHAAR-based authentication to verify customer identities and enable edge processing. This will ensure secure transactions and minimize identity fraud risks, even in remote areas.</h4></li>
-          <li><h4>A feedback module should generate AI-driven suggestions for branches and staff, analyzing customer interactions and transaction patterns to enhance service quality and deriving actionable insights for better customer service and resource allocation.</h4></li>
+          <li><p>The solution should integrate a face training model within the Union bank of India’s mobile app Vyom for fraud prevention, utilizing AADHAAR-based authentication to verify customer identities and enable edge processing. This will ensure secure transactions and minimize identity fraud risks, even in remote areas.</p></li>
+          <li><p>A feedback module should generate AI-driven suggestions for branches and staff, analyzing customer interactions and transaction patterns to enhance service quality and deriving actionable insights for better customer service and resource allocation.</p></li>
         </ul>
       `,
     },
@@ -94,14 +94,14 @@ function ProblemStatements(props) {
         }
         </div>
         <ul>
-          <li><h3>Customer profiling and onboarding</h3></li>
-          <li><h3>Complex transaction networks</h3></li>
-          <li><h3>Cross-border transactions</h3></li>
-          <li><h3>Short lifespan fraudulent accounts</h3></li>
-          <li><h3>High false-positive rates in fraud detection</h3></li>
-          <li><h3>Advanced evasion techniques by fraudsters</h3></li>
-          <li><h3>Customer analysis</h3></li>
-          <li><h3>Insider threats / fraud detection</h3></li>
+          <li><p>Customer profiling and onboarding</p></li>
+          <li><p>Complex transaction networks</p></li>
+          <li><p>Cross-border transactions</p></li>
+          <li><p>Short lifespan fraudulent accounts</p></li>
+          <li><p>High false-positive rates in fraud detection</p></li>
+          <li><p>Advanced evasion techniques by fraudsters</p></li>
+          <li><p>Customer analysis</p></li>
+          <li><p>Insider threats / fraud detection</p></li>
         </ul>
         <h2 style='color: #634647;'>Real-Life Example: Naman’s Journey</h2>
         <p><strong>Scenario 1: Fraudulent Activity Detection:</strong> Naman receives a large sum from an unfamiliar account, and subsequent international transactions are flagged as "smurfing" (money laundering), freezing the account for review.</p>
@@ -188,28 +188,37 @@ function ProblemStatements(props) {
       <Box
         sx={{
           width: "100%",
-          height: "max-content",
+          height: "70vh",
           marginTop: "4rem",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-evenly",
           flexDirection: { xs: "column", md: "row" },
           gap: 5,
+          cursor: "pointer",
         }}
       >
         {data.map((value, key) => {
           return (
-            <CustomizedDialogs
-              title={value.title}
-              description={value.description}
-              fullContent={value.fullContent}
-              imgValue={imgList[key]}
+            <Box
               key={key}
-            />
+              sx={{
+                transform: "scale(1)",
+                transition: "all 0.3s ease",
+                "&:hover": {
+                  transform: "scale(1.09)",
+                },
+              }}
+            >
+              <CustomizedDialogs
+                title={value.title}
+                description={value.description}
+                fullContent={value.fullContent}
+                imgValue={imgList[key]}
+              />
+            </Box>
           );
         })}
-        {/* <CustomizedDialogs />
-        <CustomizedDialogs /> */}
       </Box>
     </Box>
   );
