@@ -3,7 +3,7 @@ import { Card, CardContent, Typography, Box, List, ListItem, ListItemText, Butto
 
 const HackathonGuidelines = () => {
   const [expanded, setExpanded] = useState(false);
-  const showReadMore = true;
+  const showReadMore = false;
 
   const sections = [
     {

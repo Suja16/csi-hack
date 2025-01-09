@@ -205,6 +205,7 @@ function ProblemStatements(props) {
               description={value.description}
               fullContent={value.fullContent}
               imgValue={imgList[key]}
+              key={key}
             />
           );
         })}

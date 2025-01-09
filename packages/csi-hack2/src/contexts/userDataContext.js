@@ -4,6 +4,7 @@ const data = {
   userData: null,
   setUserData: null,
   eventData: null,
+  setEventData: null,
 };
 
 const UserDataContext = createContext(data);

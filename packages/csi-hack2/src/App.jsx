@@ -25,7 +25,6 @@ function App() {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        console.log(response)
         setUserData(response.data.user);
       } catch (error) {
         console.error(error);
@@ -44,11 +43,7 @@ function App() {
             baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
           }
         );
-        console.log(response.data)
         setEventData(response.data.event);
-        // if (response.data.event.Participant) {
-        //   // navigate("/header");
-        // }
       } catch (error) {
         console.error(error);
       }
@@ -58,7 +53,7 @@ function App() {
   }, []);
 
   return (
-    <UserDataContext.Provider value={{ userData, setUserData, eventData }}>
+    <UserDataContext.Provider value={{ userData, setUserData, eventData, setEventData }}>
       <RouterProvider router={router} />
     </UserDataContext.Provider>
   )

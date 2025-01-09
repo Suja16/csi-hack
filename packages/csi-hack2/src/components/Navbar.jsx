@@ -1,15 +1,18 @@
-import { useState } from "react";
-import { Box, Typography, useMediaQuery } from "@mui/material";
+import { useState, useContext, useEffect } from "react";
+import { Box, CircularProgress, Typography, useMediaQuery } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../assets/idea.png";
 import { Button } from "@mui/material";
 import RegistrationForm from "./registrationFrom";
 import { Link, useNavigate } from "react-router-dom";
+import LoadingButton from '@mui/lab/LoadingButton';
+import UserDataContext from "../contexts/userDataContext";
 
-const Navbar = ({ userData, login, open, setopen }) => {
+const Navbar = ({ userData, login, open, setopen, isLoading }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMid = useMediaQuery("(max-width:1146px)");
   const navigate = useNavigate();
+  const { userData: userData2, setUserData, eventData } = useContext(UserDataContext);
 
   const navItems = [
     { label: "HOME", href: "/" },
@@ -31,6 +34,14 @@ const Navbar = ({ userData, login, open, setopen }) => {
       }
     }
   };
+
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("user");
+    setUserData(null);
+    navigate("/");
+  }
 
   return (
     <Box>
@@ -83,10 +94,19 @@ const Navbar = ({ userData, login, open, setopen }) => {
                 </Typography>
               ))}
             </Box>
-
-            <Button variant="contained" onClick={() => login()}>
-              Register Now
-            </Button>
+            {!userData2 ? (
+              <LoadingButton onClick={() => login()} loading={isLoading} variant="contained" color="primary">
+                Register Now
+              </LoadingButton>
+            ) : eventData?.Particiapant ? (
+              <LoadingButton onClick={() => logout()} loading={isLoading} variant="contained" color="primary">
+                Logout
+              </LoadingButton>
+            ) : (
+              <LoadingButton onClick={() => setopen(true)} loading={isLoading} variant="contained" color="primary">
+                Register Now
+              </LoadingButton>
+            )}
           </>
         )}
         {open && (

@@ -5,15 +5,23 @@ import { Outlet } from "react-router";
 import { useMediaQuery } from "@mui/material";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import UserDataContext from "../contexts/userDataContext";
+
 
 export default function FooterLayout() {
+  const navigate = useNavigate();
   const isMobile = useMediaQuery("(max-width:1146px)");
   const [userData, setUserData] = useState({});
   const [open, setopen] = useState(false);
+  const [isLoading, setIsLoding] = useState(false);
+
+  const {setUserData: setUserData2, setEventData} = useContext(UserDataContext);
 
   const login = useGoogleLogin({
     onSuccess: async ({ code }) => {
+      setIsLoding(true);
       const response = await axios.post(
         "/api/v1/auth/googleToken",
         { code },
@@ -23,17 +31,22 @@ export default function FooterLayout() {
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
       localStorage.setItem("user", response.data.user);
+      setUserData2(response.data.user);
       const participantResponse = await axios.post(
-        `https://api.csi-kjsce.org/api/v1/event/p/get/47`,
+        `/api/v1/event/p/get/47`,
         {},
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
+          baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
         }
       );
+      setEventData(participantResponse.data.event);
       if (participantResponse.data.event.Participant) {
-        // navigate("/header");
+        setIsLoding(false);
+        navigate("/team");
+        return
       }
       const user = response.data.user;
       setUserData({
@@ -45,6 +58,7 @@ export default function FooterLayout() {
         phone_number: user.phone_number,
       });
       setopen(true);
+      setIsLoding(false);
     },
     flow: "auth-code",
   });
@@ -56,7 +70,7 @@ export default function FooterLayout() {
         minHeight: "100vh",
       }}
     >
-      <Navbar userData={userData} login={login} open={open} setopen={setopen} />
+      <Navbar userData={userData} login={login} open={open} setopen={setopen} isLoading={isLoading} />
       <Box
         sx={{
           paddingTop: "6rem",

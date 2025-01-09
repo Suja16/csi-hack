@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import UserDataContext from "../contexts/userDataContext";
-import { Box, Typography, Grid2, Button, Tooltip, useTheme, FormControlLabel, Checkbox, Snackbar, styled } from "@mui/material";
+import { Box, Typography, Grid2, Button, Tooltip, useTheme, FormControlLabel, Checkbox, styled } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -10,6 +10,7 @@ import Delete from "@mui/icons-material/Delete";
 import { useEffect } from "react";
 import uploadFile from "../utils/uploadFile";
 import axios from "axios";
+import {useNavigate} from "react-router";
 
 const formSchema = yup.object({
   video: yup.string().required("Video URL is required"),
@@ -74,12 +75,10 @@ const VisuallyHiddenInput = styled('input')({
   width: 1,
 });
 
-const TeamDetails = () => {
+const TeamDetails = ({setShowSnackBar, setSnackBarMessage}) => {
+  const navigate = useNavigate();
   const { userData, eventData } = useContext(UserDataContext);
   const theme = useTheme();
-
-  const [showSnackBar, setShowSnackBar] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
 
   const {
       formState: { errors },
@@ -142,10 +141,14 @@ const TeamDetails = () => {
         baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
       })
       console.log(response.data)
+      setSnackBarMessage("Left team successfully")
+      setShowSnackBar(true)
+      setTimeout(() => navigate("/"), 5000)
+      setTimeout(() => setShowSnackBar(false), 5000)
     } catch (error) {
       console.error(error)
       if (error.response?.data.error) {
-        setSnackbarMessage(error.response.data.message)
+        setSnackBarMessage(error.response.data.message)
         setShowSnackBar(true)
         setTimeout(() => setShowSnackBar(false), 5000)
       }
@@ -293,11 +296,6 @@ const TeamDetails = () => {
           <Typography variant="body1">Your submission has been recorded.</Typography>
         </Grid2>
       )}
-      <Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        open={showSnackBar}
-        message={snackbarMessage}
-      />
     </Grid2>
   );
 }

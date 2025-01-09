@@ -17,12 +17,15 @@ import CloseIcon from "@mui/icons-material/Close";
 import registrationSchema from "../utils/validation";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import TextBox from "./TextBox";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Delete from "@mui/icons-material/Delete";
 import uploadFile from "../utils/uploadFile";
+import LoadingButton from '@mui/lab/LoadingButton';
+import UserDataContext from "../contexts/userDataContext";
+import { useNavigate } from "react-router";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -36,7 +39,8 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-export default function RegistrationForm({ open, onClose, userData }) {
+export default function RegistrationForm({ open, onClose }) {
+  const {userData, setEventData} = useContext(UserDataContext);
   const {
     formState: { errors },
     handleSubmit,
@@ -58,6 +62,9 @@ export default function RegistrationForm({ open, onClose, userData }) {
   const resume = watch("resume");
   const photo_id = watch("photo_id");
 
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     console.log(errors);
     console.log(resume);
@@ -70,18 +77,20 @@ export default function RegistrationForm({ open, onClose, userData }) {
   const [clickCount, setClickCount] = useState(0);
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleClose = () => {
     if (clickCount === 0) {
       setClickCount(1);
       setTimeout(() => setClickCount(0), 2000); // Reset click count after 2 seconds
     } else {
-      reset({});
+      // reset({});
       onClose();
     }
   };
 
   const onSubmit = async () => {
+    setIsLoading(true);
     const data = getValues();
     console.log(data);
 
@@ -116,10 +125,10 @@ export default function RegistrationForm({ open, onClose, userData }) {
     }
 
     // upload resume
-    const resumeURLPromise = await uploadFile(resume[0]);
+    const resumeURLPromise = uploadFile(resume[0]);
 
     // upload photo id
-    const photoIdURLPromise = await uploadFile(photo_id[0]);
+    const photoIdURLPromise = uploadFile(photo_id[0]);
 
     const [resumeURL, photoIdURL] = await Promise.all([resumeURLPromise, photoIdURLPromise]);
 
@@ -147,15 +156,28 @@ export default function RegistrationForm({ open, onClose, userData }) {
         localStorage.setItem("inviteCode", inviteCode);
         localStorage.setItem("teamName", data.team_name);
         console.log(teamResponse);
+
+        const eventResponse = await axios.post("/api/v1/event/p/get/47", {}, {
+          baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        });
+
+        setEventData(eventResponse.data.event);
+
+
         alert("Your team code is - " + inviteCode);
         localStorage.setItem("status", "true");
         setSnackbarMessage("Registration Successful");
 
-        // navigate("/header");
+
         setShowSnackbar(true);
 
         setTimeout(() => {
           setShowSnackbar(false);
+          setIsLoading(false);
+          navigate("/team");
           onClose();
         }, 3000);
       } catch (e) {
@@ -164,6 +186,7 @@ export default function RegistrationForm({ open, onClose, userData }) {
           setSnackbarMessage(e.response.data.message);
           setShowSnackbar(true);
           setTimeout(() => setShowSnackbar(false), 3000);
+          setIsLoading(false);
           return;
         }
         return;
@@ -186,14 +209,21 @@ export default function RegistrationForm({ open, onClose, userData }) {
           }
         );
         localStorage.setItem("status", "true");
-        setSnackbarMessage("Registration Successful");
+        const eventResponse = await axios.post("/api/v1/event/get/47", {}, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
+          }
+        });
 
-        // navigate("/header");
+        setEventData(eventResponse.data.event);
+        setSnackbarMessage("Registration Successful");
 
         setShowSnackbar(true);
 
         setTimeout(() => {
           setShowSnackbar(false);
+          navigate("/team");
           onClose();
         }, 3000);
       } catch (e) {
@@ -203,6 +233,7 @@ export default function RegistrationForm({ open, onClose, userData }) {
           setShowSnackbar(true);
 
           setTimeout(() => setShowSnackbar(false), 3000);
+          setIsLoading(false);
           return;
         }
         return;
@@ -541,10 +572,11 @@ export default function RegistrationForm({ open, onClose, userData }) {
           justifyContent="end"
           marginTop="1rem"
         >
-          <Button
+          <LoadingButton
             variant="contained"
             color="primary"
             type="submit"
+            loading={isLoading}
             disabled={!teamChoice}
             sx={{
               py: "1rem",
@@ -553,7 +585,7 @@ export default function RegistrationForm({ open, onClose, userData }) {
             }}
           >
             Register
-          </Button>
+          </LoadingButton>
         </Grid2>
       </Grid2>
       {showSnackbar && (
