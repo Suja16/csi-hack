@@ -37,16 +37,6 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 export default function RegistrationForm({ open, onClose, userData }) {
-  const [gender, setGender] = useState("");
-  const [degree, setDegree] = useState("");
-
-  const handleChange = (event) => {
-    setGender(event.target.value);
-  };
-  const handleDegreeChange = (event) => {
-    setDegree(event.target.value);
-  };
-
   const {
     formState: { errors },
     handleSubmit,
@@ -275,14 +265,15 @@ export default function RegistrationForm({ open, onClose, userData }) {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={gender}
+                // value={gender}
                 name="gender"
                 label="GENDER"
-                onChange={handleChange}
+                // onChange={handleChange}
+                {...register("gender")}
               >
-                <MenuItem value={"MALE"}>MALE</MenuItem>
-                <MenuItem value={"FEMALE"}>FEMALE</MenuItem>
-                <MenuItem value={"OTHERS"}>OTHERS</MenuItem>
+                <MenuItem value="MALE">MALE</MenuItem>
+                <MenuItem value="FEMALE">FEMALE</MenuItem>
+                <MenuItem value="OTHERS">OTHERS</MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -302,13 +293,14 @@ export default function RegistrationForm({ open, onClose, userData }) {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={degree}
+                // value={degree}
                 name="degree"
                 label="DEGREE"
-                onChange={handleDegreeChange}
+                // onChange={handleDegreeChange}
+                {...register("degree")}
               >
-                <MenuItem value={"BTech"}>BTech</MenuItem>
-                <MenuItem value={"MTech"}>MTech</MenuItem>
+                <MenuItem value="B.tech">BTech</MenuItem>
+                <MenuItem value="M.tech">MTech</MenuItem>
                 <MenuItem value={"BCA"}>BCA</MenuItem>
                 <MenuItem value={"MCA"}>MCA</MenuItem>
                 <MenuItem value={"Bsc"}>Bsc</MenuItem>

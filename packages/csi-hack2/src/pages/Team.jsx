@@ -2,9 +2,10 @@ import { useContext } from "react";
 import UserDataContext from "../contexts/userDataContext";
 import { Navigate } from "react-router";
 import HeaderBox from "../elements/HeaderBox";
-import { Box, Typography, Grid2, useTheme } from "@mui/material";
+import { Box, Typography, Grid2, useTheme, CircularProgress } from "@mui/material";
 import TeamDetails from "../components/TeamDetails";
 import RegisterSteps from "../components/RegisterSteps";
+import timeline from "../assets/timeline.png"
 
 const Team = () => {
   const { userData, eventData } = useContext(UserDataContext);
@@ -14,7 +15,7 @@ const Team = () => {
   }
 
   if (!userData || !eventData) {
-    return <Box>Loading...</Box>;
+    return <Box height="100vh" width="100vw" display="flex" justifyContent="center" alignItems="center"><CircularProgress margin="auto"/></Box>;
   }
 
   return (
@@ -30,9 +31,8 @@ const Team = () => {
         </HeaderBox>
       </Grid2>
       <Grid2 item size={2}>
-        <HeaderBox header="Event">
-          {/* {eventData && (<Typography>{JSON.stringify(eventData, null, 2)}</Typography>)} */}
-          Hi
+        <HeaderBox header="Event Timeline">
+          <img width="100%" src={timeline} alt="" />
         </HeaderBox>
       </Grid2>
     </Grid2>

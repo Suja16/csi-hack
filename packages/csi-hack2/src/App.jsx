@@ -35,12 +35,13 @@ function App() {
     const getParticipantData = async () => {
       try {
         const response = await axios.post(
-          `https://api.csi-kjsce.org/api/v1/event/p/get/47`,
+          `/api/v1/event/p/get/47`,
           {},
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
+            baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
           }
         );
         console.log(response.data)

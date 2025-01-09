@@ -1,6 +1,6 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import UserDataContext from "../contexts/userDataContext";
-import { Box, Typography, Grid2, Button, Tooltip, useTheme, FormControlLabel, Checkbox, styled } from "@mui/material";
+import { Box, Typography, Grid2, Button, Tooltip, useTheme, FormControlLabel, Checkbox, Snackbar, styled } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -78,6 +78,9 @@ const TeamDetails = () => {
   const { userData, eventData } = useContext(UserDataContext);
   const theme = useTheme();
 
+  const [showSnackBar, setShowSnackBar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+
   const {
       formState: { errors },
       handleSubmit,
@@ -130,6 +133,25 @@ const TeamDetails = () => {
     console.log(response.data);
   }
 
+  const leaveTeam = async () => {
+    try {
+      const response = await axios.post("/api/v1/event/p/remove-from-team", { team_id: eventData.Participant.team.id, user_id: userData.id }, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
+      })
+      console.log(response.data)
+    } catch (error) {
+      console.error(error)
+      if (error.response?.data.error) {
+        setSnackbarMessage(error.response.data.message)
+        setShowSnackBar(true)
+        setTimeout(() => setShowSnackBar(false), 5000)
+      }
+    }
+  }
+
   return (
     <Grid2 container columns={10} component="form" onSubmit={handleSubmit(onSubmit)}>
       <Grid2 item size={6}>
@@ -167,12 +189,14 @@ const TeamDetails = () => {
           marginTop: "0.5rem",
         }}
           onClick={() =>
-            navigator.clipboard.writeText(eventData.Participant.team.invite_code)}
+            leaveTeam()}
 
         >
           Leave Team
         </Button>
       </Grid2>
+      {!eventData.Participant.team.submissions ? (
+        <>
       <Grid2 item size={10} display="flex" flexDirection="column" alignItems="center" marginTop="1rem">
         <Typography variant="h5">Upload Your Attachment</Typography>
       </Grid2>
@@ -262,6 +286,18 @@ const TeamDetails = () => {
           Submit
         </Button>
       </Grid2>
+        </>
+      ) : (
+        <Grid2 item size={10} display="flex" flexDirection="column" alignItems="center" marginTop="10rem">
+          <Typography variant="h5">Your Submission</Typography>
+          <Typography variant="body1">Your submission has been recorded.</Typography>
+        </Grid2>
+      )}
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        open={showSnackBar}
+        message={snackbarMessage}
+      />
     </Grid2>
   );
 }

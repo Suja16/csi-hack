@@ -15,7 +15,7 @@ const HeaderBox = ({header, children}) => {
           {header}
         </Typography>
       </Box>
-      <Box width="100%" minHeight="60vh" sx={{
+      <Box width="100%" minHeight="70vh" sx={{
         borderRadius: "0 0 10px 10px",
         padding: 2,
         bgcolor: "white",
