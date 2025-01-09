@@ -4,53 +4,12 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../assets/idea.png";
 import { Button } from "@mui/material";
 import RegistrationForm from "./registrationFrom";
-import { useGoogleLogin } from "@react-oauth/google";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ userData, login, open, setopen }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const isMid = useMediaQuery("(max-width:900px), (max-width:1462px)");
-  const [open, setopen] = useState(false);
-  const [userData, setUserData] = useState({});
+  const isMid = useMediaQuery("(max-width:1146px)");
   const navigate = useNavigate();
-
-  const login = useGoogleLogin({
-    onSuccess: async ({ code }) => {
-      const response = await axios.post(
-        "/api/v1/auth/googleToken",
-        { code },
-        { baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS }
-      );
-      console.log(response);
-      localStorage.setItem("accessToken", response.data.accessToken);
-      localStorage.setItem("refreshToken", response.data.refreshToken);
-      localStorage.setItem("user", response.data.user);
-      const participantResponse = await axios.post(
-        `https://api.csi-kjsce.org/api/v1/event/p/get/47`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      );
-      if (participantResponse.data.event.Participant) {
-        // navigate("/header");
-      }
-      const user = response.data.user;
-      setUserData({
-        degree: user.degree,
-        college: user.college,
-        branch: user.branch,
-        year: user.year,
-        gender: user.gender,
-        phone_number: user.phone_number,
-      });
-      setopen(true);
-    },
-    flow: "auth-code",
-  });
 
   const navItems = [
     { label: "HOME", href: "/" },
@@ -91,7 +50,13 @@ const Navbar = () => {
           padding: 2,
         }}
       >
-        <img height="40vw" width="140vw" src={Logo} alt="Logo" style={{ scale: "1.5", paddingLeft: "1rem" }} />
+        <img
+          height="40vw"
+          width="140vw"
+          src={Logo}
+          alt="Logo"
+          style={{ scale: "1.5", paddingLeft: "1rem" }}
+        />
         {!isMid && (
           <>
             <Box
@@ -100,7 +65,6 @@ const Navbar = () => {
               alignItems="center"
               gap={7}
               width="90%"
-              sx={{ display: { xs: "none", lg: "flex" } }}
             >
               {navItems.map((item) => (
                 <Typography
@@ -126,7 +90,11 @@ const Navbar = () => {
           </>
         )}
         {open && (
-          <RegistrationForm open={open} onClose={() => setopen(false)} userData={userData} />
+          <RegistrationForm
+            open={open}
+            onClose={() => setopen(false)}
+            userData={userData}
+          />
         )}
         {/* Menu Button */}
         {isMid && (
