@@ -8,7 +8,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Popup from "../elements/popup"; // Import the Popup component
 
-export default function CustomizedDialogs({ title, description, fullContent , imgValue }) {
+export default function CustomizedDialogs({
+  title,
+  description,
+  fullContent,
+  imgValue,
+}) {
   const [open, setOpen] = React.useState(false);
   const isMobile = useMediaQuery("(max-width:500px)");
 
@@ -25,8 +30,8 @@ export default function CustomizedDialogs({ title, description, fullContent , im
       <Button
         variant="div"
         sx={{
-          width: isMobile?"23rem":"35rem",
-        //   height: "450px",
+          width: isMobile ? "23rem" : "35rem",
+          //   height: "450px",
           borderRadius: "20px",
         }}
         onClick={handleClickOpen}
@@ -71,7 +76,17 @@ export default function CustomizedDialogs({ title, description, fullContent , im
 
           <Typography
             variant={isMobile ? "subtitle1" : "h4"}
-            sx={{ m: 0, py: 2, pt: 5 }}
+            component="h2"
+            sx={{
+              textAlign: "justify",
+              fontWeight: "bold",
+              marginBottom: 2,
+              color: "black",
+              letterSpacing: "0.2px",
+              m: 0,
+              py: 2,
+              pt: 5,
+            }}
             id="customized-dialog-title"
           >
             {title}

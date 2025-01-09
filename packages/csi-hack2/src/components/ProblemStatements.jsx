@@ -94,14 +94,14 @@ function ProblemStatements(props) {
         }
         </div>
         <ul>
-          <li><h3>Customer profiling and onboarding</h3></li>
-          <li><h3>Complex transaction networks</h3></li>
-          <li><h3>Cross-border transactions</h3></li>
-          <li><h3>Short lifespan fraudulent accounts</h3></li>
-          <li><h3>High false-positive rates in fraud detection</h3></li>
-          <li><h3>Advanced evasion techniques by fraudsters</h3></li>
-          <li><h3>Customer analysis</h3></li>
-          <li><h3>Insider threats / fraud detection</h3></li>
+          <li><p>Customer profiling and onboarding</p></li>
+          <li><p>Complex transaction networks</p></li>
+          <li><p>Cross-border transactions</p></li>
+          <li><p>Short lifespan fraudulent accounts</p></li>
+          <li><p>High false-positive rates in fraud detection</p></li>
+          <li><p>Advanced evasion techniques by fraudsters</p></li>
+          <li><p>Customer analysis</p></li>
+          <li><p>Insider threats / fraud detection</p></li>
         </ul>
         <h2 style='color: #634647;'>Real-Life Example: Naman’s Journey</h2>
         <p><strong>Scenario 1: Fraudulent Activity Detection:</strong> Naman receives a large sum from an unfamiliar account, and subsequent international transactions are flagged as "smurfing" (money laundering), freezing the account for review.</p>
