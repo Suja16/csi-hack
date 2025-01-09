@@ -39,7 +39,7 @@ const Footer = () => {
               About Us
             </Typography>
             <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>
-              The Computer Society of India - K.J. Somaiya College of Engineering Students&apos; chapter is the largest student network in the college. Boasting a legacy of 20 years, the CSI-KJSCE is committed to providing tech enthusiasts an avenue to explore and collaborate with one another. With various workshops, hackathons, and competitions, we strive hard each time, to deliver on our motto - &quot;We Develop to Inspire&quot;.
+              Welcome to iDEA, the Union Bank of India Hackathon, a groundbreaking initiative of the Union Bank of India in collaboration with KJ Somaiya School of Engineering (KJSSE), Somaiya Vidyavihar University (SVU) and under the guidance of the Indian Banks’ Association (IBA), and the Department of Financial Services (DFS). This hackathon represents a concerted effort under the Ministry of Finance’s vision to foster innovation and excellence in the realms of financial technology (fintech) and cybersecurity.
             </Typography>
           </Box>
 
