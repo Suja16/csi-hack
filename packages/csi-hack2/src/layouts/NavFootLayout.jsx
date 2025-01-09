@@ -9,14 +9,13 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserDataContext from "../contexts/userDataContext";
 
-
 export default function FooterLayout() {
   const navigate = useNavigate();
   const isMobile = useMediaQuery("(max-width:1146px)");
   const [open, setopen] = useState(false);
   const [isLoading, setIsLoding] = useState(false);
 
-  const {setUserData, setEventData} = useContext(UserDataContext);
+  const { setUserData, setEventData } = useContext(UserDataContext);
 
   const login = useGoogleLogin({
     onSuccess: async ({ code }) => {
@@ -32,7 +31,7 @@ export default function FooterLayout() {
       localStorage.setItem("user", response.data.user);
       setUserData(response.data.user);
       const participantResponse = await axios.post(
-        `/api/v1/event/p/get/`+import.meta.env.VITE_EVENT_ID,
+        `/api/v1/event/p/get/` + import.meta.env.VITE_EVENT_ID,
         {},
         {
           headers: {
@@ -45,7 +44,7 @@ export default function FooterLayout() {
       if (participantResponse.data.event.Participant) {
         setIsLoding(false);
         navigate("/team");
-        return
+        return;
       }
       setopen(true);
       setIsLoding(false);
@@ -61,7 +60,12 @@ export default function FooterLayout() {
         minHeight: "100vh",
       }}
     >
-      <Navbar login={login} open={open} setopen={setopen} isLoading={isLoading} />
+      <Navbar
+        login={login}
+        open={open}
+        setopen={setopen}
+        isLoading={isLoading}
+      />
       <Box
         sx={{
           paddingTop: "6rem",
@@ -94,7 +98,7 @@ export default function FooterLayout() {
             width: "100%",
             position: "fixed",
             padding: "1rem",
-            bottom: "1rem",
+            bottom: 0,
             zIndex: 1000,
             backgroundColor: "#1976d2",
             color: "#fff",

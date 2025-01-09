@@ -6,13 +6,15 @@ import Timeline from "../components/Timeline";
 
 export default function HomePage() {
   return (
-    <Box sx={{
-      overflowX:"hidden",
-    }}>
+    <Box
+      sx={{
+        overflowX: "hidden",
+      }}
+    >
       <CarouselHomePage />
-      {/* <Banner/> */}
-      <ProblemStatements/>
-      <Timeline/>
+      {/* <Banner /> */}
+      <ProblemStatements />
+      <Timeline />
     </Box>
   );
 }

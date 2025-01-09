@@ -26,7 +26,7 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
 
   const navItems = [
     { label: "HOME", href: "/" },
-    // { label: "PROBLEM STATEMENTS", href: "#problems" },
+    { label: "PROBLEM STATEMENTS", href: "#problems" },
     { label: "GUIDELINES", href: "/guidelines" },
     { label: "FAQs", href: "/faq" },
     // { label: "PRIZES", href: "#prizes" },
@@ -100,7 +100,8 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
               {navItems.map((item) => (
                 <Typography
                   key={item.href}
-                  variant="h6"
+                  variant="h5"
+                  fontWeight="bold"
                   component={Link}
                   to={item.href}
                   onClick={(e) => handleSmoothScroll(e, item.href)}

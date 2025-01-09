@@ -27,32 +27,23 @@ export default function CustomizedDialogs({
 
   return (
     <React.Fragment>
-      <Button
-        variant="div"
-        sx={{
-          width: isMobile ? "23rem" : "35rem",
-          //   height: "450px",
-          borderRadius: "20px",
-        }}
+      <Box
         onClick={handleClickOpen}
+        sx={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+          justifyContent: "center",
+          gap: 2,
+          paddingX: "4rem",
+          // boxShadow:
+          //   "rgba(60, 64, 67, 0.3) 0 1px 2px 0, rgba(60, 64, 67, 0.15) 0 2px 6px 2px",
+        }}
       >
-        <Box
-          sx={{
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            alignItems: "center",
-            flexDirection: "column",
-            justifyContent: "center",
-            gap: 2,
-            paddingX: "1rem",
-            // boxShadow:
-            //   "rgba(60, 64, 67, 0.3) 0 1px 2px 0, rgba(60, 64, 67, 0.15) 0 2px 6px 2px",
-          }}
-        >
-          <img src={imgValue} width="100%" alt="" />
-        </Box>
-      </Button>
+        <img src={imgValue} width="100%" alt="" />
+      </Box>
 
       {/* Replace BootstrapDialog with Popup */}
       <Popup
