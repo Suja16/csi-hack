@@ -18,12 +18,12 @@ const RegisterSteps = () => {
     },
     {
       title: "Evaluation Round",
-      description: "Await feedback as judges review your submissions.",
+      description: "Submissions of teams will be evaluated by working industry professionals.",
       icon: EvaluationIcon,
     },
     {
       title: "RSVP Confirmation",
-      description: "Confirm your participation by ticking the RSVP option.",
+      description: "The shortlisted teams will be invited to participate in the on-site round and will have to rsvp within the designated time to confirm their participation.",
       icon: RsvpIcon,
     },
   ];
