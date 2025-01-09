@@ -52,8 +52,7 @@ const registrationSchema =
           //   },
           // ),
 
-    why_this_hackathon: yup.string().notRequired()
-          .min(100, "At least 100 characters are required"),
+    why_this_hackathon: yup.string().notRequired(),
 
     resume: yup.mixed().required("Resume is required")
           .test("minimumFiles", "Resume is required", (value) => {

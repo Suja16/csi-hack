@@ -21,11 +21,12 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
 
   const navItems = [
     { label: "HOME", href: "/" },
-    { label: "PROBLEM STATEMENTS", href: "#problems" },
+    // { label: "PROBLEM STATEMENTS", href: "#problems" },
     { label: "GUIDELINES", href: "/guidelines" },
     { label: "FAQs", href: "/faq" },
     // { label: "PRIZES", href: "#prizes" },
     { label: "CONTACT US", href: "#contact" },
+    ...(eventData && eventData.Participant ? [{ label: "TEAM", href: "/team" }] : [])
   ];
 
   const handleSmoothScroll = (e, targetId) => {

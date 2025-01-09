@@ -241,7 +241,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
         >
           {eventData.Participant.team.invite_code}
         </Button>
-        <Button
+        {/* <Button
           variant="contained"
           color="error"
           sx={{
@@ -252,7 +252,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
           onClick={() => leaveTeam()}
         >
           Leave Team
-        </Button>
+        </Button> */}
       </Grid2>
       {!eventData.Participant.team.submissions ? (
         <>
