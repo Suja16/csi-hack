@@ -378,6 +378,9 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
               Submit
             </Button>
           </Grid2>
+          <Typography variant="caption" color="error" sx={{ paddingY: 2 }}>
+            *All team members are required to submit attachment
+          </Typography>
         </>
       ) : (
         <Grid2
