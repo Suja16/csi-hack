@@ -25,8 +25,7 @@
     "yup": "^1.6.1"
   },
   "scripts": {
-    "dev": "yarn workspace csi-hack dev",
-    "dev:csi": "yarn workspace csi-hack2 dev",
+    "dev": "yarn workspace csi-hack2 dev",
     "dev:admin": "yarn workspace admin dev"
   },
   "devDependencies": {
