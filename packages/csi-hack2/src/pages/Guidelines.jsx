@@ -10,7 +10,7 @@ const HackathonGuidelines = () => {
       title: "Preparation Before the Hackathon",
       items: [
         "Understand the Theme: Read about the hackathon's theme or problem statement beforehand.",
-        "Form a Team: Create a diverse team of 3–5 members with complementary skills (developers, designers, marketers, etc.).",
+        "Form a Team: Create a diverse team of 4 members (1 female member mandatory).",
         "Gather Tools: Install necessary software, SDKs, or development environments.",
         "Research: Familiarize yourself with APIs, datasets, or platforms allowed or provided.",
         "Prototype: Sketch out a rough idea or wireframe of your project to guide development.",
@@ -20,8 +20,8 @@ const HackathonGuidelines = () => {
     {
       title: "At the Start of the Hackathon",
       items: [
-        "Bring Essentials: Ensure you have a laptop, chargers, notepads, snacks, and any other materials you'll need.",
-        "Attend the Kickoff: Listen to the rules, judging criteria, and other announcements.",
+        "Bring Essentials: Ensure you have a laptop, chargers, and any other materials you'll need.",
+        "Attend the Inauguration: Listen to the rules, judging criteria, and other announcements.",
         "Plan Your Time: Divide the time for ideation, development, testing, feedback and presentation.",
       ],
     },
