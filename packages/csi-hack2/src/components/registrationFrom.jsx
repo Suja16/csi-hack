@@ -9,21 +9,7 @@ import axios from "axios";
 import TextBox from "./TextBox";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Delete from "@mui/icons-material/Delete";
-import { initializeApp } from "firebase/app";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { v4 } from 'uuid';
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCI5YcjYf5qw68f_u1yc_J56-eXPIdwi3Q",
-  authDomain: "hackathoncsi-9dc45.firebaseapp.com",
-  projectId: "hackathoncsi-9dc45",
-  storageBucket: "hackathoncsi-9dc45.firebasestorage.app",
-  messagingSenderId: "414781335628",
-  appId: "1:414781335628:web:ababd11482442b6b216ce9"
-};
-
-const app = initializeApp(firebaseConfig);
-const storage = getStorage(app);
+import uploadFile from "../utils/uploadFile";
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -81,15 +67,6 @@ export default function RegistrationForm({ open, onClose, userData }) {
     }
   };
 
-  const uploadFile = async (file) => {
-      console.log("Uploading file:", file.name);
-      const fileRef = ref(storage, `files/${file.name + v4()}`);
-      await uploadBytes(fileRef, file)
-      const url = await getDownloadURL(fileRef);
-      console.log("File uploaded successfully. URL:", url);
-      return url;
-  };
-
   const onSubmit = async () => {
     const data = getValues();
     console.log(data);
@@ -125,13 +102,15 @@ export default function RegistrationForm({ open, onClose, userData }) {
     }
 
     // upload resume
-    const resumeURL = await uploadFile(resume[0]);
-    more_details.resume = resumeURL;
+    const resumeURLPromise = await uploadFile(resume[0]);
 
     // upload photo id
-    const photoIdURL = await uploadFile(photo_id[0]);
-    more_details.photo_id = photoIdURL;
+    const photoIdURLPromise = await uploadFile(photo_id[0]);
 
+    const [resumeURL, photoIdURL] = await Promise.all([resumeURLPromise, photoIdURLPromise]);
+
+    more_details.resume = resumeURL;
+    more_details.photo_id = photoIdURL;
 
     if (data.team_choice === "create") {
       // create team
