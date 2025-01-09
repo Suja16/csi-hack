@@ -84,6 +84,11 @@ export default function CustomizedDialogs({ title, description, fullContent , im
             component="div"
             sx={{
               letterSpacing: "1px",
+              display:"flex",
+              justifyContent:"center",
+            //   alignItems:"center",
+              flexDirection:"column",
+            //   paddingX:2,
             }}
             dangerouslySetInnerHTML={{ __html: fullContent }}
           />

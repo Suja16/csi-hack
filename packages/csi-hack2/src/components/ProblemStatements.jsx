@@ -18,6 +18,7 @@ function ProblemStatements(props) {
       fullContent: `
         <h3 style='color: #634647;'>Objective:</h3>
         <p>The goal is to design and implement a highly accurate facial recognition system that can authenticate and accept customer service queries via video/audio recordings and create appointments for customer support. The system should streamline the process for both new and existing customers, while enhancing security, fraud prevention, and customer experience. The solution needs to provide a service ticket with a detailed analytical snapshot of the customer's profile and direct customers to the right business unit based on their needs.</p>
+        <div style="width:100%;">
         <h3 style='color: #634647;'>Core Components of the Solution:</h3>
         <ul>
           <li><h4>Facial Recognition Authentication</h4></li>
@@ -28,7 +29,9 @@ function ProblemStatements(props) {
           <li><h4>Feedback Module for Continuous Improvement</h4></li>
           <li><h4>Cost-Effective and Deployable to Rural Branches</h4></li>
         </ul>
+        </div>
         <h3 style='color: #634647; margin-top:2rem;'>Real-Life Use Case: Vatsalya’s Interaction with the System</h3>
+        <div style="width:100%;">
         <p><strong>Scenario 1: Existing Customer (Vatsalya)</strong></p>
         <ul>
           <li><h4>Vatsalya is an existing customer of the Union Bank Of India and needs assistance with a loan query. He opens the mobile banking app of Union Bank, Vyom and is prompted by the Union Bank’s Chatbot UVA to record a short video explaining his question.</h4></li>
@@ -36,6 +39,8 @@ function ProblemStatements(props) {
           <li><h4>The system creates a service ticket and pulls an analytical snapshot of Vatsalya’s financial profile, highlighting his credit score, previous loan applications, and spending habits. Based on this data, the system suggests a loan option with the relevant details.</h4></li>
           <li><h4>Vatsalya receives an appointment confirmation for a video call with a customer service representative to discuss the loan options further.</h4></li>
         </ul>
+        </div>
+        <div style="width:100%;">
         <p><strong>Scenario 2: New Customer</strong></p>
         <ul>
           <li><h4>A new customer, Ravi, downloads the Union Bank Of India’s mobile app Vyom and begins the onboarding process. He uploads his Aadhaar and PAN card details.</h4></li>
@@ -43,6 +48,7 @@ function ProblemStatements(props) {
           <li><h4>Ravi’s service ticket is generated with an analytical snapshot that includes his credit score, income, and potential eligibility for various loan options.</h4></li>
           <li><h4>Ravi is then directed to the loan officer, who receives the ticket with personalized suggestions for Ravi based on the data.</h4></li>
         </ul>
+        </div>
         <h2 style='color: #634647;'>Expected Solution:</h2>
         <ul>
           <li><h4>The solution should integrate a face training model within the Union bank of India’s mobile app Vyom for fraud prevention, utilizing AADHAAR-based authentication to verify customer identities and enable edge processing. This will ensure secure transactions and minimize identity fraud risks, even in remote areas.</h4></li>
@@ -86,6 +92,7 @@ function ProblemStatements(props) {
         "Using GenAI for customer profiling, fraud detection, and insights.",
       fullContent: `
         <p>With the rise of digital banking, financial institutions face an increasing threat of financial crimes like money laundering and fraud. This document explores how Generative AI (GenAI) can help address these challenges through large-scale data analysis to provide real-time, actionable insights. Hypothetical use cases involving individuals like Naman and Arnav illustrate practical applications.</p>
+        <div style="width:100%;">
         <div style="padding-left:3px;">
         ${
           isMobile
@@ -103,6 +110,7 @@ function ProblemStatements(props) {
           <li><h3>Customer analysis</h3></li>
           <li><h3>Insider threats / fraud detection</h3></li>
         </ul>
+        </div>
         <h2 style='color: #634647;'>Real-Life Example: Naman’s Journey</h2>
         <p><strong>Scenario 1: Fraudulent Activity Detection:</strong> Naman receives a large sum from an unfamiliar account, and subsequent international transactions are flagged as "smurfing" (money laundering), freezing the account for review.</p>
         <p><strong>Scenario 2: Personalized Services:</strong> GenAI notices Naman’s frequent foreign transactions and recommends a travel-friendly credit card.</p>
