@@ -31,7 +31,7 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
 
   const handleSmoothScroll = (e, targetId) => {
     e.preventDefault();
-    if (targetId === "/" || targetId === "/guidelines" || targetId === "/faq") {
+    if (targetId === "/" || targetId === "/guidelines" || targetId === "/faq" || targetId === "/team") {
       navigate(targetId);
     } else {
       const target = document.querySelector(targetId);
