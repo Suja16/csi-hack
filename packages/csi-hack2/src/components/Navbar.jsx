@@ -67,13 +67,15 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
           padding: 2,
         }}
       >
-        <img
-          height="40vw"
-          width="140vw"
-          src={Logo}
-          alt="Logo"
-          style={{ scale: "1.5", paddingLeft: "1rem" }}
-        />
+        <Link to="/">
+          <img
+            height="40vw"
+            width="140vw"
+            src={Logo}
+            alt="Logo"
+            style={{ scale: "1.5", paddingLeft: "1rem" }}
+          />
+        </Link>
         {!isMid && (
           <>
             <Box
