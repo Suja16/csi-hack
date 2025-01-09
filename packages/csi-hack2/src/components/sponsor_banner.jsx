@@ -98,12 +98,12 @@ const Banner = () => {
           <img
             src={ibaLogo}
             alt="IBA"
-            style={{ width: "80px", height: "auto" }}
+            style={{ width: "100px", height: "auto" }}
           />
           <img
             src={dfsLogo}
             alt="Department of Financial Services"
-            style={{ maxWidth: "100px", height: "auto", marginRight: "10px" }}
+            style={{ width: "200px", height: "auto", marginRight: "10px" }}
           />
         </Box>
       </Box>

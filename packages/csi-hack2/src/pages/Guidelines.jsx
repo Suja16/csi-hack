@@ -12,21 +12,23 @@ const HackathonGuidelines = () => {
         "Understand the Theme: Read about the hackathon's theme or problem statement beforehand.",
         "Form a Team: Create a diverse team of 3–5 members with complementary skills (developers, designers, marketers, etc.).",
         "Gather Tools: Install necessary software, SDKs, or development environments. ",
-        "Bring Essentials: Ensure you have a laptop, chargers, notepads, snacks, and any other materials you'll need.",
         "Research: Familiarize yourself with APIs, datasets, or platforms allowed or provided.",
+        "Prototype: Sketch out akk rough idea or wireframe of your project to guide development.",
+        "Build: Develop as much of your project as you can before the hackathon starts!!"
       ],
     },
     {
       title: "At the Start of the Hackathon",
       items: [
+        "Bring Essentials: Ensure you have a laptop, chargers, notepads, snacks, and any other materials you'll need.",
         "Attend the Kickoff: Listen to the rules, judging criteria, and other announcements.",
-        "Define the Goal: Decide on a project idea that aligns with the theme and is achievable within the time frame.",
-        "Plan Your Time: Divide the time for ideation, development, testing, and presentation.",
+        "Plan Your Time: Divide the time for ideation, development, testing, feedback and presentation.",
       ],
     },
     {
       title: "During the Hackathon",
       items: [
+        "Get Feedback: Gain valuable insights about your project from leading industry mentors.",
         "Stick to the Plan: Focus on completing your Minimum Viable Product (MVP) rather than overcomplicating features.",
         "Communicate Regularly: Maintain clear communication among team members.",
         "Use Version Control: Use Git or similar tools to track changes and collaborate effectively.",

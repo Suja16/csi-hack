@@ -1,4 +1,17 @@
-import { IconButton, Typography, Snackbar, Grid2, Button, Tooltip, styled } from "@mui/material";
+import {
+  IconButton,
+  Typography,
+  Snackbar,
+  Grid2,
+  Button,
+  Tooltip,
+  Box,
+  Select,
+  FormControl,
+  MenuItem,
+  InputLabel,
+  styled,
+} from "@mui/material";
 import Popup from "../elements/popup";
 import CloseIcon from "@mui/icons-material/Close";
 import registrationSchema from "../utils/validation";
@@ -11,43 +24,54 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Delete from "@mui/icons-material/Delete";
 import uploadFile from "../utils/uploadFile";
 
-const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
   height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
+  overflow: "hidden",
+  position: "absolute",
   bottom: 0,
   left: 0,
-  whiteSpace: 'nowrap',
+  whiteSpace: "nowrap",
   width: 1,
 });
 
 export default function RegistrationForm({ open, onClose, userData }) {
-  const {
-          formState: { errors },
-          handleSubmit,
-          register,
-          setValue,
-          getValues,
-          watch,
-          reset
-      } = useForm({
-          mode: "onChange",
-          resolver: yupResolver(registrationSchema),
-          defaultValues: {
-            gender: "MALE", ...userData
-          }
-      })
+  const [gender, setGender] = useState("");
+  const [degree, setDegree] = useState("");
 
-  const teamChoice = watch("team_choice")
-  const resume = watch("resume")
-  const photo_id = watch("photo_id")
+  const handleChange = (event) => {
+    setGender(event.target.value);
+  };
+  const handleDegreeChange = (event) => {
+    setDegree(event.target.value);
+  };
+
+  const {
+    formState: { errors },
+    handleSubmit,
+    register,
+    setValue,
+    getValues,
+    watch,
+    reset,
+  } = useForm({
+    mode: "onChange",
+    resolver: yupResolver(registrationSchema),
+    defaultValues: {
+      gender: "MALE",
+      ...userData,
+    },
+  });
+
+  const teamChoice = watch("team_choice");
+  const resume = watch("resume");
+  const photo_id = watch("photo_id");
 
   useEffect(() => {
     console.log(errors);
     console.log(resume);
-  }, [errors, resume])
+  }, [errors, resume]);
 
   useEffect(() => {
     reset(userData);
@@ -127,23 +151,23 @@ export default function RegistrationForm({ open, onClose, userData }) {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
-          },
+          }
         );
         const inviteCode = teamResponse.data.team.invite_code;
         localStorage.setItem("inviteCode", inviteCode);
         localStorage.setItem("teamName", data.team_name);
         console.log(teamResponse);
-        alert("Your team code is - " + inviteCode)
-        localStorage.setItem("status", "true")
+        alert("Your team code is - " + inviteCode);
+        localStorage.setItem("status", "true");
         setSnackbarMessage("Registration Successful");
-
 
         // navigate("/header");
         setShowSnackbar(true);
 
-        setTimeout(() => { setShowSnackbar(false); onClose() }, 3000);
-
-
+        setTimeout(() => {
+          setShowSnackbar(false);
+          onClose();
+        }, 3000);
       } catch (e) {
         console.error(e);
         if (e.response && e.response.data && e.response.data.message) {
@@ -169,16 +193,19 @@ export default function RegistrationForm({ open, onClose, userData }) {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
-          },
+          }
         );
-        localStorage.setItem("status" , "true")
+        localStorage.setItem("status", "true");
         setSnackbarMessage("Registration Successful");
 
         // navigate("/header");
 
         setShowSnackbar(true);
 
-        setTimeout(() => { setShowSnackbar(false); onClose() }, 3000);
+        setTimeout(() => {
+          setShowSnackbar(false);
+          onClose();
+        }, 3000);
       } catch (e) {
         console.error(e);
         if (e.response && e.response.data && e.response.data.message) {
@@ -215,7 +242,14 @@ export default function RegistrationForm({ open, onClose, userData }) {
       <Typography variant="h4" align="center" marginTop="1.5rem">
         Register
       </Typography>
-      <Grid2 component="form"  onSubmit={handleSubmit(onSubmit)} container columns={{xs:1, sm:2}} spacing={2} padding="2rem">
+      <Grid2
+        component="form"
+        onSubmit={handleSubmit(onSubmit)}
+        container
+        columns={{ xs: 1, sm: 2 }}
+        spacing={2}
+        padding="2rem"
+      >
         <Grid2 item size={1}>
           <TextBox
             name="phone_number"
@@ -227,24 +261,63 @@ export default function RegistrationForm({ open, onClose, userData }) {
           />
         </Grid2>
         <Grid2 item size={1}>
-          <TextBox
+          {/* <TextBox
             name="gender"
             label="GENDER"
             register={register}
             placeholder={"MALE / FEMALE"}
             helperText={errors?.gender?.message}
             error={!!errors?.gender?.message}
-          />
+          /> */}
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={gender}
+                name="gender"
+                label="GENDER"
+                onChange={handleChange}
+              >
+                <MenuItem value={"MALE"}>MALE</MenuItem>
+                <MenuItem value={"FEMALE"}>FEMALE</MenuItem>
+                <MenuItem value={"OTHERS"}>OTHERS</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
         </Grid2>
         <Grid2 item size={1}>
-          <TextBox
+          {/* <TextBox
             name="degree"
             label="DEGREE"
             register={register}
             placeholder={"Enter your Degree"}
             helperText={errors?.degree?.message}
             error={!!errors?.degree?.message}
-          />
+          /> */}
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Degree</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={degree}
+                name="degree"
+                label="DEGREE"
+                onChange={handleDegreeChange}
+              >
+                <MenuItem value={"BTech"}>BTech</MenuItem>
+                <MenuItem value={"MTech"}>MTech</MenuItem>
+                <MenuItem value={"BCA"}>BCA</MenuItem>
+                <MenuItem value={"MCA"}>MCA</MenuItem>
+                <MenuItem value={"Bsc"}>Bsc</MenuItem>
+                <MenuItem value={"Msc"}>Msc</MenuItem>
+                <MenuItem value={"MBA"}>MBA</MenuItem>
+                <MenuItem value={"Other"}>Other</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
         </Grid2>
         <Grid2 item size={1}>
           <TextBox
@@ -326,7 +399,15 @@ export default function RegistrationForm({ open, onClose, userData }) {
             role={undefined}
             variant="text"
             tabIndex={-1}
-            startIcon={resume && resume[0] ? <Tooltip title="Delete File"><Delete/></Tooltip>: <CloudUploadIcon />}
+            startIcon={
+              resume && resume[0] ? (
+                <Tooltip title="Delete File">
+                  <Delete />
+                </Tooltip>
+              ) : (
+                <CloudUploadIcon />
+              )
+            }
             sx={{ padding: "1rem" }}
           >
             {resume && resume[0] ? "" : "Upload Resume"}
@@ -348,7 +429,15 @@ export default function RegistrationForm({ open, onClose, userData }) {
             component="label"
             role={undefined}
             variant="text"
-            startIcon={photo_id && photo_id[0] ? <Tooltip title="Delete File"><Delete/></Tooltip> : <CloudUploadIcon />}
+            startIcon={
+              photo_id && photo_id[0] ? (
+                <Tooltip title="Delete File">
+                  <Delete />
+                </Tooltip>
+              ) : (
+                <CloudUploadIcon />
+              )
+            }
             sx={{ padding: "1rem" }}
           >
             {photo_id && photo_id[0] ? "" : "Upload Photo ID"}
@@ -375,10 +464,17 @@ export default function RegistrationForm({ open, onClose, userData }) {
             {errors?.photo_id?.message}
           </Typography>
         </Grid2>
-        <Grid2 item size={1} display="flex" justifyContent="start" gap="3rem" marginTop="1rem">
+        <Grid2
+          item
+          size={1}
+          display="flex"
+          justifyContent="start"
+          gap="3rem"
+          marginTop="1rem"
+        >
           <Tooltip title="Team Leaders create a Team">
             <Button
-              variant={teamChoice==="create" ? "contained" : "outlined"}
+              variant={teamChoice === "create" ? "contained" : "outlined"}
               color="secondary"
               onClick={() => setValue("team_choice", "create")}
               sx={{
@@ -392,7 +488,7 @@ export default function RegistrationForm({ open, onClose, userData }) {
           </Tooltip>
           <Tooltip title="Team Members join a Leader's Team">
             <Button
-              variant={teamChoice==="join" ? "contained" : "outlined"}
+              variant={teamChoice === "join" ? "contained" : "outlined"}
               color="secondary"
               onClick={() => setValue("team_choice", "join")}
               sx={{
@@ -406,7 +502,14 @@ export default function RegistrationForm({ open, onClose, userData }) {
           </Tooltip>
         </Grid2>
         {!teamChoice && (
-          <Grid2 item size={1} marginTop="1rem" display="flex" flexDirection="column" justifyContent="center">
+          <Grid2
+            item
+            size={1}
+            marginTop="1rem"
+            display="flex"
+            flexDirection="column"
+            justifyContent="center"
+          >
             <Typography variant="caption" color="error">
               * Team Leaders will &apos;Create A Team&apos;
             </Typography>
@@ -439,7 +542,13 @@ export default function RegistrationForm({ open, onClose, userData }) {
             />
           </Grid2>
         )}
-        <Grid2 item size={2} display="flex" justifyContent="end" marginTop="1rem">
+        <Grid2
+          item
+          size={2}
+          display="flex"
+          justifyContent="end"
+          marginTop="1rem"
+        >
           <Button
             variant="contained"
             color="primary"
@@ -455,16 +564,20 @@ export default function RegistrationForm({ open, onClose, userData }) {
           </Button>
         </Grid2>
       </Grid2>
-      {showSnackbar && (<Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        open={open}
-        message={snackbarMessage}
-      />)}
-      {clickCount===1 && (<Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        open={open}
-        message="Click twice to close"
-      />)}
+      {showSnackbar && (
+        <Snackbar
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          open={open}
+          message={snackbarMessage}
+        />
+      )}
+      {clickCount === 1 && (
+        <Snackbar
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          open={open}
+          message="Click twice to close"
+        />
+      )}
     </Popup>
   );
 }
