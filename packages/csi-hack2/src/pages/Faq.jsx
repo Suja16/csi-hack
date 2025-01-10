@@ -58,7 +58,7 @@ const Faq = ({ isExpanded }) => {
         },
         {
           question: "Is it only open to students, or can working professionals also join?",
-          answer: "Participants must be Undergraduate Students attending a recognised university."
+          answer: "All full-time Undergraduate and Postgraduate students are eligible."
         },
         {
           question: "Can I attend virtually?",

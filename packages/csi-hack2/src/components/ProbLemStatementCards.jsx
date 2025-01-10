@@ -10,6 +10,8 @@ import Popup from "../elements/popup"; // Import the Popup component
 
 export default function CustomizedDialogs({
   title,
+  majorArea,
+  subArea,
   description,
   fullContent,
   imgValue,
@@ -65,8 +67,38 @@ export default function CustomizedDialogs({
             <CloseIcon />
           </IconButton>
           <Typography
+            variant={isMobile ? "body3" : "h4"}
+            component="h4"
+            color="primary"
+            sx={{
+              textAlign: "justify",
+              width: "max-content",
+              fontWeight: "bold",
+              m: 0,
+              mt: 1,
+            }}
+            id="customized-dialog-title"
+          >
+            Major Area: {majorArea}
+          </Typography>
+          <Typography
+            variant={isMobile ? "body3" : "h5"}
+            component="h5"
+            maxWidth="100%"
+            // color="secondary"
+            sx={{
+              letterSpacing: "0.2px",
+              m: 0,
+              mt: 1,
+              mb: 1,
+            }}
+            id="customized-dialog-title"
+          >
+            Sub Area: {subArea}
+          </Typography>
+          <Typography
             variant={isMobile ? "body2" : "h4"}
-            component="h3"
+            component="h4"
             sx={{
               textAlign: "justify",
               textDecoration: "unerline",
@@ -77,31 +109,43 @@ export default function CustomizedDialogs({
               // borderBottom: "1px solid black",
               m: 0,
               mt: 3,
-              mb: 2,
-              pt: 2,
             }}
             id="customized-dialog-title"
           >
             Problem Statement :
           </Typography>
           <Typography
-            variant={isMobile ? "subtitle1" : "h4"}
-            component={isMobile ? "subtitle1" : "h4"}
+            variant={isMobile ? "subtitle1" : "h5"}
+            component={isMobile ? "subtitle1" : "h5"}
             sx={{
-              textAlign: "justify",
+              // textAlign: "justify",
               fontWeight: "bold",
               marginBottom: 2,
               color: "black",
               letterSpacing: "0.2px",
               m: 0,
-              py: 2,
-              pt: 2,
+              pb: 2,
             }}
             id="customized-dialog-title"
           >
             {title}
           </Typography>
-          <Typography variant="subtitle2" sx={{ m: 0, py: 1 }}>
+          <Typography
+            variant={isMobile ? "body3" : "h5"}
+            component="h5"
+            maxWidth="100%"
+            color="primary"
+            sx={{
+              letterSpacing: "0.2px",
+              fontWeight: "bold",
+              m: 0,
+              mt: 1,
+            }}
+            id="customized-dialog-title"
+          >
+            Expected Outcome:
+          </Typography>
+          <Typography variant="subtitle2" sx={{ m: 0, pb: 1 }}>
             {description}
           </Typography>
 

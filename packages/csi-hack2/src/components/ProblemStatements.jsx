@@ -13,6 +13,8 @@ function ProblemStatements(props) {
     {
       title:
         "Business Analytics-Based Appointment Management System for Efficient Customer Service",
+      majorArea: "FINTECH",
+      subArea: "Customer Service and Identity Cerification",
       description:
         "Design and implement a facial recognition system to streamline customer service queries.",
       fullContent: `
@@ -51,37 +53,35 @@ function ProblemStatements(props) {
       `,
     },
     {
-      title:
-        "Need for Government Agencies Assistance for takedown of Malicious/Phishing domain",
+      title: "Need for Government Agencies Assistance for takedown of Malicious/Phishing domain:",
+      majorArea: "CYBERSECURITY",
+      subArea: "Advance Fruad Detection Mechanisms - Phishing, Identity Theft and Fraud Prevention",
       description:
-        "Challenges in phishing domain takedowns and expected solutions.",
+        "Develop a centralized platform or API to facilitate collaboration between public and private entities for faster takedown of malicious domains:",
       fullContent: `
-        <p>Many times, it is observed that not all domain registrars or hosting providers are cooperative when it comes to requests for phishing domain takedowns, especially if they operate in jurisdictions where state actors or threat actors benefit from relaxed cybersecurity laws. Public Sector Banks (PSBs) in India face significant challenges in the timely takedown of suspicious, malicious, or phishing domains impersonating their entities.</p>
-        <p>In several instances, third-party takedown service providers have been unable to successfully remove such phishing domains or fraudulent applications. Furthermore, there is an absence of a well-defined, centralized mechanism provided by any authority to address these issues. Specifically, difficulties arise in identifying a single point of contact or department responsible for handling such cases, as well as a lack of clear guidelines on how to proceed with these requests.</p>
-        <p>This often leads to delays in resolving these threats, potentially compromising the security of customers.</p>
-        <h2 style='color: #634647;'>Example Scenario: Arnav’s Challenge</h2>
-        <p>Arnav, a cybersecurity specialist at a Union Bank Of India, discovers a phishing website impersonating their bank. The fraudulent website is collecting sensitive customer information, posing a significant threat. Despite contacting third-party takedown service providers, the domain remains active due to non-cooperation from the registrar, located in a jurisdiction with lax cybersecurity regulations. This delay risks exposing customer data and eroding trust in the institution.</p>
-        <h2 style='color: #634647;'>Expected Solution:</h2>
+        <h2 style='color: #634647;'>Features:</h2>
         <ul>
-          <li><h3>Streamlined Takedown Processes:</h3>
-            <ul>
-              <li>A clear and efficient mechanism for reporting phishing domains and fraudulent applications to the right stakeholders.</li>
-              <li>Templates or guidelines for PSBs to escalate and follow up on takedown requests from the appropriate Government authority.</li>
-            </ul>
-          </li>
-          <li><h3>Centralized Coordination:</h3>
-            <ul>
-              <li>A centralized platform or framework to ensure coordination among banks, government, cybersecurity experts, and service providers.</li>
-              <li>Efficient coordination facilitation between the right department and the Bank.</li>
-              <li>Mechanisms to overcome jurisdictional challenges and non-cooperative registrars.</li>
-            </ul>
-          </li>
+          <li>Automated detection of phishing domains using AI and threat intelligence.</li>
+          <li>Workflow to report malicious activity to the relevant government agency.</li>
+          <li>Real-time updates on takedown progress.Mli>
+          <li>Integration with CERTs and domain registrars for seamless coordination.</li>
         </ul>
+        <h2 style='color: #634647;'>Impact:</h2>
+        <ul>
+          <li>Reduce response times for domain takedowns.</li>
+          <li>Enhance public trust by mitigating cybersecurity risks promptly.</li>
+          <li>Support law enforcement in prosecuting cybercriminals.</li>
+        </ul>
+        <p>
+          This use case emphasizes the critical role of government agencies in securing the digital ecosystem and provides an actionable roadmap for mitigating phishing and malicious domain threats.
+        </p>
       `,
     },
     {
       title:
         "Leveraging GenAI for Customer Analytics and Fraud Detection in Banking",
+      majorArea: "GENERATIVE AI",
+      subArea: "Customer analytics / Fraud detection using GenAI",
       description:
         "Using GenAI for customer profiling, fraud detection, and insights.",
       fullContent: `
@@ -216,6 +216,8 @@ function ProblemStatements(props) {
             >
               <CustomizedDialogs
                 title={value.title}
+                majorArea={value.majorArea}
+                subArea={value.subArea}
                 description={value.description}
                 fullContent={value.fullContent}
                 imgValue={imgList[key]}

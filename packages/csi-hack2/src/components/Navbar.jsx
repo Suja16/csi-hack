@@ -36,7 +36,7 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
       : []),
   ];
 
-  const handleSmoothScroll = (e, targetId) => {
+  const handleSmoothScroll = async (e, targetId) => {
     e.preventDefault();
     if (
       targetId === "/" ||
@@ -46,6 +46,9 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
     ) {
       navigate(targetId);
     } else {
+      if (targetId === "#problems") {
+        await navigate("/");
+      }
       const target = document.querySelector(targetId);
       if (target) {
         target.scrollIntoView({ behavior: "smooth", block: "start" });
