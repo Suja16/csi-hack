@@ -1,9 +1,9 @@
+import { Box, useMediaQuery } from "@mui/material";
 import React from "react";
 import Carousel from "react-material-ui-carousel";
-import { Paper, useMediaQuery, Button, Box, colors } from "@mui/material";
+import goodies from "../assets/goodies.png";
 import main from "../assets/main.png";
 import domain from "../assets/ps.png";
-import goodies from "../assets/goodies.png";
 import timeline from "../assets/timeline.png";
 
 function CarouselHomePage(props) {
