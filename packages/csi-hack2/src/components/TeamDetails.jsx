@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import UserDataContext from "../contexts/userDataContext";
 import {
   Box,
@@ -16,6 +16,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import TextBox from "./TextBox";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import LoadingButton from "@mui/lab/LoadingButton";
 import Delete from "@mui/icons-material/Delete";
 import { useEffect } from "react";
 import uploadFile from "../utils/uploadFile";
@@ -90,6 +91,8 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
   const navigate = useNavigate();
   const { userData, eventData } = useContext(UserDataContext);
   const theme = useTheme();
+  const [isSubmitting , setIsSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const {
     formState: { errors },
@@ -111,12 +114,17 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
 
   useEffect(() => {
     console.log(errors);
-  }, [errors]);
+    if(eventData.Participant.team.submissions) {
+      setSubmitted(true);
+    }
+    
+  }, [errors, eventData.Participant.team.submissions]);
 
   const ppt = watch("ppt");
   const consent = watch("consent");
 
   const onSubmit = async () => {
+    setIsSubmitting(true);
     const data = getValues();
     console.log(data);
 
@@ -137,19 +145,25 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
       consent: consentUrl,
       acceptance: data.acceptance,
     };
-
-    const response = await axios.post(
-      "/api/v1/event/p/team-submission",
-      { team_id: eventData.Participant.team.id, submissions },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-        baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
+    try {
+      const response = await axios.post(
+        "/api/v1/event/p/team-submission",
+        { team_id: eventData.Participant.team.id, submissions },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+          baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
+        }
+      );
+      if(response.status === 200 && response.data.error==false) {
+        setIsSubmitting(false);
+        setSubmitted(true);
       }
-    );
-
-    console.log(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const leaveTeam = async () => {
@@ -254,7 +268,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
           Leave Team
         </Button> */}
       </Grid2>
-      {!eventData.Participant.team.submissions && userData.id === eventData.Participant.team.leader_id ? (
+      {!submitted && userData.id === eventData.Participant.team.leader_id ? (
         <>
           <Grid2
             item
@@ -374,6 +388,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
               variant="contained"
               type="submit"
               sx={{ padding: "1rem", marginTop: "1rem", marginX: "auto" }}
+              disabled={isSubmitting}
             >
               Submit
             </Button>
