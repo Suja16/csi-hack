@@ -1,5 +1,4 @@
 import { Box, useMediaQuery } from "@mui/material";
-import React from "react";
 import Carousel from "react-material-ui-carousel";
 import goodies from "../assets/goodies.png";
 import main from "../assets/main.png";
@@ -37,12 +36,7 @@ function Item(props) {
         border: 0,
       }}
     >
-      <img
-        sx={{ objectFit: "cover" }}
-        src={props.item}
-        width="100%"
-        alt="Idea"
-      />
+      <img src={props.item} width="100%" alt="Idea" />
     </Box>
   );
 }
