@@ -32,9 +32,9 @@ const formSchema = yup.object({
     .test("minimumFiles", "PPT is required", (value) => {
       return value && value.length > 0 && value[0];
     })
-    .test("fileType", "Only PPTX files are allowed", (value) => {
+    .test("fileType", "Only PDF files are allowed", (value) => {
       return (
-        value && value.length > 0 && value[0] && value[0].name.endsWith(".pptx") // Checks for .pptx extension
+        value && value.length > 0 && value[0] && value[0].name.endsWith(".pdf") // Checks for .pptx extension
       );
     })
     .test("fileSize", "File size must be less than 2MB", (value) => {
