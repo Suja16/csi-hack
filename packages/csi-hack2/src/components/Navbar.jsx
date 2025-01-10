@@ -9,37 +9,45 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../assets/idea.png";
 import { Button } from "@mui/material";
 import RegistrationForm from "./registrationFrom";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton";
 import UserDataContext from "../contexts/userDataContext";
 
 const Navbar = ({ login, open, setopen, isLoading }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeItem, setActiveItem] = useState('/');  // Track active item
   const isMid = useMediaQuery("(max-width:1146px)");
   const navigate = useNavigate();
+  const location = useLocation();
   const { userData, setUserData, eventData } = useContext(UserDataContext);
 
   useEffect(() => {
-    console.log("USER", userData);
-    console.log("EVENT", eventData);
-  }, [userData, eventData]);
+    if (location.pathname === '/') {
+      setActiveItem('/');
+    } else {
+      setActiveItem(location.pathname);
+    }
+  }, [location.pathname]);
 
   const navItems = [
     { label: "HOME", href: "/" },
     { label: "PROBLEM STATEMENTS", href: "#problems" },
     { label: "GUIDELINES", href: "/guidelines" },
     { label: "FAQs", href: "/faq" },
-    // { label: "PRIZES", href: "#prizes" },
     { label: "CONTACT US", href: "#contact" },
     ...(eventData && eventData.Participant
       ? [{ label: "TEAM", href: "/team" }]
       : []),
   ];
 
-
+  const isActive = (href) => {
+    return activeItem === href;
+  };
 
   const handleSmoothScroll = async (e, targetId) => {
     e.preventDefault();
+    setActiveItem(targetId);
+
     if (
       targetId === "/" ||
       targetId === "/guidelines" ||
@@ -63,7 +71,29 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
     }
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (location.pathname === '/') {
+        const problemsSection = document.querySelector('#problems');
+        const contactSection = document.querySelector('#contact');
 
+        if (problemsSection && contactSection) {
+          const problemsRect = problemsSection.getBoundingClientRect();
+          const contactRect = contactSection.getBoundingClientRect();
+          const windowHeight = window.innerHeight;
+
+          if (problemsRect.top >= 0 && problemsRect.top <= windowHeight / 2) {
+            setActiveItem('#problems');
+          } else if (contactRect.top >= 0 && contactRect.top <= windowHeight / 2) {
+            setActiveItem('#contact');
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [location.pathname]);
 
   const logout = () => {
     localStorage.removeItem("accessToken");
@@ -117,8 +147,23 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
                   onClick={(e) => handleSmoothScroll(e, item.href)}
                   sx={{
                     textDecoration: "none",
-                    color: "black",
+                    color: isActive(item.href) ? "primary.main" : "black",
                     fontSize: "16px",
+                    position: "relative",
+                    "&::after": {
+                      content: '""',
+                      position: "absolute",
+                      width: "100%",
+                      height: "2px",
+                      bottom: "-4px",
+                      left: 0,
+                      backgroundColor: "primary.main",
+                      transform: isActive(item.href) ? "scaleX(1)" : "scaleX(0)",
+                      transition: "transform 0.3s ease-in-out",
+                    },
+                    "&:hover::after": {
+                      transform: "scaleX(1)",
+                    },
                   }}
                 >
                   {item.label}
@@ -219,9 +264,12 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
             }}
             sx={{
               textDecoration: "none",
-              color: "black",
+              color: isActive(item.href) ? "primary.main" : "black",
               fontSize: "24px",
               fontWeight: "semi-bold",
+              "&:hover": {
+                color: "primary.main",
+              },
             }}
           >
             {item.label}
