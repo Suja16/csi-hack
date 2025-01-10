@@ -160,6 +160,11 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
         setIsSubmitting(false);
         setSubmitted(true);
       }
+      else if(response.data.error==true) {
+        setIsSubmitting(false);
+        window.alert(response.data.message);
+        setSubmitted(false);
+      }
       console.log(response.data);
     } catch (error) {
       console.error(error);
@@ -407,9 +412,10 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
           marginTop="10rem"
         >
           <Typography variant="h5">Your Submission</Typography>
-          <Typography variant="body1">
-            {eventData.Participant.team.submissions ? "Your submission has been recorded." : "Your team leader has not submitted the project yet."}
-          </Typography>
+          
+             <Typography variant="body1">
+             {submitted ? "Your submission has been recorded." : "Your team leader has not submitted the project yet."}
+           </Typography>
         </Grid2>
       )}
     </Grid2>
