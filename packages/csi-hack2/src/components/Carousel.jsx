@@ -1,11 +1,11 @@
 import { Box, useMediaQuery } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
-import goodies from "../assets/goodies.png";
+import goodies from "../assets/prizes.png";
 import main from "../assets/main.png";
 import domain from "../assets/ps.png";
 import timeline from "../assets/timeline.png";
 
-function CarouselHomePage(props) {
+function CarouselHomePage() {
   var items = [main, domain, timeline, goodies];
 
   return (
