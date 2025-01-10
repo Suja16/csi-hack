@@ -1,5 +1,4 @@
 import { Box, Typography, Container } from "@mui/material";
-import React from "react";
 import CustomizedDialogs from "./ProbLemStatementCards";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import fintech from "../assets/fintech.png";
@@ -9,12 +8,13 @@ import genai from "../assets/genai.png";
 export default function ProblemStatements() {
   const isMobile = useMediaQuery("(max-width:500px)");
 
-
   const data = [
     {
-      title: "Need for Government Agencies Assistance for takedown of Malicious/Phishing domain:",
+      title:
+        "Need for Government Agencies Assistance for takedown of Malicious/Phishing domain:",
       majorArea: "CYBERSECURITY",
-      subArea: "Advance Fruad Detection Mechanisms - Phishing, Identity Theft and Fraud Prevention",
+      subArea:
+        "Advance Fruad Detection Mechanisms - Phishing, Identity Theft and Fraud Prevention",
       description:
         "Develop a centralized platform or API to facilitate collaboration between public and private entities for faster takedown of malicious domains:",
       fullContent: `
@@ -88,9 +88,10 @@ export default function ProblemStatements() {
       fullContent: `
         <p>With the rise of digital banking, financial institutions face an increasing threat of financial crimes like money laundering and fraud. This document explores how Generative AI (GenAI) can help address these challenges through large-scale data analysis to provide real-time, actionable insights. Hypothetical use cases involving individuals like Naman and Arnav illustrate practical applications.</p>
         <div style="padding-left:3px;">
-        ${isMobile
-          ? "<h3 style='color: #634647; letter-spacing: 3px;'>Financial Institutions Struggle With:</h3>"
-          : "<h2 style='color: #634647; letter-spacing: 3px;'>Financial Institutions Struggle With:</h2>"
+        ${
+          isMobile
+            ? "<h3 style='color: #634647; letter-spacing: 3px;'>Financial Institutions Struggle With:</h3>"
+            : "<h2 style='color: #634647; letter-spacing: 3px;'>Financial Institutions Struggle With:</h2>"
         }
         </div>
         <ul>
@@ -167,52 +168,44 @@ export default function ProblemStatements() {
   const imgList = [cybersecurity, fintech, genai];
 
   return (
-    <Box
-      id="problems"
-      sx={{
-        py: { xs: 8, md: 12 },
-        backgroundColor: "grey.50",
-      }}
-    >
-      <Container maxWidth="xl">
-        <Typography
-          variant={isMobile ? "h3" : "h2"}
-          align="center"
-          sx={{
-            fontWeight: 700,
-            mb: { xs: 6, md: 8 },
-            color: "text.primary",
-          }}
-        >
-          Problem Statements
-        </Typography>
+    <Container maxWidth="xl">
+      <Typography
+        variant={isMobile ? "h3" : "h2"}
+        align="center"
+        sx={{
+          fontWeight: 700,
+          mb: { xs: 6, md: 8 },
+          color: "text.primary",
+        }}
+      >
+        Problem Statements
+      </Typography>
 
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: {
-              xs: "1fr",
-              md: "repeat(2, 1fr)",
-              lg: "repeat(3, 1fr)",
-            },
-            gap: 4,
-            justifyItems: "center",
-            alignItems: "stretch",
-          }}
-        >
-          {data.map((value, key) => (
-            <CustomizedDialogs
-              key={key}
-              title={value.title}
-              majorArea={value.majorArea}
-              subArea={value.subArea}
-              description={value.description}
-              fullContent={value.fullContent}
-              imgValue={imgList[key]}
-            />
-          ))}
-        </Box>
-      </Container>
-    </Box>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "1fr",
+            md: "repeat(2, 1fr)",
+            lg: "repeat(3, 1fr)",
+          },
+          gap: 4,
+          justifyItems: "center",
+          alignItems: "stretch",
+        }}
+      >
+        {data.map((value, key) => (
+          <CustomizedDialogs
+            key={key}
+            title={value.title}
+            majorArea={value.majorArea}
+            subArea={value.subArea}
+            description={value.description}
+            fullContent={value.fullContent}
+            imgValue={imgList[key]}
+          />
+        ))}
+      </Box>
+    </Container>
   );
 }
