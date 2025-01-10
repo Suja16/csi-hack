@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Container } from "@mui/material";
 import React from "react";
 import CustomizedDialogs from "./ProbLemStatementCards";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -6,10 +6,36 @@ import fintech from "../assets/fintech.png";
 import cybersecurity from "../assets/cybersecurity.png";
 import genai from "../assets/genai.png";
 
-function ProblemStatements(props) {
+export default function ProblemStatements() {
   const isMobile = useMediaQuery("(max-width:500px)");
 
+
   const data = [
+    {
+      title: "Need for Government Agencies Assistance for takedown of Malicious/Phishing domain:",
+      majorArea: "CYBERSECURITY",
+      subArea: "Advance Fruad Detection Mechanisms - Phishing, Identity Theft and Fraud Prevention",
+      description:
+        "Develop a centralized platform or API to facilitate collaboration between public and private entities for faster takedown of malicious domains:",
+      fullContent: `
+        <h2 style='color: #634647;'>Features:</h2>
+        <ul>
+          <li>Automated detection of phishing domains using AI and threat intelligence.</li>
+          <li>Workflow to report malicious activity to the relevant government agency.</li>
+          <li>Real-time updates on takedown progress.Mli>
+          <li>Integration with CERTs and domain registrars for seamless coordination.</li>
+        </ul>
+        <h2 style='color: #634647;'>Impact:</h2>
+        <ul>
+          <li>Reduce response times for domain takedowns.</li>
+          <li>Enhance public trust by mitigating cybersecurity risks promptly.</li>
+          <li>Support law enforcement in prosecuting cybercriminals.</li>
+        </ul>
+        <p>
+          This use case emphasizes the critical role of government agencies in securing the digital ecosystem and provides an actionable roadmap for mitigating phishing and malicious domain threats.
+        </p>
+      `,
+    },
     {
       title:
         "Business Analytics-Based Appointment Management System for Efficient Customer Service",
@@ -53,31 +79,6 @@ function ProblemStatements(props) {
       `,
     },
     {
-      title: "Need for Government Agencies Assistance for takedown of Malicious/Phishing domain:",
-      majorArea: "CYBERSECURITY",
-      subArea: "Advance Fruad Detection Mechanisms - Phishing, Identity Theft and Fraud Prevention",
-      description:
-        "Develop a centralized platform or API to facilitate collaboration between public and private entities for faster takedown of malicious domains:",
-      fullContent: `
-        <h2 style='color: #634647;'>Features:</h2>
-        <ul>
-          <li>Automated detection of phishing domains using AI and threat intelligence.</li>
-          <li>Workflow to report malicious activity to the relevant government agency.</li>
-          <li>Real-time updates on takedown progress.Mli>
-          <li>Integration with CERTs and domain registrars for seamless coordination.</li>
-        </ul>
-        <h2 style='color: #634647;'>Impact:</h2>
-        <ul>
-          <li>Reduce response times for domain takedowns.</li>
-          <li>Enhance public trust by mitigating cybersecurity risks promptly.</li>
-          <li>Support law enforcement in prosecuting cybercriminals.</li>
-        </ul>
-        <p>
-          This use case emphasizes the critical role of government agencies in securing the digital ecosystem and provides an actionable roadmap for mitigating phishing and malicious domain threats.
-        </p>
-      `,
-    },
-    {
       title:
         "Leveraging GenAI for Customer Analytics and Fraud Detection in Banking",
       majorArea: "GENERATIVE AI",
@@ -87,10 +88,9 @@ function ProblemStatements(props) {
       fullContent: `
         <p>With the rise of digital banking, financial institutions face an increasing threat of financial crimes like money laundering and fraud. This document explores how Generative AI (GenAI) can help address these challenges through large-scale data analysis to provide real-time, actionable insights. Hypothetical use cases involving individuals like Naman and Arnav illustrate practical applications.</p>
         <div style="padding-left:3px;">
-        ${
-          isMobile
-            ? "<h3 style='color: #634647; letter-spacing: 3px;'>Financial Institutions Struggle With:</h3>"
-            : "<h2 style='color: #634647; letter-spacing: 3px;'>Financial Institutions Struggle With:</h2>"
+        ${isMobile
+          ? "<h3 style='color: #634647; letter-spacing: 3px;'>Financial Institutions Struggle With:</h3>"
+          : "<h2 style='color: #634647; letter-spacing: 3px;'>Financial Institutions Struggle With:</h2>"
         }
         </div>
         <ul>
@@ -164,70 +164,55 @@ function ProblemStatements(props) {
     },
   ];
 
-  const imgList = [fintech, cybersecurity, genai];
+  const imgList = [cybersecurity, fintech, genai];
 
   return (
     <Box
       id="problems"
       sx={{
-        marginTop: "1rem",
-        height: { xs: "max-content", lg: "100vh" },
-        marginY: 10,
-        paddingY: 10,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-around",
-        alignItems: "center",
-        borderBottom: "1px solid grey",
+        py: { xs: 8, md: 12 },
+        backgroundColor: "grey.50",
       }}
     >
-      <Typography
-        variant={isMobile ? "h4" : "h1"}
-        sx={{
-          textAlign: "center",
-        }}
-      >
-        Problem statements
-      </Typography>
-      <Box
-        sx={{
-          width: "100%",
-          height: "max-content",
-          marginTop: "4rem",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexDirection: { xs: "column", lg: "row" },
-          gap: 5,
-          cursor: "pointer",
-        }}
-      >
-        {data.map((value, key) => {
-          return (
-            <Box
+      <Container maxWidth="xl">
+        <Typography
+          variant={isMobile ? "h3" : "h2"}
+          align="center"
+          sx={{
+            fontWeight: 700,
+            mb: { xs: 6, md: 8 },
+            color: "text.primary",
+          }}
+        >
+          Problem Statements
+        </Typography>
+
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: {
+              xs: "1fr",
+              md: "repeat(2, 1fr)",
+              lg: "repeat(3, 1fr)",
+            },
+            gap: 4,
+            justifyItems: "center",
+            alignItems: "stretch",
+          }}
+        >
+          {data.map((value, key) => (
+            <CustomizedDialogs
               key={key}
-              sx={{
-                transform: "scale(1)",
-                transition: "all 0.3s ease",
-                "&:hover": {
-                  transform: "scale(1.09)",
-                },
-              }}
-            >
-              <CustomizedDialogs
-                title={value.title}
-                majorArea={value.majorArea}
-                subArea={value.subArea}
-                description={value.description}
-                fullContent={value.fullContent}
-                imgValue={imgList[key]}
-              />
-            </Box>
-          );
-        })}
-      </Box>
+              title={value.title}
+              majorArea={value.majorArea}
+              subArea={value.subArea}
+              description={value.description}
+              fullContent={value.fullContent}
+              imgValue={imgList[key]}
+            />
+          ))}
+        </Box>
+      </Container>
     </Box>
   );
 }
-
-export default ProblemStatements;

@@ -1,12 +1,7 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
-import { Box } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import { styled } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
+import { Box, Typography, IconButton, useMediaQuery } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Popup from "../elements/popup"; // Import the Popup component
+import Popup from "../elements/popup";
 
 export default function CustomizedDialogs({
   title,
@@ -19,143 +14,202 @@ export default function CustomizedDialogs({
   const [open, setOpen] = React.useState(false);
   const isMobile = useMediaQuery("(max-width:500px)");
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return (
     <React.Fragment>
       <Box
-        onClick={handleClickOpen}
+        onClick={() => setOpen(true)}
         sx={{
           width: "100%",
-          height: "max-content",
+          maxWidth: { xs: "340px", sm: "400px" },
+          height: "100%",
+          backgroundColor: "#fff",
+          borderRadius: "60px",
+          overflow: "hidden",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          transition: "transform 0.3s ease, box-shadow 0.3s ease",
+          "&:hover": {
+            transform: "translateY(-4px)",
+            boxShadow: "0 12px 16px rgba(0, 0, 0, 0.1)",
+          },
           display: "flex",
-          alignItems: "center",
           flexDirection: "column",
-          justifyContent: "center",
-          gap: 2,
-          paddingX: { xs: "5rem", md: "10rem", lg: "4rem" },
-          // boxShadow:
-          //   "rgba(60, 64, 67, 0.3) 0 1px 2px 0, rgba(60, 64, 67, 0.15) 0 2px 6px 2px",
+          position: "relative",
         }}
       >
-        <img src={imgValue} width="100%" alt="" />
-      </Box>
+        <Box sx={{ position: "relative", width: "100%", pt: "75%" }}>
+          <Box sx={{ position: "absolute", top: 0, left: 0, width: "100%" }}>
+            <img
+              src={imgValue}
+              alt={title}
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
+            <Box
+              sx={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: "9rem",
+                background: "linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)",
+              }}
+            />
+            <Box
+              sx={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: "3.8rem",
+                background: "white",
+              }} >
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  color: "primary.main",
+                  fontWeight: "bold",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 0.5,
+                  mb: 2,
+                  textAlign: "center",
+                  p: 3,
+                  flex: 1,
+                  flexDirection: "column"
+                }}
+              >
+                {majorArea}
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
 
-      {/* Replace BootstrapDialog with Popup */}
-      <Popup
-        dialogProps={{
-          open: open,
-          onClose: handleClose, // onClose handler to close the dialog
-        }}
-      >
-        <Box sx={{ position: "relative", p: 2, pl: 4, pr: 7 }}>
-          <IconButton
-            aria-label="close"
-            onClick={handleClose}
-            sx={(theme) => ({
-              position: "absolute",
-              right: 0,
-              color: theme.palette.grey[500],
-            })}
-          >
-            <CloseIcon />
-          </IconButton>
+        <Box sx={{ p: 3, flex: 1, display: "flex", flexDirection: "column" }}>
           <Typography
-            variant={isMobile ? "body3" : "h4"}
-            component="h4"
-            color="primary"
+            variant="h6"
             sx={{
-              textAlign: "justify",
-              width: "max-content",
-              fontWeight: "bold",
-              m: 0,
-              mt: 1,
-            }}
-            id="customized-dialog-title"
-          >
-            Major Area: {majorArea}
-          </Typography>
-          <Typography
-            variant={isMobile ? "body3" : "h5"}
-            component="h5"
-            maxWidth="100%"
-            // color="secondary"
-            sx={{
-              letterSpacing: "0.2px",
-              m: 0,
-              mt: 1,
               mb: 1,
+              fontWeight: 600,
+              color: "text.primary",
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
             }}
-            id="customized-dialog-title"
-          >
-            Sub Area: {subArea}
-          </Typography>
-          <Typography
-            variant={isMobile ? "body2" : "h4"}
-            component="h4"
-            sx={{
-              textAlign: "justify",
-              textDecoration: "unerline",
-              color: "red",
-              letterSpacing: "0.2px",
-              width: "max-content",
-              fontWeight: "bold",
-              // borderBottom: "1px solid black",
-              m: 0,
-              mt: 3,
-            }}
-            id="customized-dialog-title"
-          >
-            Problem Statement :
-          </Typography>
-          <Typography
-            variant={isMobile ? "subtitle1" : "h5"}
-            component={isMobile ? "subtitle1" : "h5"}
-            sx={{
-              // textAlign: "justify",
-              fontWeight: "bold",
-              marginBottom: 2,
-              color: "black",
-              letterSpacing: "0.2px",
-              m: 0,
-              pb: 2,
-            }}
-            id="customized-dialog-title"
           >
             {title}
           </Typography>
           <Typography
-            variant={isMobile ? "body3" : "h5"}
-            component="h5"
-            maxWidth="100%"
-            color="primary"
+            variant="body2"
+            color="text.secondary"
             sx={{
-              letterSpacing: "0.2px",
-              fontWeight: "bold",
-              m: 0,
-              mt: 1,
+              mb: 2,
+              display: "-webkit-box",
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
             }}
-            id="customized-dialog-title"
           >
-            Expected Outcome:
-          </Typography>
-          <Typography variant="subtitle2" sx={{ m: 0, pb: 1 }}>
             {description}
           </Typography>
+          <Box sx={{ mt: "auto" }}>
+            <Typography
+              variant="caption"
+              sx={{
+                color: "primary.main",
+                fontWeight: 600,
+                display: "flex",
+                alignItems: "center",
+                gap: 0.5,
+              }}
+            >
+              Click to learn more
+            </Typography>
+          </Box>
+        </Box>
+      </Box>
 
-          <Box
-            component="div"
-            sx={{
-              letterSpacing: "1px",
-            }}
-            dangerouslySetInnerHTML={{ __html: fullContent }}
-          />
+      <Popup
+        dialogProps={{
+          open,
+          onClose: () => setOpen(false),
+          maxWidth: "lg",
+          fullWidth: true,
+        }}
+      >
+        <Box sx={{ position: "relative", p: { xs: 2, sm: 4 }, maxHeight: "90vh", overflow: "auto" }}>
+          <IconButton
+            onClick={() => setOpen(false)}
+            sx={{ position: "absolute", right: 8, top: 8, color: "grey.500" }}
+          >
+            <CloseIcon />
+          </IconButton>
+
+          <Typography
+            variant={isMobile ? "h5" : "h4"}
+            color="primary"
+            sx={{ fontWeight: 700, mb: 3 }}
+          >
+            {majorArea}
+          </Typography>
+
+          <Box sx={{ mb: 4 }}>
+            <Typography variant="h6" color="text.secondary" sx={{ mb: 1 }}>
+              Sub Area: {subArea}
+            </Typography>
+
+            <Typography
+              variant={isMobile ? "h6" : "h5"}
+              sx={{ color: "error.main", fontWeight: 600, mb: 2 }}
+            >
+              Problem Statement:
+            </Typography>
+
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: 500, mb: 3, color: "text.primary" }}
+            >
+              {title}
+            </Typography>
+
+            <Typography
+              variant="h6"
+              color="primary"
+              sx={{ fontWeight: 600, mb: 1 }}
+            >
+              Expected Outcome:
+            </Typography>
+
+            <Typography variant="body1" sx={{ mb: 3 }}>
+              {description}
+            </Typography>
+
+            <Box
+              sx={{
+                '& h2, & h3': {
+                  color: 'primary.main',
+                  mt: 4,
+                  mb: 2,
+                  fontWeight: 600,
+                },
+                '& p': {
+                  mb: 2,
+                  lineHeight: 1.7,
+                },
+                '& ul': {
+                  pl: 3,
+                  mb: 3,
+                },
+                '& li': {
+                  mb: 1,
+                },
+                '& strong': {
+                  color: 'text.primary',
+                  fontWeight: 600,
+                }
+              }}
+              dangerouslySetInnerHTML={{ __html: fullContent }}
+            />
+          </Box>
         </Box>
       </Popup>
     </React.Fragment>
