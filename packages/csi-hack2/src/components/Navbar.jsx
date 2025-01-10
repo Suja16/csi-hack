@@ -36,6 +36,8 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
       : []),
   ];
 
+
+
   const handleSmoothScroll = async (e, targetId) => {
     e.preventDefault();
     if (
@@ -44,7 +46,12 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
       targetId === "/faq" ||
       targetId === "/team"
     ) {
-      navigate(targetId);
+      if (window.location.pathname === targetId) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        await navigate(targetId);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
     } else {
       if (targetId === "#problems") {
         await navigate("/");
@@ -55,6 +62,8 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
       }
     }
   };
+
+
 
   const logout = () => {
     localStorage.removeItem("accessToken");
