@@ -14,7 +14,7 @@ export default function ProblemStatements() {
         "Need for Government Agencies Assistance for takedown of Malicious/Phishing domain:",
       majorArea: "CYBERSECURITY",
       subArea:
-        "Advance Fruad Detection Mechanisms - Phishing, Identity Theft and Fraud Prevention",
+        "Advance Fraud Detection Mechanisms - Phishing, Identity Theft and Fraud Prevention",
       description:
         "Develop a centralized platform or API to facilitate collaboration between public and private entities for faster takedown of malicious domains:",
       fullContent: `
@@ -22,7 +22,7 @@ export default function ProblemStatements() {
         <ul>
           <li>Automated detection of phishing domains using AI and threat intelligence.</li>
           <li>Workflow to report malicious activity to the relevant government agency.</li>
-          <li>Real-time updates on takedown progress.Mli>
+          <li>Real-time updates on takedown progress.</li>
           <li>Integration with CERTs and domain registrars for seamless coordination.</li>
         </ul>
         <h2 style='color: #634647;'>Impact:</h2>
@@ -40,7 +40,7 @@ export default function ProblemStatements() {
       title:
         "Business Analytics-Based Appointment Management System for Efficient Customer Service",
       majorArea: "FINTECH",
-      subArea: "Customer Service and Identity Cerification",
+      subArea: "Customer Service and Identity Certification",
       description:
         "Design and implement a facial recognition system to streamline customer service queries.",
       fullContent: `
@@ -168,7 +168,7 @@ export default function ProblemStatements() {
   const imgList = [cybersecurity, fintech, genai];
 
   return (
-    <Container maxWidth="xl">
+    <Container id="ps" maxWidth="xl">
       <Typography
         variant={isMobile ? "h3" : "h2"}
         align="center"

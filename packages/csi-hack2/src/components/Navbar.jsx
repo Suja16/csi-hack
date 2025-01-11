@@ -31,7 +31,7 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
 
   const navItems = [
     { label: "HOME", href: "/" },
-    { label: "PROBLEM STATEMENTS", href: "#problems" },
+    { label: "PROBLEM STATEMENTS", href: "#ps" },
     { label: "GUIDELINES", href: "/guidelines" },
     { label: "FAQs", href: "/faq" },
     { label: "CONTACT US", href: "#contact" },
@@ -61,12 +61,22 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
     } else {
-      if (targetId === "#problems") {
+      if (targetId === "#ps") {
         await navigate("/");
-      }
-      const target = document.querySelector(targetId);
-      if (target) {
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
+    
+        setTimeout(() => {
+          const target = document.querySelector(targetId);
+          setActiveItem(targetId);
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+          
+        }, 100);
+      } else {
+        const target = document.querySelector(targetId);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
       }
     }
   };

@@ -233,7 +233,7 @@ const Faq = ({ isExpanded }) => {
                     }}
                   >
                     {expanded === `${catIndex}-${index}` ? (
-                      <RemoveIcon sx={{ color: "#fff", fontSize: "1.7rem" }} />
+                      <RemoveIcon sx={{ color: "#fff", fontSize: "1.7rem"}} />
                     ) : (
                       <AddIcon sx={{ color: "#fff", fontSize: "1.7rem" }} />
                     )}
@@ -253,7 +253,8 @@ const Faq = ({ isExpanded }) => {
                     "&:hover": {
                       textDecoration: "underline",
                     },
-                    textAlign: "justify",
+                    textAlign: "start",
+                    marginRight: 2,
                   }}
                 >
                   Q{index + 1}. {item.question}
@@ -262,7 +263,7 @@ const Faq = ({ isExpanded }) => {
               <AccordionDetails>
                 <Typography
                   variant="body1"
-                  sx={{ color: "black", textAlign: "justify" }}
+                  sx={{ color: "black", textAlign: "start" }}
                 >
                   {item.answer}
                 </Typography>
