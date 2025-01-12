@@ -4,9 +4,16 @@ import goodies from "../assets/prizes.png";
 import main from "../assets/main.png";
 import domain from "../assets/ps.png";
 import timeline from "../assets/timeline.png";
+import goodiesMobile from "../assets/goodiesMobile.png";
+import mainMobile from "../assets/mainMobile.png";
+import domainMobile from "../assets/domainMobile.png";
+import timelineMobile from "../assets/timelineMobile.png";
 
 function CarouselHomePage() {
-  var items = [main, domain, timeline, goodies];
+  const isMobile = useMediaQuery("(max-width:768px)");
+  const items = isMobile
+    ? [mainMobile, domainMobile, timelineMobile, goodiesMobile]
+    : [main, domain, timeline, goodies];
 
   return (
     <Carousel
@@ -24,7 +31,7 @@ function CarouselHomePage() {
 }
 
 function Item(props) {
-  const isMobile = useMediaQuery("(max-width:500px)");
+  const isMobile = useMediaQuery("(max-width:900px)");
   return (
     <Box
       sx={{
