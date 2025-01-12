@@ -58,7 +58,7 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
         await navigate(targetId);
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 100);
       }
     } else {
       if (targetId === "#ps") {
