@@ -174,7 +174,8 @@ export default function ProblemStatements() {
         align="center"
         sx={{
           fontWeight: 700,
-          mb: { xs: 6, md: 8 },
+          mt: { xs: 6, md: 8 },
+          mb: { xs: 4, md: 6 },
           color: "text.primary",
         }}
       >

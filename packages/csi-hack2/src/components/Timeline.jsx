@@ -11,7 +11,7 @@ function Timeline(props) {
       justifyContent: "center",
       alignItems: 'center',
       flexDirection: "column",
-      gap: 4,
+      gap: 1,
       marginTop: "2rem",
       marginBottom: isMobile ? null : "5rem",
       objectFit: "cover",
@@ -22,7 +22,8 @@ function Timeline(props) {
         align="center"
         sx={{
           fontWeight: 700,
-          mb: { xs: 6, md: 8 },
+          mt: { xs: 6, md: 8 },
+          mb: { xs: 4, md: 6 },
           color: "text.primary",
         }}
       >

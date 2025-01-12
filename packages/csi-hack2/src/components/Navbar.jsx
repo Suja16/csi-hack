@@ -89,8 +89,8 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
         if (problemsSection) {
           const problemsRect = problemsSection.getBoundingClientRect();
           const windowHeight = window.innerHeight;
-
-          if (problemsRect.top >= 0 && problemsRect.top <= windowHeight / 2) {
+          console.log(problemsRect.top, problemsRect.bottom, windowHeight);
+          if ((problemsRect.top >= 0 && problemsRect.top <= windowHeight / 2) || (problemsRect.bottom <= windowHeight && problemsRect.bottom >= windowHeight/2)) {
             setActiveItem('#ps');
             return
           } else {
@@ -105,7 +105,6 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
         if (contactSection) {
           const contactRect = contactSection.getBoundingClientRect();
           const windowHeight = window.innerHeight;
-          console.log(contactRect.top, windowHeight)
           if (contactRect.top >= 0 && contactRect.top <= windowHeight * 2 / 3) {
             setActiveItem('#contact');
             return
