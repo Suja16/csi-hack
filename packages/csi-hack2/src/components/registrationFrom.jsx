@@ -347,7 +347,7 @@ export default function RegistrationForm({ open, onClose }) {
             name="college"
             label="*COLLEGE"
             register={register}
-            placeholder={"Enter College Name"}
+            placeholder={"Enter Full College Name"}
             helperText={errors?.college?.message}
             error={!!errors?.college?.message}
           />

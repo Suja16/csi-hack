@@ -24,7 +24,7 @@ const registrationSchema =
         return value !== "BRANCH";
       }),
 
-    college: yup.string().required("College is required"),
+    college: yup.string().required("College is required").min(6, "College name must be at least 6 characters"),
 
     degree: yup.string().required("Degree is required"),
 
