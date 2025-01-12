@@ -1,5 +1,14 @@
-import { useState } from 'react';
-import { Card, CardContent, Typography, Box, List, ListItem, ListItemText, Button } from '@mui/material';
+import { useState } from "react";
+import {
+  Card,
+  CardContent,
+  Typography,
+  Box,
+  List,
+  ListItem,
+  ListItemText,
+  Button,
+} from "@mui/material";
 
 const HackathonGuidelines = () => {
   const [expanded, setExpanded] = useState(false);
@@ -10,11 +19,11 @@ const HackathonGuidelines = () => {
       title: "Preparation Before the Hackathon",
       items: [
         "Understand the Theme: Read about the hackathon's theme or problem statement beforehand.",
-        "Form a Team: Create a diverse team of 4 members (1 female member mandatory).",
+        "Form a Team: Create a diverse team of 4 members",
         "Gather Tools: Install necessary software, SDKs, or development environments.",
         "Research: Familiarize yourself with APIs, datasets, or platforms allowed or provided.",
         "Prototype: Sketch out a rough idea or wireframe of your project to guide development.",
-        "Build: Develop as much of your project as you can before the hackathon starts!!"
+        "Build: Develop as much of your project as you can before the hackathon starts!!",
       ],
     },
     {
@@ -76,11 +85,11 @@ const HackathonGuidelines = () => {
     <Card
       sx={{
         maxWidth: 1200,
-        margin: '20px auto',
-        padding: '15px',
-        borderRadius: '12px',
+        margin: "20px auto",
+        padding: "15px",
+        borderRadius: "12px",
         boxShadow: 3,
-        position: 'relative'
+        position: "relative",
       }}
     >
       <CardContent>
@@ -88,26 +97,34 @@ const HackathonGuidelines = () => {
           variant="h4"
           component="h2"
           sx={{
-            textAlign: 'justify',
-            fontWeight: 'bold',
+            textAlign: "justify",
+            fontWeight: "bold",
             marginBottom: 2,
-            color: '#D32F2F',
-            letterSpacing: '0.5px'
+            color: "#D32F2F",
+            letterSpacing: "0.5px",
           }}
         >
           Hackathon Guidelines
         </Typography>
 
-        <Box sx={{
-          maxHeight: showReadMore && !expanded ? 600 : 'none',
-          overflow: showReadMore && !expanded ? 'hidden' : 'auto',
-        }}>
+        <Box
+          sx={{
+            maxHeight: showReadMore && !expanded ? 600 : "none",
+            overflow: showReadMore && !expanded ? "hidden" : "auto",
+          }}
+        >
           {sections.map((section, index) => (
             <Box key={index} sx={{ marginBottom: 2 }}>
               <Typography
                 variant="h6"
                 component="h3"
-                sx={{ fontWeight: 'bold', color: '#2846AA', marginBottom: 0.5, textAlign: 'justify', letterSpacing: '0.5px' }}
+                sx={{
+                  fontWeight: "bold",
+                  color: "#2846AA",
+                  marginBottom: 0.5,
+                  textAlign: "justify",
+                  letterSpacing: "0.5px",
+                }}
               >
                 {index + 1}. {section.title}
               </Typography>
@@ -117,17 +134,17 @@ const HackathonGuidelines = () => {
                     key={idx}
                     sx={{
                       paddingLeft: 0,
-                      display: 'flex',
-                      alignItems: 'start',
+                      display: "flex",
+                      alignItems: "start",
                       paddingTop: 0,
-                      paddingBottom: 0
+                      paddingBottom: 0,
                     }}
                   >
                     <Typography
                       sx={{
                         marginRight: 1,
-                        color: '#D32F2F',
-                        fontSize: '1.3rem'
+                        color: "#D32F2F",
+                        fontSize: "1.3rem",
                       }}
                     >
                       •
@@ -135,11 +152,11 @@ const HackathonGuidelines = () => {
                     <ListItemText
                       primary={item}
                       sx={{
-                        '& .MuiListItemText-primary': {
+                        "& .MuiListItemText-primary": {
                           marginBottom: 0.5,
-                          textAlign: 'justify',
-                          letterSpacing: '0.5px'
-                        }
+                          textAlign: "justify",
+                          letterSpacing: "0.5px",
+                        },
                       }}
                     />
                   </ListItem>
@@ -152,12 +169,12 @@ const HackathonGuidelines = () => {
         {showReadMore && !expanded && (
           <Box
             sx={{
-              position: 'absolute',
+              position: "absolute",
               bottom: 0,
               left: 0,
               right: 0,
               height: 60,
-              background: 'linear-gradient(to top, white, transparent)'
+              background: "linear-gradient(to top, white, transparent)",
             }}
           />
         )}
@@ -167,13 +184,13 @@ const HackathonGuidelines = () => {
         <Button
           onClick={() => setExpanded(!expanded)}
           sx={{
-            width: '100%',
-            textTransform: 'none',
-            fontWeight: 'bold',
-            fontSize: '1rem',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
+            width: "100%",
+            textTransform: "none",
+            fontWeight: "bold",
+            fontSize: "1rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
           {expanded ? "Show Less" : "Read More"}
@@ -182,12 +199,15 @@ const HackathonGuidelines = () => {
             height="24"
             viewBox="0 0 24 24"
             style={{
-              transform: expanded ? 'rotate(180deg)' : 'none',
-              transition: 'transform 0.2s',
-              marginLeft: '4px'
+              transform: expanded ? "rotate(180deg)" : "none",
+              transition: "transform 0.2s",
+              marginLeft: "4px",
             }}
           >
-            <path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z" fill="currentColor" />
+            <path
+              d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"
+              fill="currentColor"
+            />
           </svg>
         </Button>
       )}
