@@ -212,10 +212,18 @@ const Faq = ({ isExpanded }) => {
               onChange={handleChange(`${catIndex}-${index}`)}
               disableGutters
               sx={{
-                boxShadow: "none",
+                borderRadius: "12px",
                 backgroundColor: "transparent",
+                marginBottom: "16px",
+                boxShadow: "none",
                 "&:before": {
                   display: "none",
+                },
+                "&:hover": {
+                  boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+                },
+                "&.Mui-expanded": {
+                  boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
                 },
               }}
             >
@@ -233,7 +241,7 @@ const Faq = ({ isExpanded }) => {
                     }}
                   >
                     {expanded === `${catIndex}-${index}` ? (
-                      <RemoveIcon sx={{ color: "#fff", fontSize: "1.7rem"}} />
+                      <RemoveIcon sx={{ color: "#fff", fontSize: "1.7rem" }} />
                     ) : (
                       <AddIcon sx={{ color: "#fff", fontSize: "1.7rem" }} />
                     )}
