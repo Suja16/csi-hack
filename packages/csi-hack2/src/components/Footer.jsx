@@ -17,6 +17,7 @@ import {
   Mail,
   Phone,
 } from "@mui/icons-material";
+import Logo from "../assets/csiLogo.png";
 
 const Footer = () => {
   const theme = useTheme();
@@ -52,13 +53,22 @@ const Footer = () => {
           }}
         >
           <Box sx={{ flex: { xs: "1 1 100%", sm: "0 1 45%" } }}>
-            <Typography
-              variant="h5"
-              gutterBottom
-              sx={{ fontWeight: "bold", textAlign: "justify" }}
-            >
-              About Us
-            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+              <img
+                src={Logo}
+                alt="CSI Logo"
+                style={{
+                  height: '80px',
+                  width: 'auto'
+                }}
+              />
+              <Typography
+                variant="h5"
+                sx={{ fontWeight: "bold" }}
+              >
+                About Us
+              </Typography>
+            </Box>
             <Typography
               variant="body2"
               sx={{ fontSize: "0.875rem", textAlign: "justify" }}
