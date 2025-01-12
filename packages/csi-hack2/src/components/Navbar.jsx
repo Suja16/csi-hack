@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../assets/idea.png";
-import { Button } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import RegistrationForm from "./registrationFrom";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -83,38 +83,38 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-        const problemsSection = document.querySelector('#ps');
-        const contactSection = document.querySelector('#contact');
+      const problemsSection = document.querySelector('#ps');
+      const contactSection = document.querySelector('#contact');
 
-        if (problemsSection) {
-          const problemsRect = problemsSection.getBoundingClientRect();
-          const windowHeight = window.innerHeight;
-          if ((problemsRect.top >= 0 && problemsRect.top <= windowHeight / 2) || (problemsRect.bottom <= windowHeight && problemsRect.bottom >= windowHeight/2)) {
-            setActiveItem('#ps');
-            return
+      if (problemsSection) {
+        const problemsRect = problemsSection.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        if ((problemsRect.top >= 0 && problemsRect.top <= windowHeight / 2) || (problemsRect.bottom <= windowHeight && problemsRect.bottom >= windowHeight / 2)) {
+          setActiveItem('#ps');
+          return
+        } else {
+          if (location.pathname === '/') {
+            setActiveItem('/');
           } else {
-            if (location.pathname === '/') {
-              setActiveItem('/');
-            } else {
-              setActiveItem(location.pathname);
-            }
+            setActiveItem(location.pathname);
           }
         }
+      }
 
-        if (contactSection) {
-          const contactRect = contactSection.getBoundingClientRect();
-          const windowHeight = window.innerHeight;
-          if (contactRect.top >= 0 && contactRect.top <= windowHeight * 2 / 3) {
-            setActiveItem('#contact');
-            return
+      if (contactSection) {
+        const contactRect = contactSection.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        if (contactRect.top >= 0 && contactRect.top <= windowHeight * 2 / 3) {
+          setActiveItem('#contact');
+          return
+        } else {
+          if (location.pathname === '/') {
+            setActiveItem('/');
           } else {
-            if (location.pathname === '/') {
-              setActiveItem('/');
-            } else {
-              setActiveItem(location.pathname);
-            }
+            setActiveItem(location.pathname);
           }
         }
+      }
 
     };
     window.addEventListener('scroll', handleScroll);
@@ -248,7 +248,7 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
         {/* Menu Button */}
         {isMid && (
           <Box onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            <MenuIcon />
+            {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
           </Box>
         )}
       </Box>
