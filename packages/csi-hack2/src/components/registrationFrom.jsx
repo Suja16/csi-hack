@@ -330,14 +330,14 @@ export default function RegistrationForm({ open, onClose }) {
                 // onChange={handleDegreeChange}
                 {...register("degree")}
               >
-                <MenuItem value="B.tech">BTECH</MenuItem>
-                <MenuItem value="M.tech">MTECH</MenuItem>
-                <MenuItem value={"BCA"}>BCA</MenuItem>
-                <MenuItem value={"MCA"}>MCA</MenuItem>
-                <MenuItem value={"Bsc"}>BSC</MenuItem>
-                <MenuItem value={"Msc"}>MSC</MenuItem>
-                <MenuItem value={"MBA"}>MBA</MenuItem>
-                <MenuItem value={"Other"}>Other</MenuItem>
+                <MenuItem value="B.E/B.Tech">B.E / B.TECH</MenuItem>
+                <MenuItem value="M.E/M.Tech">M.E / M.TECH</MenuItem>
+                <MenuItem value="B.CA">B.CA</MenuItem>
+                <MenuItem value="M.CA">M.CA</MenuItem>
+                <MenuItem value="B.SC">B.SC</MenuItem>
+                <MenuItem value="M.SC">M.SC</MenuItem>
+                <MenuItem value="MBA">MBA</MenuItem>
+                <MenuItem value="Other">Other</MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -367,7 +367,7 @@ export default function RegistrationForm({ open, onClose }) {
             name="year"
             label="*YEAR OF GRADUATION"
             register={register}
-            placeholder={"Enter College Name"}
+            placeholder={"Enter Year of Graduation"}
             helperText={errors?.year?.message}
             error={!!errors?.year?.message}
           />
