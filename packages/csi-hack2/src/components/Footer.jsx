@@ -54,14 +54,6 @@ const Footer = () => {
         >
           <Box sx={{ flex: { xs: "1 1 100%", sm: "0 1 45%" } }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-              <img
-                src={Logo}
-                alt="CSI Logo"
-                style={{
-                  height: '80px',
-                  width: 'auto'
-                }}
-              />
               <Typography
                 variant="h5"
                 sx={{ fontWeight: "bold" }}
@@ -130,6 +122,14 @@ const Footer = () => {
                   +91 8657432101
                 </Typography>
               </Link>
+              <img
+                src={Logo}
+                alt="CSI Logo"
+                style={{
+                  height: '100px',
+                  width: 'auto'
+                }}
+              />
             </Box>
           </Box>
 
@@ -196,6 +196,9 @@ const Footer = () => {
         >
           <Typography variant="body2" sx={{ mr: 2, textAlign: "justify" }}>
             © 2024-25 Computer Society of India KJSCE. All rights reserved
+          </Typography>
+          <Typography variant="body2" sx={{ mr: 2, textAlign: "justify" }}>
+            Made with <span style={{ color: 'red' }}>❤</span> by CSI-KJSCE
           </Typography>
           <IconButton
             onClick={handleScrollToTop}
