@@ -89,7 +89,6 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
         if (problemsSection) {
           const problemsRect = problemsSection.getBoundingClientRect();
           const windowHeight = window.innerHeight;
-          console.log(problemsRect.top, problemsRect.bottom, windowHeight);
           if ((problemsRect.top >= 0 && problemsRect.top <= windowHeight / 2) || (problemsRect.bottom <= windowHeight && problemsRect.bottom >= windowHeight/2)) {
             setActiveItem('#ps');
             return
