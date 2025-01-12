@@ -63,14 +63,14 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
     } else {
       if (targetId === "#ps") {
         await navigate("/");
-    
+
         setTimeout(() => {
           const target = document.querySelector(targetId);
           setActiveItem(targetId);
           if (target) {
             target.scrollIntoView({ behavior: "smooth", block: "start" });
           }
-          
+
         }, 100);
       } else {
         const target = document.querySelector(targetId);
@@ -83,24 +83,42 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (location.pathname === '/') {
-        const problemsSection = document.querySelector('#problems');
+        const problemsSection = document.querySelector('#ps');
         const contactSection = document.querySelector('#contact');
 
-        if (problemsSection && contactSection) {
+        if (problemsSection) {
           const problemsRect = problemsSection.getBoundingClientRect();
-          const contactRect = contactSection.getBoundingClientRect();
           const windowHeight = window.innerHeight;
 
           if (problemsRect.top >= 0 && problemsRect.top <= windowHeight / 2) {
-            setActiveItem('#problems');
-          } else if (contactRect.top >= 0 && contactRect.top <= windowHeight / 2) {
-            setActiveItem('#contact');
+            setActiveItem('#ps');
+            return
+          } else {
+            if (location.pathname === '/') {
+              setActiveItem('/');
+            } else {
+              setActiveItem(location.pathname);
+            }
           }
         }
-      }
-    };
 
+        if (contactSection) {
+          const contactRect = contactSection.getBoundingClientRect();
+          const windowHeight = window.innerHeight;
+          console.log(contactRect.top, windowHeight)
+          if (contactRect.top >= 0 && contactRect.top <= windowHeight * 2 / 3) {
+            setActiveItem('#contact');
+            return
+          } else {
+            if (location.pathname === '/') {
+              setActiveItem('/');
+            } else {
+              setActiveItem(location.pathname);
+            }
+          }
+        }
+
+    };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [location.pathname]);
