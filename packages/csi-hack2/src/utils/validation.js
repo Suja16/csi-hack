@@ -28,6 +28,12 @@ const registrationSchema =
 
     degree: yup.string().required("Degree is required"),
 
+    state: yup.string().required("State is required"),
+
+    city: yup.string().required("City is required"),
+
+    pin_code: yup.string().required("Pin code is required").matches(/^\d{6}$/, "Pin code must be 6 digits"),
+
     linkedin: yup.string().required("LinkedIn is required"),
           // .matches(
           //   /^https?:\/\/((www|\w\w)\.)?linkedin\.com\/((in\/[^/]+\/?)|(pub\/[^/]+\/((\w|\d)+\/?){3}))$/,

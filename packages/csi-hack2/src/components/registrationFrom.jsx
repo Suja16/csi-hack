@@ -104,6 +104,9 @@ export default function RegistrationForm({ open, onClose }) {
     };
 
     const more_details = {
+      state: data.state,
+      city: data.city,
+      pin_code: data.pin_code,
       linkedin: data.linkedin,
       github: data.github,
       category: data.category,
@@ -372,6 +375,37 @@ export default function RegistrationForm({ open, onClose }) {
             error={!!errors?.year?.message}
           />
         </Grid2>
+        <Grid2 item size={1}>
+          <TextBox
+            name="state"
+            label="*STATE"
+            register={register}
+            placeholder={"Enter State of Your College"}
+            helperText={errors?.state?.message}
+            error={!!errors?.state?.message}
+          />
+        </Grid2>
+        <Grid2 item size={1}>
+          <TextBox
+            name="city"
+            label="*CITY"
+            register={register}
+            placeholder={"Enter City of Your College"}
+            helperText={errors?.city?.message}
+            error={!!errors?.city?.message}
+          />
+        </Grid2>
+        <Grid2 item size={1}>
+          <TextBox
+            name="pin_code"
+            label="*PIN CODE"
+            register={register}
+            placeholder={"Enter Pin Code of Your College"}
+            helperText={errors?.pin_code?.message}
+            error={!!errors?.pin_code?.message}
+          />
+        </Grid2>
+        <Grid2 item size={1} />
         <Grid2 item size={1}>
           <TextBox
             name="linkedin"
