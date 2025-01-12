@@ -9,8 +9,8 @@ import mainMobile from "../assets/mainMobile.png";
 import domainMobile from "../assets/domainMobile.png";
 import timelineMobile from "../assets/timelineMobile.png";
 
-function CarouselHomePage() {
-  const isMobile = useMediaQuery("(max-width:768px)");
+const CarouselHomePage = () => {
+  const isMobile = useMediaQuery("(max-width:900px)");
   const items = isMobile
     ? [mainMobile, domainMobile, timelineMobile, goodiesMobile]
     : [main, domain, timeline, goodies];
@@ -23,14 +23,14 @@ function CarouselHomePage() {
         },
       }}
     >
-      {items.map((item, i) => (
-        <Item key={i} item={item} />
+      {items.map((item, index) => (
+        <CarouselItem key={index} item={item} />
       ))}
     </Carousel>
   );
-}
+};
 
-function Item(props) {
+const CarouselItem = ({ item }) => {
   const isMobile = useMediaQuery("(max-width:900px)");
   return (
     <Box
@@ -43,9 +43,9 @@ function Item(props) {
         border: 0,
       }}
     >
-      <img src={props.item} width="100%" alt="Idea" />
+      <img src={item} width="100%" alt="Carousel Item" />
     </Box>
   );
-}
+};
 
 export default CarouselHomePage;
