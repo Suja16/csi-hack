@@ -11,33 +11,6 @@ export default function ProblemStatements() {
   const data = [
     {
       title:
-        "Need for Government Agencies Assistance for takedown of Malicious/Phishing domain:",
-      majorArea: "CYBERSECURITY",
-      subArea:
-        "Advance Fraud Detection Mechanisms - Phishing, Identity Theft and Fraud Prevention",
-      description:
-        "Develop a centralized platform or API to facilitate collaboration between public and private entities for faster takedown of malicious domains:",
-      fullContent: `
-        <h2 style='color: #634647;'>Features:</h2>
-        <ul>
-          <li>Automated detection of phishing domains using AI and threat intelligence.</li>
-          <li>Workflow to report malicious activity to the relevant government agency.</li>
-          <li>Real-time updates on takedown progress.</li>
-          <li>Integration with CERTs and domain registrars for seamless coordination.</li>
-        </ul>
-        <h2 style='color: #634647;'>Impact:</h2>
-        <ul>
-          <li>Reduce response times for domain takedowns.</li>
-          <li>Enhance public trust by mitigating cybersecurity risks promptly.</li>
-          <li>Support law enforcement in prosecuting cybercriminals.</li>
-        </ul>
-        <p>
-          This use case emphasizes the critical role of government agencies in securing the digital ecosystem and provides an actionable roadmap for mitigating phishing and malicious domain threats.
-        </p>
-      `,
-    },
-    {
-      title:
         "Business Analytics-Based Appointment Management System for Efficient Customer Service",
       majorArea: "FINTECH",
       subArea: "Customer Service and Identity Certification",
@@ -78,6 +51,34 @@ export default function ProblemStatements() {
         </ul>
       `,
     },
+    {
+      title:
+        "Need for Government Agencies Assistance for takedown of Malicious/Phishing domain:",
+      majorArea: "CYBERSECURITY",
+      subArea:
+        "Advance Fraud Detection Mechanisms - Phishing, Identity Theft and Fraud Prevention",
+      description:
+        "Develop a centralized platform or API to facilitate collaboration between public and private entities for faster takedown of malicious domains:",
+      fullContent: `
+        <h2 style='color: #634647;'>Features:</h2>
+        <ul>
+          <li>Automated detection of phishing domains using AI and threat intelligence.</li>
+          <li>Workflow to report malicious activity to the relevant government agency.</li>
+          <li>Real-time updates on takedown progress.</li>
+          <li>Integration with CERTs and domain registrars for seamless coordination.</li>
+        </ul>
+        <h2 style='color: #634647;'>Impact:</h2>
+        <ul>
+          <li>Reduce response times for domain takedowns.</li>
+          <li>Enhance public trust by mitigating cybersecurity risks promptly.</li>
+          <li>Support law enforcement in prosecuting cybercriminals.</li>
+        </ul>
+        <p>
+          This use case emphasizes the critical role of government agencies in securing the digital ecosystem and provides an actionable roadmap for mitigating phishing and malicious domain threats.
+        </p>
+      `,
+    },
+
     {
       title:
         "Leveraging GenAI for Customer Analytics and Fraud Detection in Banking",
@@ -165,7 +166,7 @@ export default function ProblemStatements() {
     },
   ];
 
-  const imgList = [cybersecurity, fintech, genai];
+  const imgList = [fintech, cybersecurity, genai];
 
   return (
     <Container id="ps" maxWidth="xl">
