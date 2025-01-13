@@ -117,7 +117,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
     if(eventData.Participant.team.submissions) {
       setSubmitted(true);
     }
-    
+
   }, [errors, eventData.Participant.team.submissions]);
 
   const ppt = watch("ppt");
@@ -199,7 +199,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
   };
 
   return (
-    <Grid2 container component="form" onSubmit={handleSubmit(onSubmit)}>
+    <Grid2 container component="form" onSubmit={handleSubmit(onSubmit)} justifyContent="center">
       <Grid2
         item
         size={{ xs: 12, md: 6 }}
@@ -398,7 +398,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
               Submit
             </Button>
           </Grid2>
-          <Typography variant="caption" color="error" sx={{ paddingY: 2 }}>
+          <Typography variant="caption" color="error" marginTop="3rem">
             *Only team leader is required to submit attachments
           </Typography>
         </>
@@ -412,7 +412,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
           marginTop="10rem"
         >
           <Typography variant="h5">Your Submission</Typography>
-          
+
              <Typography variant="body1">
              {submitted ? "Your submission has been recorded." : "Your team leader has not submitted the project yet."}
            </Typography>
