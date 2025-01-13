@@ -13,13 +13,13 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton";
 import UserDataContext from "../contexts/userDataContext";
 
-const Navbar = ({ login, open, setopen, isLoading }) => {
+const Navbar = ({ login, logout, open, setopen, isLoading }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeItem, setActiveItem] = useState('/');  // Track active item
   const isMid = useMediaQuery("(max-width:1146px)");
   const navigate = useNavigate();
   const location = useLocation();
-  const { userData, setUserData, eventData } = useContext(UserDataContext);
+  const { userData, eventData } = useContext(UserDataContext);
 
   useEffect(() => {
     if (location.pathname === '/') {
@@ -121,14 +121,6 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [location.pathname]);
 
-  const logout = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("user");
-    setUserData(null);
-    navigate("/");
-  };
-
   return (
     <Box>
       {/* Main Navbar */}
@@ -196,14 +188,18 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
                 </Typography>
               ))}
             </Box>
-            <Box width="15rem">
+            <Box width="16rem">
               {!userData ? (
                 <LoadingButton
+                  width="100%"
                   onClick={() => login()}
                   loading={isLoading}
                   variant="contained"
                   color="primary"
                   paddingY="2rem"
+                  sx={{
+                    width: "100%",
+                  }}
                 >
                   <Typography
                     variant="body3"
@@ -221,18 +217,39 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
                   variant="contained"
                   color="primary"
                   paddingY="2rem"
+                  sx={{
+                    width: "100%",
+                  }}
                 >
-                  Logout
+                  <Typography
+                    variant="body3"
+                    sx={{
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Logout
+                  </Typography>
                 </LoadingButton>
               ) : (
                 <LoadingButton
+                  width="100%"
                   onClick={() => setopen(true)}
                   loading={isLoading}
                   variant="contained"
                   color="primary"
                   paddingY="2rem"
+                  sx={{
+                    width: "100%",
+                  }}
                 >
-                  Register Now
+                  <Typography
+                    variant="body3"
+                    sx={{
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Register Now
+                  </Typography>
                 </LoadingButton>
               )}
             </Box>

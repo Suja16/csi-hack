@@ -17,7 +17,8 @@ import {
   Mail,
   Phone,
 } from "@mui/icons-material";
-import Logo from "../assets/csiLogo.png";
+import CsiLogo from "../assets/csiLogo.png";
+import EuclidLogo from "../assets/EuclidLogoFooter.jpg";
 
 const Footer = () => {
   const theme = useTheme();
@@ -122,14 +123,26 @@ const Footer = () => {
                   +91 8657432101
                 </Typography>
               </Link>
-              <img
-                src={Logo}
-                alt="CSI Logo"
-                style={{
-                  height: '100px',
-                  width: 'auto'
-                }}
-              />
+              <Box>
+                <img
+                  src={CsiLogo}
+                  alt="CSI Logo"
+                  style={{
+                    height: '100px',
+                    width: 'auto'
+                  }}
+                />
+                <img
+                  src={EuclidLogo}
+                  alt="CSI Logo"
+                  style={{
+                    height: '55px',
+                    width: 'auto',
+                    marginBottom: '1.7rem',
+                    marginLeft: '1rem'
+                  }}
+                />
+              </Box>
             </Box>
           </Box>
 
