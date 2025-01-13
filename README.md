@@ -9,3 +9,4 @@ dvd img
 dvd big
 dvd smol
 dvd giant
+dvd diddy
