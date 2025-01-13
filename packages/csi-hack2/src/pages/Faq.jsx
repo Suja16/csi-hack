@@ -86,7 +86,7 @@ const Faq = ({ isExpanded }) => {
         {
           question: "How many members can be in a team?",
           answer:
-            "Teams must consist of 4 members only, with at least one female member.",
+            "Teams must consist of 4 members only.",
         },
         {
           question: "Does a team need to qualify first?",
