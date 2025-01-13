@@ -101,7 +101,8 @@ export default function FooterLayout() {
         </Box>
         <Footer />
       </Box>
-      {isMobile && !userData ? (
+      {isMobile &&
+        (!userData ? (
         <LoadingButton
           onClick={() => login()}
           loading={isLoading}
@@ -176,6 +177,7 @@ export default function FooterLayout() {
             Register Now
           </Typography>
         </LoadingButton>
+      )
       )}
     </Box>
   );
