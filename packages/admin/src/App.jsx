@@ -1,6 +1,6 @@
 // import { useQuery } from "@apollo/client";
 import "./App.css";
-import DashboardLayoutBasic from "./sidebar";
+import DashboardLayoutBasic from "./components/sidebar.jsx";
 // import { TEAM_QUERY } from "./queries";
 
 function App() {
