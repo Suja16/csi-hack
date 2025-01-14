@@ -104,6 +104,9 @@ export default function RegistrationForm({ open, onClose }) {
     };
 
     const more_details = {
+      state: data.state,
+      city: data.city,
+      pin_code: data.pin_code,
       linkedin: data.linkedin,
       github: data.github,
       category: data.category,
@@ -330,14 +333,14 @@ export default function RegistrationForm({ open, onClose }) {
                 // onChange={handleDegreeChange}
                 {...register("degree")}
               >
-                <MenuItem value="B.tech">BTECH</MenuItem>
-                <MenuItem value="M.tech">MTECH</MenuItem>
-                <MenuItem value={"BCA"}>BCA</MenuItem>
-                <MenuItem value={"MCA"}>MCA</MenuItem>
-                <MenuItem value={"Bsc"}>BSC</MenuItem>
-                <MenuItem value={"Msc"}>MSC</MenuItem>
-                <MenuItem value={"MBA"}>MBA</MenuItem>
-                <MenuItem value={"Other"}>Other</MenuItem>
+                <MenuItem value="B.E/B.Tech">B.E / B.TECH</MenuItem>
+                <MenuItem value="M.E/M.Tech">M.E / M.TECH</MenuItem>
+                <MenuItem value="B.CA">B.CA</MenuItem>
+                <MenuItem value="M.CA">M.CA</MenuItem>
+                <MenuItem value="B.SC">B.SC</MenuItem>
+                <MenuItem value="M.SC">M.SC</MenuItem>
+                <MenuItem value="MBA">MBA</MenuItem>
+                <MenuItem value="Other">Other</MenuItem>
               </Select>
             </FormControl>
           </Box>
@@ -347,7 +350,7 @@ export default function RegistrationForm({ open, onClose }) {
             name="college"
             label="*COLLEGE"
             register={register}
-            placeholder={"Enter College Name"}
+            placeholder={"Enter Full College Name"}
             helperText={errors?.college?.message}
             error={!!errors?.college?.message}
           />
@@ -367,11 +370,42 @@ export default function RegistrationForm({ open, onClose }) {
             name="year"
             label="*YEAR OF GRADUATION"
             register={register}
-            placeholder={"Enter College Name"}
+            placeholder={"Enter Year of Graduation"}
             helperText={errors?.year?.message}
             error={!!errors?.year?.message}
           />
         </Grid2>
+        <Grid2 item size={1}>
+          <TextBox
+            name="state"
+            label="*STATE"
+            register={register}
+            placeholder={"Enter State of Your College"}
+            helperText={errors?.state?.message}
+            error={!!errors?.state?.message}
+          />
+        </Grid2>
+        <Grid2 item size={1}>
+          <TextBox
+            name="city"
+            label="*CITY"
+            register={register}
+            placeholder={"Enter City of Your College"}
+            helperText={errors?.city?.message}
+            error={!!errors?.city?.message}
+          />
+        </Grid2>
+        <Grid2 item size={1}>
+          <TextBox
+            name="pin_code"
+            label="*PIN CODE"
+            register={register}
+            placeholder={"Enter Pin Code of Your College"}
+            helperText={errors?.pin_code?.message}
+            error={!!errors?.pin_code?.message}
+          />
+        </Grid2>
+        <Grid2 item size={1} />
         <Grid2 item size={1}>
           <TextBox
             name="linkedin"

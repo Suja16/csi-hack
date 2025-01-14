@@ -1,18 +1,19 @@
-import { Box, Typography } from "@mui/material";
-import React from "react";
+import { Box, Typography, Container } from "@mui/material";
 import CustomizedDialogs from "./ProbLemStatementCards";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import fintech from "../assets/fintech.png";
 import cybersecurity from "../assets/cybersecurity.png";
 import genai from "../assets/genai.png";
 
-function ProblemStatements(props) {
+export default function ProblemStatements() {
   const isMobile = useMediaQuery("(max-width:500px)");
 
   const data = [
     {
       title:
         "Business Analytics-Based Appointment Management System for Efficient Customer Service",
+      majorArea: "FINTECH",
+      subArea: "Customer Service and Identity Certification",
       description:
         "Design and implement a facial recognition system to streamline customer service queries.",
       fullContent: `
@@ -58,36 +59,37 @@ function ProblemStatements(props) {
     },
     {
       title:
-        "Need for Government Agencies Assistance for takedown of Malicious/Phishing domain",
+        "Need for Government Agencies Assistance for takedown of Malicious/Phishing domain:",
+      majorArea: "CYBERSECURITY",
+      subArea:
+        "Advance Fraud Detection Mechanisms - Phishing, Identity Theft and Fraud Prevention",
       description:
-        "Challenges in phishing domain takedowns and expected solutions.",
+        "Develop a centralized platform or API to facilitate collaboration between public and private entities for faster takedown of malicious domains:",
       fullContent: `
-        <p>Many times, it is observed that not all domain registrars or hosting providers are cooperative when it comes to requests for phishing domain takedowns, especially if they operate in jurisdictions where state actors or threat actors benefit from relaxed cybersecurity laws. Public Sector Banks (PSBs) in India face significant challenges in the timely takedown of suspicious, malicious, or phishing domains impersonating their entities.</p>
-        <p>In several instances, third-party takedown service providers have been unable to successfully remove such phishing domains or fraudulent applications. Furthermore, there is an absence of a well-defined, centralized mechanism provided by any authority to address these issues. Specifically, difficulties arise in identifying a single point of contact or department responsible for handling such cases, as well as a lack of clear guidelines on how to proceed with these requests.</p>
-        <p>This often leads to delays in resolving these threats, potentially compromising the security of customers.</p>
-        <h2 style='color: #634647;'>Example Scenario: Arnav’s Challenge</h2>
-        <p>Arnav, a cybersecurity specialist at a Union Bank Of India, discovers a phishing website impersonating their bank. The fraudulent website is collecting sensitive customer information, posing a significant threat. Despite contacting third-party takedown service providers, the domain remains active due to non-cooperation from the registrar, located in a jurisdiction with lax cybersecurity regulations. This delay risks exposing customer data and eroding trust in the institution.</p>
-        <h2 style='color: #634647;'>Expected Solution:</h2>
+        <h2 style='color: #634647;'>Features:</h2>
         <ul>
-          <li><h3>Streamlined Takedown Processes:</h3>
-            <ul>
-              <li>A clear and efficient mechanism for reporting phishing domains and fraudulent applications to the right stakeholders.</li>
-              <li>Templates or guidelines for PSBs to escalate and follow up on takedown requests from the appropriate Government authority.</li>
-            </ul>
-          </li>
-          <li><h3>Centralized Coordination:</h3>
-            <ul>
-              <li>A centralized platform or framework to ensure coordination among banks, government, cybersecurity experts, and service providers.</li>
-              <li>Efficient coordination facilitation between the right department and the Bank.</li>
-              <li>Mechanisms to overcome jurisdictional challenges and non-cooperative registrars.</li>
-            </ul>
-          </li>
+          <li>Automated detection of phishing domains using AI and threat intelligence.</li>
+          <li>Workflow to report malicious activity to the relevant government agency.</li>
+          <li>Real-time updates on takedown progress.</li>
+          <li>Integration with CERTs and domain registrars for seamless coordination.</li>
         </ul>
+        <h2 style='color: #634647;'>Impact:</h2>
+        <ul>
+          <li>Reduce response times for domain takedowns.</li>
+          <li>Enhance public trust by mitigating cybersecurity risks promptly.</li>
+          <li>Support law enforcement in prosecuting cybercriminals.</li>
+        </ul>
+        <p>
+          This use case emphasizes the critical role of government agencies in securing the digital ecosystem and provides an actionable roadmap for mitigating phishing and malicious domain threats.
+        </p>
       `,
     },
+
     {
       title:
         "Leveraging GenAI for Customer Analytics and Fraud Detection in Banking",
+      majorArea: "GENERATIVE AI",
+      subArea: "Customer analytics / Fraud detection using GenAI",
       description:
         "Using GenAI for customer profiling, fraud detection, and insights.",
       fullContent: `
@@ -175,65 +177,45 @@ function ProblemStatements(props) {
   const imgList = [fintech, cybersecurity, genai];
 
   return (
-    <Box
-      id="problems"
-      sx={{
-        marginTop: "1rem",
-        height: { xs: "max-content", lg: "100vh" },
-        marginY: 10,
-        paddingY: 10,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-around",
-        alignItems: "center",
-        borderBottom: "1px solid grey",
-      }}
-    >
+    <Container id="ps" maxWidth="xl">
       <Typography
-        variant={isMobile ? "h4" : "h1"}
+        variant={isMobile ? "h3" : "h2"}
+        align="center"
         sx={{
-          textAlign: "center",
+          fontWeight: 700,
+          mt: { xs: 6, md: 8 },
+          mb: { xs: 4, md: 6 },
+          color: "text.primary",
         }}
       >
-        Problem statements
+        Problem Statements
       </Typography>
+
       <Box
         sx={{
-          width: "100%",
-          height: "max-content",
-          marginTop: "4rem",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexDirection: { xs: "column", lg: "row" },
-          gap: 5,
-          cursor: "pointer",
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "1fr",
+            md: "repeat(2, 1fr)",
+            lg: "repeat(3, 1fr)",
+          },
+          gap: 4,
+          justifyItems: "center",
+          alignItems: "stretch",
         }}
       >
-        {data.map((value, key) => {
-          return (
-            <Box
-              key={key}
-              sx={{
-                transform: "scale(1)",
-                transition: "all 0.3s ease",
-                "&:hover": {
-                  transform: "scale(1.09)",
-                },
-              }}
-            >
-              <CustomizedDialogs
-                title={value.title}
-                description={value.description}
-                fullContent={value.fullContent}
-                imgValue={imgList[key]}
-              />
-            </Box>
-          );
-        })}
+        {data.map((value, key) => (
+          <CustomizedDialogs
+            key={key}
+            title={value.title}
+            majorArea={value.majorArea}
+            subArea={value.subArea}
+            description={value.description}
+            fullContent={value.fullContent}
+            imgValue={imgList[key]}
+          />
+        ))}
       </Box>
-    </Box>
+    </Container>
   );
 }
-
-export default ProblemStatements;

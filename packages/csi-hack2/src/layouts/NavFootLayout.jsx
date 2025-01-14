@@ -1,6 +1,7 @@
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { Box, Button } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 import { Outlet } from "react-router";
 import { useMediaQuery } from "@mui/material";
 import { useGoogleLogin } from "@react-oauth/google";
@@ -15,10 +16,11 @@ export default function FooterLayout() {
   const [open, setopen] = useState(false);
   const [isLoading, setIsLoding] = useState(false);
 
-  const { setUserData, setEventData } = useContext(UserDataContext);
+  const { userData, eventData, setUserData, setEventData } = useContext(UserDataContext);
 
   const login = useGoogleLogin({
     onSuccess: async ({ code }) => {
+      console.log("CALLED")
       setIsLoding(true);
       const response = await axios.post(
         "/api/v1/auth/googleToken",
@@ -52,6 +54,14 @@ export default function FooterLayout() {
     flow: "auth-code",
   });
 
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("user");
+    setUserData(null);
+    navigate("/");
+  };
+
   return (
     <Box
       sx={{
@@ -62,6 +72,7 @@ export default function FooterLayout() {
     >
       <Navbar
         login={login}
+        logout={logout}
         open={open}
         setopen={setopen}
         isLoading={isLoading}
@@ -90,25 +101,83 @@ export default function FooterLayout() {
         </Box>
         <Footer />
       </Box>
-      {isMobile && (
-        <Button
-          variant="contained"
+      {isMobile &&
+        (!userData ? (
+        <LoadingButton
           onClick={() => login()}
+          loading={isLoading}
+          variant="contained"
+          color="primary"
           sx={{
-            width: "100%",
+            paddingY: "1rem",
             position: "fixed",
-            padding: "1rem",
+            width: "100%",
             bottom: 0,
+            left: 0,
+            right: 0,
             zIndex: 1000,
-            backgroundColor: "#1976d2",
-            color: "#fff",
-            "&:hover": {
-              backgroundColor: "#1565c0",
-            },
           }}
         >
-          Register Now
-        </Button>
+          <Typography
+            variant="body3"
+            sx={{
+              fontWeight: "bold",
+            }}
+          >
+            Register Now
+          </Typography>
+        </LoadingButton>
+      ) : eventData?.Participant ? (
+        <LoadingButton
+          onClick={() => logout()}
+          loading={isLoading}
+          variant="contained"
+          color="primary"
+          sx={{
+            paddingY: "1rem",
+            position: "fixed",
+            width: "100%",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1000,
+          }}
+        >
+          <Typography
+            variant="body3"
+            sx={{
+              fontWeight: "bold",
+            }}
+          >
+            Logout
+          </Typography>
+        </LoadingButton>
+      ) : (
+        <LoadingButton
+          onClick={() => setopen(true)}
+          loading={isLoading}
+          variant="contained"
+          color="primary"
+          sx={{
+            paddingY: "1rem",
+            position: "fixed",
+            width: "100%",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1000,
+          }}
+        >
+          <Typography
+            variant="body3"
+            sx={{
+              fontWeight: "bold",
+            }}
+          >
+            Register Now
+          </Typography>
+        </LoadingButton>
+      )
       )}
     </Box>
   );

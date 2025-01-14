@@ -7,59 +7,119 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../assets/idea.png";
-import { Button } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import RegistrationForm from "./registrationFrom";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton";
 import UserDataContext from "../contexts/userDataContext";
 
-const Navbar = ({ login, open, setopen, isLoading }) => {
+const Navbar = ({ login, logout, open, setopen, isLoading }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeItem, setActiveItem] = useState('/');  // Track active item
   const isMid = useMediaQuery("(max-width:1146px)");
   const navigate = useNavigate();
-  const { userData, setUserData, eventData } = useContext(UserDataContext);
+  const location = useLocation();
+  const { userData, eventData } = useContext(UserDataContext);
 
   useEffect(() => {
-    console.log("USER", userData);
-    console.log("EVENT", eventData);
-  }, [userData, eventData]);
+    if (location.pathname === '/') {
+      setActiveItem('/');
+    } else {
+      setActiveItem(location.pathname);
+    }
+  }, [location.pathname]);
 
   const navItems = [
     { label: "HOME", href: "/" },
-    { label: "PROBLEM STATEMENTS", href: "#problems" },
+    { label: "PROBLEM STATEMENTS", href: "#ps" },
     { label: "GUIDELINES", href: "/guidelines" },
     { label: "FAQs", href: "/faq" },
-    // { label: "PRIZES", href: "#prizes" },
     { label: "CONTACT US", href: "#contact" },
     ...(eventData && eventData.Participant
       ? [{ label: "TEAM", href: "/team" }]
       : []),
   ];
 
-  const handleSmoothScroll = (e, targetId) => {
+  const isActive = (href) => {
+    return activeItem === href;
+  };
+
+  const handleSmoothScroll = async (e, targetId) => {
     e.preventDefault();
+    setActiveItem(targetId);
+
     if (
       targetId === "/" ||
       targetId === "/guidelines" ||
       targetId === "/faq" ||
       targetId === "/team"
     ) {
-      navigate(targetId);
+      if (window.location.pathname === targetId) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        await navigate(targetId);
+        setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 100);
+      }
     } else {
-      const target = document.querySelector(targetId);
-      if (target) {
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (targetId === "#ps") {
+        await navigate("/");
+
+        setTimeout(() => {
+          const target = document.querySelector(targetId);
+          setActiveItem(targetId);
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+
+        }, 100);
+      } else {
+        const target = document.querySelector(targetId);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
       }
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("user");
-    setUserData(null);
-    navigate("/");
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      const problemsSection = document.querySelector('#ps');
+      const contactSection = document.querySelector('#contact');
+
+      if (problemsSection) {
+        const problemsRect = problemsSection.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        if ((problemsRect.top >= 0 && problemsRect.top <= windowHeight / 2) || (problemsRect.bottom <= windowHeight && problemsRect.bottom >= windowHeight / 2)) {
+          setActiveItem('#ps');
+          return
+        } else {
+          if (location.pathname === '/') {
+            setActiveItem('/');
+          } else {
+            setActiveItem(location.pathname);
+          }
+        }
+      }
+
+      if (contactSection) {
+        const contactRect = contactSection.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        if (contactRect.top >= 0 && contactRect.top <= windowHeight * 2 / 3) {
+          setActiveItem('#contact');
+          return
+        } else {
+          if (location.pathname === '/') {
+            setActiveItem('/');
+          } else {
+            setActiveItem(location.pathname);
+          }
+        }
+      }
+
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [location.pathname]);
 
   return (
     <Box>
@@ -105,22 +165,41 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
                   onClick={(e) => handleSmoothScroll(e, item.href)}
                   sx={{
                     textDecoration: "none",
-                    color: "black",
+                    color: isActive(item.href) ? "primary.main" : "black",
                     fontSize: "16px",
+                    position: "relative",
+                    "&::after": {
+                      content: '""',
+                      position: "absolute",
+                      width: "100%",
+                      height: "2px",
+                      bottom: "-4px",
+                      left: 0,
+                      backgroundColor: "primary.main",
+                      transform: isActive(item.href) ? "scaleX(1)" : "scaleX(0)",
+                      transition: "transform 0.3s ease-in-out",
+                    },
+                    "&:hover::after": {
+                      transform: "scaleX(1)",
+                    },
                   }}
                 >
                   {item.label}
                 </Typography>
               ))}
             </Box>
-            <Box width="15rem">
+            <Box width="16rem">
               {!userData ? (
                 <LoadingButton
+                  width="100%"
                   onClick={() => login()}
                   loading={isLoading}
                   variant="contained"
                   color="primary"
                   paddingY="2rem"
+                  sx={{
+                    width: "100%",
+                  }}
                 >
                   <Typography
                     variant="body3"
@@ -138,18 +217,39 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
                   variant="contained"
                   color="primary"
                   paddingY="2rem"
+                  sx={{
+                    width: "100%",
+                  }}
                 >
-                  Logout
+                  <Typography
+                    variant="body3"
+                    sx={{
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Logout
+                  </Typography>
                 </LoadingButton>
               ) : (
                 <LoadingButton
+                  width="100%"
                   onClick={() => setopen(true)}
                   loading={isLoading}
                   variant="contained"
                   color="primary"
                   paddingY="2rem"
+                  sx={{
+                    width: "100%",
+                  }}
                 >
-                  Register Now
+                  <Typography
+                    variant="body3"
+                    sx={{
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Register Now
+                  </Typography>
                 </LoadingButton>
               )}
             </Box>
@@ -165,7 +265,7 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
         {/* Menu Button */}
         {isMid && (
           <Box onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            <MenuIcon />
+            {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
           </Box>
         )}
       </Box>
@@ -207,9 +307,12 @@ const Navbar = ({ login, open, setopen, isLoading }) => {
             }}
             sx={{
               textDecoration: "none",
-              color: "black",
+              color: isActive(item.href) ? "primary.main" : "black",
               fontSize: "24px",
               fontWeight: "semi-bold",
+              "&:hover": {
+                color: "primary.main",
+              },
             }}
           >
             {item.label}

@@ -1,13 +1,21 @@
-import React from "react";
+import { Box, useMediaQuery } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
-import { Paper, useMediaQuery, Button, Box, colors } from "@mui/material";
+import goodies from "../assets/prizes.png";
 import main from "../assets/main.png";
 import domain from "../assets/ps.png";
-import goodies from "../assets/goodies.png";
 import timeline from "../assets/timeline.png";
+import special from "../assets/special.png";
+import goodiesMobile from "../assets/goodiesMobile.png";
+import mainMobile from "../assets/mainMobile.png";
+import domainMobile from "../assets/domainMobile.png";
+import timelineMobile from "../assets/timelineMobile.png";
+import specialMobile from "../assets/specialMobile.png"
 
-function CarouselHomePage(props) {
-  var items = [main, domain, timeline, goodies];
+const CarouselHomePage = () => {
+  const isMobile = useMediaQuery("(max-width:900px)");
+  const items = isMobile
+    ? [mainMobile, domainMobile, timelineMobile, goodiesMobile, specialMobile]
+    : [main, domain, timeline, goodies, special];
 
   return (
     <Carousel
@@ -17,15 +25,15 @@ function CarouselHomePage(props) {
         },
       }}
     >
-      {items.map((item, i) => (
-        <Item key={i} item={item} />
+      {items.map((item, index) => (
+        <CarouselItem key={index} item={item} />
       ))}
     </Carousel>
   );
-}
+};
 
-function Item(props) {
-  const isMobile = useMediaQuery("(max-width:500px)");
+const CarouselItem = ({ item }) => {
+  const isMobile = useMediaQuery("(max-width:900px)");
   return (
     <Box
       sx={{
@@ -37,14 +45,9 @@ function Item(props) {
         border: 0,
       }}
     >
-      <img
-        sx={{ objectFit: "cover" }}
-        src={props.item}
-        width="100%"
-        alt="Idea"
-      />
+      <img src={item} width="100%" alt="Carousel Item" />
     </Box>
   );
-}
+};
 
 export default CarouselHomePage;
