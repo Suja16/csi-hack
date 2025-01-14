@@ -20,40 +20,7 @@ import {
 import { LinkedIn, GitHub, Description } from "@mui/icons-material";
 
 // Sample data (replace with your actual data)
-const teamData = {
-  teamName: "Code Crushers",
-  approved: true,
-  teamLeader: "Alice Johnson",
-  members: [
-    {
-      name: "Alice Johnson",
-      photo: "https://via.placeholder.com/150",
-      resumeUrl: "https://example.com/alice-resume.pdf",
-      techStack: ["Java", "React.js", "MySQL"],
-      linkedinUrl: "https://linkedin.com/in/alice-johnson",
-      githubUrl: "https://github.com/alice-johnson",
-      whyHackathon: "To challenge myself and learn new technologies.",
-    },
-    {
-      name: "Bob Smith",
-      photo: "https://via.placeholder.com/150",
-      resumeUrl: "https://example.com/bob-resume.pdf",
-      techStack: ["Python", "Django", "PostgreSQL"],
-      linkedinUrl: "https://linkedin.com/in/bob-smith",
-      githubUrl: "https://github.com/bob-smith",
-      whyHackathon: "To collaborate with other passionate developers.",
-    },
-    {
-      name: "Charlie Brown",
-      photo: "https://via.placeholder.com/150",
-      resumeUrl: "https://example.com/charlie-resume.pdf",
-      techStack: ["JavaScript", "Node.js", "MongoDB"],
-      linkedinUrl: "https://linkedin.com/in/charlie-brown",
-      githubUrl: "https://github.com/charlie-brown",
-      whyHackathon: "To build something innovative and impactful.",
-    },
-  ],
-};
+
 
 const TeamDetailsPage = ({ teamData }) => {
   return (
@@ -81,7 +48,7 @@ const TeamDetailsPage = ({ teamData }) => {
       <Grid container spacing={3}>
         {teamData.teamMembers.map((member, index) => (
           <Grid item xs={12} md={6} lg={4} key={index}>
-            <Card>
+            <Card sx={{minHeight:{md:650}}}>
               <Box
                 sx={{
                   width: "100%",
@@ -161,8 +128,8 @@ const TeamDetailsPage = ({ teamData }) => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Technology</TableCell>
-              <TableCell align="right">Number of Members</TableCell>
+              <TableCell sx={{fontWeight:600}}>Technology</TableCell>
+              <TableCell sx={{fontWeight:600 , textAlign:"right"}} >Number of Members</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

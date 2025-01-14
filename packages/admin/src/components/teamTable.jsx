@@ -413,6 +413,19 @@ const initialData = [
         github: "https://github.com/GopalDose",
       },
       {
+        name: "Sujal Jain",
+        resume:
+          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose%20Resume%2026Nov.pdf3d072281-0036-4522-a8ed-f096d6074962?alt=media&token=894c4ca7-e2b9-47e7-a290-4ac754b51230",
+        photo:
+          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose.jpg23db608f-3129-49e2-9ee4-7c306e0f4754?alt=media&token=5f5885ed-14af-410d-9d11-b4ff81530f13",
+        TechStack:
+          "C++, Java, Python, JavaScript, PHP, HTML, CSS, React.js, Node.js, Express.js, ASP.NET, Django, Django REST Framework (DRF), MySQL, MongoDB, PostgreSQL",
+        linkedin: "https://www.linkedin.com/in/gopaldose21/",
+        why_this_hackathon:
+          "This hackathon is a perfect place to collaborate, learn from others, and work on real-world problems using cutting-edge technologies.",
+        github: "https://github.com/GopalDose",
+      },
+      {
         name: "Neha Reddy",
         resume:
           "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose%20Resume%2026Nov.pdf3d072281-0036-4522-a8ed-f096d6074962?alt=media&token=894c4ca7-e2b9-47e7-a290-4ac754b51230",
