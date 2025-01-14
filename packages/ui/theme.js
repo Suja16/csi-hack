@@ -7,7 +7,7 @@ const theme = createTheme({
       main: "#00579C", // Primary color
     },
     secondary: {
-      main: "#9c27b0", // Secondary color
+      main: "#B22629", // Secondary color
     },
     error: {
       main: "#D20000",
@@ -17,10 +17,11 @@ const theme = createTheme({
     },
   },
   typography: {
+    fontFamily: "Roboto, Kantumruy Pro, Montserrat, Arial, sans-serif",
     h1: {
-      fontFamily: "Montserrat",
-      fontWeight: 400,
-      fontSize: "75px",
+      fontFamily: "Kantumruy Pro",
+      fontWeight: 600,
+      // fontSize: "75px",
       lineHeight: "75px",
       letterSpacing: "-0.2px",
     },

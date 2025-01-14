@@ -272,7 +272,8 @@ export default function RegistrationForm({ open, onClose }) {
         container
         columns={{ xs: 1, sm: 2 }}
         spacing={2}
-        padding="2rem"
+        padding={{xs:"0", sm: "2rem"}}
+        marginTop={{xs: "2rem", sm:"0"}}
       >
         <Grid2 item size={1}>
           <TextBox
@@ -526,8 +527,9 @@ export default function RegistrationForm({ open, onClose }) {
           size={1}
           display="flex"
           justifyContent="start"
-          gap="3rem"
+          gap={{xs: "1rem", md: "3rem"}}
           marginTop="1rem"
+          flexDirection={{xs: "column", sm: "row"}}
         >
           <Tooltip title="Team Leaders create a Team">
             <Button

@@ -17,8 +17,8 @@ import {
   Mail,
   Phone,
 } from "@mui/icons-material";
-import CsiLogo from "../assets/csiLogo.png";
-import EuclidLogo from "../assets/EuclidLogoFooter.jpg";
+import CsiLogo from "../assets/logos/csi.png";
+import EuclidLogo from "../assets/logos/euclid.jpg";
 
 const Footer = () => {
   const theme = useTheme();

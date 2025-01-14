@@ -1,9 +1,9 @@
 import { Box, Typography, Container } from "@mui/material";
 import CustomizedDialogs from "./ProbLemStatementCards";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import fintech from "../assets/fintech.png";
-import cybersecurity from "../assets/cybersecurity.png";
-import genai from "../assets/genai.png";
+import fintech from "../assets/ps/fintech.png";
+import cybersecurity from "../assets/ps/cybersecurity.png";
+import genai from "../assets/ps/genai.png";
 
 export default function ProblemStatements() {
   const isMobile = useMediaQuery("(max-width:500px)");

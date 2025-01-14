@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import TeamDetails from "../components/TeamDetails";
 import RegisterSteps from "../components/RegisterSteps";
-import timeline from "../assets/timeline.png";
+import timeline from "../assets/carousel/desktop/timeline.png";
 
 const Team = () => {
   const { userData, eventData } = useContext(UserDataContext);

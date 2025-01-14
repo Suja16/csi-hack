@@ -1,35 +1,39 @@
-import { Box, useMediaQuery } from "@mui/material";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { gsap } from 'gsap';
 import { useEffect, useRef } from 'react';
 import Carousel from "react-material-ui-carousel";
-import domainMobile from "../assets/domainMobile.png";
-import goodiesMobile from "../assets/goodiesMobile.png";
-import main from "../assets/main.png";
-import mainMobile from "../assets/mainMobile.png";
-import goodies from "../assets/prizes.png";
-import domain from "../assets/ps.png";
-import special from "../assets/special.png";
-import specialMobile from "../assets/specialMobile.png";
-import timeline from "../assets/timeline.png";
-import timelineMobile from "../assets/timelineMobile.png";
+
+import main from "../assets/carousel/desktop/main.png";
+import prizes from "../assets/carousel/desktop/prizes.png";
+import domain from "../assets/carousel/desktop/domain.png";
+import special from "../assets/carousel/desktop/special.png";
+import timeline from "../assets/carousel/desktop/timeline.png";
+
+import mainMobile from "../assets/carousel/mobile/main.png";
+import domainMobile from "../assets/carousel/mobile/domain.png";
+import prizesMobile from "../assets/carousel/mobile/prizes.png";
+import specialMobile from "../assets/carousel/mobile/special.png";
+import timelineMobile from "../assets/carousel/mobile/timeline.png";
 
 const CarouselHomePage = () => {
+  const theme = useTheme();
   const isMobile = useMediaQuery("(max-width:900px)");
   const items = isMobile
-    ? [mainMobile, domainMobile, timelineMobile, goodiesMobile, specialMobile]
-    : [main, domain, timeline, goodies, special];
+    ? [prizesMobile, prizesMobile]
+    : [prizes, prizes];
 
-    const carouselRef = useRef(null);
+  const carouselRef = useRef(null);
 
-    useEffect(() => {
-      gsap.fromTo(carouselRef.current, { x: -100, opacity: 0 }, { x: 0, opacity: 1, duration: 1 });
-    }, []);
+  useEffect(() => {
+    gsap.fromTo(carouselRef.current, { x: -100, opacity: 0 }, { x: 0, opacity: 1, duration: 1 });
+  }, []);
+
   return (
     <div ref={carouselRef}>
     <Carousel
       activeIndicatorIconButtonProps={{
         style: {
-          color: "#f16822",
+          color: theme.palette.secondary.main,
         },
       }}
     >
@@ -42,20 +46,15 @@ const CarouselHomePage = () => {
 };
 
 const CarouselItem = ({ item }) => {
-  const isMobile = useMediaQuery("(max-width:900px)");
   return (
     <Box
       sx={{
         display: "flex",
         justifyContent: "center",
         width: "100vw",
-        height: isMobile ? "max-content" : "100vh",
-        maxHeight: isMobile ? null : "43rem",
         border: 0,
       }}
-      
     >
-      
       <img src={item} width="100%" alt="Carousel Item" />
     </Box>
   );
