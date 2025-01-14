@@ -7,7 +7,7 @@ import HowToRegIcon from '@mui/icons-material/HowToReg';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import AllTeams from '../pages/AllTeams.jsx';
 import AddEvaluators from '../pages/Evaluators.jsx';
 import Statistics from '../pages/Statistics.jsx';
@@ -54,11 +54,12 @@ function DashboardLayoutBasic() {
                 logo: <img src={IDEALogo} alt="IDEA Logo" />,
                 title: '',
                 // homeUrl: '/toolpad/core/introduction',
-              }}            
+              }}       
         >
             <Router>
                 <DashboardLayout>
                     <Routes>
+                        <Route path="/" element={<Navigate to="/allteams" />} />
                         <Route path="/allteams" element={<AllTeams />} />
                         <Route path="/evaluators" element={<AddEvaluators />} />
                         <Route path="/statistics" element={<Statistics />} />
