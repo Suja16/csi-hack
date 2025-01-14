@@ -1,31 +1,49 @@
 import { useState, useContext, useEffect } from "react";
-import { Box, CircularProgress, Typography, useMediaQuery } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../assets/idea.png";
 import { Button } from "@mui/material";
 import RegistrationForm from "./registrationFrom";
 import { Link, useNavigate } from "react-router-dom";
-import LoadingButton from '@mui/lab/LoadingButton';
+import LoadingButton from "@mui/lab/LoadingButton";
 import UserDataContext from "../contexts/userDataContext";
 
-const Navbar = ({ userData, login, open, setopen, isLoading }) => {
+const Navbar = ({ login, open, setopen, isLoading }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMid = useMediaQuery("(max-width:1146px)");
   const navigate = useNavigate();
-  const { userData: userData2, setUserData, eventData } = useContext(UserDataContext);
+  const { userData, setUserData, eventData } = useContext(UserDataContext);
+
+  useEffect(() => {
+    console.log("USER", userData);
+    console.log("EVENT", eventData);
+  }, [userData, eventData]);
 
   const navItems = [
     { label: "HOME", href: "/" },
     { label: "PROBLEM STATEMENTS", href: "#problems" },
     { label: "GUIDELINES", href: "/guidelines" },
     { label: "FAQs", href: "/faq" },
-    { label: "PRIZES", href: "#prizes" },
+    // { label: "PRIZES", href: "#prizes" },
     { label: "CONTACT US", href: "#contact" },
+    ...(eventData && eventData.Participant
+      ? [{ label: "TEAM", href: "/team" }]
+      : []),
   ];
 
   const handleSmoothScroll = (e, targetId) => {
     e.preventDefault();
-    if (targetId === "/" || targetId === "/guidelines" || targetId === "/faq") {
+    if (
+      targetId === "/" ||
+      targetId === "/guidelines" ||
+      targetId === "/faq" ||
+      targetId === "/team"
+    ) {
       navigate(targetId);
     } else {
       const target = document.querySelector(targetId);
@@ -41,7 +59,7 @@ const Navbar = ({ userData, login, open, setopen, isLoading }) => {
     localStorage.removeItem("user");
     setUserData(null);
     navigate("/");
-  }
+  };
 
   return (
     <Box>
@@ -56,18 +74,18 @@ const Navbar = ({ userData, login, open, setopen, isLoading }) => {
         bgcolor="white"
         paddingY={2}
         sx={{
-          borderBottomRightRadius: "25px",
-          borderBottomLeftRadius: "25px",
           padding: 2,
         }}
       >
-        <img
-          height="40vw"
-          width="140vw"
-          src={Logo}
-          alt="Logo"
-          style={{ scale: "1.5", paddingLeft: "1rem" }}
-        />
+        <Link to="/">
+          <img
+            height="40vw"
+            width="140vw"
+            src={Logo}
+            alt="Logo"
+            style={{ scale: "1.5", paddingLeft: "1rem" }}
+          />
+        </Link>
         {!isMid && (
           <>
             <Box
@@ -80,7 +98,8 @@ const Navbar = ({ userData, login, open, setopen, isLoading }) => {
               {navItems.map((item) => (
                 <Typography
                   key={item.href}
-                  variant="h6"
+                  variant="h5"
+                  fontWeight="bold"
                   component={Link}
                   to={item.href}
                   onClick={(e) => handleSmoothScroll(e, item.href)}
@@ -94,19 +113,46 @@ const Navbar = ({ userData, login, open, setopen, isLoading }) => {
                 </Typography>
               ))}
             </Box>
-            {!userData2 ? (
-              <LoadingButton onClick={() => login()} loading={isLoading} variant="contained" color="primary">
-                Register Now
-              </LoadingButton>
-            ) : eventData?.Particiapant ? (
-              <LoadingButton onClick={() => logout()} loading={isLoading} variant="contained" color="primary">
-                Logout
-              </LoadingButton>
-            ) : (
-              <LoadingButton onClick={() => setopen(true)} loading={isLoading} variant="contained" color="primary">
-                Register Now
-              </LoadingButton>
-            )}
+            <Box width="15rem">
+              {!userData ? (
+                <LoadingButton
+                  onClick={() => login()}
+                  loading={isLoading}
+                  variant="contained"
+                  color="primary"
+                  paddingY="2rem"
+                >
+                  <Typography
+                    variant="body3"
+                    sx={{
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Register Now
+                  </Typography>
+                </LoadingButton>
+              ) : eventData?.Participant ? (
+                <LoadingButton
+                  onClick={() => logout()}
+                  loading={isLoading}
+                  variant="contained"
+                  color="primary"
+                  paddingY="2rem"
+                >
+                  Logout
+                </LoadingButton>
+              ) : (
+                <LoadingButton
+                  onClick={() => setopen(true)}
+                  loading={isLoading}
+                  variant="contained"
+                  color="primary"
+                  paddingY="2rem"
+                >
+                  Register Now
+                </LoadingButton>
+              )}
+            </Box>
           </>
         )}
         {open && (
@@ -126,7 +172,9 @@ const Navbar = ({ userData, login, open, setopen, isLoading }) => {
 
       {/* Mobile Menu */}
       <Box
-        height="400px"
+        height="max-content"
+        border="1px solid grey"
+        paddingBottom="1rem"
         bgcolor="white"
         position="fixed"
         top="65px"
@@ -153,7 +201,10 @@ const Navbar = ({ userData, login, open, setopen, isLoading }) => {
             variant="h6"
             component={Link}
             to={item.href}
-            onClick={(e) => handleSmoothScroll(e, item.href)}
+            onClick={(e) => {
+              handleSmoothScroll(e, item.href);
+              setIsMenuOpen(!isMenuOpen);
+            }}
             sx={{
               textDecoration: "none",
               color: "black",

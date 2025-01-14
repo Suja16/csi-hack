@@ -9,15 +9,13 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserDataContext from "../contexts/userDataContext";
 
-
 export default function FooterLayout() {
   const navigate = useNavigate();
   const isMobile = useMediaQuery("(max-width:1146px)");
-  const [userData, setUserData] = useState({});
   const [open, setopen] = useState(false);
   const [isLoading, setIsLoding] = useState(false);
 
-  const {setUserData: setUserData2, setEventData} = useContext(UserDataContext);
+  const { setUserData, setEventData } = useContext(UserDataContext);
 
   const login = useGoogleLogin({
     onSuccess: async ({ code }) => {
@@ -31,9 +29,9 @@ export default function FooterLayout() {
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
       localStorage.setItem("user", response.data.user);
-      setUserData2(response.data.user);
+      setUserData(response.data.user);
       const participantResponse = await axios.post(
-        `/api/v1/event/p/get/47`,
+        `/api/v1/event/p/get/` + import.meta.env.VITE_EVENT_ID,
         {},
         {
           headers: {
@@ -46,22 +44,14 @@ export default function FooterLayout() {
       if (participantResponse.data.event.Participant) {
         setIsLoding(false);
         navigate("/team");
-        return
+        return;
       }
-      const user = response.data.user;
-      setUserData({
-        degree: user.degree,
-        college: user.college,
-        branch: user.branch,
-        year: user.year,
-        gender: user.gender,
-        phone_number: user.phone_number,
-      });
       setopen(true);
       setIsLoding(false);
     },
     flow: "auth-code",
   });
+
   return (
     <Box
       sx={{
@@ -70,10 +60,15 @@ export default function FooterLayout() {
         minHeight: "100vh",
       }}
     >
-      <Navbar userData={userData} login={login} open={open} setopen={setopen} isLoading={isLoading} />
+      <Navbar
+        login={login}
+        open={open}
+        setopen={setopen}
+        isLoading={isLoading}
+      />
       <Box
         sx={{
-          paddingTop: "6rem",
+          paddingTop: "5rem",
           flexGrow: 1,
           display: "flex",
           flexDirection: "column",
@@ -103,7 +98,7 @@ export default function FooterLayout() {
             width: "100%",
             position: "fixed",
             padding: "1rem",
-            bottom: "1rem",
+            bottom: 0,
             zIndex: 1000,
             backgroundColor: "#1976d2",
             color: "#fff",

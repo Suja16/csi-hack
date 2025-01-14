@@ -40,7 +40,7 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 export default function RegistrationForm({ open, onClose }) {
-  const {userData, setEventData} = useContext(UserDataContext);
+  const { userData, setEventData } = useContext(UserDataContext);
   const {
     formState: { errors },
     handleSubmit,
@@ -157,7 +157,7 @@ export default function RegistrationForm({ open, onClose }) {
         localStorage.setItem("teamName", data.team_name);
         console.log(teamResponse);
 
-        const eventResponse = await axios.post("/api/v1/event/p/get/47", {}, {
+        const eventResponse = await axios.post("/api/v1/event/p/get/"+import.meta.env.VITE_EVENT_ID, {}, {
           baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -209,11 +209,11 @@ export default function RegistrationForm({ open, onClose }) {
           }
         );
         localStorage.setItem("status", "true");
-        const eventResponse = await axios.post("/api/v1/event/get/47", {}, {
+        const eventResponse = await axios.post("/api/v1/event/p/get/47", {}, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
-          }
+          },
+          baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
         });
 
         setEventData(eventResponse.data.event);
@@ -274,7 +274,7 @@ export default function RegistrationForm({ open, onClose }) {
         <Grid2 item size={1}>
           <TextBox
             name="phone_number"
-            label="PHONE NUMBER"
+            label="*PHONE NUMBER"
             register={register}
             placeholder={"Enter 10 digit phone number"}
             helperText={errors?.phone_number?.message}
@@ -292,7 +292,7 @@ export default function RegistrationForm({ open, onClose }) {
           /> */}
           <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+              <InputLabel id="demo-simple-select-label">*GENDER</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -320,7 +320,7 @@ export default function RegistrationForm({ open, onClose }) {
           /> */}
           <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Degree</InputLabel>
+              <InputLabel id="demo-simple-select-label">*DEGREE</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -330,12 +330,12 @@ export default function RegistrationForm({ open, onClose }) {
                 // onChange={handleDegreeChange}
                 {...register("degree")}
               >
-                <MenuItem value="B.tech">BTech</MenuItem>
-                <MenuItem value="M.tech">MTech</MenuItem>
+                <MenuItem value="B.tech">BTECH</MenuItem>
+                <MenuItem value="M.tech">MTECH</MenuItem>
                 <MenuItem value={"BCA"}>BCA</MenuItem>
                 <MenuItem value={"MCA"}>MCA</MenuItem>
-                <MenuItem value={"Bsc"}>Bsc</MenuItem>
-                <MenuItem value={"Msc"}>Msc</MenuItem>
+                <MenuItem value={"Bsc"}>BSC</MenuItem>
+                <MenuItem value={"Msc"}>MSC</MenuItem>
                 <MenuItem value={"MBA"}>MBA</MenuItem>
                 <MenuItem value={"Other"}>Other</MenuItem>
               </Select>
@@ -345,7 +345,7 @@ export default function RegistrationForm({ open, onClose }) {
         <Grid2 item size={1}>
           <TextBox
             name="college"
-            label="COLLEGE"
+            label="*COLLEGE"
             register={register}
             placeholder={"Enter College Name"}
             helperText={errors?.college?.message}
@@ -355,7 +355,7 @@ export default function RegistrationForm({ open, onClose }) {
         <Grid2 item size={1}>
           <TextBox
             name="branch"
-            label="BRANCH"
+            label="*BRANCH"
             register={register}
             placeholder={"Enter Your Branch"}
             helperText={errors?.branch?.message}
@@ -365,7 +365,7 @@ export default function RegistrationForm({ open, onClose }) {
         <Grid2 item size={1}>
           <TextBox
             name="year"
-            label="YEAR OF GRADUATION"
+            label="*YEAR OF GRADUATION"
             register={register}
             placeholder={"Enter College Name"}
             helperText={errors?.year?.message}
@@ -375,7 +375,7 @@ export default function RegistrationForm({ open, onClose }) {
         <Grid2 item size={1}>
           <TextBox
             name="linkedin"
-            label="LINKEDIN"
+            label="*LINKEDIN"
             register={register}
             placeholder={"Enter LinkedIn Profile URL"}
             helperText={errors?.linkedin?.message}
@@ -385,7 +385,7 @@ export default function RegistrationForm({ open, onClose }) {
         <Grid2 item size={1}>
           <TextBox
             name="github"
-            label="GITHUB"
+            label="*GITHUB"
             register={register}
             placeholder={"Enter Github Profile URL"}
             helperText={errors?.github?.message}
@@ -395,7 +395,7 @@ export default function RegistrationForm({ open, onClose }) {
         <Grid2 item size={1}>
           <TextBox
             name="tech_stack"
-            label="TECH STACK"
+            label="*TECH STACK"
             register={register}
             placeholder={"Enter Your Tech Stack"}
             helperText={errors?.tech_stack?.message}
@@ -538,6 +538,9 @@ export default function RegistrationForm({ open, onClose }) {
             </Typography>
             <Typography variant="caption" color="error">
               * Team Members will &apos;Join A Team&apos; using Invite Code
+            </Typography>
+            <Typography variant="caption" color="error">
+              * Fields having '*' are mandatory.
             </Typography>
           </Grid2>
         )}

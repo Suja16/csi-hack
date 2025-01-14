@@ -10,18 +10,18 @@ const HackathonGuidelines = () => {
       title: "Preparation Before the Hackathon",
       items: [
         "Understand the Theme: Read about the hackathon's theme or problem statement beforehand.",
-        "Form a Team: Create a diverse team of 3–5 members with complementary skills (developers, designers, marketers, etc.).",
-        "Gather Tools: Install necessary software, SDKs, or development environments. ",
+        "Form a Team: Create a diverse team of 4 members (1 female member mandatory).",
+        "Gather Tools: Install necessary software, SDKs, or development environments.",
         "Research: Familiarize yourself with APIs, datasets, or platforms allowed or provided.",
-        "Prototype: Sketch out akk rough idea or wireframe of your project to guide development.",
+        "Prototype: Sketch out a rough idea or wireframe of your project to guide development.",
         "Build: Develop as much of your project as you can before the hackathon starts!!"
       ],
     },
     {
       title: "At the Start of the Hackathon",
       items: [
-        "Bring Essentials: Ensure you have a laptop, chargers, notepads, snacks, and any other materials you'll need.",
-        "Attend the Kickoff: Listen to the rules, judging criteria, and other announcements.",
+        "Bring Essentials: Ensure you have a laptop, chargers, and any other materials you'll need.",
+        "Attend the Inauguration: Listen to the rules, judging criteria, and other announcements.",
         "Plan Your Time: Divide the time for ideation, development, testing, feedback and presentation.",
       ],
     },
@@ -88,10 +88,11 @@ const HackathonGuidelines = () => {
           variant="h4"
           component="h2"
           sx={{
-            textAlign: 'start',
+            textAlign: 'justify',
             fontWeight: 'bold',
             marginBottom: 2,
-            color: '#D32F2F'
+            color: '#D32F2F',
+            letterSpacing: '0.5px'
           }}
         >
           Hackathon Guidelines
@@ -106,7 +107,7 @@ const HackathonGuidelines = () => {
               <Typography
                 variant="h6"
                 component="h3"
-                sx={{ fontWeight: 'bold', color: '#2846AA', marginBottom: 0.5 }}
+                sx={{ fontWeight: 'bold', color: '#2846AA', marginBottom: 0.5, textAlign: 'justify', letterSpacing: '0.5px' }}
               >
                 {index + 1}. {section.title}
               </Typography>
@@ -135,7 +136,9 @@ const HackathonGuidelines = () => {
                       primary={item}
                       sx={{
                         '& .MuiListItemText-primary': {
-                          marginBottom: 0.5
+                          marginBottom: 0.5,
+                          textAlign: 'justify',
+                          letterSpacing: '0.5px'
                         }
                       }}
                     />

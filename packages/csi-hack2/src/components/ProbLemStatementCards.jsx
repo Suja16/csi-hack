@@ -8,7 +8,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Popup from "../elements/popup"; // Import the Popup component
 
-export default function CustomizedDialogs({ title, description, fullContent , imgValue }) {
+export default function CustomizedDialogs({
+  title,
+  description,
+  fullContent,
+  imgValue,
+}) {
   const [open, setOpen] = React.useState(false);
   const isMobile = useMediaQuery("(max-width:500px)");
 
@@ -22,32 +27,23 @@ export default function CustomizedDialogs({ title, description, fullContent , im
 
   return (
     <React.Fragment>
-      <Button
-        variant="div"
-        sx={{
-          width: isMobile?"23rem":"35rem",
-        //   height: "450px",
-          borderRadius: "20px",
-        }}
+      <Box
         onClick={handleClickOpen}
+        sx={{
+          width: "100%",
+          height: "max-content",
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+          justifyContent: "center",
+          gap: 2,
+          paddingX: { xs: "5rem", md: "10rem", lg: "4rem" },
+          // boxShadow:
+          //   "rgba(60, 64, 67, 0.3) 0 1px 2px 0, rgba(60, 64, 67, 0.15) 0 2px 6px 2px",
+        }}
       >
-        <Box
-          sx={{
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            alignItems: "center",
-            flexDirection: "column",
-            justifyContent: "center",
-            gap: 2,
-            paddingX: "1rem",
-            // boxShadow:
-            //   "rgba(60, 64, 67, 0.3) 0 1px 2px 0, rgba(60, 64, 67, 0.15) 0 2px 6px 2px",
-          }}
-        >
-          <img src={imgValue} width="100%" alt="" />
-        </Box>
-      </Button>
+        <img src={imgValue} width="100%" alt="" />
+      </Box>
 
       {/* Replace BootstrapDialog with Popup */}
       <Popup
@@ -56,7 +52,7 @@ export default function CustomizedDialogs({ title, description, fullContent , im
           onClose: handleClose, // onClose handler to close the dialog
         }}
       >
-        <Box sx={{ position: "relative" }}>
+        <Box sx={{ position: "relative", p: 2, pl: 4, pr: 7 }}>
           <IconButton
             aria-label="close"
             onClick={handleClose}
@@ -68,10 +64,39 @@ export default function CustomizedDialogs({ title, description, fullContent , im
           >
             <CloseIcon />
           </IconButton>
-
+          <Typography
+            variant={isMobile ? "body2" : "h4"}
+            component="h3"
+            sx={{
+              textAlign: "justify",
+              textDecoration: "unerline",
+              color: "red",
+              letterSpacing: "0.2px",
+              width: "max-content",
+              fontWeight: "bold",
+              // borderBottom: "1px solid black",
+              m: 0,
+              mt: 3,
+              mb: 2,
+              pt: 2,
+            }}
+            id="customized-dialog-title"
+          >
+            Problem Statement :
+          </Typography>
           <Typography
             variant={isMobile ? "subtitle1" : "h4"}
-            sx={{ m: 0, py: 2, pt: 5 }}
+            component={isMobile ? "subtitle1" : "h4"}
+            sx={{
+              textAlign: "justify",
+              fontWeight: "bold",
+              marginBottom: 2,
+              color: "black",
+              letterSpacing: "0.2px",
+              m: 0,
+              py: 2,
+              pt: 2,
+            }}
             id="customized-dialog-title"
           >
             {title}

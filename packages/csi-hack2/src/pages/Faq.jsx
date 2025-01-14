@@ -129,7 +129,7 @@ const Faq = ({ isExpanded }) => {
         },
         {
           question: "Who will own the IP (Intellectual Property) Rights to the product built by the teams?",
-          answer: "The ownership of Intellectual Property (IP) for individual prototypes will lie with the entity who developed the solution, i.e., the team. However, Union Bank of India and Department of Financial Services (DFS) reserve the right to collaborate with the entity for potential commercialization and or deployment of the solution. Union Bank will retain the rights to any IP specifically related to their business, while any open source or generalizable solutions may be used by the Union Bank of India under the terms agreed upon by both the parties."
+          answer: "The ownership of Intellectual Property (IP) for individual prototypes will lie with Union Bank of India."
         }
       ]
     }
@@ -161,6 +161,7 @@ const Faq = ({ isExpanded }) => {
               color: '#f15a24',
               marginTop: 3,
               zIndex: showFullContent ? 1 : 0,
+              textAlign: 'justify'
             }}
           >
             {category.title}
@@ -212,14 +213,15 @@ const Faq = ({ isExpanded }) => {
                     textDecoration: 'none',
                     '&:hover': {
                       textDecoration: 'underline',
-                    }
+                    },
+                    textAlign: 'justify'
                   }}
                 >
                   Q{index + 1}. {item.question}
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Typography variant="body1" sx={{ color: 'black' }}>
+                <Typography variant="body1" sx={{ color: 'black', textAlign: 'justify' }}>
                   {item.answer}
                 </Typography>
               </AccordionDetails>

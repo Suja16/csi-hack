@@ -33,7 +33,7 @@ function Item(props) {
         justifyContent: "center",
         width: "100vw",
         height: isMobile ? "max-content" : "100vh",
-        maxHeight: isMobile ? null : "43rem",
+        maxHeight: isMobile ? null : "48rem",
         border: 0,
       }}
     >
