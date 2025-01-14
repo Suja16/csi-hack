@@ -8,9 +8,10 @@ import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import AllTeams from './pages/AllTeams.jsx';
-import AddEvaluators from './pages/Evaluators.jsx';
-import Statistics from './pages/Statistics.jsx';
+import AllTeams from '../pages/AllTeams.jsx';
+import AddEvaluators from '../pages/Evaluators.jsx';
+import Statistics from '../pages/Statistics.jsx';
+import IDEALogo from '../assets/idea.png';
 
 const NAVIGATION = [
     {
@@ -50,9 +51,9 @@ function DashboardLayoutBasic() {
             navigation={NAVIGATION}
             theme={demoTheme}
             branding={{
-                logo: <img src="https://mui.com/static/logo.png" alt="MUI logo" />,
-                title: 'IDEA HACKATHON',
-                homeUrl: '/toolpad/core/introduction',
+                logo: <img src={IDEALogo} alt="IDEA Logo" />,
+                title: '',
+                // homeUrl: '/toolpad/core/introduction',
               }}            
         >
             <Router>

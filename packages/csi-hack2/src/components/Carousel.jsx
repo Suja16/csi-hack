@@ -1,15 +1,17 @@
 import { Box, useMediaQuery } from "@mui/material";
+import { gsap } from 'gsap';
+import { useEffect, useRef } from 'react';
 import Carousel from "react-material-ui-carousel";
-import goodies from "../assets/prizes.png";
-import main from "../assets/main.png";
-import domain from "../assets/ps.png";
-import timeline from "../assets/timeline.png";
-import special from "../assets/special.png";
-import goodiesMobile from "../assets/goodiesMobile.png";
-import mainMobile from "../assets/mainMobile.png";
 import domainMobile from "../assets/domainMobile.png";
+import goodiesMobile from "../assets/goodiesMobile.png";
+import main from "../assets/main.png";
+import mainMobile from "../assets/mainMobile.png";
+import goodies from "../assets/prizes.png";
+import domain from "../assets/ps.png";
+import special from "../assets/special.png";
+import specialMobile from "../assets/specialMobile.png";
+import timeline from "../assets/timeline.png";
 import timelineMobile from "../assets/timelineMobile.png";
-import specialMobile from "../assets/specialMobile.png"
 
 const CarouselHomePage = () => {
   const isMobile = useMediaQuery("(max-width:900px)");
@@ -17,7 +19,13 @@ const CarouselHomePage = () => {
     ? [mainMobile, domainMobile, timelineMobile, goodiesMobile, specialMobile]
     : [main, domain, timeline, goodies, special];
 
+    const carouselRef = useRef(null);
+
+    useEffect(() => {
+      gsap.fromTo(carouselRef.current, { x: -100, opacity: 0 }, { x: 0, opacity: 1, duration: 1 });
+    }, []);
   return (
+    <div ref={carouselRef}>
     <Carousel
       activeIndicatorIconButtonProps={{
         style: {
@@ -29,6 +37,7 @@ const CarouselHomePage = () => {
         <CarouselItem key={index} item={item} />
       ))}
     </Carousel>
+    </div>
   );
 };
 
@@ -44,7 +53,9 @@ const CarouselItem = ({ item }) => {
         maxHeight: isMobile ? null : "43rem",
         border: 0,
       }}
+      
     >
+      
       <img src={item} width="100%" alt="Carousel Item" />
     </Box>
   );
