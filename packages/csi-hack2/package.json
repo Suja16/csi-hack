@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@mui/lab": "^6.0.0-beta.22",
+    "gsap": "^3.12.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-material-ui-carousel": "^3.4.2"

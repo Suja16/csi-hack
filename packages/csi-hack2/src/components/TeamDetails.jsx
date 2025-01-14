@@ -117,8 +117,9 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
     if(eventData.Participant.team.submissions) {
       setSubmitted(true);
     }
-
   }, [errors, eventData.Participant.team.submissions]);
+
+  console.log(eventData.Participant.team.Participant.length)
 
   const ppt = watch("ppt");
   const consent = watch("consent");
@@ -273,7 +274,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
           Leave Team
         </Button> */}
       </Grid2>
-      {!submitted && userData.id === eventData.Participant.team.leader_id ? (
+      {!submitted && userData.id === eventData.Participant.team.leader_id && eventData.Participant.team.Participant.length==4 ? (
         <>
           <Grid2
             item
@@ -411,11 +412,10 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
           alignItems="center"
           marginTop="10rem"
         >
-          <Typography variant="h5">Your Submission</Typography>
-
-             <Typography variant="body1">
-             {submitted ? "Your submission has been recorded." : "Your team leader has not submitted the project yet."}
-           </Typography>
+          <Typography variant="h5" marginBlock="1rem">Your Submission</Typography>
+          <Typography variant="body1">
+             {submitted ? "Your submission has been recorded." : eventData.Participant.team.Participant.length!=4 ? "4 Members are required in a team." : "Your team leader has not submitted the project yet."}
+          </Typography>
         </Grid2>
       )}
     </Grid2>
