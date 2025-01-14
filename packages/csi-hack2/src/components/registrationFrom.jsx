@@ -160,7 +160,7 @@ export default function RegistrationForm({ open, onClose }) {
         localStorage.setItem("teamName", data.team_name);
         console.log(teamResponse);
 
-        const eventResponse = await axios.post("/api/v1/event/p/get/"+import.meta.env.VITE_EVENT_ID, {}, {
+        const eventResponse = await axios.post("/api/v1/event/p/get/" + import.meta.env.VITE_EVENT_ID, {}, {
           baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -497,7 +497,7 @@ export default function RegistrationForm({ open, onClose }) {
             }
             sx={{ padding: "1rem" }}
           >
-            {photo_id && photo_id[0] ? "" : "Upload Photo ID"}
+            {photo_id && photo_id[0] ? "" : "Upload College ID"}
             <VisuallyHiddenInput
               type="file"
               name="photo_id"
