@@ -24,7 +24,7 @@ export default function Popup({ children, dialogProps }) {
           paddingY: { xs: 2, md: 2 },
           overflowY: "scroll",
           maxHeight: "85vh",
-          scrollbarWidth:"thin"
+          scrollbarWidth: "thin",
         }}
       >
         {children}

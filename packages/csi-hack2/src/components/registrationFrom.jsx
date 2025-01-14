@@ -12,7 +12,7 @@ import {
   InputLabel,
   styled,
 } from "@mui/material";
-import Popup from "../elements/popup";
+import Popup from "../../../ui/popup";
 import CloseIcon from "@mui/icons-material/Close";
 import registrationSchema from "../utils/validation";
 import { useForm } from "react-hook-form";

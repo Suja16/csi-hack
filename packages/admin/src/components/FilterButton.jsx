@@ -1,0 +1,189 @@
+import { useState } from "react";
+import {
+  Button,
+  Menu,
+  MenuItem,
+  Checkbox,
+  FormGroup,
+  FormControlLabel,
+  Typography,
+  Box,
+  Divider,
+  IconButton,
+} from "@mui/material";
+import { FilterList, Close } from "@mui/icons-material";
+
+const initialFilters = {
+  status: [
+    { id: "active", label: "Active", checked: false },
+    { id: "pending", label: "Pending", checked: false },
+    { id: "archived", label: "Archived", checked: false },
+  ],
+  priority: [
+    { id: "high", label: "High Priority", checked: false },
+    { id: "medium", label: "Medium Priority", checked: false },
+    { id: "low", label: "Low Priority", checked: false },
+  ],
+  type: [
+    { id: "bug", label: "Bug Report", checked: false },
+    { id: "feature", label: "Feature Request", checked: false },
+    { id: "improvement", label: "Improvement", checked: false },
+  ],
+};
+
+export default function FilterDropdown() {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [filters, setFilters] = useState(initialFilters);
+  const [activeFiltersCount, setActiveFiltersCount] = useState(0);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleFilterChange = (category, filterId) => {
+    setFilters((prev) => ({
+      ...prev,
+      [category]: prev[category].map((filter) =>
+        filter.id === filterId
+          ? { ...filter, checked: !filter.checked }
+          : filter
+      ),
+    }));
+
+    // Update active filters count
+    const newFilters = {
+      ...filters,
+      [category]: filters[category].map((filter) =>
+        filter.id === filterId
+          ? { ...filter, checked: !filter.checked }
+          : filter
+      ),
+    };
+
+    const count = Object.values(newFilters)
+      .flat()
+      .filter((filter) => filter.checked).length;
+
+    setActiveFiltersCount(count);
+  };
+
+  const clearFilters = () => {
+    setFilters(
+      Object.entries(filters).reduce(
+        (acc, [category, options]) => ({
+          ...acc,
+          [category]: options.map((option) => ({ ...option, checked: false })),
+        }),
+        {}
+      )
+    );
+    setActiveFiltersCount(0);
+  };
+
+  return (
+    <Box>
+      <Button
+        variant="outlined"
+        onClick={handleClick}
+        startIcon={<FilterList sx={{ color: "#1e2939" }} />}
+        endIcon={
+          activeFiltersCount > 0 && (
+            <Box
+              sx={{
+                backgroundColor: "primary.main",
+                color: "primary.contrastText",
+                borderRadius: "50%",
+                width: 20,
+                height: 20,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "0.75rem",
+              }}
+            >
+              {activeFiltersCount}
+            </Box>
+          )
+        }
+        sx={{ minWidth: 100, color: "#1e2939", borderColor: "#1e2939" }}
+      >
+        Filters
+      </Button>
+
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        PaperProps={{
+          sx: {
+            width: 320,
+            maxHeight: 480,
+            mt: 1,
+            scrollbarWidth: "thin",
+          },
+        }}
+      >
+        <Box sx={{ p: 2, pb: 1 }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mb: 1,
+            }}
+          >
+            <Typography variant="subtitle1" fontWeight="bold">
+              Filters
+            </Typography>
+            {activeFiltersCount > 0 && (
+              <Button
+                size="small"
+                onClick={clearFilters}
+                startIcon={<Close fontSize="small" />}
+              >
+                Clear all
+              </Button>
+            )}
+          </Box>
+        </Box>
+
+        {Object.entries(filters).map(([category, options], index) => (
+          <Box key={category}>
+            {index > 0 && <Divider />}
+            <Box sx={{ p: 2 }}>
+              <Typography
+                variant="subtitle2"
+                sx={{
+                  mb: 1,
+                  textTransform: "uppercase",
+                  color: "text.secondary",
+                }}
+              >
+                {category}
+              </Typography>
+              <FormGroup>
+                {options.map((option) => (
+                  <FormControlLabel
+                    key={option.id}
+                    control={
+                      <Checkbox
+                        checked={option.checked}
+                        onChange={() => handleFilterChange(category, option.id)}
+                        size="small"
+                      />
+                    }
+                    label={option.label}
+                  />
+                ))}
+              </FormGroup>
+            </Box>
+          </Box>
+        ))}
+      </Menu>
+    </Box>
+  );
+}
