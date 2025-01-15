@@ -17,17 +17,17 @@ const Sidebar = ({ isSidebarOpen }) => {
             variant="permanent"
             sx={{
                 display: { xs: isSidebarOpen ? 'block' : 'none', sm: 'block' },
-                width: isSidebarOpen ? 240 : 60,
+                width: isSidebarOpen ? '15rem' : '3.75rem',
                 flexShrink: 0,
                 '& .MuiDrawer-paper': {
-                    width: isSidebarOpen ? 240 : 60,
+                    width: isSidebarOpen ? '15rem' : '3.75rem',
                     boxSizing: 'border-box',
                     position: 'fixed',
-                    top: 64, 
+                    top: '4rem', 
                     left: 0,
                     background: '#fff',
-                    borderRadius: '10px',
-                    boxShadow: '0 0 40px rgba(0, 0, 0, 0.03)',
+                    borderRadius: '0.625rem',
+                    boxShadow: '0 0 2.5rem rgba(0, 0, 0, 0.03)',
                     overflowX: 'hidden',
                     transition: 'width 0.3s',
                 },
@@ -42,17 +42,19 @@ const Sidebar = ({ isSidebarOpen }) => {
                             component={Link}
                             to={item.path}
                             sx={{
-                                marginBottom: isSidebarOpen ? '8px' : '16px',
-                                backgroundColor: location.pathname === item.path ? '#f0f0f0' : 'transparent',
-                                borderRadius: '8px', // Added borderRadius for rounded corners
+                                marginBottom: isSidebarOpen ? '0.5rem' : '1rem',
+                                marginLeft: isSidebarOpen ? '0.5rem' : '0',
+                                marginRight: isSidebarOpen ? '0.5rem' : '0',
+                                backgroundColor: location.pathname === item.path ? '#d0efff' : 'transparent',
+                                borderRadius: '0.5rem',
                                 '&:hover': {
-                                    backgroundColor: '#e0e0e0', // Ensure hover color also has rounded corners
+                                    backgroundColor: '#c0dceb',
                                 },
                                 '& .MuiListItemText-root': {
                                     color: 'black',
                                 },
                                 '& .MuiListItemIcon-root': {
-                                    color: '#6a778e',
+                                    color: location.pathname === item.path ? 'rgba(21, 101, 192, 1)' : 'black',
                                 },
                             }}
                         >
