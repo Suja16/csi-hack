@@ -1,19 +1,35 @@
-// import { useQuery } from "@apollo/client";
 import "./App.css";
-import DashboardLayoutBasic from "./components/sidebar.jsx";
-// import { TEAM_QUERY } from "./queries";
+import { Box } from "@mui/material";
+import { useState } from "react";
+import AppRouter from "./AppRouter.jsx";
+import { BrowserRouter as Router } from "react-router-dom";
+import AppBarHeader from "./components/AppBarHeader.jsx";
+import Sidebar from "./components/NewSidebar.jsx";
 
 function App() {
-  // const { loading, error, data } = useQuery(TEAM_QUERY);
-  // console.log(data);
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!isSidebarOpen);
+  };
+
   return (
-    <div>
-      {/* <h1>Team</h1>
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error.message}</p>}
-      {data && <pre>{JSON.stringify(data, null, 2)}</pre>} */}
-      <DashboardLayoutBasic />
-    </div>
+    <Router>
+      <AppBarHeader toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+      <Box sx={{ display: "flex", height: "100vh" }}>
+        <Sidebar isSidebarOpen={isSidebarOpen} />
+        <Box
+          sx={{
+            flex: 1,
+            padding: "1.05rem",
+            paddingTop: "5rem",
+            overflow: "auto",
+          }}
+        >
+          <AppRouter />
+        </Box>
+      </Box>
+    </Router>
   );
 }
 
