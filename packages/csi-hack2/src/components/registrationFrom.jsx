@@ -22,8 +22,8 @@ import axios from "axios";
 import TextBox from "./TextBox";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Delete from "@mui/icons-material/Delete";
-import uploadFile from "../utils/uploadFile";
-import LoadingButton from '@mui/lab/LoadingButton';
+import { uploadFile, deleteFile } from "../utils/uploadFile";
+import LoadingButton from "@mui/lab/LoadingButton";
 import UserDataContext from "../contexts/userDataContext";
 import { useNavigate } from "react-router";
 
@@ -62,13 +62,47 @@ export default function RegistrationForm({ open, onClose }) {
   const resume = watch("resume");
   const photo_id = watch("photo_id");
 
-
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(errors);
-    console.log(resume);
-  }, [errors, resume]);
+    const uploadResume = async () => {
+      if (resume && resume[0]) {
+        try {
+          setIsLoading(true);
+          const oldResumeLink = getValues("resume_link");
+          if (oldResumeLink) {
+            deleteFile(oldResumeLink);
+          }
+          const url = await uploadFile(resume[0]);
+          setValue("resume_link", url);
+          setIsLoading(false);
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    };
+    uploadResume();
+  }, [resume]);
+
+  useEffect(() => {
+    const uploadPhoto = async () => {
+      if (photo_id && photo_id[0]) {
+        try {
+          setIsLoading(true);
+          const oldPhotoIdLink = getValues("photo_id_link");
+          if (oldPhotoIdLink) {
+            deleteFile(oldPhotoIdLink);
+          }
+          const url = await uploadFile(photo_id[0]);
+          setValue("photo_id_link", url);
+          setIsLoading(false);
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    };
+    uploadPhoto();
+  }, [photo_id]);
 
   useEffect(() => {
     reset(userData);
@@ -124,19 +158,28 @@ export default function RegistrationForm({ open, onClose }) {
       });
     } catch (e) {
       console.error(e);
+      if (e.response && e.response.data && e.response.data.message) {
+        setSnackbarMessage(e.response.data.message);
+        setShowSnackbar(true);
+        setTimeout(() => setShowSnackbar(false), 3000);
+        setIsLoading(false);
+      }
       return;
     }
 
     // upload resume
-    const resumeURLPromise = uploadFile(resume[0]);
+    // const resumeURLPromise = uploadFile(resume[0]);
 
     // upload photo id
-    const photoIdURLPromise = uploadFile(photo_id[0]);
+    // const photoIdURLPromise = uploadFile(photo_id[0]);
 
-    const [resumeURL, photoIdURL] = await Promise.all([resumeURLPromise, photoIdURLPromise]);
+    // const [resumeURL, photoIdURL] = await Promise.all([
+    //   resumeURLPromise,
+    //   photoIdURLPromise,
+    // ]);
 
-    more_details.resume = resumeURL;
-    more_details.photo_id = photoIdURL;
+    more_details.resume = data.resume_link;
+    more_details.photo_id = data.photo_id_link;
 
     if (data.team_choice === "create") {
       // create team
@@ -153,27 +196,29 @@ export default function RegistrationForm({ open, onClose }) {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
-          }
+          },
         );
         const inviteCode = teamResponse.data.team.invite_code;
         localStorage.setItem("inviteCode", inviteCode);
         localStorage.setItem("teamName", data.team_name);
         console.log(teamResponse);
 
-        const eventResponse = await axios.post("/api/v1/event/p/get/" + import.meta.env.VITE_EVENT_ID, {}, {
-          baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        const eventResponse = await axios.post(
+          "/api/v1/event/p/get/" + import.meta.env.VITE_EVENT_ID,
+          {},
+          {
+            baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
           },
-        });
+        );
 
         setEventData(eventResponse.data.event);
-
 
         alert("Your team code is - " + inviteCode);
         localStorage.setItem("status", "true");
         setSnackbarMessage("Registration Successful");
-
 
         setShowSnackbar(true);
 
@@ -209,15 +254,19 @@ export default function RegistrationForm({ open, onClose }) {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
-          }
+          },
         );
         localStorage.setItem("status", "true");
-        const eventResponse = await axios.post("/api/v1/event/p/get/47", {}, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        const eventResponse = await axios.post(
+          "/api/v1/event/p/get/47",
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+            baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
           },
-          baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
-        });
+        );
 
         setEventData(eventResponse.data.event);
         setSnackbarMessage("Registration Successful");

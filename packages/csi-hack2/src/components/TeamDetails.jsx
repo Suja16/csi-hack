@@ -19,7 +19,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Delete from "@mui/icons-material/Delete";
 import { useEffect } from "react";
-import uploadFile from "../utils/uploadFile";
+import { uploadFile } from "../utils/uploadFile";
 import axios from "axios";
 import { useNavigate } from "react-router";
 
@@ -91,7 +91,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
   const navigate = useNavigate();
   const { userData, eventData } = useContext(UserDataContext);
   const theme = useTheme();
-  const [isSubmitting , setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const {
@@ -114,12 +114,12 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
 
   useEffect(() => {
     console.log(errors);
-    if(eventData.Participant.team.submissions) {
+    if (eventData.Participant.team.submissions) {
       setSubmitted(true);
     }
   }, [errors, eventData.Participant.team.submissions]);
 
-  console.log(eventData.Participant.team.Participant.length)
+  console.log(eventData.Participant.team.Participant.length);
 
   const ppt = watch("ppt");
   const consent = watch("consent");
@@ -155,13 +155,12 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
           baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
-        }
+        },
       );
-      if(response.status === 200 && response.data.error==false) {
+      if (response.status === 200 && response.data.error == false) {
         setIsSubmitting(false);
         setSubmitted(true);
-      }
-      else if(response.data.error==true) {
+      } else if (response.data.error == true) {
         setIsSubmitting(false);
         window.alert(response.data.message);
         setSubmitted(false);
@@ -182,7 +181,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
           baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
-        }
+        },
       );
       console.log(response.data);
       setSnackBarMessage("Left team successfully");
@@ -200,7 +199,12 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
   };
 
   return (
-    <Grid2 container component="form" onSubmit={handleSubmit(onSubmit)} justifyContent="center">
+    <Grid2
+      container
+      component="form"
+      onSubmit={handleSubmit(onSubmit)}
+      justifyContent="center"
+    >
       <Grid2
         item
         size={{ xs: 12, md: 6 }}
@@ -255,7 +259,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
           }}
           onClick={() =>
             navigator.clipboard.writeText(
-              eventData.Participant.team.invite_code
+              eventData.Participant.team.invite_code,
             )
           }
         >
@@ -274,7 +278,9 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
           Leave Team
         </Button> */}
       </Grid2>
-      {!submitted && userData.id === eventData.Participant.team.leader_id && eventData.Participant.team.Participant.length==4 ? (
+      {!submitted &&
+      userData.id === eventData.Participant.team.leader_id &&
+      eventData.Participant.team.Participant.length == 4 ? (
         <>
           <Grid2
             item
@@ -412,9 +418,15 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
           alignItems="center"
           marginTop="10rem"
         >
-          <Typography variant="h5" marginBlock="1rem">Your Submission</Typography>
+          <Typography variant="h5" marginBlock="1rem">
+            Your Submission
+          </Typography>
           <Typography variant="body1">
-             {submitted ? "Your submission has been recorded." : eventData.Participant.team.Participant.length!=4 ? "4 Members are required in a team." : "Your team leader has not submitted the project yet."}
+            {submitted
+              ? "Your submission has been recorded."
+              : eventData.Participant.team.Participant.length != 4
+                ? "4 Members are required in a team."
+                : "Your team leader has not submitted the project yet."}
           </Typography>
         </Grid2>
       )}
