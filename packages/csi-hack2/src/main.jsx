@@ -5,6 +5,7 @@ import App from "./App.jsx";
 import { CssBaseline, GlobalStyles, ThemeProvider } from "@mui/material";
 import theme from "../../ui/theme.js";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { Analytics } from "@vercel/analytics/react";
 
 const globalStyles = (
   <GlobalStyles
@@ -23,7 +24,8 @@ createRoot(document.getElementById("root")).render(
       {globalStyles}
       <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
         <App />
+        <Analytics />
       </GoogleOAuthProvider>
     </ThemeProvider>
-  </StrictMode>
+  </StrictMode>,
 );
