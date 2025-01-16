@@ -1,8 +1,8 @@
-import { Box, Typography } from '@mui/material';
-import FilePresentation from '@mui/icons-material/Description';
-import VideoIcon from '@mui/icons-material/Videocam';
-import EvaluationIcon from '@mui/icons-material/AssignmentTurnedIn';
-import RsvpIcon from '@mui/icons-material/CheckCircle';
+import { Box, Typography, Button } from "@mui/material";
+import FilePresentation from "@mui/icons-material/Description";
+import VideoIcon from "@mui/icons-material/Videocam";
+import EvaluationIcon from "@mui/icons-material/AssignmentTurnedIn";
+import RsvpIcon from "@mui/icons-material/CheckCircle";
 
 const RegisterSteps = () => {
   const steps = [
@@ -18,12 +18,14 @@ const RegisterSteps = () => {
     },
     {
       title: "Evaluation Round",
-      description: "Submissions of teams will be evaluated by working industry professionals.",
+      description:
+        "Submissions of teams will be evaluated by working industry professionals.",
       icon: EvaluationIcon,
     },
     {
       title: "RSVP Confirmation",
-      description: "The shortlisted teams will be invited to participate in the on-site round and will have to rsvp within the designated time to confirm their participation.",
+      description:
+        "The shortlisted teams will be invited to participate in the on-site round and will have to rsvp within the designated time to confirm their participation.",
       icon: RsvpIcon,
     },
   ];
@@ -32,22 +34,32 @@ const RegisterSteps = () => {
     <Box
       sx={{
         maxWidth: 800,
-        margin: '20px auto',
-        padding: '24px',
-        borderRadius: '12px',
+        margin: "auto",
+        padding: "24px",
+        borderRadius: "12px",
       }}
     >
+      <a
+        href="/template.pptx"
+        download="iDEA Hackathon PPT Submission Template.pptx"
+        target="_blank"
+      >
+        <Button variant="contained" color="secondary">
+          Download PPT Template
+        </Button>
+      </a>
       <Box
+        marginTop="2rem"
         sx={{
-          position: 'relative',
-          '&::before': {
+          position: "relative",
+          "&::before": {
             content: '""',
-            position: 'absolute',
-            left: '7px',
-            top: '16px',
-            bottom: '16px',
-            width: '2px',
-            backgroundColor: 'grey.200',
+            position: "absolute",
+            left: "7px",
+            top: "16px",
+            bottom: "16px",
+            width: "2px",
+            backgroundColor: "grey.200",
           },
         }}
       >
@@ -55,10 +67,10 @@ const RegisterSteps = () => {
           <Box
             key={index}
             sx={{
-              display: 'flex',
-              alignItems: 'flex-start',
+              display: "flex",
+              alignItems: "flex-start",
               gap: 3,
-              position: 'relative',
+              position: "relative",
               mb: index !== steps.length - 1 ? 6 : 0,
             }}
           >
@@ -67,11 +79,11 @@ const RegisterSteps = () => {
               sx={{
                 width: 16,
                 height: 16,
-                borderRadius: '50%',
-                backgroundColor: 'primary.main',
+                borderRadius: "50%",
+                backgroundColor: "primary.main",
                 border: 4,
-                borderColor: 'background.paper',
-                position: 'absolute',
+                borderColor: "background.paper",
+                position: "absolute",
                 left: 0,
               }}
             />
@@ -82,8 +94,8 @@ const RegisterSteps = () => {
                 variant="h6"
                 component="h3"
                 sx={{
-                  fontWeight: 'bold',
-                  color: 'text.primary',
+                  fontWeight: "bold",
+                  color: "text.primary",
                   mb: 0.5,
                 }}
               >
@@ -92,7 +104,7 @@ const RegisterSteps = () => {
               <Typography
                 variant="body1"
                 sx={{
-                  color: 'text.secondary',
+                  color: "text.secondary",
                 }}
               >
                 {step.description}
@@ -105,18 +117,18 @@ const RegisterSteps = () => {
                 width: 64,
                 height: 64,
                 border: 2,
-                borderColor: 'grey.200',
+                borderColor: "grey.200",
                 borderRadius: 2,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
                 flexShrink: 0,
               }}
             >
               <step.icon
                 sx={{
                   fontSize: 32,
-                  color: 'primary.main',
+                  color: "primary.main",
                 }}
               />
             </Box>
