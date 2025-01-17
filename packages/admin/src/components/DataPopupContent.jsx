@@ -21,7 +21,6 @@ import { LinkedIn, GitHub, Description } from "@mui/icons-material";
 
 // Sample data (replace with your actual data)
 
-
 const TeamDetailsPage = ({ teamData }) => {
   return (
     <Box sx={{ maxWidth: 1200, margin: "auto", padding: 2 }}>
@@ -31,13 +30,13 @@ const TeamDetailsPage = ({ teamData }) => {
           sx={{ fontWeight: 600, color: "#00579c", ml: -0.5 }}
           gutterBottom
         >
-          {teamData.teamName}
+          {teamData.name}
         </Typography>
         <Typography variant="h6" gutterBottom>
           <strong>Approved </strong>: {teamData.approved ? "Yes" : "No"}
         </Typography>
         <Typography variant="h5" gutterBottom>
-          <strong>Team Leader </strong>: {teamData.leaderName}
+          <strong>Team Leader </strong>: {teamData.Leader?.name}
         </Typography>
 
         <Typography variant="h5" sx={{ mt: 4, mb: 2 }}>
@@ -46,9 +45,9 @@ const TeamDetailsPage = ({ teamData }) => {
       </Box>
 
       <Grid container spacing={3}>
-        {teamData.teamMembers.map((member, index) => (
+        {teamData.Participants?.map((member, index) => (
           <Grid item xs={12} md={6} lg={4} key={index}>
-            <Card sx={{minHeight:{md:650}}}>
+            <Card sx={{ minHeight: { md: 650 } }}>
               <Box
                 sx={{
                   width: "100%",
@@ -56,21 +55,27 @@ const TeamDetailsPage = ({ teamData }) => {
                   justifyContent: "center",
                 }}
               >
-                <img width="200px" src={member.photo} alt="Team Member" />
+                <img
+                  width="200px"
+                  src={member.User?.photo_url}
+                  alt="Team Member"
+                />
               </Box>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
                   {member.name}
                 </Typography>
                 <Box sx={{ mb: 2 }}>
-                  {member.TechStack.split(", ").map((tech, techIndex) => (
-                    <Chip
-                      key={techIndex}
-                      label={tech}
-                      size="small"
-                      sx={{ mr: 0.5, mb: 0.5 }}
-                    />
-                  ))}
+                  {member.more_details?.tech_stack
+                    ?.split(", ")
+                    .map((tech, techIndex) => (
+                      <Chip
+                        key={techIndex}
+                        label={tech}
+                        size="small"
+                        sx={{ mr: 0.5, mb: 0.5 }}
+                      />
+                    ))}
                 </Box>
                 <Box
                   sx={{
@@ -82,7 +87,7 @@ const TeamDetailsPage = ({ teamData }) => {
                   <IconButton
                     color="primary"
                     component="a"
-                    href={member.linkedin}
+                    href={member.more_details?.linkedin}
                     target="_blank"
                     size="large"
                     rel="noopener noreferrer"
@@ -92,7 +97,7 @@ const TeamDetailsPage = ({ teamData }) => {
                   <IconButton
                     color="primary"
                     component="a"
-                    href={member.github}
+                    href={member.more_details?.github}
                     target="_blank"
                     size="large"
                     rel="noopener noreferrer"
@@ -102,14 +107,14 @@ const TeamDetailsPage = ({ teamData }) => {
                 </Box>
                 <Typography variant="body2" color="text.secondary" paragraph>
                   <strong>Why this hackathon:</strong>{" "}
-                  {member.why_this_hackathon}
+                  {member.more_details?.why_this_hackathon}
                 </Typography>
                 <Button
                   variant="outlined"
                   color="primary"
                   startIcon={<Description />}
                   component="a"
-                  href={member.resume}
+                  href={member.more_details?.resume}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -128,21 +133,23 @@ const TeamDetailsPage = ({ teamData }) => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell sx={{fontWeight:600}}>Technology</TableCell>
-              <TableCell sx={{fontWeight:600 , textAlign:"right"}} >Number of Members</TableCell>
+              <TableCell sx={{ fontWeight: 600 }}>Technology</TableCell>
+              <TableCell sx={{ fontWeight: 600, textAlign: "right" }}>
+                Number of Members
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {Object.entries(
-              teamData.teamMembers
-                .flatMap((m) => m.TechStack.split(", "))
-                .reduce(
-                  (acc, tech) => ({
-                    ...acc,
-                    [tech]: (acc[tech] || 0) + 1,
-                  }),
-                  {}
-                )
+              teamData.Participants.flatMap((m) =>
+                m.more_details?.tech_stack?.split(", "),
+              ).reduce(
+                (acc, tech) => ({
+                  ...acc,
+                  [tech]: (acc[tech] || 0) + 1,
+                }),
+                {},
+              ),
             ).map(([tech, count]) => (
               <TableRow key={tech}>
                 <TableCell component="th" scope="row">

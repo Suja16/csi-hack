@@ -1,23 +1,24 @@
 import { gql } from "@apollo/client";
 
 export const TEAM_QUERY = gql`
-  query MyQuery {
-    Team {
-      submissions
+  query TeamQuery {
+    Team(where: { event_id: { _eq: 47 } }, order_by: { id: asc }) {
+      id
       name
       leader_id
-      invite_code
-      id
       approved
-    }
-    Team_aggregate {
-      aggregate {
-        count
+      submissions
+      invite_code
+      Participants {
+        id
+        user_id
+        more_details
+        User {
+          photo_url
+        }
       }
-    }
-    Participant_aggregate(where: { team_id: { _is_null: false } }) {
-      aggregate {
-        count
+      Leader {
+        name
       }
     }
   }

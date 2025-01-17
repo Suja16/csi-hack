@@ -18,268 +18,16 @@ import CloseIcon from "@mui/icons-material/Close";
 import { render } from "react-dom";
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom"; // Import hooks
-
-const initialData = [
-  {
-    id: "1",
-    teamName: "Tata Consultancy Services",
-    approved: true,
-    submission: "On Time",
-    leaderName: "Amit Kumar",
-    teamMembers: [
-      {
-        name: "Gopal Dose",
-        resume:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose%20Resume%2026Nov.pdf3d072281-0036-4522-a8ed-f096d6074962?alt=media&token=894c4ca7-e2b9-47e7-a290-4ac754b51230",
-        photo:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose.jpg23db608f-3129-49e2-9ee4-7c306e0f4754?alt=media&token=5f5885ed-14af-410d-9d11-b4ff81530f13",
-        TechStack:
-          "C++, Java, Python, JavaScript, PHP, HTML, CSS, React.js, Node.js, Express.js, ASP.NET, Django, Django REST Framework (DRF), MySQL, MongoDB, PostgreSQL",
-        linkedin: "https://www.linkedin.com/in/gopaldose21/",
-        why_this_hackathon:
-          "I am passionate about coding and problem-solving. This hackathon gives me an opportunity to work with innovative minds and build impactful solutions.",
-        github: "https://github.com/GopalDose",
-      },
-      {
-        name: "Rajesh Kumar",
-        resume:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose%20Resume%2026Nov.pdf3d072281-0036-4522-a8ed-f096d6074962?alt=media&token=894c4ca7-e2b9-47e7-a290-4ac754b51230",
-        photo:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose.jpg23db608f-3129-49e2-9ee4-7c306e0f4754?alt=media&token=5f5885ed-14af-410d-9d11-b4ff81530f13",
-        TechStack:
-          "C++, Java, Python, JavaScript, PHP, HTML, CSS, React.js, Node.js, Express.js, ASP.NET, Django, Django REST Framework (DRF), MySQL, MongoDB, PostgreSQL",
-        linkedin: "https://www.linkedin.com/in/gopaldose21/",
-        why_this_hackathon:
-          "I love learning new technologies and I want to challenge myself in a competitive environment where I can push the boundaries of my skills.",
-        github: "https://github.com/GopalDose",
-      },
-      {
-        name: "Sujal Jain",
-        resume:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose%20Resume%2026Nov.pdf3d072281-0036-4522-a8ed-f096d6074962?alt=media&token=894c4ca7-e2b9-47e7-a290-4ac754b51230",
-        photo:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose.jpg23db608f-3129-49e2-9ee4-7c306e0f4754?alt=media&token=5f5885ed-14af-410d-9d11-b4ff81530f13",
-        TechStack:
-          "C++, Java, Python, JavaScript, PHP, HTML, CSS, React.js, Node.js, Express.js, ASP.NET, Django, Django REST Framework (DRF), MySQL, MongoDB, PostgreSQL",
-        linkedin: "https://www.linkedin.com/in/gopaldose21/",
-        why_this_hackathon:
-          "This hackathon is a perfect place to collaborate, learn from others, and work on real-world problems using cutting-edge technologies.",
-        github: "https://github.com/GopalDose",
-      },
-      {
-        name: "Neha Reddy",
-        resume:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose%20Resume%2026Nov.pdf3d072281-0036-4522-a8ed-f096d6074962?alt=media&token=894c4ca7-e2b9-47e7-a290-4ac754b51230",
-        photo:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose.jpg23db608f-3129-49e2-9ee4-7c306e0f4754?alt=media&token=5f5885ed-14af-410d-9d11-b4ff81530f13",
-        TechStack:
-          "C++, Java, Python, JavaScript, PHP, HTML, CSS, React.js, Node.js, Express.js, ASP.NET, Django, Django REST Framework (DRF), MySQL, MongoDB, PostgreSQL",
-        linkedin: "https://www.linkedin.com/in/gopaldose21/",
-        why_this_hackathon:
-          "This hackathon is a perfect place to collaborate, learn from others, and work on real-world problems using cutting-edge technologies.",
-        github: "https://github.com/GopalDose",
-      },
-    ],
-  },
-  {
-    id: "2",
-    teamName: "Infosys",
-    approved: false,
-    submission: "Late",
-    leaderName: "Sanya Mehra",
-    teamMembers: [
-      {
-        name: "Gopal Dose",
-        resume:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose%20Resume%2026Nov.pdf3d072281-0036-4522-a8ed-f096d6074962?alt=media&token=894c4ca7-e2b9-47e7-a290-4ac754b51230",
-        photo:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose.jpg23db608f-3129-49e2-9ee4-7c306e0f4754?alt=media&token=5f5885ed-14af-410d-9d11-b4ff81530f13",
-        TechStack:
-          "C++, Java, Python, JavaScript, PHP, HTML, CSS, React.js, Node.js, Express.js, ASP.NET, Django, Django REST Framework (DRF), MySQL, MongoDB, PostgreSQL",
-        linkedin: "https://www.linkedin.com/in/gopaldose21/",
-        why_this_hackathon:
-          "I am passionate about coding and problem-solving. This hackathon gives me an opportunity to work with innovative minds and build impactful solutions.",
-        github: "https://github.com/GopalDose",
-      },
-      {
-        name: "Ravi Singh",
-        resume:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose%20Resume%2026Nov.pdf3d072281-0036-4522-a8ed-f096d6074962?alt=media&token=894c4ca7-e2b9-47e7-a290-4ac754b51230",
-        photo:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose.jpg23db608f-3129-49e2-9ee4-7c306e0f4754?alt=media&token=5f5885ed-14af-410d-9d11-b4ff81530f13",
-        TechStack:
-          "C++, Java, Python, JavaScript, PHP, HTML, CSS, React.js, Node.js, Express.js, ASP.NET, Django, Django REST Framework (DRF), MySQL, MongoDB, PostgreSQL",
-        linkedin: "https://www.linkedin.com/in/gopaldose21/",
-        why_this_hackathon:
-          "I want to work on something meaningful while learning and growing in a competitive and diverse environment.",
-        github: "https://github.com/GopalDose",
-      },
-      {
-        name: "Priya Patel",
-        resume:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose%20Resume%2026Nov.pdf3d072281-0036-4522-a8ed-f096d6074962?alt=media&token=894c4ca7-e2b9-47e7-a290-4ac754b51230",
-        photo:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose.jpg23db608f-3129-49e2-9ee4-7c306e0f4754?alt=media&token=5f5885ed-14af-410d-9d11-b4ff81530f13",
-        TechStack:
-          "C++, Java, Python, JavaScript, PHP, HTML, CSS, React.js, Node.js, Express.js, ASP.NET, Django, Django REST Framework (DRF), MySQL, MongoDB, PostgreSQL",
-        linkedin: "https://www.linkedin.com/in/gopaldose21/",
-        why_this_hackathon:
-          "The opportunity to meet like-minded individuals and develop creative solutions in a challenging environment motivates me.",
-        github: "https://github.com/GopalDose",
-      },
-    ],
-  },
-  {
-    id: "3",
-    teamName: "Wipro",
-    approved: true,
-    submission: "On Time",
-    leaderName: "Ravi Kumar",
-    teamMembers: [
-      {
-        name: "Gopal Dose",
-        resume:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose%20Resume%2026Nov.pdf3d072281-0036-4522-a8ed-f096d6074962?alt=media&token=894c4ca7-e2b9-47e7-a290-4ac754b51230",
-        photo:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose.jpg23db608f-3129-49e2-9ee4-7c306e0f4754?alt=media&token=5f5885ed-14af-410d-9d11-b4ff81530f13",
-        TechStack:
-          "C++, Java, Python, JavaScript, PHP, HTML, CSS, React.js, Node.js, Express.js, ASP.NET, Django, Django REST Framework (DRF), MySQL, MongoDB, PostgreSQL",
-        linkedin: "https://www.linkedin.com/in/gopaldose21/",
-        why_this_hackathon:
-          "I believe that innovation happens when diverse minds come together. I look forward to contributing to that creativity in this hackathon.",
-        github: "https://github.com/GopalDose",
-      },
-      {
-        name: "Manoj Desai",
-        resume:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose%20Resume%2026Nov.pdf3d072281-0036-4522-a8ed-f096d6074962?alt=media&token=894c4ca7-e2b9-47e7-a290-4ac754b51230",
-        photo:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose.jpg23db608f-3129-49e2-9ee4-7c306e0f4754?alt=media&token=5f5885ed-14af-410d-9d11-b4ff81530f13",
-        TechStack:
-          "C++, Java, Python, JavaScript, PHP, HTML, CSS, React.js, Node.js, Express.js, ASP.NET, Django, Django REST Framework (DRF), MySQL, MongoDB, PostgreSQL",
-        linkedin: "https://www.linkedin.com/in/gopaldose21/",
-        why_this_hackathon:
-          "This is a fantastic opportunity to learn, grow, and collaborate with talented individuals to create impactful solutions.",
-        github: "https://github.com/GopalDose",
-      },
-      {
-        name: "Anita Sharma",
-        resume:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose%20Resume%2026Nov.pdf3d072281-0036-4522-a8ed-f096d6074962?alt=media&token=894c4ca7-e2b9-47e7-a290-4ac754b51230",
-        photo:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose.jpg23db608f-3129-49e2-9ee4-7c306e0f4754?alt=media&token=5f5885ed-14af-410d-9d11-b4ff81530f13",
-        TechStack:
-          "C++, Java, Python, JavaScript, PHP, HTML, CSS, React.js, Node.js, Express.js, ASP.NET, Django, Django REST Framework (DRF), MySQL, MongoDB, PostgreSQL",
-        linkedin: "https://www.linkedin.com/in/gopaldose21/",
-        why_this_hackathon:
-          "I am excited to push my skills further in a team environment and make meaningful contributions.",
-        github: "https://github.com/GopalDose",
-      },
-    ],
-  },
-  {
-    id: "4",
-    teamName: "Tech Mahindra",
-    approved: true,
-    submission: "On Time",
-    leaderName: "Priya Singh",
-    teamMembers: [
-      {
-        name: "Ravi Mehra",
-        resume:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose%20Resume%2026Nov.pdf3d072281-0036-4522-a8ed-f096d6074962?alt=media&token=894c4ca7-e2b9-47e7-a290-4ac754b51230",
-        photo:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose.jpg23db608f-3129-49e2-9ee4-7c306e0f4754?alt=media&token=5f5885ed-14af-410d-9d11-b4ff81530f13",
-        TechStack:
-          "C++, Java, Python, JavaScript, PHP, HTML, CSS, React.js, Node.js, Express.js, ASP.NET, Django, Django REST Framework (DRF), MySQL, MongoDB, PostgreSQL",
-        linkedin: "https://www.linkedin.com/in/gopaldose21/",
-        why_this_hackathon:
-          "This hackathon offers a platform for me to test my skills while learning and collaborating with experts in a fast-paced environment.",
-        github: "https://github.com/GopalDose",
-      },
-      {
-        name: "Manoj Reddy",
-        resume:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose%20Resume%2026Nov.pdf3d072281-0036-4522-a8ed-f096d6074962?alt=media&token=894c4ca7-e2b9-47e7-a290-4ac754b51230",
-        photo:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose.jpg23db608f-3129-49e2-9ee4-7c306e0f4754?alt=media&token=5f5885ed-14af-410d-9d11-b4ff81530f13",
-        TechStack:
-          "C++, Java, Python, JavaScript, PHP, HTML, CSS, React.js, Node.js, Express.js, ASP.NET, Django, Django REST Framework (DRF), MySQL, MongoDB, PostgreSQL",
-        linkedin: "https://www.linkedin.com/in/gopaldose21/",
-        why_this_hackathon:
-          "I’m excited to apply my technical knowledge to create solutions that can make a significant difference in society.",
-        github: "https://github.com/GopalDose",
-      },
-      {
-        name: "Anita Kumari",
-        resume:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose%20Resume%2026Nov.pdf3d072281-0036-4522-a8ed-f096d6074962?alt=media&token=894c4ca7-e2b9-47e7-a290-4ac754b51230",
-        photo:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose.jpg23db608f-3129-49e2-9ee4-7c306e0f4754?alt=media&token=5f5885ed-14af-410d-9d11-b4ff81530f13",
-        TechStack:
-          "C++, Java, Python, JavaScript, PHP, HTML, CSS, React.js, Node.js, Express.js, ASP.NET, Django, Django REST Framework (DRF), MySQL, MongoDB, PostgreSQL",
-        linkedin: "https://www.linkedin.com/in/gopaldose21/",
-        why_this_hackathon:
-          "The hackathon provides a platform where we can turn our ideas into reality by leveraging our technical knowledge.",
-        github: "https://github.com/GopalDose",
-      },
-    ],
-  },
-  {
-    id: "5",
-    teamName: "Cognizant",
-    approved: false,
-    submission: "Late",
-    leaderName: "Vikram Sharma",
-    teamMembers: [
-      {
-        name: "Priya Gupta",
-        resume:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose%20Resume%2026Nov.pdf3d072281-0036-4522-a8ed-f096d6074962?alt=media&token=894c4ca7-e2b9-47e7-a290-4ac754b51230",
-        photo:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose.jpg23db608f-3129-49e2-9ee4-7c306e0f4754?alt=media&token=5f5885ed-14af-410d-9d11-b4ff81530f13",
-        TechStack:
-          "C++, Java, Python, JavaScript, PHP, HTML, CSS, React.js, Node.js, Express.js, ASP.NET, Django, Django REST Framework (DRF), MySQL, MongoDB, PostgreSQL",
-        linkedin: "https://www.linkedin.com/in/gopaldose21/",
-        why_this_hackathon:
-          "I am motivated to contribute to innovative solutions that have the potential to make a lasting impact. The hackathon offers a collaborative environment for that.",
-        github: "https://github.com/GopalDose",
-      },
-      {
-        name: "Ravi Patil",
-        resume:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose%20Resume%2026Nov.pdf3d072281-0036-4522-a8ed-f096d6074962?alt=media&token=894c4ca7-e2b9-47e7-a290-4ac754b51230",
-        photo:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose.jpg23db608f-3129-49e2-9ee4-7c306e0f4754?alt=media&token=5f5885ed-14af-410d-9d11-b4ff81530f13",
-        TechStack:
-          "C++, Java, Python, JavaScript, PHP, HTML, CSS, React.js, Node.js, Express.js, ASP.NET, Django, Django REST Framework (DRF), MySQL, MongoDB, PostgreSQL",
-        linkedin: "https://www.linkedin.com/in/gopaldose21/",
-        why_this_hackathon:
-          "Participating in this hackathon will enable me to sharpen my problem-solving skills while working with a diverse group of talented individuals.",
-        github: "https://github.com/GopalDose",
-      },
-      {
-        name: "Shweta Deshmukh",
-        resume:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose%20Resume%2026Nov.pdf3d072281-0036-4522-a8ed-f096d6074962?alt=media&token=894c4ca7-e2b9-47e7-a290-4ac754b51230",
-        photo:
-          "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FGopal%20Dose.jpg23db608f-3129-49e2-9ee4-7c306e0f4754?alt=media&token=5f5885ed-14af-410d-9d11-b4ff81530f13",
-        TechStack:
-          "C++, Java, Python, JavaScript, PHP, HTML, CSS, React.js, Node.js, Express.js, ASP.NET, Django, Django REST Framework (DRF), MySQL, MongoDB, PostgreSQL",
-        linkedin: "https://www.linkedin.com/in/gopaldose21/",
-        why_this_hackathon:
-          "This hackathon provides an excellent opportunity to collaborate, innovate, and work on real-world problems with other talented individuals.",
-        github: "https://github.com/GopalDose",
-      },
-    ],
-  },
-];
+import { useQuery } from "@apollo/client";
+import { TEAM_QUERY } from "../queries";
 
 export default function DataTable() {
   const navigate = useNavigate(); // For navigation
   const location = useLocation(); // To get the current URL
 
-  const [data, setData] = useState(initialData); // Your data
+  // const [data, setData] = useState(initialData); // Your data
+  const { data, loading, error } = useQuery(TEAM_QUERY);
+  console.log(data);
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
   const [selectedRows, setSelectedRows] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -304,7 +52,7 @@ export default function DataTable() {
       ),
     },
     {
-      field: "teamName",
+      field: "name",
       width: 350,
       sortable: false,
       filterable: false,
@@ -327,13 +75,16 @@ export default function DataTable() {
       ),
     },
     {
-      field: "submission",
+      field: "submissions",
       width: 220,
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
       renderHeader: () => (
         <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Submission</div>
+      ),
+      renderCell: (params) => (
+        <CheckIcon sx={{ color: params.row.submissions ? "green" : "red" }} />
       ),
     },
     {
@@ -345,6 +96,9 @@ export default function DataTable() {
       disableColumnMenu: true,
       renderHeader: () => (
         <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Leader Name</div>
+      ),
+      renderCell: (params) => (
+        <div style={{ display: "flex" }}>{params.row.Leader.name}</div>
       ),
     },
     {
@@ -376,23 +130,23 @@ export default function DataTable() {
         search: `?search=${term}`, // Add search query parameter to the URL
       });
     },
-    [location, navigate]
+    [location, navigate],
   );
 
   // Update data when the search term in URL changes
-  useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const searchQuery = queryParams.get("search") || "";
-    setSearchTerm(searchQuery);
+  // useEffect(() => {
+  //   const queryParams = new URLSearchParams(location.search);
+  //   const searchQuery = queryParams.get("search") || "";
+  //   setSearchTerm(searchQuery);
 
-    const filtered = initialData.filter(
-      (row) =>
-        row.teamName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        row.submission.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        row.leaderName.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setData(filtered);
-  }, [location.search]);
+  //   const filtered = initialData.filter(
+  //     (row) =>
+  //       row.teamName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //       row.submission.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //       row.leaderName.toLowerCase().includes(searchQuery.toLowerCase())
+  //   );
+  //   setData(filtered);
+  // }, [location.search]);
 
   const handlePopupOpen = (row) => {
     setSelectedRowDetails(row);
@@ -403,6 +157,8 @@ export default function DataTable() {
     setAnchorEl(null);
     setActiveRow(null);
   };
+
+  // if (loading) return <p>Loading...</p>;
 
   return (
     <Paper sx={{ width: "98%", overflow: "hidden", p: 2, mr: -1 }}>
@@ -429,7 +185,11 @@ export default function DataTable() {
       </Box>
 
       <Box sx={{ height: "70vh", width: "99%" }}>
-        <DataGrid rows={data} columns={columns} pageSize={5} />
+        <DataGrid
+          rows={loading ? [] : data.Team}
+          columns={columns}
+          pageSize={5}
+        />
       </Box>
 
       <Popup dialogProps={{ open: popupOpen }}>
