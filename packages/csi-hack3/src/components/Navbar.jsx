@@ -9,7 +9,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton";
 import UserDataContext from "../contexts/userDataContext";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Logo from "../assets/logos/iDEA.png";
 import RegistrationForm from "./registrationFrom";
 
