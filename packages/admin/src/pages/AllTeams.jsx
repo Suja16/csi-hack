@@ -1,10 +1,12 @@
-import "react";
+import { Suspense } from "react";
 import DataGridDemo from "../components/TeamTableDatagrid";
 
 const AllTeams = () => {
   return (
     <>
-      <DataGridDemo />
+      <Suspense fallback={<p>Loading...</p>}>
+        <DataGridDemo />
+      </Suspense>
     </>
   );
 };

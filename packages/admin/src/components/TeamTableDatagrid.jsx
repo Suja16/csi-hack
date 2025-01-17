@@ -4,19 +4,15 @@ import {
   TextField,
   Paper,
   IconButton,
-  Menu,
-  MenuItem,
+  CircularProgress,
 } from "@mui/material";
-import CheckIcon from "@mui/icons-material/Check";
-import ClearIcon from "@mui/icons-material/Clear";
+import { Close, Check } from "@mui/icons-material";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import FilterDropdown from "./FilterButton";
 import Popup from "../../../ui/popup";
 import TeamDetailsPage from "./DataPopupContent";
 import { DataGrid } from "@mui/x-data-grid";
 import CloseIcon from "@mui/icons-material/Close";
-import { render } from "react-dom";
-import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom"; // Import hooks
 import { useQuery } from "@apollo/client";
 import { TEAM_QUERY } from "../queries";
@@ -27,11 +23,7 @@ export default function DataTable() {
 
   // const [data, setData] = useState(initialData); // Your data
   const { data, loading, error } = useQuery(TEAM_QUERY);
-  console.log(data);
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
-  const [selectedRows, setSelectedRows] = useState([]);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [activeRow, setActiveRow] = useState(null);
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedRowDetails, setSelectedRowDetails] = useState(null);
 
@@ -67,9 +59,12 @@ export default function DataTable() {
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
-      renderCell: (params) => (
-        <CheckIcon sx={{ color: params.value ? "green" : "red" }} />
-      ),
+      renderCell: (params) =>
+        params.value ? (
+          <Check sx={{ color: "green" }} />
+        ) : (
+          <Close sx={{ color: "red" }} />
+        ),
       renderHeader: () => (
         <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Approved</div>
       ),
@@ -83,9 +78,12 @@ export default function DataTable() {
       renderHeader: () => (
         <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Submission</div>
       ),
-      renderCell: (params) => (
-        <CheckIcon sx={{ color: params.row.submissions ? "green" : "red" }} />
-      ),
+      renderCell: (params) =>
+        params.value ? (
+          <Check sx={{ color: "green" }} />
+        ) : (
+          <Close sx={{ color: "red" }} />
+        ),
     },
     {
       field: "leaderName",
@@ -153,12 +151,7 @@ export default function DataTable() {
     setPopupOpen(true);
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    setActiveRow(null);
-  };
-
-  // if (loading) return <p>Loading...</p>;
+  if (loading) return <CircularProgress />;
 
   return (
     <Paper sx={{ width: "98%", overflow: "hidden", p: 2, mr: -1 }}>
@@ -201,16 +194,6 @@ export default function DataTable() {
         </IconButton>
         <TeamDetailsPage teamData={selectedRowDetails} />
       </Popup>
-
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleMenuClose}
-      >
-        <MenuItem onClick={handleMenuClose}>Edit</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Delete</MenuItem>
-        <MenuItem onClick={handleMenuClose}>View Details</MenuItem>
-      </Menu>
     </Paper>
   );
 }
