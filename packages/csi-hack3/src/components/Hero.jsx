@@ -1,4 +1,10 @@
-import { Container, Typography, Button, useTheme, useMediaQuery } from "@mui/material";
+import {
+  Container,
+  Typography,
+  Button,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import { useEffect, useCallback, useState } from "react";
 import { animate, stagger } from "motion";
 import { motion } from "motion/react";
@@ -20,45 +26,45 @@ const buttonVariants = {
         duration: 1.5,
         repeat: Infinity,
         repeatType: "reverse",
-      }
-    }
+      },
+    },
   },
   tap: {
     scale: 0.95,
-  }
+  },
 };
 
 const AnimatedTitle = () => (
-  <div style={{ overflow: 'hidden', display: 'inline-block' }}>
+  <div style={{ overflow: "hidden", display: "inline-block", width: "100%" }}>
     {"IDEA HACKATHON".split("").map((letter, index) => (
       <motion.span
         key={index}
         initial={{
           x: index < "IDEA HACKATHON".length / 2 ? -100 : 100,
           opacity: 0,
-          scale: 0.5
+          scale: 0.5,
         }}
         animate={{
           x: 0,
           opacity: 1,
-          scale: 1
+          scale: 1,
         }}
         transition={{
-          duration: 3,
+          duration: 1.5,
           delay: Math.abs(index - "IDEA HACKATHON".length / 2) * 0.06,
           ease: [0.215, 0.61, 0.355, 1],
           opacity: { duration: 0.4 },
-          scale: { duration: 0.6 }
+          scale: { duration: 0.6 },
         }}
         style={{
-          display: 'inline-block',
-          whiteSpace: 'pre',
+          display: "inline-block",
+          whiteSpace: "pre",
           fontSize: {
-            xs: '2rem',
-            sm: '2.5rem',
-            md: '3.5rem',
+            xs: "2rem",
+            sm: "2.5rem",
+            md: "3.5rem",
           },
-          textShadow: '0 2px 4px rgba(0,0,0,0.1)'
+          textShadow: "0 2px 4px rgba(0,0,0,0.1)",
         }}
       >
         {letter}
@@ -73,17 +79,17 @@ const AnimatedWord = ({ word, isMobile }) => {
       elements,
       {
         opacity: [0, 1],
-        y: [10, 0]
+        y: [10, 0],
       },
       {
         delay: stagger(0.05),
-        duration: 0.4
-      }
+        duration: 0.4,
+      },
     );
   }, []);
 
   useEffect(() => {
-    const letters = document.querySelectorAll('.animated-letter');
+    const letters = document.querySelectorAll(".animated-letter");
     animateLetters(letters);
   }, [word, animateLetters]);
 
@@ -96,7 +102,7 @@ const AnimatedWord = ({ word, isMobile }) => {
           style={{
             display: "inline-block",
             opacity: 0,
-            fontSize: isMobile ? '1rem' : 'inherit'
+            fontSize: isMobile ? "1rem" : "inherit",
           }}
         >
           {letter}
@@ -109,11 +115,15 @@ const AnimatedWord = ({ word, isMobile }) => {
 const Hero = () => {
   const [wordIndex, setWordIndex] = useState(0);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setWordIndex((prev) => (prev + 1) % ["INNOVATION", "DEVELOPMENT", "EXECUTION", "ADVANCEMENT"].length);
+      setWordIndex(
+        (prev) =>
+          (prev + 1) %
+          ["INNOVATION", "DEVELOPMENT", "EXECUTION", "ADVANCEMENT"].length,
+      );
     }, 3000);
 
     return () => clearInterval(interval);
@@ -133,10 +143,10 @@ const Hero = () => {
           color="primary"
           sx={{
             mt: isMobile ? 2 : 4,
-            wordBreak: 'break-word',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
+            wordBreak: "break-word",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           <AnimatedTitle isMobile={isMobile} />
@@ -152,21 +162,26 @@ const Hero = () => {
           letterSpacing: { xs: "0.1rem", sm: "0.2rem", md: "0.3rem" },
           fontWeight: 500,
           fontSize: {
-            xs: '1.2rem',
-            sm: '1.5rem',
-            md: '2rem'
-          }
+            xs: "1.2rem",
+            sm: "1.5rem",
+            md: "2rem",
+          },
         }}
       >
-        <AnimatedWord word={["INNOVATION", "DEVELOPMENT", "EXECUTION", "ADVANCEMENT"][wordIndex]} isMobile={isMobile} />
+        <AnimatedWord
+          word={
+            ["INNOVATION", "DEVELOPMENT", "EXECUTION", "ADVANCEMENT"][wordIndex]
+          }
+          isMobile={isMobile}
+        />
       </Typography>
 
       <motion.div
         style={{
-          display: 'flex',
-          justifyContent: 'center',
-          marginTop: isMobile ? '1rem' : '2rem',
-          marginBottom: isMobile ? '1rem' : '2rem'
+          display: "flex",
+          justifyContent: "center",
+          marginTop: isMobile ? "1rem" : "2rem",
+          marginBottom: isMobile ? "1rem" : "2rem",
         }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -178,7 +193,8 @@ const Hero = () => {
           whileHover="hover"
           whileTap="tap"
           style={{
-            background: "linear-gradient(-45deg, #FF6B6B, #4ECDC4, #45B7D1, #6c5ce7, #a8e6cf)",
+            background:
+              "linear-gradient(-45deg, #00579C, #B22629, #00579C, #D9D9D9)",
             backgroundSize: "200% 200%",
             borderRadius: isMobile ? "6px" : "8px",
             padding: "2px",
@@ -192,12 +208,12 @@ const Hero = () => {
               py: { xs: 1, sm: 1.25, md: 1.5 },
               borderRadius: isMobile ? "4px" : "6px",
               fontSize: {
-                xs: '0.9rem',
-                sm: '1rem',
-                md: '1.1rem'
+                xs: "0.9rem",
+                sm: "1rem",
+                md: "1.1rem",
               },
               fontWeight: 600,
-              textTransform: 'none',
+              textTransform: "none",
               background: "rgba(255, 255, 255, 0.1)",
               backdropFilter: "blur(10px)",
               transition: "all 0.3s ease",
@@ -206,7 +222,7 @@ const Hero = () => {
               "&:hover": {
                 background: "rgba(255, 255, 255, 0.2)",
                 boxShadow: "0 8px 20px rgba(0,0,0,0.2)",
-              }
+              },
             }}
           >
             Register Now
@@ -222,19 +238,19 @@ const Hero = () => {
           maxWidth: {
             xs: "95vw",
             sm: "80vw",
-            md: "60vw"
+            md: "60vw",
           },
           mx: "auto",
           fontSize: {
-            xs: '0.875rem',
-            sm: '0.925rem',
-            md: '1rem'
+            xs: "0.875rem",
+            sm: "0.925rem",
+            md: "1rem",
           },
           lineHeight: {
             xs: 1.5,
             sm: 1.6,
-            md: 1.7
-          }
+            md: 1.7,
+          },
         }}
       >
         Welcome to iDEA, the Union Bank of India Hackathon, a groundbreaking
