@@ -1,25 +1,26 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import {
   Box,
-  CircularProgress,
   Typography,
   useMediaQuery,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import Logo from "../assets/logos/iDEA.png";
 import CloseIcon from "@mui/icons-material/Close";
-import RegistrationForm from "./registrationFrom";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton";
 import UserDataContext from "../contexts/userDataContext";
+import { motion } from "framer-motion";
+import Logo from "../assets/logos/iDEA.png";
+import RegistrationForm from "./registrationFrom";
 
 const Navbar = ({ login, logout, open, setopen, isLoading }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState('/');  // Track active item
+  const [activeItem, setActiveItem] = useState('/');
   const isMid = useMediaQuery("(max-width:1146px)");
   const navigate = useNavigate();
   const location = useLocation();
   const { userData, eventData } = useContext(UserDataContext);
+  const containerRef = useRef(null);
 
   useEffect(() => {
     if (location.pathname === '/') {
@@ -120,6 +121,56 @@ const Navbar = ({ login, logout, open, setopen, isLoading }) => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [location.pathname]);
+
+  const sidebarVariants = {
+    open: (height = 1000) => ({
+      clipPath: `circle(${height * 2 + 200}px at calc(100% - 40px) 40px)`,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 20,
+        restDelta: 2,
+        opacity: { duration: 0.3 }
+      },
+    }),
+    closed: {
+      clipPath: "circle(30px at calc(100% - 40px) 40px)",
+      opacity: 0,
+      transition: {
+        delay: 0.2,
+        type: "spring",
+        stiffness: 400,
+        damping: 40,
+        opacity: { duration: 1.05 }
+      },
+    },
+  };
+
+  const navVariants = {
+    open: {
+      transition: { staggerChildren: 0.07, delayChildren: 0.2 },
+    },
+    closed: {
+      transition: { staggerChildren: 0.05, staggerDirection: -1 },
+    },
+  };
+
+  const itemVariants = {
+    open: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        y: { stiffness: 1000, velocity: -100 },
+      },
+    },
+    closed: {
+      y: 50,
+      opacity: 0,
+      transition: {
+        y: { stiffness: 1000 },
+      },
+    },
+  };
 
   return (
     <Box id="navbar">
@@ -271,54 +322,58 @@ const Navbar = ({ login, logout, open, setopen, isLoading }) => {
       </Box>
 
       {/* Mobile Menu */}
-      <Box
-        height="max-content"
-        border="1px solid grey"
-        paddingBottom="1rem"
-        bgcolor="white"
-        position="fixed"
-        top="65px"
-        borderRadius="15px"
-        zIndex={30}
-        gap={3.5}
-        sx={{
-          left: { xs: "9px", md: "5px" },
-          display: { xs: "flex", lg: "none" },
-          flexDirection: "column",
+      <motion.div
+        ref={containerRef}
+        initial="closed"
+        animate={isMenuOpen ? "open" : "closed"}
+        custom={containerRef.current ? containerRef.current.offsetHeight : 1000}
+        variants={sidebarVariants}
+        style={{
+          position: "fixed",
+          top: "65px",
+          right: "9px",
+          zIndex: 30,
+          backgroundColor: "white",
+          borderRadius: "15px",
           padding: "20px",
-          paddingLeft: "30px",
-          width: { xs: "95.5%", md: isMid ? "99%" : "95%" },
-          opacity: isMenuOpen ? 1 : 0,
-          transform: isMenuOpen ? "translateY(0)" : "translateY(-20px)",
-          pointerEvents: isMenuOpen ? "auto" : "none",
-          transition:
-            "opacity 500ms cubic-bezier(0.4, 0, 0.2, 1), transform 500ms cubic-bezier(0.4, 0, 0.2, 1)",
+          width: "calc(100% - 18px)",
+          overflow: "hidden",
         }}
       >
-        {navItems.map((item) => (
-          <Typography
-            key={item.href}
-            variant="h6"
-            component={Link}
-            to={item.href}
-            onClick={(e) => {
-              handleSmoothScroll(e, item.href);
-              setIsMenuOpen(!isMenuOpen);
-            }}
-            sx={{
-              textDecoration: "none",
-              color: isActive(item.href) ? "primary.main" : "black",
-              fontSize: "24px",
-              fontWeight: "semi-bold",
-              "&:hover": {
-                color: "primary.main",
-              },
-            }}
-          >
-            {item.label}
-          </Typography>
-        ))}
-      </Box>
+        <motion.ul
+          variants={navVariants}
+          style={{
+            listStyle: "none",
+            padding: 0,
+            margin: 0,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-end",
+            gap: "20px",
+          }}
+        >
+          {navItems.map((item) => (
+            <motion.li
+              key={item.href}
+              variants={itemVariants}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={(e) => {
+                handleSmoothScroll(e, item.href);
+                setIsMenuOpen(false);
+              }}
+              style={{
+                cursor: "pointer",
+                fontSize: "24px",
+                fontWeight: "semi-bold",
+                color: isActive(item.href) ? "primary.main" : "black",
+              }}
+            >
+              {item.label}
+            </motion.li>
+          ))}
+        </motion.ul>
+      </motion.div>
     </Box>
   );
 };
