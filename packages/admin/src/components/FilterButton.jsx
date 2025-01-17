@@ -1,37 +1,24 @@
-import { useState } from "react";
+import { Close, FilterList } from "@mui/icons-material";
 import {
-  Button,
-  Menu,
-  MenuItem,
-  Checkbox,
-  FormGroup,
-  FormControlLabel,
-  Typography,
   Box,
+  Button,
+  Checkbox,
   Divider,
-  IconButton,
+  FormControlLabel,
+  FormGroup,
+  Menu,
+  Typography
 } from "@mui/material";
-import { FilterList, Close } from "@mui/icons-material";
+import { useState } from "react";
 
 const initialFilters = {
   status: [
-    { id: "active", label: "Active", checked: false },
-    { id: "pending", label: "Pending", checked: false },
-    { id: "archived", label: "Archived", checked: false },
-  ],
-  priority: [
-    { id: "high", label: "High Priority", checked: false },
-    { id: "medium", label: "Medium Priority", checked: false },
-    { id: "low", label: "Low Priority", checked: false },
-  ],
-  type: [
-    { id: "bug", label: "Bug Report", checked: false },
-    { id: "feature", label: "Feature Request", checked: false },
-    { id: "improvement", label: "Improvement", checked: false },
+    { id: "active", label: "Approved", checked: false },
+    { id: "pending", label: "Rejected", checked: false },
   ],
 };
 
-export default function FilterDropdown() {
+export default function FilterDropdown({ isApproved, setIsApproved }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [filters, setFilters] = useState(initialFilters);
   const [activeFiltersCount, setActiveFiltersCount] = useState(0);
@@ -45,26 +32,29 @@ export default function FilterDropdown() {
   };
 
   const handleFilterChange = (category, filterId) => {
-    setFilters((prev) => ({
-      ...prev,
-      [category]: prev[category].map((filter) =>
-        filter.id === filterId
-          ? { ...filter, checked: !filter.checked }
-          : filter
-      ),
-    }));
+    setFilters((prev) => {
+      const updatedFilters = {
+        ...prev,
+        [category]: prev[category].map((filter) => {
+          if (filter.id === filterId) {
+            return { ...filter, checked: !filter.checked };
+          }
+          return filter;
+        }),
+      };
+
+      // If "Approved" or "Rejected" is selected, update the isApproved state
+      const selectedFilter = updatedFilters[category].find((filter) => filter.id === filterId);
+      if (selectedFilter.checked) {
+        // If "Approved" is selected, set isApproved to false, otherwise trues
+        setIsApproved(selectedFilter.id === "pending");
+      }
+
+      return updatedFilters;
+    });
 
     // Update active filters count
-    const newFilters = {
-      ...filters,
-      [category]: filters[category].map((filter) =>
-        filter.id === filterId
-          ? { ...filter, checked: !filter.checked }
-          : filter
-      ),
-    };
-
-    const count = Object.values(newFilters)
+    const count = Object.values(filters)
       .flat()
       .filter((filter) => filter.checked).length;
 

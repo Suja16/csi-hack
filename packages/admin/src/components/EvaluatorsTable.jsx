@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import EditIcon from "@mui/icons-material/Edit";
+import RateReviewIcon from "@mui/icons-material/RateReview";
 import {
   Box,
   Button,
@@ -6,18 +7,17 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Paper,
-  Typography,
   FormControl,
   InputLabel,
-  Select,
   MenuItem,
+  Paper,
+  Select,
   TextField,
+  Typography,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import EditIcon from "@mui/icons-material/Edit";
-import RateReviewIcon from "@mui/icons-material/RateReview";
 import PropTypes from "prop-types";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 const MENTOR_OPTIONS = ["Ayush Mehta", "Oni Chan", "vats boy"];
 const EVALUATOR_OPTIONS = [
@@ -150,8 +150,8 @@ const EvaluatorsTable = () => {
             id: 1,
             teamName: "Team A",
             mentorAssigned: "Rai Janpara",
-            evaluator1Assigned: "Ayush Mehta",
-            evaluator2Assigned: "Ayush Mehta",
+            evaluator1Assigned: "Aayush Mehta",
+            evaluator2Assigned: "Aayush Mehta",
             reviewGiven: "Good progress",
             status: "Ongoing",
           },

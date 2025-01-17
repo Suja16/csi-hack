@@ -1,34 +1,38 @@
-import { useState, useCallback } from "react";
+import { useQuery } from "@apollo/client";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import {
   Box,
-  TextField,
-  Paper,
   IconButton,
   Menu,
   MenuItem,
+  Paper,
+  TextField,
 } from "@mui/material";
-import CheckIcon from "@mui/icons-material/Check";
-import ClearIcon from "@mui/icons-material/Clear";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import FilterDropdown from "./FilterButton";
-import Popup from "../../../ui/popup";
-import TeamDetailsPage from "./DataPopupContent";
 import { DataGrid } from "@mui/x-data-grid";
-import CloseIcon from "@mui/icons-material/Close";
-import { render } from "react-dom";
-import { useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom"; // Import hooks
-import { useQuery } from "@apollo/client";
+import { useCallback, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom"; // Import hooks
+import Popup from "../../../ui/popup";
 import { TEAM_QUERY } from "../queries";
+import TeamDetailsPage from "./DataPopupContent";
+import FilterDropdown from "./FilterButton";
 
 export default function DataTable() {
   const navigate = useNavigate(); // For navigation
   const location = useLocation(); // To get the current URL
+  const [isApproved, setIsApproved] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(""); // State for search term
 
   // const [data, setData] = useState(initialData); // Your data
-  const { data, loading, error } = useQuery(TEAM_QUERY);
+  const { data, loading, error } = useQuery(TEAM_QUERY, {
+    variables: {
+      approved: isApproved, search: `%${searchTerm}%`,skip: !searchTerm,
+    },
+  });
+  
   console.log(data);
-  const [searchTerm, setSearchTerm] = useState(""); // State for search term
+  
   const [selectedRows, setSelectedRows] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const [activeRow, setActiveRow] = useState(null);
@@ -181,7 +185,7 @@ export default function DataTable() {
           onChange={(e) => handleSearch(e.target.value)} // Update URL on change
           sx={{ minWidth: { xs: 200, md: 300 } }}
         />
-        <FilterDropdown />
+        <FilterDropdown isApproved={isApproved} setIsApproved={setIsApproved}/>
       </Box>
 
       <Box sx={{ height: "70vh", width: "99%" }}>
