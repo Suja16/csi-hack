@@ -15,6 +15,7 @@ export const TEAM_QUERY = gql`
         more_details
         User {
           photo_url
+          name
         }
       }
       Leader {

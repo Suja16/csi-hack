@@ -63,7 +63,7 @@ const TeamDetailsPage = ({ teamData }) => {
               </Box>
               <CardContent>
                 <Typography variant="h6" gutterBottom>
-                  {member.name}
+                  {member.User?.name}
                 </Typography>
                 <Box sx={{ mb: 2 }}>
                   {member.more_details?.tech_stack
