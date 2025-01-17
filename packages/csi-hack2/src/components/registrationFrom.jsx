@@ -321,7 +321,8 @@ export default function RegistrationForm({ open, onClose }) {
         container
         columns={{ xs: 1, sm: 2 }}
         spacing={2}
-        padding="2rem"
+        padding={{ xs: 0, sm: 4 }}
+        marginTop={{ xs: 2, sm: 0 }}
       >
         <Grid2 item size={1}>
           <TextBox
