@@ -13,7 +13,7 @@ import { useState } from "react";
 
 const initialFilters = {
   status: [
-    { id: "active", label: "Approved", checked: false },
+    { id: "active", label: "Approved", checked: true },
     { id: "pending", label: "Rejected", checked: false },
   ],
 };
@@ -32,46 +32,45 @@ export default function FilterDropdown({ isApproved, setIsApproved }) {
   };
 
   const handleFilterChange = (category, filterId) => {
-    setFilters((prev) => {
-      const updatedFilters = {
-        ...prev,
-        [category]: prev[category].map((filter) => {
-          if (filter.id === filterId) {
-            return { ...filter, checked: !filter.checked };
-          }
-          return filter;
-        }),
-      };
+    // Update the filter state properly
+    const newFilters = {
+      ...filters,
+      [category]: filters[category].map((filter) =>
+        filter.id === filterId
+          ? { ...filter, checked: !filter.checked }
+          : filter
+      ),
+    };
 
-      // If "Approved" or "Rejected" is selected, update the isApproved state
-      const selectedFilter = updatedFilters[category].find((filter) => filter.id === filterId);
-      if (selectedFilter.checked) {
-        // If "Approved" is selected, set isApproved to false, otherwise trues
-        setIsApproved(selectedFilter.id === "pending");
-      }
-
-      return updatedFilters;
-    });
+    setFilters(newFilters);
 
     // Update active filters count
-    const count = Object.values(filters)
+    const count = Object.values(newFilters)
       .flat()
       .filter((filter) => filter.checked).length;
 
     setActiveFiltersCount(count);
+
+    // If 'status' category filter is changed, update the parent component state
+    if (category === "status") {
+      const approved = newFilters.status.find((filter) => filter.id === "active").checked;
+      setIsApproved(approved); // Update the parent state
+    }
   };
 
   const clearFilters = () => {
-    setFilters(
-      Object.entries(filters).reduce(
-        (acc, [category, options]) => ({
-          ...acc,
-          [category]: options.map((option) => ({ ...option, checked: false })),
-        }),
-        {}
-      )
+    // Reset all filters to unchecked state
+    const resetFilters = Object.entries(filters).reduce(
+      (acc, [category, options]) => ({
+        ...acc,
+        [category]: options.map((option) => ({ ...option, checked: false })),
+      }),
+      {}
     );
+
+    setFilters(resetFilters);
     setActiveFiltersCount(0);
+    setIsApproved(false); // Reset isApproved state in parent
   };
 
   return (

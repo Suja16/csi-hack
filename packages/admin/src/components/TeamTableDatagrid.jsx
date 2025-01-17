@@ -1,14 +1,13 @@
 import { useQuery } from "@apollo/client";
-import CheckIcon from "@mui/icons-material/Check";
+import { Check, Close } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import {
   Box,
+  CircularProgress,
   IconButton,
-  Menu,
-  MenuItem,
   Paper,
-  TextField,
+  TextField
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useCallback, useState } from "react";
@@ -21,7 +20,7 @@ import FilterDropdown from "./FilterButton";
 export default function DataTable() {
   const navigate = useNavigate(); // For navigation
   const location = useLocation(); // To get the current URL
-  const [isApproved, setIsApproved] = useState(false);
+  const [isApproved, setIsApproved] = useState(true);
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
 
   // const [data, setData] = useState(initialData); // Your data
@@ -71,9 +70,12 @@ export default function DataTable() {
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
-      renderCell: (params) => (
-        <CheckIcon sx={{ color: params.value ? "green" : "red" }} />
-      ),
+      renderCell: (params) =>
+        params.value ? (
+          <Check sx={{ color: "green" }} />
+        ) : (
+          <Close sx={{ color: "red" }} />
+        ),
       renderHeader: () => (
         <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Approved</div>
       ),
@@ -87,9 +89,12 @@ export default function DataTable() {
       renderHeader: () => (
         <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Submission</div>
       ),
-      renderCell: (params) => (
-        <CheckIcon sx={{ color: params.row.submissions ? "green" : "red" }} />
-      ),
+      renderCell: (params) =>
+        params.value ? (
+          <Check sx={{ color: "green" }} />
+        ) : (
+          <Close sx={{ color: "red" }} />
+        ),
     },
     {
       field: "leaderName",
@@ -157,12 +162,7 @@ export default function DataTable() {
     setPopupOpen(true);
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    setActiveRow(null);
-  };
-
-  // if (loading) return <p>Loading...</p>;
+  if (loading) return <CircularProgress />;
 
   return (
     <Paper sx={{ width: "98%", overflow: "hidden", p: 2, mr: -1 }}>
@@ -205,16 +205,6 @@ export default function DataTable() {
         </IconButton>
         <TeamDetailsPage teamData={selectedRowDetails} />
       </Popup>
-
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleMenuClose}
-      >
-        <MenuItem onClick={handleMenuClose}>Edit</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Delete</MenuItem>
-        <MenuItem onClick={handleMenuClose}>View Details</MenuItem>
-      </Menu>
     </Paper>
   );
 }
