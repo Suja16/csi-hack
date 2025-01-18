@@ -19,7 +19,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Delete from "@mui/icons-material/Delete";
 import { useEffect } from "react";
-import uploadFile from "@utils/uploadFile";
+import { uploadFile } from "@utils/uploadFile";
 import axios from "axios";
 import { useNavigate } from "react-router";
 
@@ -113,13 +113,10 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
   });
 
   useEffect(() => {
-    console.log(errors);
     if (eventData.Participant.team.submissions) {
       setSubmitted(true);
     }
-  }, [errors, eventData.Participant.team.submissions]);
-
-  console.log(eventData.Participant.team.Participant.length);
+  }, [eventData.Participant.team.submissions]);
 
   const ppt = watch("ppt");
   const consent = watch("consent");
@@ -204,6 +201,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
       component="form"
       onSubmit={handleSubmit(onSubmit)}
       justifyContent="center"
+      height="100%"
     >
       <Grid2
         item
@@ -215,7 +213,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
         <Typography variant="h5">Team Members</Typography>
         <Box>
           {eventData.Participant.team.Participant.map((member) => (
-            <Typography
+            <Box
               key={member.user.id}
               bgcolor={theme.palette.background.main}
               padding="1rem"
@@ -226,7 +224,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
               justifyContent="space-between"
               alignItems="center"
             >
-              {member.user.name}
+              <Typography>{member.user.name}</Typography>
               {eventData.Participant.team.leader_id === member.user.id && (
                 <Typography
                   bgcolor={theme.palette.secondary.main}
@@ -237,7 +235,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
                   Leader
                 </Typography>
               )}
-            </Typography>
+            </Box>
           ))}
         </Box>
       </Grid2>
@@ -416,12 +414,13 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
           display="flex"
           flexDirection="column"
           alignItems="center"
-          marginTop="10rem"
+          justifyContent={{ xs: "center", md: "flex-start" }}
+          minHeight="10rem"
         >
           <Typography variant="h5" marginBlock="1rem">
             Your Submission
           </Typography>
-          <Typography variant="body1">
+          <Typography variant="body1" textAlign="center">
             {submitted
               ? "Your submission has been recorded."
               : eventData.Participant.team.Participant.length != 4

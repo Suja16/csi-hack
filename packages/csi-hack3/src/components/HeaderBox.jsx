@@ -21,7 +21,7 @@ const HeaderBox = ({ header, children }) => {
           borderRadius: "0 0 10px 10px",
           padding: 2,
           bgcolor: "white",
-          "text-wrap": "wrap",
+          textWrap: "wrap",
         }}
       >
         {children}

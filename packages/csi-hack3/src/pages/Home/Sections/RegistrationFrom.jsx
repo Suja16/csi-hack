@@ -12,7 +12,7 @@ import {
   InputLabel,
   styled,
 } from "@mui/material";
-import Popup from "@components/popup";
+import Popup from "../../../../../ui/popup";
 import CloseIcon from "@mui/icons-material/Close";
 import registrationSchema from "@utils/validation";
 import { useForm } from "react-hook-form";
@@ -22,7 +22,7 @@ import axios from "axios";
 import TextBox from "@components/TextBox";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Delete from "@mui/icons-material/Delete";
-import uploadFile from "@utils/uploadFile";
+import { uploadFile, deleteFile } from "@utils/uploadFile";
 import LoadingButton from "@mui/lab/LoadingButton";
 import UserDataContext from "../../../contexts/userDataContext";
 import { useNavigate } from "react-router";
@@ -63,6 +63,46 @@ export default function RegistrationForm({ open, onClose }) {
   const photo_id = watch("photo_id");
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const uploadResume = async () => {
+      if (resume && resume[0]) {
+        try {
+          setIsLoading(true);
+          const oldResumeLink = getValues("resume_link");
+          if (oldResumeLink) {
+            deleteFile(oldResumeLink);
+          }
+          const url = await uploadFile(resume[0]);
+          setValue("resume_link", url);
+          setIsLoading(false);
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    };
+    uploadResume();
+  }, [resume]);
+
+  useEffect(() => {
+    const uploadPhoto = async () => {
+      if (photo_id && photo_id[0]) {
+        try {
+          setIsLoading(true);
+          const oldPhotoIdLink = getValues("photo_id_link");
+          if (oldPhotoIdLink) {
+            deleteFile(oldPhotoIdLink);
+          }
+          const url = await uploadFile(photo_id[0]);
+          setValue("photo_id_link", url);
+          setIsLoading(false);
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    };
+    uploadPhoto();
+  }, [photo_id]);
 
   useEffect(() => {
     reset(userData);
@@ -118,22 +158,28 @@ export default function RegistrationForm({ open, onClose }) {
       });
     } catch (e) {
       console.error(e);
+      if (e.response && e.response.data && e.response.data.message) {
+        setSnackbarMessage(e.response.data.message);
+        setShowSnackbar(true);
+        setTimeout(() => setShowSnackbar(false), 3000);
+        setIsLoading(false);
+      }
       return;
     }
 
     // upload resume
-    const resumeURLPromise = uploadFile(resume[0]);
+    // const resumeURLPromise = uploadFile(resume[0]);
 
     // upload photo id
-    const photoIdURLPromise = uploadFile(photo_id[0]);
+    // const photoIdURLPromise = uploadFile(photo_id[0]);
 
-    const [resumeURL, photoIdURL] = await Promise.all([
-      resumeURLPromise,
-      photoIdURLPromise,
-    ]);
+    // const [resumeURL, photoIdURL] = await Promise.all([
+    //   resumeURLPromise,
+    //   photoIdURLPromise,
+    // ]);
 
-    more_details.resume = resumeURL;
-    more_details.photo_id = photoIdURL;
+    more_details.resume = data.resume_link;
+    more_details.photo_id = data.photo_id_link;
 
     if (data.team_choice === "create") {
       // create team
@@ -275,8 +321,8 @@ export default function RegistrationForm({ open, onClose }) {
         container
         columns={{ xs: 1, sm: 2 }}
         spacing={2}
-        padding={{ xs: "0", sm: "2rem" }}
-        marginTop={{ xs: "2rem", sm: "0" }}
+        padding={{ xs: 0, sm: 4 }}
+        marginTop={{ xs: 2, sm: 0 }}
       >
         <Grid2 item size={1}>
           <TextBox
@@ -579,7 +625,7 @@ export default function RegistrationForm({ open, onClose }) {
               * Team Members will &apos;Join A Team&apos; using Invite Code
             </Typography>
             <Typography variant="caption" color="error">
-              * Fields having '*' are mandatory.
+              * Fields having &apos;*&apos; are mandatory.
             </Typography>
           </Grid2>
         )}

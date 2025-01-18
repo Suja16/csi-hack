@@ -19,7 +19,6 @@ const Team = () => {
   const [snackBarMessage, setSnackBarMessage] = useState("");
 
   const theme = useTheme();
-  console.log(eventData);
   if (
     userData === null ||
     eventData === null ||
