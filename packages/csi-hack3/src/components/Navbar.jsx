@@ -6,16 +6,16 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton";
 import UserDataContext from "../contexts/userDataContext";
 import { motion } from "motion/react";
-import Logo from "../assets/logos/iDEA.png";
-import RegistrationForm from "./registrationFrom";
+import Logo from "@assets/logos/iDEA.png";
 
-const Navbar = ({ login, logout, open, setopen, isLoading }) => {
+const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeItem, setActiveItem] = useState("/");
   const isMid = useMediaQuery("(max-width:1146px)");
   const navigate = useNavigate();
   const location = useLocation();
-  const { userData, eventData } = useContext(UserDataContext);
+  const { userData, eventData, login, logout, loginLoading } =
+    useContext(UserDataContext);
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -87,6 +87,7 @@ const Navbar = ({ login, logout, open, setopen, isLoading }) => {
         const windowHeight = window.innerHeight;
         if (
           (problemsRect.top >= 0 && problemsRect.top <= windowHeight / 2) ||
+          (problemsRect.top <= 0 && problemsRect.bottom >= windowHeight) ||
           (problemsRect.bottom <= windowHeight &&
             problemsRect.bottom >= windowHeight / 2)
         ) {
@@ -244,10 +245,10 @@ const Navbar = ({ login, logout, open, setopen, isLoading }) => {
                 <LoadingButton
                   width="100%"
                   onClick={() => login()}
-                  loading={isLoading}
+                  loading={loginLoading}
                   variant="contained"
                   color="primary"
-                  paddingY="2rem"
+                  // paddingY="2rem"
                   sx={{
                     width: "100%",
                   }}
@@ -258,16 +259,16 @@ const Navbar = ({ login, logout, open, setopen, isLoading }) => {
                       fontWeight: "bold",
                     }}
                   >
-                    Register Now
+                    Login
                   </Typography>
                 </LoadingButton>
-              ) : eventData?.Participant ? (
+              ) : (
                 <LoadingButton
                   onClick={() => logout()}
-                  loading={isLoading}
+                  loading={false}
                   variant="contained"
                   color="primary"
-                  paddingY="2rem"
+                  // paddingY="2rem"
                   sx={{
                     width: "100%",
                   }}
@@ -281,38 +282,17 @@ const Navbar = ({ login, logout, open, setopen, isLoading }) => {
                     Logout
                   </Typography>
                 </LoadingButton>
-              ) : (
-                <LoadingButton
-                  width="100%"
-                  onClick={() => setopen(true)}
-                  loading={isLoading}
-                  variant="contained"
-                  color="primary"
-                  paddingY="2rem"
-                  sx={{
-                    width: "100%",
-                  }}
-                >
-                  <Typography
-                    variant="body3"
-                    sx={{
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Register Now
-                  </Typography>
-                </LoadingButton>
               )}
             </Box>
           </>
         )}
-        {open && (
+        {/* {open && (
           <RegistrationForm
             open={open}
             onClose={() => setopen(false)}
             userData={userData}
           />
-        )}
+        )} */}
         {/* Menu Button */}
         {isMid && (
           <Box onClick={() => setIsMenuOpen(!isMenuOpen)}>

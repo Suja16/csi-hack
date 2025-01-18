@@ -1,18 +1,17 @@
 import { useContext, useState } from "react";
-import UserDataContext from "../contexts/userDataContext";
+import UserDataContext from "../../contexts/userDataContext";
 import { Navigate } from "react-router";
-import HeaderBox from "../elements/HeaderBox";
+import HeaderBox from "../../components/HeaderBox";
 import {
   Box,
-  Typography,
   Grid2,
   useTheme,
   CircularProgress,
   Snackbar,
 } from "@mui/material";
-import TeamDetails from "../components/TeamDetails";
-import RegisterSteps from "../components/RegisterSteps";
-import timeline from "../assets/carousel/desktop/timeline.png";
+import TeamDetails from "./TeamDetails";
+import RegisterSteps from "./RegisterSteps";
+import timeline from "@assets/carousel/desktop/timeline.png";
 
 const Team = () => {
   const { userData, eventData } = useContext(UserDataContext);

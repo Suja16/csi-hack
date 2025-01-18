@@ -12,19 +12,19 @@ import {
   InputLabel,
   styled,
 } from "@mui/material";
-import Popup from "../elements/popup";
+import Popup from "@components/popup";
 import CloseIcon from "@mui/icons-material/Close";
-import registrationSchema from "../utils/validation";
+import registrationSchema from "@utils/validation";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import TextBox from "./TextBox";
+import TextBox from "@components/TextBox";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Delete from "@mui/icons-material/Delete";
-import uploadFile from "../utils/uploadFile";
-import LoadingButton from '@mui/lab/LoadingButton';
-import UserDataContext from "../contexts/userDataContext";
+import uploadFile from "@utils/uploadFile";
+import LoadingButton from "@mui/lab/LoadingButton";
+import UserDataContext from "../../../contexts/userDataContext";
 import { useNavigate } from "react-router";
 
 const VisuallyHiddenInput = styled("input")({
@@ -62,13 +62,7 @@ export default function RegistrationForm({ open, onClose }) {
   const resume = watch("resume");
   const photo_id = watch("photo_id");
 
-
   const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log(errors);
-    console.log(resume);
-  }, [errors, resume]);
 
   useEffect(() => {
     reset(userData);
@@ -133,7 +127,10 @@ export default function RegistrationForm({ open, onClose }) {
     // upload photo id
     const photoIdURLPromise = uploadFile(photo_id[0]);
 
-    const [resumeURL, photoIdURL] = await Promise.all([resumeURLPromise, photoIdURLPromise]);
+    const [resumeURL, photoIdURL] = await Promise.all([
+      resumeURLPromise,
+      photoIdURLPromise,
+    ]);
 
     more_details.resume = resumeURL;
     more_details.photo_id = photoIdURL;
@@ -153,27 +150,29 @@ export default function RegistrationForm({ open, onClose }) {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
-          }
+          },
         );
         const inviteCode = teamResponse.data.team.invite_code;
         localStorage.setItem("inviteCode", inviteCode);
         localStorage.setItem("teamName", data.team_name);
         console.log(teamResponse);
 
-        const eventResponse = await axios.post("/api/v1/event/p/get/" + import.meta.env.VITE_EVENT_ID, {}, {
-          baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        const eventResponse = await axios.post(
+          "/api/v1/event/p/get/" + import.meta.env.VITE_EVENT_ID,
+          {},
+          {
+            baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
           },
-        });
+        );
 
         setEventData(eventResponse.data.event);
-
 
         alert("Your team code is - " + inviteCode);
         localStorage.setItem("status", "true");
         setSnackbarMessage("Registration Successful");
-
 
         setShowSnackbar(true);
 
@@ -209,15 +208,19 @@ export default function RegistrationForm({ open, onClose }) {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
-          }
+          },
         );
         localStorage.setItem("status", "true");
-        const eventResponse = await axios.post("/api/v1/event/p/get/47", {}, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        const eventResponse = await axios.post(
+          "/api/v1/event/p/get/47",
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+            baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
           },
-          baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
-        });
+        );
 
         setEventData(eventResponse.data.event);
         setSnackbarMessage("Registration Successful");
@@ -272,8 +275,8 @@ export default function RegistrationForm({ open, onClose }) {
         container
         columns={{ xs: 1, sm: 2 }}
         spacing={2}
-        padding={{xs:"0", sm: "2rem"}}
-        marginTop={{xs: "2rem", sm:"0"}}
+        padding={{ xs: "0", sm: "2rem" }}
+        marginTop={{ xs: "2rem", sm: "0" }}
       >
         <Grid2 item size={1}>
           <TextBox
@@ -527,9 +530,9 @@ export default function RegistrationForm({ open, onClose }) {
           size={1}
           display="flex"
           justifyContent="start"
-          gap={{xs: "1rem", md: "3rem"}}
+          gap={{ xs: "1rem", md: "3rem" }}
           marginTop="1rem"
-          flexDirection={{xs: "column", sm: "row"}}
+          flexDirection={{ xs: "column", sm: "row" }}
         >
           <Tooltip title="Team Leaders create a Team">
             <Button

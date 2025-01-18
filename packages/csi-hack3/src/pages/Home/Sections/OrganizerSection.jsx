@@ -1,10 +1,10 @@
 import { Box, Container, Typography, Paper } from "@mui/material";
 import { motion } from "motion/react";
 
-import UnionBankLogo from "../assets/logos/unionBank.jpeg";
-import SomaiyaLogo from "../assets/logos/somaiya.svg";
-import CSILogo from "../assets/logos/csiKJSCE.png";
-import EuclidLogo from "../assets/logos/euclid.jpg";
+import UnionBankLogo from "@assets/logos/unionBank.jpeg";
+import SomaiyaLogo from "@assets/logos/somaiya.svg";
+import CSILogo from "@assets/logos/csiKJSCE.png";
+import EuclidLogo from "@assets/logos/euclid.png";
 
 const MotionPaper = motion(Paper);
 

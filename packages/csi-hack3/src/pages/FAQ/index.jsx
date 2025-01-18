@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Accordion,
   AccordionSummary,
@@ -6,25 +6,17 @@ import {
   Typography,
   Container,
   Box,
-  Button,
+  useTheme,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 
-const Faq = ({ isExpanded }) => {
+const Faq = () => {
   const [expanded, setExpanded] = useState(false);
-  const [showFullContent, setShowFullContent] = useState(isExpanded);
-
-  useEffect(() => {
-    setShowFullContent(isExpanded);
-  }, [isExpanded]);
+  const theme = useTheme();
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
-  };
-
-  const handleReadMore = () => {
-    setShowFullContent(true);
   };
 
   const faqCategories = [
@@ -85,8 +77,7 @@ const Faq = ({ isExpanded }) => {
       questions: [
         {
           question: "How many members can be in a team?",
-          answer:
-            "Teams must consist of 4 members only.",
+          answer: "Teams must consist of 4 members only.",
         },
         {
           question: "Does a team need to qualify first?",
@@ -182,7 +173,7 @@ const Faq = ({ isExpanded }) => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-start",
-        height: showFullContent ? "auto" : "530px",
+        height: "auto",
         overflow: "hidden",
         position: "relative",
         marginTop: 1,
@@ -194,12 +185,13 @@ const Faq = ({ isExpanded }) => {
             variant="h4"
             align="start"
             gutterBottom
+            color="secondary"
             sx={{
               fontWeight: "bold",
               marginBottom: 3,
-              color: "#f15a24",
+              // color: "#f15a24",
               marginTop: 3,
-              zIndex: showFullContent ? 1 : 0,
+              zIndex: 1,
               textAlign: "justify",
             }}
           >
@@ -231,7 +223,7 @@ const Faq = ({ isExpanded }) => {
                 expandIcon={
                   <Box
                     sx={{
-                      backgroundColor: "#5d73d1",
+                      backgroundColor: theme.palette.primary.main,
                       borderRadius: "50%",
                       width: 32,
                       height: 32,
@@ -280,23 +272,6 @@ const Faq = ({ isExpanded }) => {
           ))}
         </Box>
       ))}
-      {!showFullContent && (
-        <Box
-          sx={{
-            position: "absolute",
-            bottom: 0,
-            width: "100%",
-            textAlign: "center",
-            backgroundColor: "rgba(255, 255, 255, 1)",
-            py: 2,
-            zIndex: 2,
-          }}
-        >
-          <Button variant="contained" color="primary" onClick={handleReadMore}>
-            Read More
-          </Button>
-        </Box>
-      )}
     </Container>
   );
 };

@@ -5,9 +5,14 @@ import {
   useTheme,
   useMediaQuery,
 } from "@mui/material";
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback, useState, useContext } from "react";
+import { useNavigate } from "react-router";
 import { animate, stagger } from "motion";
 import { motion } from "motion/react";
+import axios from "axios";
+import { useGoogleLogin } from "@react-oauth/google";
+import RegistrationForm from "./RegistrationFrom";
+import UserDataContext from "../../../contexts/userDataContext";
 
 const buttonVariants = {
   initial: {
@@ -114,8 +119,12 @@ const AnimatedWord = ({ word, isMobile }) => {
 
 const Hero = () => {
   const [wordIndex, setWordIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { userData, setUserData, eventData, setEventData, setLoginLoading } =
+    useContext(UserDataContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -128,6 +137,49 @@ const Hero = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+  const login = useGoogleLogin({
+    onSuccess: async ({ code }) => {
+      setLoginLoading(true);
+      const response = await axios.post(
+        "/api/v1/auth/googleToken",
+        { code },
+        { baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS },
+      );
+      localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.refreshToken);
+      setUserData(response.data.user);
+      const participantResponse = await axios.post(
+        `/api/v1/event/p/get/` + import.meta.env.VITE_EVENT_ID,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+          baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
+        },
+      );
+      setEventData(participantResponse.data.event);
+      setLoginLoading(false);
+      if (!participantResponse.data.event.Participant) {
+        setIsModalOpen(true);
+      } else {
+        navigate("/team");
+      }
+    },
+    flow: "auth-code",
+  });
+
+  const registerNow = () => {
+    if (!userData) {
+      login();
+    } else if (!eventData?.Participant) {
+      setIsModalOpen(true);
+    } else {
+      navigate("/team");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   return (
     <Container maxWidth="lg" sx={{ px: isMobile ? 2 : 3 }}>
@@ -203,6 +255,7 @@ const Hero = () => {
           <Button
             variant="contained"
             size={isMobile ? "medium" : "large"}
+            onClick={registerNow}
             sx={{
               px: { xs: 3, sm: 3.5, md: 4 },
               py: { xs: 1, sm: 1.25, md: 1.5 },
@@ -225,7 +278,7 @@ const Hero = () => {
               },
             }}
           >
-            Register Now
+            {eventData?.Participant ? "View Team" : "Register Now"}
           </Button>
         </motion.div>
       </motion.div>
@@ -262,6 +315,10 @@ const Hero = () => {
         innovation and excellence in the realms of financial technology
         (fintech) and cybersecurity.
       </Typography>
+      <RegistrationForm
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </Container>
   );
 };

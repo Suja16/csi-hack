@@ -5,7 +5,12 @@
     "jsx": "react-jsx",
     "baseUrl": ".", // Set baseUrl to current directory
     "paths": {
-      "*": ["node_modules/*"] // Allow imports from root node_modules
+      "*": ["node_modules/*"], // Allow imports from root node_modules
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@assets/*": ["src/assets/*"],
+      "@contexts/*": ["src/contexts/*"],
+      "@utils/*": ["src/utils/*"]
     },
     "typeRoots": ["../../node_modules/@types", "./node_modules/@types"], // Ensure types from root are available
     "strict": true,

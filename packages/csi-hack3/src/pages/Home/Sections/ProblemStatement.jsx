@@ -38,7 +38,7 @@ const ProblemStatementCard = () => {
   const theme = useTheme();
 
   return (
-    <Container maxWidth="xl" sx={{ py: 6 }}>
+    <Container maxWidth="xl" sx={{ py: 6 }} id="ps">
       <Typography
         variant="h2"
         sx={{

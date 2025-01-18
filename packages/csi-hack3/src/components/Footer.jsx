@@ -17,8 +17,8 @@ import {
   Mail,
   Phone,
 } from "@mui/icons-material";
-import CsiLogo from "../assets/logos/csi.png";
-import EuclidLogo from "../assets/logos/euclid.jpg";
+import CsiLogo from "../assets/logos/csiKJSCE.png";
+import EuclidLogo from "../assets/logos/euclid.png";
 
 const Footer = () => {
   const theme = useTheme();
@@ -54,11 +54,8 @@ const Footer = () => {
           }}
         >
           <Box sx={{ flex: { xs: "1 1 100%", sm: "0 1 45%" } }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-              <Typography
-                variant="h5"
-                sx={{ fontWeight: "bold" }}
-              >
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
+              <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                 About Us
               </Typography>
             </Box>
@@ -123,23 +120,28 @@ const Footer = () => {
                   +91 8657432101
                 </Typography>
               </Link>
-              <Box>
+              <Box
+                height={70}
+                display="flex"
+                alignItems="center"
+                gap={3}
+                marginY={2}
+              >
                 <img
                   src={CsiLogo}
                   alt="CSI Logo"
                   style={{
-                    height: '100px',
-                    width: 'auto'
+                    height: "100%",
+                    width: "auto",
+                    borderRadius: "999px",
                   }}
                 />
                 <img
                   src={EuclidLogo}
                   alt="CSI Logo"
                   style={{
-                    height: '55px',
-                    width: 'auto',
-                    marginBottom: '1.7rem',
-                    marginLeft: '1rem'
+                    height: "55px",
+                    width: "auto",
                   }}
                 />
               </Box>
@@ -211,7 +213,7 @@ const Footer = () => {
             © 2024-25 Computer Society of India KJSCE. All rights reserved
           </Typography>
           <Typography variant="body2" sx={{ mr: 2, textAlign: "justify" }}>
-            Made with <span style={{ color: 'red' }}>❤</span> by CSI-KJSCE
+            Made with <span style={{ color: "red" }}>❤</span> by CSI-KJSCE
           </Typography>
           <IconButton
             onClick={handleScrollToTop}

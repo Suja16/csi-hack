@@ -96,11 +96,12 @@ const HackathonGuidelines = () => {
         <Typography
           variant="h4"
           component="h2"
+          color="secondary"
           sx={{
             textAlign: "justify",
             fontWeight: "bold",
             marginBottom: 2,
-            color: "#D32F2F",
+            // color: "#D32F2F",
             letterSpacing: "0.5px",
           }}
         >
@@ -118,9 +119,10 @@ const HackathonGuidelines = () => {
               <Typography
                 variant="h6"
                 component="h3"
+                color="primary"
                 sx={{
                   fontWeight: "bold",
-                  color: "#2846AA",
+                  // color: "#2846AA",
                   marginBottom: 0.5,
                   textAlign: "justify",
                   letterSpacing: "0.5px",

@@ -1,10 +1,12 @@
-import { createContext } from 'react';
+import { createContext } from "react";
 
 const data = {
   userData: null,
-  setUserData: null,
+  setUserData: () => {},
   eventData: null,
-  setEventData: null,
+  setEventData: () => {},
+  login: () => {},
+  logout: () => {},
 };
 
 const UserDataContext = createContext(data);
