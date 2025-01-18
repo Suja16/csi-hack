@@ -15,7 +15,10 @@ function App() {
 
   return (
     <Router>
-      <AppBarHeader toggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
+      <AppBarHeader
+        toggleSidebar={toggleSidebar}
+        isSidebarOpen={isSidebarOpen}
+      />
       <Box sx={{ display: "flex", height: "100vh" }}>
         <Sidebar isSidebarOpen={isSidebarOpen} />
         <Box

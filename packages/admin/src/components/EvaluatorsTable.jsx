@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import EditIcon from "@mui/icons-material/Edit";
+import RateReviewIcon from "@mui/icons-material/RateReview";
 import {
   Box,
   Button,
@@ -6,18 +7,17 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Paper,
-  Typography,
   FormControl,
   InputLabel,
-  Select,
   MenuItem,
+  Paper,
+  Select,
   TextField,
+  Typography,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import EditIcon from "@mui/icons-material/Edit";
-import RateReviewIcon from "@mui/icons-material/RateReview";
 import PropTypes from "prop-types";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 const MENTOR_OPTIONS = ["Ayush Mehta", "Oni Chan", "vats boy"];
 const EVALUATOR_OPTIONS = [
@@ -150,8 +150,8 @@ const EvaluatorsTable = () => {
             id: 1,
             teamName: "Team A",
             mentorAssigned: "Rai Janpara",
-            evaluator1Assigned: "Ayush Mehta",
-            evaluator2Assigned: "Ayush Mehta",
+            evaluator1Assigned: "Aayush Mehta",
+            evaluator2Assigned: "Aayush Mehta",
             reviewGiven: "Good progress",
             status: "Ongoing",
           },
@@ -234,28 +234,93 @@ const EvaluatorsTable = () => {
 
   const columns = useMemo(
     () => [
-      { field: "id", headerName: "Team ID", width: 90 },
-      { field: "teamName", headerName: "Team Name", width: 150, flex: 1 },
+      {
+        field: "id",
+        headerName: "Team ID",
+        width: 90,
+        sortable: false,
+        filterable: false,
+        disableColumnMenu: true,
+        renderHeader: () => (
+          <div style={{ fontWeight: "bold", fontSize: "1rem", paddingLeft: 20 }}>
+            Team ID
+          </div>
+        ),
+        renderCell: (params) => (
+          <div style={{ display: "flex", paddingLeft: 20 }}>{params.value}</div>
+        ),
+      },
+      {
+        field: "teamName",
+        headerName: "Team Name",
+        width: 150,
+        flex: 1,
+        sortable: false,
+        filterable: false,
+        disableColumnMenu: true,
+        renderHeader: () => (
+          <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Team Name</div>
+        ),
+      },
       {
         field: "mentorAssigned",
         headerName: "Mentor Assigned",
         width: 180,
         flex: 1,
+        sortable: false,
+        filterable: false,
+        disableColumnMenu: true,
+        renderHeader: () => (
+          <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Mentor Assigned</div>
+        ),
       },
       {
         field: "evaluator1Assigned",
         headerName: "Evaluator 1",
         width: 180,
         flex: 1,
+        sortable: false,
+        filterable: false,
+        disableColumnMenu: true,
+        renderHeader: () => (
+          <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Evaluator 1</div>
+        ),
       },
       {
         field: "evaluator2Assigned",
         headerName: "Evaluator 2",
         width: 180,
         flex: 1,
+        sortable: false,
+        filterable: false,
+        disableColumnMenu: true,
+        renderHeader: () => (
+          <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Evaluator 2</div>
+        ),
       },
-      { field: "reviewGiven", headerName: "Review", width: 200, flex: 1 },
-      { field: "status", headerName: "Status", width: 120 },
+      {
+        field: "reviewGiven",
+        headerName: "Review",
+        width: 200,
+        flex: 1,
+        sortable: false,
+        filterable: false,
+        disableColumnMenu: true,
+        renderHeader: () => (
+          <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Review</div>
+        ),
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        width: 120,
+        sortable: false,
+        filterable: false,
+        disableColumnMenu: true,
+        renderHeader: () => (
+          <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Status</div>
+        ),
+      },
       {
         field: "actions",
         headerName: "Actions",
@@ -265,13 +330,21 @@ const EvaluatorsTable = () => {
             startIcon={<EditIcon />}
             onClick={() => handleEditClick(params.row.id)}
             size="small"
+            sx={{
+              fontWeight: "bold", 
+              fontSize: "1rem", 
+              textTransform: "none"
+            }}
           >
             Edit
           </Button>
         ),
+        renderHeader: () => (
+          <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Actions</div>
+        ),
       },
     ],
-    [handleEditClick],
+    [handleEditClick]
   );
 
   return (

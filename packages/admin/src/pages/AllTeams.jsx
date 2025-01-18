@@ -1,14 +1,14 @@
-import 'react';
-import { Typography } from '@mui/material';
+import { Suspense } from "react";
+import DataGridDemo from "../components/TeamTableDatagrid";
 
 const AllTeams = () => {
-    return (
-        <div>
-            <Typography variant="h4" component="h1" gutterBottom>
-                All Teams
-            </Typography>
-        </div>
-    );
+  return (
+    <>
+      <Suspense fallback={<p>Loading...</p>}>
+        <DataGridDemo />
+      </Suspense>
+    </>
+  );
 };
 
 export default AllTeams;

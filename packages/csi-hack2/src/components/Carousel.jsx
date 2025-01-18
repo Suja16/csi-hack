@@ -52,6 +52,8 @@ const CarouselItem = ({ item }) => {
         display: "flex",
         justifyContent: "center",
         width: "100vw",
+        height: isMobile ? "max-content" : "100vh",
+        maxHeight: isMobile ? null : "48rem",
         border: 0,
       }}
     >

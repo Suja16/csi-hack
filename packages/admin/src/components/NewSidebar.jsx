@@ -1,15 +1,17 @@
 import 'react';
 import { Drawer, List, ListItem, ListItemText, ListItemIcon, Tooltip } from '@mui/material';
-import { People, Settings, Archive } from '@mui/icons-material';
+import { People } from '@mui/icons-material';
 import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
+import BarChartIcon from '@mui/icons-material/BarChart';
 
 const Sidebar = ({ isSidebarOpen }) => {
     const location = useLocation();
     const menuItems = [
         { label: 'All Teams', icon: <People />, path: '/allteams' },
-        { label: 'Add Evaluators', icon: <Settings />, path: '/evaluators' },
-        { label: 'Statistics', icon: <Archive />, path: '/statistics' },
+        { label: 'Add Evaluators', icon: <HowToRegIcon />, path: '/evaluators' },
+        { label: 'Statistics', icon: <BarChartIcon />, path: '/statistics' },
     ];
 
     return (
