@@ -138,7 +138,7 @@ const TimelineCard = ({ data, isLeft, inView, isMobile }) => {
       <Paper elevation={3} sx={{ p: { xs: 2, md: 3 } }}>
         <motion.div variants={contentVariants}>
           <motion.div variants={contentVariants}>
-            <Typography variant="subtitle2" color="primary" gutterBottom>
+            <Typography variant="subtitle2" color="secondary" gutterBottom>
               {data.date}
             </Typography>
           </motion.div>
@@ -208,7 +208,7 @@ const HackathonTimeline = () => {
 
   return (
     <Container>
-      <Box py={8}>
+      <Box py={1}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
