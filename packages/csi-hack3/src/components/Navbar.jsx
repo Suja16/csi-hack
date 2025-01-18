@@ -1,9 +1,5 @@
 import { useState, useContext, useEffect, useRef } from "react";
-import {
-  Box,
-  Typography,
-  useMediaQuery,
-} from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -15,7 +11,7 @@ import RegistrationForm from "./registrationFrom";
 
 const Navbar = ({ login, logout, open, setopen, isLoading }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState('/');
+  const [activeItem, setActiveItem] = useState("/");
   const isMid = useMediaQuery("(max-width:1146px)");
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,8 +19,8 @@ const Navbar = ({ login, logout, open, setopen, isLoading }) => {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    if (location.pathname === '/') {
-      setActiveItem('/');
+    if (location.pathname === "/") {
+      setActiveItem("/");
     } else {
       setActiveItem(location.pathname);
     }
@@ -71,7 +67,6 @@ const Navbar = ({ login, logout, open, setopen, isLoading }) => {
           if (target) {
             target.scrollIntoView({ behavior: "smooth", block: "start" });
           }
-
         }, 100);
       } else {
         const target = document.querySelector(targetId);
@@ -84,18 +79,22 @@ const Navbar = ({ login, logout, open, setopen, isLoading }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const problemsSection = document.querySelector('#ps');
-      const contactSection = document.querySelector('#contact');
+      const problemsSection = document.querySelector("#ps");
+      const contactSection = document.querySelector("#contact");
 
       if (problemsSection) {
         const problemsRect = problemsSection.getBoundingClientRect();
         const windowHeight = window.innerHeight;
-        if ((problemsRect.top >= 0 && problemsRect.top <= windowHeight / 2) || (problemsRect.bottom <= windowHeight && problemsRect.bottom >= windowHeight / 2)) {
-          setActiveItem('#ps');
-          return
+        if (
+          (problemsRect.top >= 0 && problemsRect.top <= windowHeight / 2) ||
+          (problemsRect.bottom <= windowHeight &&
+            problemsRect.bottom >= windowHeight / 2)
+        ) {
+          setActiveItem("#ps");
+          return;
         } else {
-          if (location.pathname === '/') {
-            setActiveItem('/');
+          if (location.pathname === "/") {
+            setActiveItem("/");
           } else {
             setActiveItem(location.pathname);
           }
@@ -105,21 +104,20 @@ const Navbar = ({ login, logout, open, setopen, isLoading }) => {
       if (contactSection) {
         const contactRect = contactSection.getBoundingClientRect();
         const windowHeight = window.innerHeight;
-        if (contactRect.top >= 0 && contactRect.top <= windowHeight * 2 / 3) {
-          setActiveItem('#contact');
-          return
+        if (contactRect.top >= 0 && contactRect.top <= (windowHeight * 2) / 3) {
+          setActiveItem("#contact");
+          return;
         } else {
-          if (location.pathname === '/') {
-            setActiveItem('/');
+          if (location.pathname === "/") {
+            setActiveItem("/");
           } else {
             setActiveItem(location.pathname);
           }
         }
       }
-
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [location.pathname]);
 
   const sidebarVariants = {
@@ -130,7 +128,7 @@ const Navbar = ({ login, logout, open, setopen, isLoading }) => {
         type: "spring",
         stiffness: 20,
         restDelta: 2,
-        opacity: { duration: 0.3 }
+        opacity: { duration: 0.3 },
       },
     }),
     closed: {
@@ -141,7 +139,7 @@ const Navbar = ({ login, logout, open, setopen, isLoading }) => {
         type: "spring",
         stiffness: 400,
         damping: 40,
-        opacity: { duration: 1.05 }
+        opacity: { duration: 1.05 },
       },
     },
   };
@@ -227,7 +225,9 @@ const Navbar = ({ login, logout, open, setopen, isLoading }) => {
                       bottom: "-4px",
                       left: 0,
                       backgroundColor: "primary.main",
-                      transform: isActive(item.href) ? "scaleX(1)" : "scaleX(0)",
+                      transform: isActive(item.href)
+                        ? "scaleX(1)"
+                        : "scaleX(0)",
                       transition: "transform 0.3s ease-in-out",
                     },
                     "&:hover::after": {
@@ -366,7 +366,10 @@ const Navbar = ({ login, logout, open, setopen, isLoading }) => {
                 cursor: "pointer",
                 fontSize: "24px",
                 fontWeight: "semi-bold",
+                fontFamily: "Kantumruy Pro",
+                letterSpacing: "0.05rem",
                 color: isActive(item.href) ? "primary.main" : "black",
+                textAlign: "right",
               }}
             >
               {item.label}
