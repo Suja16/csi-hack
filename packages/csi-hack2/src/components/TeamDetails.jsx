@@ -417,7 +417,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
             display="flex"
             flexDirection="column"
             alignItems="center"
-            marginTop="10rem"
+            marginTop="7rem"
           >
             <Typography variant="h5" marginBlock="1rem">
               Your Submission
