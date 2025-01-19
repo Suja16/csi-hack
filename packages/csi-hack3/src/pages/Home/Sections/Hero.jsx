@@ -39,44 +39,151 @@ const buttonVariants = {
   },
 };
 
-const AnimatedTitle = () => (
-  <div style={{ overflow: "hidden", display: "inline-block", width: "100%" }}>
-    {"IDEA HACKATHON".split("").map((letter, index) => (
-      <motion.span
-        key={index}
-        initial={{
-          x: index < "IDEA HACKATHON".length / 2 ? -100 : 100,
-          opacity: 0,
-          scale: 0.5,
-        }}
-        animate={{
-          x: 0,
-          opacity: 1,
-          scale: 1,
-        }}
-        transition={{
-          duration: 1.5,
-          delay: Math.abs(index - "IDEA HACKATHON".length / 2) * 0.06,
-          ease: [0.215, 0.61, 0.355, 1],
-          opacity: { duration: 0.4 },
-          scale: { duration: 0.6 },
-        }}
+
+const AnimatedTitle = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
+
+  const getFontSize = () => {
+    if (isMobile) return "2.7rem";
+    if (isTablet) return "3.5rem";
+    return "5.5rem";
+  };
+
+  if (isMobile) {
+    return (
+      <div
         style={{
+          overflow: "hidden",
           display: "inline-block",
-          whiteSpace: "pre",
-          fontSize: {
-            xs: "2rem",
-            sm: "2.5rem",
-            md: "3.5rem",
-          },
-          textShadow: "0 2px 4px rgba(0,0,0,0.1)",
+          width: "100%",
+          maxWidth: "90vw"
         }}
       >
-        {letter}
-      </motion.span>
-    ))}
-  </div>
-);
+        <div className="flex flex-col items-center gap-4">
+          {/* IDEA Animation */}
+          <div className="overflow-hidden">
+            {"IDEA".split("").map((letter, index) => (
+              <motion.span
+                key={`idea-${index}`}
+                initial={{
+                  x: index < "IDEA".length / 2 ? -100 : 100,
+                  opacity: 0,
+                  scale: 0.5,
+                }}
+                animate={{
+                  x: 0,
+                  opacity: 1,
+                  scale: 1,
+                }}
+                transition={{
+                  duration: 1.5,
+                  delay: Math.abs(index - "IDEA".length / 2) * 0.06,
+                  ease: [0.215, 0.61, 0.355, 1],
+                  opacity: { duration: 0.4 },
+                  scale: { duration: 0.6 },
+                }}
+                style={{
+                  display: "inline-block",
+                  whiteSpace: "pre",
+                  fontSize: getFontSize(),
+                  textShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                  fontWeight: 600,
+                  letterSpacing: "0.05em"
+                }}
+              >
+                {letter}
+              </motion.span>
+            ))}
+          </div>
+
+          {/* HACKATHON Animation */}
+          <div className="overflow-hidden">
+            {"HACKATHON".split("").map((letter, index) => (
+              <motion.span
+                key={`hackathon-${index}`}
+                initial={{
+                  x: index < "HACKATHON".length / 2 ? -100 : 100,
+                  opacity: 0,
+                  scale: 0.5,
+                }}
+                animate={{
+                  x: 0,
+                  opacity: 1,
+                  scale: 1,
+                }}
+                transition={{
+                  duration: 1.5,
+                  delay: Math.abs(index - "HACKATHON".length / 2) * 0.06,
+                  ease: [0.215, 0.61, 0.355, 1],
+                  opacity: { duration: 0.4 },
+                  scale: { duration: 0.6 },
+                }}
+                style={{
+                  display: "inline-block",
+                  whiteSpace: "pre",
+                  fontSize: getFontSize(),
+                  textShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                  fontWeight: 600,
+                  letterSpacing: "0.05em"
+                }}
+              >
+                {letter}
+              </motion.span>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Desktop version
+  return (
+    <div
+      style={{
+        overflow: "hidden",
+        display: "inline-block",
+        width: "100%",
+        maxWidth: isTablet ? "90vw" : "80vw"
+      }}
+    >
+      {"IDEA HACKATHON".split("").map((letter, index) => (
+        <motion.span
+          key={index}
+          initial={{
+            x: index < "IDEA HACKATHON".length / 2 ? -100 : 100,
+            opacity: 0,
+            scale: 0.5,
+          }}
+          animate={{
+            x: 0,
+            opacity: 1,
+            scale: 1,
+          }}
+          transition={{
+            duration: 1.5,
+            delay: Math.abs(index - "IDEA HACKATHON".length / 2) * 0.06,
+            ease: [0.215, 0.61, 0.355, 1],
+            opacity: { duration: 0.4 },
+            scale: { duration: 0.6 },
+          }}
+          style={{
+            display: "inline-block",
+            whiteSpace: "pre",
+            fontSize: getFontSize(),
+            textShadow: "0 2px 4px rgba(0,0,0,0.1)",
+            fontWeight: 600,
+            letterSpacing: "0.05em"
+          }}
+        >
+          {letter}
+        </motion.span>
+      ))}
+    </div>
+  );
+};
+
 
 const AnimatedWord = ({ word, isMobile }) => {
   const animateLetters = useCallback((elements) => {
