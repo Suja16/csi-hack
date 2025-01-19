@@ -277,8 +277,8 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
         </Button> */}
       </Grid2>
       {!submitted &&
-      userData.id === eventData.Participant.team.leader_id &&
-      eventData.Participant.team.Participant.length == 4 ? (
+        userData.id === eventData.Participant.team.leader_id &&
+        eventData.Participant.team.Participant.length == 4 ? (
         <>
           <Grid2
             item
@@ -417,10 +417,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
           justifyContent={{ xs: "center", md: "flex-start" }}
           minHeight="10rem"
         >
-          <Typography variant="h5" marginBlock="1rem">
-            Your Submission
-          </Typography>
-          <Typography variant="body1" textAlign="center">
+          <Typography variant="h5" textAlign="center">
             {submitted
               ? "Your submission has been recorded."
               : eventData.Participant.team.Participant.length != 4
