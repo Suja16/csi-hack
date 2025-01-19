@@ -39,7 +39,6 @@ const buttonVariants = {
   },
 };
 
-
 const AnimatedTitle = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -58,7 +57,7 @@ const AnimatedTitle = () => {
           overflow: "hidden",
           display: "inline-block",
           width: "100%",
-          maxWidth: "90vw"
+          maxWidth: "90vw",
         }}
       >
         <div className="flex flex-col items-center gap-4">
@@ -89,7 +88,7 @@ const AnimatedTitle = () => {
                   fontSize: getFontSize(),
                   textShadow: "0 2px 4px rgba(0,0,0,0.1)",
                   fontWeight: 600,
-                  letterSpacing: "0.05em"
+                  letterSpacing: "0.05em",
                 }}
               >
                 {letter}
@@ -125,7 +124,7 @@ const AnimatedTitle = () => {
                   fontSize: getFontSize(),
                   textShadow: "0 2px 4px rgba(0,0,0,0.1)",
                   fontWeight: 600,
-                  letterSpacing: "0.05em"
+                  letterSpacing: "0.05em",
                 }}
               >
                 {letter}
@@ -144,7 +143,7 @@ const AnimatedTitle = () => {
         overflow: "hidden",
         display: "inline-block",
         width: "100%",
-        maxWidth: isTablet ? "90vw" : "80vw"
+        maxWidth: isTablet ? "90vw" : "80vw",
       }}
     >
       {"iDEA HACKATHON".split("").map((letter, index) => (
@@ -173,7 +172,7 @@ const AnimatedTitle = () => {
             fontSize: getFontSize(),
             textShadow: "0 2px 4px rgba(0,0,0,0.1)",
             fontWeight: 600,
-            letterSpacing: "0.05em"
+            letterSpacing: "0.05em",
           }}
         >
           {letter}
@@ -182,7 +181,6 @@ const AnimatedTitle = () => {
     </div>
   );
 };
-
 
 const AnimatedWord = ({ word, isMobile }) => {
   const animateLetters = useCallback((elements) => {
@@ -228,8 +226,14 @@ const Hero = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const { userData, setUserData, eventData, setEventData, setLoginLoading } =
-    useContext(UserDataContext);
+  const {
+    userData,
+    setUserData,
+    eventData,
+    setEventData,
+    loginLoading,
+    setLoginLoading,
+  } = useContext(UserDataContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -362,6 +366,7 @@ const Hero = () => {
             variant="contained"
             size={isMobile ? "medium" : "large"}
             onClick={registerNow}
+            disabled={loginLoading}
             sx={{
               px: { xs: 3, sm: 3.5, md: 4 },
               py: { xs: 1, sm: 1.25, md: 1.5 },
@@ -412,7 +417,10 @@ const Hero = () => {
           },
         }}
       >
-        PSB Hackathon Series' brings to you, the iDEA Hackathon, presented by the Union Bank of India. One of the largest student led hackathon initiatives, under the guidance of Department of Financial Services, Indian Banks' Association and organised by Somaiya Vidyavihar University
+        PSB Hackathon Series' brings to you, the iDEA Hackathon, presented by
+        the Union Bank of India. One of the largest student led hackathon
+        initiatives, under the guidance of Department of Financial Services,
+        Indian Banks' Association and organised by Somaiya Vidyavihar University
       </Typography>
       <RegistrationForm
         open={isModalOpen}

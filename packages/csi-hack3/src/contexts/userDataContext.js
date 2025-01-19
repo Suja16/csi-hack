@@ -7,6 +7,8 @@ const data = {
   setEventData: () => {},
   login: () => {},
   logout: () => {},
+  loginLoading: false,
+  setLoginLoading: () => {},
 };
 
 const UserDataContext = createContext(data);
