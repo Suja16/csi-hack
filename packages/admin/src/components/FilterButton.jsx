@@ -1,76 +1,66 @@
-import { Close, FilterList } from "@mui/icons-material";
+import { FilterList } from "@mui/icons-material";
 import {
   Box,
   Button,
-  Checkbox,
   Divider,
+  FormControl,
   FormControlLabel,
-  FormGroup,
   Menu,
+  Radio,
+  RadioGroup,
   Typography
 } from "@mui/material";
 import { useState } from "react";
 
 const initialFilters = {
-  status: [
-    { id: "active", label: "Approved", checked: true },
-    { id: "pending", label: "Rejected", checked: false },
-  ],
+  status: "active", // Default selected value
 };
 
 export default function FilterDropdown({ isApproved, setIsApproved }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [filters, setFilters] = useState(initialFilters);
-  const [activeFiltersCount, setActiveFiltersCount] = useState(0);
+  const [activeFiltersCount, setActiveFiltersCount] = useState(1); // Based on default values
 
+  const filterOptions = {
+    status: [
+      { id: "active", label: "Approved" },
+      { id: "pending", label: "Rejected" },
+    ],
+  };
+
+  // Open the dropdown menu
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
+  // Close the dropdown menu
   const handleClose = () => {
     setAnchorEl(null);
   };
 
-  const handleFilterChange = (category, filterId) => {
-    // Update the filter state properly
-    const newFilters = {
-      ...filters,
-      [category]: filters[category].map((filter) =>
-        filter.id === filterId
-          ? { ...filter, checked: !filter.checked }
-          : filter
-      ),
-    };
-
-    setFilters(newFilters);
-
-    // Update active filters count
-    const count = Object.values(newFilters)
-      .flat()
-      .filter((filter) => filter.checked).length;
-
+  // Handle radio button change
+  const handleFilterChange = (category, value) => {
+    // Update the specific category filter
+    const updatedFilters = { ...filters, [category]: value };
+    setFilters(updatedFilters);
+  
+    // Update active filter count
+    const count = Object.values(updatedFilters).filter(Boolean).length;
     setActiveFiltersCount(count);
-
-    // If 'status' category filter is changed, update the parent component state
+  
+    // Update parent state if status filter is changed
     if (category === "status") {
-      const approved = newFilters.status.find((filter) => filter.id === "active").checked;
-      setIsApproved(approved); // Update the parent state
+      setIsApproved(value === "active"); // "active" for Approved, "pending" for Rejected
     }
   };
+  
 
+  // Reset all filters
   const clearFilters = () => {
-    // Reset all filters to unchecked state
-    const resetFilters = Object.entries(filters).reduce(
-      (acc, [category, options]) => ({
-        ...acc,
-        [category]: options.map((option) => ({ ...option, checked: false })),
-      }),
-      {}
-    );
-
+    const resetFilters = { status: "" };
     setFilters(resetFilters);
     setActiveFiltersCount(0);
-    setIsApproved(false); // Reset isApproved state in parent
+    setIsApproved(false); // Reset parent state
   };
 
   return (
@@ -78,29 +68,31 @@ export default function FilterDropdown({ isApproved, setIsApproved }) {
       <Button
         variant="outlined"
         onClick={handleClick}
-        startIcon={<FilterList sx={{ color: "#1e2939" }} />}
-        endIcon={
-          activeFiltersCount > 0 && (
-            <Box
-              sx={{
-                backgroundColor: "primary.main",
-                color: "primary.contrastText",
-                borderRadius: "50%",
-                width: 20,
-                height: 20,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "0.75rem",
-              }}
-            >
-              {activeFiltersCount}
-            </Box>
-          )
-        }
-        sx={{ minWidth: 100, color: "#1e2939", borderColor: "#1e2939" }}
+        startIcon={<FilterList />}
+        sx={{
+          minWidth: 120,
+          color: "#1e2939",
+          borderColor: "#1e2939",
+          "&:hover": { backgroundColor: "rgba(30, 41, 57, 0.1)" },
+        }}
       >
-        Filters
+         Filters
+        {/*{activeFiltersCount > 0 && (
+          <Box
+            sx={{
+              ml: 1,
+              px: 1,
+              py: 0.5,
+              backgroundColor: "primary.main",
+              color: "primary.contrastText",
+              borderRadius: 1,
+              fontSize: "0.75rem",
+              display: "inline-block",
+            }}
+          >
+            {activeFiltersCount}
+          </Box>
+        )} */}
       </Button>
 
       <Menu
@@ -109,67 +101,60 @@ export default function FilterDropdown({ isApproved, setIsApproved }) {
         onClose={handleClose}
         PaperProps={{
           sx: {
-            width: 320,
-            maxHeight: 480,
+            width: 340,
+            maxHeight: 500,
             mt: 1,
-            scrollbarWidth: "thin",
+            borderRadius: 2,
+            boxShadow: 4,
+            p: 2,
           },
         }}
       >
-        <Box sx={{ p: 2, pb: 1 }}>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              mb: 1,
-            }}
-          >
-            <Typography variant="subtitle1" fontWeight="bold">
-              Filters
-            </Typography>
-            {activeFiltersCount > 0 && (
-              <Button
-                size="small"
-                onClick={clearFilters}
-                startIcon={<Close fontSize="small" />}
-              >
-                Clear all
-              </Button>
-            )}
-          </Box>
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+          <Typography variant="h6" fontWeight="bold">
+            Filters
+          </Typography>
+          {/* {activeFiltersCount > 0 && (
+            <Button
+              size="small"
+              onClick={clearFilters}
+              startIcon={<Close fontSize="small" />}
+              sx={{
+                color: "primary.main",
+                fontSize: "0.8rem",
+                textTransform: "none",
+              }}
+            >
+              Clear all
+            </Button>
+          )} */}
         </Box>
+        <Divider sx={{ mb: 2 }} />
+        {Object.entries(filterOptions).map(([category, options]) => (
+          <Box key={category} sx={{ mb: 2 }}>
+            <Typography
+              variant="subtitle2"
+              fontWeight="bold"
+              sx={{ textTransform: "uppercase", color: "text.secondary", mb: 1 }}
+            >
+              {category}
+            </Typography>
+            <FormControl>
+            <RadioGroup
+  value={filters[category]} // This binds the selected value of the category
+  onChange={(e) => handleFilterChange(category, e.target.value)} // Update on change
+>
+  {options.map((option) => (
+    <FormControlLabel
+      key={option.id}
+      value={option.id} // Radio button value
+      control={<Radio sx={{ color: "primary.main" }} />} // Styling
+      label={option.label} // Displayed label
+    />
+  ))}
+</RadioGroup>
 
-        {Object.entries(filters).map(([category, options], index) => (
-          <Box key={category}>
-            {index > 0 && <Divider />}
-            <Box sx={{ p: 2 }}>
-              <Typography
-                variant="subtitle2"
-                sx={{
-                  mb: 1,
-                  textTransform: "uppercase",
-                  color: "text.secondary",
-                }}
-              >
-                {category}
-              </Typography>
-              <FormGroup>
-                {options.map((option) => (
-                  <FormControlLabel
-                    key={option.id}
-                    control={
-                      <Checkbox
-                        checked={option.checked}
-                        onChange={() => handleFilterChange(category, option.id)}
-                        size="small"
-                      />
-                    }
-                    label={option.label}
-                  />
-                ))}
-              </FormGroup>
-            </Box>
+            </FormControl>
           </Box>
         ))}
       </Menu>

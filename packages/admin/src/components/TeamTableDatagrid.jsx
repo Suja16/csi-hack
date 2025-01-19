@@ -7,7 +7,7 @@ import {
   CircularProgress,
   IconButton,
   Paper,
-  TextField
+  TextField,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useCallback, useState } from "react";
@@ -26,12 +26,12 @@ export default function DataTable() {
   // const [data, setData] = useState(initialData); // Your data
   const { data, loading, error } = useQuery(TEAM_QUERY, {
     variables: {
-      approved: isApproved, search: `%${searchTerm}%`,skip: !searchTerm,
+      approved: isApproved,
+      search: `%${searchTerm}%`,
+      skip: !searchTerm,
     },
   });
-  
-  console.log(data);
-  
+
   const [selectedRows, setSelectedRows] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const [activeRow, setActiveRow] = useState(null);
@@ -185,7 +185,7 @@ export default function DataTable() {
           onChange={(e) => handleSearch(e.target.value)} // Update URL on change
           sx={{ minWidth: { xs: 200, md: 300 } }}
         />
-        <FilterDropdown isApproved={isApproved} setIsApproved={setIsApproved}/>
+        <FilterDropdown isApproved={isApproved} setIsApproved={setIsApproved} />
       </Box>
 
       <Box sx={{ height: "70vh", width: "99%" }}>

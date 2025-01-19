@@ -19,7 +19,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import TextBox from "./TextBox";
+import TextBox from "../../../ui/TextBox";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Delete from "@mui/icons-material/Delete";
 import { uploadFile, deleteFile } from "../utils/uploadFile";
