@@ -576,9 +576,8 @@ export default function RegistrationForm({ open, onClose }) {
           size={1}
           display="flex"
           justifyContent="start"
-          gap={{xs: "1rem", md: "3rem"}}
+          gap="3rem"
           marginTop="1rem"
-          flexDirection={{xs: "column", sm: "row"}}
         >
           <Tooltip title="Team Leaders create a Team">
             <Button

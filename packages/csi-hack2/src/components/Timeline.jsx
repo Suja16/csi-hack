@@ -1,5 +1,5 @@
 import React from 'react';
-import timeline from "../assets/carousel/desktop/timeline.png"
+import timeline from "../assets/timeline.png"
 import { Box, useMediaQuery, Typography } from "@mui/material";
 
 function Timeline(props) {

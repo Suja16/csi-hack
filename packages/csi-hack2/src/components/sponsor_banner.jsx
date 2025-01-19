@@ -1,9 +1,9 @@
 import "react";
 import { Box, useMediaQuery, Typography } from "@mui/material";
-import somaiyaLogo from "../assets/logos/somaiya.png";
-import ibaLogo from "../assets/logos/IBA.png";
-import euclidLogo from "../assets/logos/euclid.jpg";
-import dfsLogo from "../assets/logos/DFS.png";
+import somaiyaLogo from "../assets/somaiya_logo.png";
+import ibaLogo from "../assets/IBA_Logo.png";
+import euclidLogo from "../assets/Euclid_logo.png";
+import dfsLogo from "../assets/DFS_Logo.png";
 
 const Banner = () => {
   const isMobile = useMediaQuery("(max-width:792px)");

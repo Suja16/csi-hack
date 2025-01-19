@@ -3,7 +3,6 @@ import CarouselHomePage from "../components/Carousel";
 import ProblemStatements from "../components/ProblemStatements";
 import Banner from "../components/sponsor_banner";
 import Timeline from "../components/Timeline";
-import Hero from "../components/Hero";
 
 export default function HomePage() {
   return (
@@ -13,7 +12,6 @@ export default function HomePage() {
       }}
     >
       <CarouselHomePage />
-      <Hero/>
       {/* <Banner /> */}
       <ProblemStatements />
       <Timeline />

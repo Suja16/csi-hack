@@ -1,10 +1,9 @@
 import { Box, Typography, Container } from "@mui/material";
 import CustomizedDialogs from "./ProbLemStatementCards";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
-import fintech from "../assets/ps/fintech.png";
-import cybersecurity from "../assets/ps/cybersecurity.png";
-import genai from "../assets/ps/genai.png";
+import fintech from "../assets/fintech.png";
+import cybersecurity from "../assets/cybersecurity.png";
+import genai from "../assets/genai.png";
 
 export default function ProblemStatements() {
   const isMobile = useMediaQuery("(max-width:500px)");
@@ -13,6 +12,8 @@ export default function ProblemStatements() {
     {
       title:
         "Business Analytics-Based Appointment Management System for Efficient Customer Service",
+      majorArea: "FINTECH",
+      subArea: "Customer Service and Identity Certification",
       description:
         "Design and implement a facial recognition system to streamline customer service queries.",
       fullContent: `
@@ -21,93 +22,95 @@ export default function ProblemStatements() {
         <div style="width:100%;">
         <h3 style='color: #634647;'>Core Components of the Solution:</h3>
         <ul>
-          <li><h4>Facial Recognition Authentication</h4></li>
-          <li><h4>Video/Audio Query Acceptance</h4></li>
-          <li><h4>Service Ticket Creation</h4></li>
-          <li><h4>Customer Redirection for New Customers</h4></li>
-          <li><h4>AI-Powered Risk Mitigation and Data Gathering</h4></li>
-          <li><h4>Feedback Module for Continuous Improvement</h4></li>
-          <li><h4>Cost-Effective and Deployable to Rural Branches</h4></li>
+          <li><p>Facial Recognition Authentication</p></li>
+          <li><p>Video/Audio Query Acceptance</p></li>
+          <li><p>Service Ticket Creation</p></li>
+          <li><p>Customer Redirection for New Customers</p></li>
+          <li><p>AI-Powered Risk Mitigation and Data Gathering</p></li>
+          <li><p>Feedback Module for Continuous Improvement</p></li>
+          <li><p>Cost-Effective and Deployable to Rural Branches</p></li>
         </ul>
         </div>
         <h3 style='color: #634647; margin-top:2rem;'>Real-Life Use Case: Vatsalya’s Interaction with the System</h3>
         <div style="width:100%;">
         <p><strong>Scenario 1: Existing Customer (Vatsalya)</strong></p>
         <ul>
-          <li><h4>Vatsalya is an existing customer of the Union Bank Of India and needs assistance with a loan query. He opens the mobile banking app of Union Bank, Vyom and is prompted by the Union Bank’s Chatbot UVA to record a short video explaining his question.</h4></li>
-          <li><h4>The facial recognition system authenticates his identity using the facial model stored in the app, along with his Aadhaar-based authentication.</h4></li>
-          <li><h4>The system creates a service ticket and pulls an analytical snapshot of Vatsalya’s financial profile, highlighting his credit score, previous loan applications, and spending habits. Based on this data, the system suggests a loan option with the relevant details.</h4></li>
-          <li><h4>Vatsalya receives an appointment confirmation for a video call with a customer service representative to discuss the loan options further.</h4></li>
+          <li><p>Vatsalya is an existing customer of the Union Bank Of India and needs assistance with a loan query. He opens the mobile banking app of Union Bank, Vyom and is prompted by the Union Bank’s Chatbot UVA to record a short video explaining his question.</p></li>
+          <li><p>The facial recognition system authenticates his identity using the facial model stored in the app, along with his Aadhaar-based authentication.</p></li>
+          <li><p>The system creates a service ticket and pulls an analytical snapshot of Vatsalya’s financial profile, highlighting his credit score, previous loan applications, and spending habits. Based on this data, the system suggests a loan option with the relevant details.</p></li>
+          <li><p>Vatsalya receives an appointment confirmation for a video call with a customer service representative to discuss the loan options further.</p></li>
         </ul>
         </div>
         <div style="width:100%;">
         <p><strong>Scenario 2: New Customer</strong></p>
         <ul>
-          <li><h4>A new customer, Ravi, downloads the Union Bank Of India’s mobile app Vyom and begins the onboarding process. He uploads his Aadhaar and PAN card details.</h4></li>
-          <li><h4>The system fetches information from these records, assesses Ravi’s financial background, and routes him to the loan department because his profile indicates he is interested in a housing loan.</h4></li>
-          <li><h4>Ravi’s service ticket is generated with an analytical snapshot that includes his credit score, income, and potential eligibility for various loan options.</h4></li>
-          <li><h4>Ravi is then directed to the loan officer, who receives the ticket with personalized suggestions for Ravi based on the data.</h4></li>
+          <li><p>A new customer, Ravi, downloads the Union Bank Of India’s mobile app Vyom and begins the onboarding process. He uploads his Aadhaar and PAN card details.</p></li>
+          <li><p>The system fetches information from these records, assesses Ravi’s financial background, and routes him to the loan department because his profile indicates he is interested in a housing loan.</p></li>
+          <li><p>Ravi’s service ticket is generated with an analytical snapshot that includes his credit score, income, and potential eligibility for various loan options.</p></li>
+          <li><p>Ravi is then directed to the loan officer, who receives the ticket with personalized suggestions for Ravi based on the data.</p></li>
         </ul>
         </div>
         <h2 style='color: #634647;'>Expected Solution:</h2>
         <ul>
-          <li><h4>The solution should integrate a face training model within the Union bank of India’s mobile app Vyom for fraud prevention, utilizing AADHAAR-based authentication to verify customer identities and enable edge processing. This will ensure secure transactions and minimize identity fraud risks, even in remote areas.</h4></li>
-          <li><h4>A feedback module should generate AI-driven suggestions for branches and staff, analyzing customer interactions and transaction patterns to enhance service quality and deriving actionable insights for better customer service and resource allocation.</h4></li>
+          <li><p>The solution should integrate a face training model within the Union bank of India’s mobile app Vyom for fraud prevention, utilizing AADHAAR-based authentication to verify customer identities and enable edge processing. This will ensure secure transactions and minimize identity fraud risks, even in remote areas.</p></li>
+          <li><p>A feedback module should generate AI-driven suggestions for branches and staff, analyzing customer interactions and transaction patterns to enhance service quality and deriving actionable insights for better customer service and resource allocation.</p></li>
         </ul>
       `,
     },
     {
       title:
-        "Need for Government Agencies Assistance for takedown of Malicious/Phishing domain",
+        "Need for Government Agencies Assistance for takedown of Malicious/Phishing domain:",
+      majorArea: "CYBERSECURITY",
+      subArea:
+        "Advance Fraud Detection Mechanisms - Phishing, Identity Theft and Fraud Prevention",
       description:
-        "Challenges in phishing domain takedowns and expected solutions.",
+        "Develop a centralized platform or API to facilitate collaboration between public and private entities for faster takedown of malicious domains:",
       fullContent: `
-        <p>Many times, it is observed that not all domain registrars or hosting providers are cooperative when it comes to requests for phishing domain takedowns, especially if they operate in jurisdictions where state actors or threat actors benefit from relaxed cybersecurity laws. Public Sector Banks (PSBs) in India face significant challenges in the timely takedown of suspicious, malicious, or phishing domains impersonating their entities.</p>
-        <p>In several instances, third-party takedown service providers have been unable to successfully remove such phishing domains or fraudulent applications. Furthermore, there is an absence of a well-defined, centralized mechanism provided by any authority to address these issues. Specifically, difficulties arise in identifying a single point of contact or department responsible for handling such cases, as well as a lack of clear guidelines on how to proceed with these requests.</p>
-        <p>This often leads to delays in resolving these threats, potentially compromising the security of customers.</p>
-        <h2 style='color: #634647;'>Example Scenario: Arnav’s Challenge</h2>
-        <p>Arnav, a cybersecurity specialist at a Union Bank Of India, discovers a phishing website impersonating their bank. The fraudulent website is collecting sensitive customer information, posing a significant threat. Despite contacting third-party takedown service providers, the domain remains active due to non-cooperation from the registrar, located in a jurisdiction with lax cybersecurity regulations. This delay risks exposing customer data and eroding trust in the institution.</p>
-        <h2 style='color: #634647;'>Expected Solution:</h2>
+        <h2 style='color: #634647;'>Features:</h2>
         <ul>
-          <li><h3>Streamlined Takedown Processes:</h3>
-            <ul>
-              <li>A clear and efficient mechanism for reporting phishing domains and fraudulent applications to the right stakeholders.</li>
-              <li>Templates or guidelines for PSBs to escalate and follow up on takedown requests from the appropriate Government authority.</li>
-            </ul>
-          </li>
-          <li><h3>Centralized Coordination:</h3>
-            <ul>
-              <li>A centralized platform or framework to ensure coordination among banks, government, cybersecurity experts, and service providers.</li>
-              <li>Efficient coordination facilitation between the right department and the Bank.</li>
-              <li>Mechanisms to overcome jurisdictional challenges and non-cooperative registrars.</li>
-            </ul>
-          </li>
+          <li>Automated detection of phishing domains using AI and threat intelligence.</li>
+          <li>Workflow to report malicious activity to the relevant government agency.</li>
+          <li>Real-time updates on takedown progress.</li>
+          <li>Integration with CERTs and domain registrars for seamless coordination.</li>
         </ul>
+        <h2 style='color: #634647;'>Impact:</h2>
+        <ul>
+          <li>Reduce response times for domain takedowns.</li>
+          <li>Enhance public trust by mitigating cybersecurity risks promptly.</li>
+          <li>Support law enforcement in prosecuting cybercriminals.</li>
+        </ul>
+        <p>
+          This use case emphasizes the critical role of government agencies in securing the digital ecosystem and provides an actionable roadmap for mitigating phishing and malicious domain threats.
+        </p>
       `,
     },
+
     {
       title:
         "Leveraging GenAI for Customer Analytics and Fraud Detection in Banking",
+      majorArea: "GENERATIVE AI",
+      subArea: "Customer analytics / Fraud detection using GenAI",
       description:
         "Using GenAI for customer profiling, fraud detection, and insights.",
       fullContent: `
         <p>With the rise of digital banking, financial institutions face an increasing threat of financial crimes like money laundering and fraud. This document explores how Generative AI (GenAI) can help address these challenges through large-scale data analysis to provide real-time, actionable insights. Hypothetical use cases involving individuals like Naman and Arnav illustrate practical applications.</p>
         <div style="width:100%;">
         <div style="padding-left:3px;">
-        ${isMobile
-          ? "<h3 style='color: #634647; letter-spacing: 3px;'>Financial Institutions Struggle With:</h3>"
-          : "<h2 style='color: #634647; letter-spacing: 3px;'>Financial Institutions Struggle With:</h2>"
+        ${
+          isMobile
+            ? "<h3 style='color: #634647; letter-spacing: 3px;'>Financial Institutions Struggle With:</h3>"
+            : "<h2 style='color: #634647; letter-spacing: 3px;'>Financial Institutions Struggle With:</h2>"
         }
         </div>
         <ul>
-          <li><h3>Customer profiling and onboarding</h3></li>
-          <li><h3>Complex transaction networks</h3></li>
-          <li><h3>Cross-border transactions</h3></li>
-          <li><h3>Short lifespan fraudulent accounts</h3></li>
-          <li><h3>High false-positive rates in fraud detection</h3></li>
-          <li><h3>Advanced evasion techniques by fraudsters</h3></li>
-          <li><h3>Customer analysis</h3></li>
-          <li><h3>Insider threats / fraud detection</h3></li>
+          <li><p>Customer profiling and onboarding</p></li>
+          <li><p>Complex transaction networks</p></li>
+          <li><p>Cross-border transactions</p></li>
+          <li><p>Short lifespan fraudulent accounts</p></li>
+          <li><p>High false-positive rates in fraud detection</p></li>
+          <li><p>Advanced evasion techniques by fraudsters</p></li>
+          <li><p>Customer analysis</p></li>
+          <li><p>Insider threats / fraud detection</p></li>
         </ul>
         </div>
         <h2 style='color: #634647;'>Real-Life Example: Naman’s Journey</h2>
@@ -176,89 +179,42 @@ export default function ProblemStatements() {
   return (
     <Container id="ps" maxWidth="xl">
       <Typography
-        variant={isMobile ? "h3" : "h3"}
-        align="left"
+        variant={isMobile ? "h3" : "h2"}
+        align="center"
         sx={{
-          fontWeight: 500,
+          fontWeight: 700,
           mt: { xs: 6, md: 8 },
-          mb: { xs: 2, md: 3 },
+          mb: { xs: 4, md: 6 },
           color: "text.primary",
         }}
       >
         Problem Statements
       </Typography>
+
       <Box
-        display="flex"
-        justifyContent="space-between"
-        gap="2rem"
-        marginX="-1.5rem"
-        padding="1rem"
-        paddingX="2.5rem"
-      >
-        <img
-          src={fintech}
-          alt="Fintech"
-          width="20%"
-          style={{ borderRadius: 60 }}
-        />
-        <Box>
-          <Typography
-            variant="h4"
-            align="right"
-            color="secondary"
-            sx={{ fontWeight: 500 }}
-          >
-            Customer Service and Identity Certification
-          </Typography>
-          <Typography variant="h5" align="right" sx={{ fontWeight: 500 }}>
-            Business Analytics-Based Appointment Management System for Efficient
-            Customer Service
-          </Typography>
-          <Typography variant="h6" align="right" marginTop="2rem">
-            Design and implement a facial recognition system to streamline
-            customer service queries.
-          </Typography>
-        </Box>
-      </Box>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        flexDirection="row-reverse"
-        gap="2rem"
-        marginX="-1.5rem"
-        padding="1rem"
-        paddingX="2.5rem"
         sx={{
-          backgroundColor: "background.main",
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "1fr",
+            md: "repeat(2, 1fr)",
+            lg: "repeat(3, 1fr)",
+          },
+          gap: 4,
+          justifyItems: "center",
+          alignItems: "stretch",
         }}
       >
-        <img
-          src={cybersecurity}
-          alt="Fintech"
-          width="20%"
-          style={{ borderRadius: 60 }}
-        />
-        <Typography variant="h4" align="left" sx={{ fontWeight: 500 }}>
-          Cybersecurity
-        </Typography>
-      </Box>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        gap="2rem"
-        marginX="-1.5rem"
-        padding="1rem"
-        paddingX="2.5rem"
-      >
-        <img
-          src={genai}
-          alt="Fintech"
-          width="20%"
-          style={{ borderRadius: 60 }}
-        />
-        <Typography variant="h4" align="left" sx={{ fontWeight: 500 }}>
-          GenAI
-        </Typography>
+        {data.map((value, key) => (
+          <CustomizedDialogs
+            key={key}
+            title={value.title}
+            majorArea={value.majorArea}
+            subArea={value.subArea}
+            description={value.description}
+            fullContent={value.fullContent}
+            imgValue={imgList[key]}
+          />
+        ))}
       </Box>
     </Container>
   );

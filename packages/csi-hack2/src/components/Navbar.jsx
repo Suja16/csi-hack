@@ -6,7 +6,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import Logo from "../assets/logos/iDEA.png";
+import Logo from "../assets/idea.png";
 import CloseIcon from "@mui/icons-material/Close";
 import RegistrationForm from "./registrationFrom";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -122,7 +122,7 @@ const Navbar = ({ login, logout, open, setopen, isLoading }) => {
   }, [location.pathname]);
 
   return (
-    <Box id="navbar">
+    <Box>
       {/* Main Navbar */}
       <Box
         display="flex"
