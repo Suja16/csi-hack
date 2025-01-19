@@ -5,6 +5,7 @@ import AppRouter from "./AppRouter.jsx";
 import { BrowserRouter as Router } from "react-router-dom";
 import AppBarHeader from "./components/AppBarHeader.jsx";
 import Sidebar from "./components/NewSidebar.jsx";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
@@ -30,6 +31,7 @@ function App() {
           }}
         >
           <AppRouter />
+          <ToastContainer />
         </Box>
       </Box>
     </Router>

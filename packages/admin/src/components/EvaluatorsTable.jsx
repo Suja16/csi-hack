@@ -12,12 +12,14 @@ import {
   Paper,
   Select,
   Typography,
+  Snackbar,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { EVALUATOR_QUERY, ASSIGN_TEAM } from "../queries";
 import AddEvaluator from "./AddEvaluator";
+import { success, failure } from "../utils/snackbar";
 
 const styles = {
   root: {
@@ -76,7 +78,16 @@ const EvaluatorsTable = () => {
     },
   });
   const { data, loading, error, refetch } = useQuery(EVALUATOR_QUERY);
-  const [assignTeam, { loading: assignLoading }] = useMutation(ASSIGN_TEAM);
+  const [assignTeam, { loading: assignLoading }] = useMutation(ASSIGN_TEAM, {
+    onCompleted: () => {
+      refetch();
+      success("Assigned successfully");
+      handleDialogClose();
+    },
+    onError: (error) => {
+      failure(error.message);
+    },
+  });
   const [open, setOpen] = useState(false);
 
   const handleEditClick = useCallback(
@@ -109,43 +120,36 @@ const EvaluatorsTable = () => {
   );
 
   const handleSave = useCallback(async () => {
-    const promises = [];
+    const objects = [];
+
     if (editDialog.data.mentor) {
-      promises.push(
-        assignTeam({
-          variables: {
-            Idea_user_Id: editDialog.data.mentor,
-            team_id: editDialog.data.id,
-          },
-        }),
-      );
+      objects.push({
+        Idea_user_Id: editDialog.data.mentor,
+        team_id: editDialog.data.id,
+      });
     }
     if (editDialog.data.evaluator1) {
-      promises.push(
-        assignTeam({
-          variables: {
-            Idea_user_Id: editDialog.data.evaluator1,
-            team_id: editDialog.data.id,
-          },
-        }),
-      );
+      objects.push({
+        Idea_user_Id: editDialog.data.evaluator1,
+        team_id: editDialog.data.id,
+      });
     }
-
     if (editDialog.data.evaluator2) {
-      promises.push(
-        assignTeam({
-          variables: {
-            Idea_user_Id: editDialog.data.evaluator2,
-            team_id: editDialog.data.id,
-          },
-        }),
-      );
+      objects.push({
+        Idea_user_Id: editDialog.data.evaluator2,
+        team_id: editDialog.data.id,
+      });
     }
-
-    await Promise.all(promises);
-    await refetch();
-    handleDialogClose();
-  }, [editDialog.data, handleDialogClose]);
+    try {
+      await assignTeam({
+        variables: {
+          objects, // Pass the array of objects here
+        },
+      });
+    } catch (error) {
+      console.error("Error assigning team:", error);
+    }
+  }, [editDialog.data, assignTeam]);
 
   // useEffect(() => {
   //   if (editDialog.open) {
@@ -426,7 +430,7 @@ const EvaluatorsTable = () => {
           </DialogActions>
         </Dialog>
 
-        <AddEvaluator open={open} setOpen={setOpen} />
+        <AddEvaluator open={open} setOpen={setOpen} refetch={refetch} />
       </Paper>
     </Box>
   );

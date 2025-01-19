@@ -80,12 +80,9 @@ export const EVALUATOR_QUERY = gql`
 `;
 
 export const ASSIGN_TEAM = gql`
-  mutation MyMutation($Idea_user_Id: Int, $team_id: Int) {
-    insert_feedbacks_one(
-      object: { Idea_user_Id: $Idea_user_Id, team_id: $team_id }
-    ) {
-      Idea_user_Id
-      team_id
+  mutation MyMutation($objects: [feedbacks_insert_input!]!) {
+    insert_feedbacks(objects: $objects) {
+      affected_rows
     }
   }
 `;
