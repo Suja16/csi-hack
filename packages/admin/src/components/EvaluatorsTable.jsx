@@ -79,10 +79,6 @@ const EvaluatorsTable = () => {
   const [assignTeam, { loading: assignLoading }] = useMutation(ASSIGN_TEAM);
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   const handleEditClick = useCallback(
     (id) => {
       const teamToEdit = data.Team.find((team) => team.id === id);
@@ -107,17 +103,12 @@ const EvaluatorsTable = () => {
     [data?.Team],
   );
 
-  useEffect(() => {
-    console.log(editDialog);
-  }, [editDialog]);
-
   const handleDialogClose = useCallback(
     () => setEditDialog((prev) => ({ ...prev, open: false })),
     [],
   );
 
   const handleSave = useCallback(async () => {
-    console.log(editDialog);
     const promises = [];
     if (editDialog.data.mentor) {
       promises.push(
