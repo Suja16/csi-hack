@@ -90,30 +90,7 @@ const ProblemStatementCard = () => {
                   marginBottom: { xs: "20px", md: "0" },
                 }}
               >
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: 160,
-                    left: 0,
-                    width: "100%",
-                    height: "300px",
-                    backgroundColor: `${theme.palette.primary.main}15`,
-                    borderRadius: "20px",
-                    transform: "skew(0deg, -2deg)",
-                    zIndex: 0,
-                    overflow: "hidden", // background stays within bounds
-                    "&::after": {
-                      content: '""',
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      borderRadius: "20px",
-                      boxShadow: "inset 0 0 20px rgba(0,0,0,0.1)",
-                    },
-                  }}
-                />
+
 
                 <motion.div
                   variants={cardVariants}
