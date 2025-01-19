@@ -1,5 +1,4 @@
 import EditIcon from "@mui/icons-material/Edit";
-import RateReviewIcon from "@mui/icons-material/RateReview";
 import {
   Box,
   Button,
@@ -12,21 +11,13 @@ import {
   MenuItem,
   Paper,
   Select,
-  TextField,
   Typography,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import PropTypes from "prop-types";
 import { useCallback, useEffect, useMemo, useState } from "react";
-
-const MENTOR_OPTIONS = ["Ayush Mehta", "Oni Chan", "vats boy"];
-const EVALUATOR_OPTIONS = [
-  "Minank Mehta",
-  "Rai Janpara",
-  "Twinkle Naman",
-  "Suja16",
-];
-const STATUS_OPTIONS = ["Reviewed", "Pending", "Ongoing", "Assigned"];
+import { useQuery, useMutation } from "@apollo/client";
+import { EVALUATOR_QUERY, ASSIGN_TEAM } from "../queries";
+import AddEvaluator from "./AddEvaluator";
 
 const styles = {
   root: {
@@ -74,163 +65,107 @@ const styles = {
   },
 };
 
-const FormField = ({
-  name,
-  label,
-  type = "text",
-  options = null,
-  multiline = false,
-  value,
-  onChange,
-}) => (
-  <FormControl sx={styles.formControl}>
-    {type === "select" ? (
-      <>
-        <InputLabel>{label}</InputLabel>
-        <Select
-          name={name}
-          value={value || ""}
-          onChange={onChange}
-          label={label}
-          sx={{ bgcolor: "white" }}
-        >
-          {options?.map((option) => (
-            <MenuItem key={option} value={option}>
-              {option}
-            </MenuItem>
-          ))}
-        </Select>
-      </>
-    ) : (
-      <TextField
-        name={name}
-        label={label}
-        value={value || ""}
-        onChange={onChange}
-        variant="outlined"
-        fullWidth
-        multiline={multiline}
-        rows={multiline ? 4 : 1}
-        sx={{ bgcolor: "white" }}
-      />
-    )}
-  </FormControl>
-);
-
-FormField.propTypes = {
-  name: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(["text", "select"]),
-  options: PropTypes.arrayOf(PropTypes.string),
-  multiline: PropTypes.bool,
-  value: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-};
-
 const EvaluatorsTable = () => {
-  const [teams, setTeams] = useState([]);
   const [editDialog, setEditDialog] = useState({
     open: false,
     data: {
       teamName: "",
-      mentorAssigned: "",
-      evaluator1Assigned: "",
-      evaluator2Assigned: "",
-      reviewGiven: "",
-      status: "",
+      mentor: null,
+      evaluator1: null,
+      evaluator2: null,
     },
   });
-  const [loading, setLoading] = useState(true);
+  const { data, loading, error, refetch } = useQuery(EVALUATOR_QUERY);
+  const [assignTeam, { loading: assignLoading }] = useMutation(ASSIGN_TEAM);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const fetchTeams = async () => {
-      try {
-        const dummyData = [
-          {
-            id: 1,
-            teamName: "Team A",
-            mentorAssigned: "Rai Janpara",
-            evaluator1Assigned: "Aayush Mehta",
-            evaluator2Assigned: "Aayush Mehta",
-            reviewGiven: "Good progress",
-            status: "Ongoing",
-          },
-          {
-            id: 2,
-            teamName: "Team B",
-            mentorAssigned: "Saman Nachetee",
-            evaluator1Assigned: "Ayush Mehta",
-            evaluator2Assigned: "Ayush Mehta",
-            reviewGiven: "Needs improvement",
-            status: "Pending",
-          },
-          {
-            id: 3,
-            teamName: "Team C",
-            mentorAssigned: "Viraj Chokeme",
-            evaluator1Assigned: "Ayush Mehta",
-            evaluator2Assigned: "Ayush Mehta",
-            reviewGiven: "Excellent work",
-            status: "Reviewed",
-          },
-          {
-            id: 4,
-            teamName: "Team D",
-            mentorAssigned: "Suja16",
-            evaluator1Assigned: "Grace Lee",
-            evaluator2Assigned: "Ayush Mehta",
-            reviewGiven: "Excellent work",
-            status: "Reviewed",
-          },
-        ];
-        setTeams(dummyData);
-      } catch (error) {
-        console.error("Error fetching teams:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchTeams();
-  }, []);
+    console.log(data);
+  }, [data]);
 
   const handleEditClick = useCallback(
     (id) => {
-      const teamToEdit = teams.find((team) => team.id === id);
-      setEditDialog({ open: true, data: teamToEdit });
+      const teamToEdit = data.Team.find((team) => team.id === id);
+      const mentor = teamToEdit.feedbacks_from_idea.filter(
+        (user) => user.Idea_USER.roles == "mentor",
+      )[0]?.Idea_USER.id;
+      const evaluator1 = teamToEdit.feedbacks_from_idea.filter(
+        (user) => user.Idea_USER.roles == "evaluator",
+      )[0]?.Idea_USER.id;
+      const evaluator2 = teamToEdit.feedbacks_from_idea.filter(
+        (user) => user.Idea_USER.roles == "evaluator",
+      )[1]?.Idea_USER.id;
+      const d = {
+        id: teamToEdit.id,
+        name: teamToEdit.name,
+        mentor,
+        evaluator1,
+        evaluator2,
+      };
+      setEditDialog({ open: true, data: d });
     },
-    [teams],
+    [data?.Team],
   );
+
+  useEffect(() => {
+    console.log(editDialog);
+  }, [editDialog]);
 
   const handleDialogClose = useCallback(
     () => setEditDialog((prev) => ({ ...prev, open: false })),
     [],
   );
 
-  const handleFormChange = useCallback((event) => {
-    const { name, value } = event.target;
-    setEditDialog((prev) => ({
-      ...prev,
-      data: { ...prev.data, [name]: value },
-    }));
-  }, []);
+  const handleSave = useCallback(async () => {
+    console.log(editDialog);
+    const promises = [];
+    if (editDialog.data.mentor) {
+      promises.push(
+        assignTeam({
+          variables: {
+            Idea_user_Id: editDialog.data.mentor,
+            team_id: editDialog.data.id,
+          },
+        }),
+      );
+    }
+    if (editDialog.data.evaluator1) {
+      promises.push(
+        assignTeam({
+          variables: {
+            Idea_user_Id: editDialog.data.evaluator1,
+            team_id: editDialog.data.id,
+          },
+        }),
+      );
+    }
 
-  const handleSave = useCallback(() => {
-    setTeams((prevTeams) =>
-      prevTeams.map((team) =>
-        team.id === editDialog.data.id ? { ...team, ...editDialog.data } : team,
-      ),
-    );
+    if (editDialog.data.evaluator2) {
+      promises.push(
+        assignTeam({
+          variables: {
+            Idea_user_Id: editDialog.data.evaluator2,
+            team_id: editDialog.data.id,
+          },
+        }),
+      );
+    }
+
+    await Promise.all(promises);
+    await refetch();
     handleDialogClose();
   }, [editDialog.data, handleDialogClose]);
 
-  useEffect(() => {
-    if (editDialog.open) {
-      const teamToEdit = teams.find((team) => team.id === editDialog.data.id);
-      if (teamToEdit) {
-        setEditDialog((prev) => ({ ...prev, data: teamToEdit }));
-      }
-    }
-  }, [editDialog.open, teams]);
+  // useEffect(() => {
+  //   if (editDialog.open) {
+  //     const teamToEdit = data.Team.find(
+  //       (team) => team.id === editDialog.data.id,
+  //     );
+  //     if (teamToEdit) {
+  //       setEditDialog((prev) => ({ ...prev, data: teamToEdit }));
+  //     }
+  //   }
+  // }, [editDialog.open, data?.Team]);
 
   const columns = useMemo(
     () => [
@@ -242,16 +177,14 @@ const EvaluatorsTable = () => {
         filterable: false,
         disableColumnMenu: true,
         renderHeader: () => (
-          <div style={{ fontWeight: "bold", fontSize: "1rem", paddingLeft: 20 }}>
-            Team ID
-          </div>
+          <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Team ID</div>
         ),
         renderCell: (params) => (
           <div style={{ display: "flex", paddingLeft: 20 }}>{params.value}</div>
         ),
       },
       {
-        field: "teamName",
+        field: "name",
         headerName: "Team Name",
         width: 150,
         flex: 1,
@@ -271,7 +204,16 @@ const EvaluatorsTable = () => {
         filterable: false,
         disableColumnMenu: true,
         renderHeader: () => (
-          <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Mentor Assigned</div>
+          <div style={{ fontWeight: "bold", fontSize: "1rem" }}>
+            Mentor Assigned
+          </div>
+        ),
+        renderCell: (params) => (
+          <div style={{ display: "flex" }}>
+            {params.row?.feedbacks_from_idea.filter(
+              (user) => user.Idea_USER.roles == "mentor",
+            )[0]?.Idea_USER.name || "Not Assigned"}
+          </div>
         ),
       },
       {
@@ -283,7 +225,16 @@ const EvaluatorsTable = () => {
         filterable: false,
         disableColumnMenu: true,
         renderHeader: () => (
-          <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Evaluator 1</div>
+          <div style={{ fontWeight: "bold", fontSize: "1rem" }}>
+            Evaluator 1
+          </div>
+        ),
+        renderCell: (params) => (
+          <div style={{ display: "flex" }}>
+            {params.row?.feedbacks_from_idea.filter(
+              (user) => user.Idea_USER.roles == "evaluator",
+            )[0]?.Idea_USER.name || "Not Assigned"}
+          </div>
         ),
       },
       {
@@ -295,19 +246,16 @@ const EvaluatorsTable = () => {
         filterable: false,
         disableColumnMenu: true,
         renderHeader: () => (
-          <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Evaluator 2</div>
+          <div style={{ fontWeight: "bold", fontSize: "1rem" }}>
+            Evaluator 2
+          </div>
         ),
-      },
-      {
-        field: "reviewGiven",
-        headerName: "Review",
-        width: 200,
-        flex: 1,
-        sortable: false,
-        filterable: false,
-        disableColumnMenu: true,
-        renderHeader: () => (
-          <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Review</div>
+        renderCell: (params) => (
+          <div style={{ display: "flex" }}>
+            {params.row?.feedbacks_from_idea.filter(
+              (user) => user.Idea_USER.roles == "evaluator",
+            )[1]?.Idea_USER.name || "Not Assigned"}
+          </div>
         ),
       },
       {
@@ -331,9 +279,9 @@ const EvaluatorsTable = () => {
             onClick={() => handleEditClick(params.row.id)}
             size="small"
             sx={{
-              fontWeight: "bold", 
-              fontSize: "1rem", 
-              textTransform: "none"
+              fontWeight: "bold",
+              fontSize: "1rem",
+              textTransform: "none",
             }}
           >
             Edit
@@ -344,14 +292,28 @@ const EvaluatorsTable = () => {
         ),
       },
     ],
-    [handleEditClick]
+    [handleEditClick],
   );
+
+  if (loading) return <p>Loading...</p>;
+
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <Box sx={styles.root}>
       <Paper sx={styles.paper} elevation={3}>
+        <Box display="flex" justifyContent="flex-start">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setOpen(true)}
+            sx={{ mb: 2 }}
+          >
+            Add Evaluator
+          </Button>
+        </Box>
         <DataGrid
-          rows={teams}
+          rows={data.Team}
           columns={columns}
           loading={loading}
           disableSelectionOnClick
@@ -359,7 +321,6 @@ const EvaluatorsTable = () => {
           rowsPerPageOptions={[5, 10, 20]}
           sx={{ "& .MuiDataGrid-virtualScroller": { minHeight: "300px" } }}
         />
-
         <Dialog
           open={editDialog.open}
           onClose={handleDialogClose}
@@ -368,80 +329,113 @@ const EvaluatorsTable = () => {
         >
           <DialogTitle sx={styles.dialogTitle}>
             <Typography variant="h6">
-              <EditIcon sx={{ mr: 1 }} /> Edit Team
+              <EditIcon sx={{ mr: 1 }} /> {editDialog.data.name}
             </Typography>
           </DialogTitle>
 
           <DialogContent sx={styles.dialogContent} dividers>
             <Box mb={3}>
               <Typography variant="h6" sx={styles.sectionTitle}>
-                Team Information
-              </Typography>
-              <FormField
-                name="teamName"
-                label="Team Name"
-                value={editDialog.data.teamName}
-                onChange={handleFormChange}
-              />
-            </Box>
-
-            <Box mb={3}>
-              <Typography variant="h6" sx={styles.sectionTitle}>
                 Assignments
               </Typography>
-              <FormField
-                name="mentorAssigned"
-                label="Mentor Assigned"
-                type="select"
-                options={MENTOR_OPTIONS}
-                value={editDialog.data.mentorAssigned}
-                onChange={handleFormChange}
-              />
-              <FormField
-                name="evaluator1Assigned"
-                label="Evaluator 1"
-                type="select"
-                options={EVALUATOR_OPTIONS}
-                value={editDialog.data.evaluator1Assigned}
-                onChange={handleFormChange}
-              />
-              <FormField
-                name="evaluator2Assigned"
-                label="Evaluator 2"
-                type="select"
-                options={EVALUATOR_OPTIONS}
-                value={editDialog.data.evaluator2Assigned}
-                onChange={handleFormChange}
-              />
-            </Box>
-
-            <Box sx={styles.reviewSection}>
-              <Typography variant="h6" sx={styles.sectionTitle}>
-                <RateReviewIcon /> Review Details
-              </Typography>
-              <FormField
-                name="reviewGiven"
-                label="Performance Review"
-                multiline={true}
-                value={editDialog.data.reviewGiven}
-                onChange={handleFormChange}
-              />
-              <FormField
-                name="status"
-                label="Review Status"
-                type="select"
-                options={STATUS_OPTIONS}
-                value={editDialog.data.status}
-                onChange={handleFormChange}
-              />
+              <FormControl fullWidth sx={{ mb: 2 }}>
+                <InputLabel>Mentor</InputLabel>
+                <Select
+                  name="mentor"
+                  label="MENTOR"
+                  value={editDialog.data.mentor || 0}
+                  onChange={(e) =>
+                    setEditDialog({
+                      open: editDialog.open,
+                      data: {
+                        ...editDialog.data,
+                        mentor: e.target.value,
+                      },
+                    })
+                  }
+                >
+                  <MenuItem value={0}>
+                    <em>None</em>
+                  </MenuItem>
+                  {data?.Idea_USERS?.filter(
+                    (user) => user.roles == "mentor",
+                  ).map((mentor) => (
+                    <MenuItem key={mentor.id} value={mentor.id}>
+                      {mentor.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl fullWidth sx={{ mb: 2 }}>
+                <InputLabel>Evaluator 1</InputLabel>
+                <Select
+                  name="evaluator1"
+                  label="EVALUATOR 1"
+                  value={editDialog.data.evaluator1 || 0}
+                  onChange={(e) =>
+                    setEditDialog({
+                      open: editDialog.open,
+                      data: {
+                        ...editDialog.data,
+                        evaluator1: e.target.value,
+                      },
+                    })
+                  }
+                >
+                  <MenuItem value={0}>
+                    <em>None</em>
+                  </MenuItem>
+                  {data?.Idea_USERS?.filter(
+                    (user) => user.roles == "evaluator",
+                  ).map((evaluator) => (
+                    <MenuItem key={evaluator.id} value={evaluator.id}>
+                      {evaluator.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl fullWidth sx={{ mb: 2 }}>
+                <InputLabel id="demo-simple-select-label">
+                  Evaluator 2
+                </InputLabel>
+                <Select
+                  name="evaluator2"
+                  label="EVALUATOR 2"
+                  value={editDialog.data.evaluator2 || 0}
+                  onChange={(e) =>
+                    setEditDialog({
+                      open: editDialog.open,
+                      data: {
+                        ...editDialog.data,
+                        evaluator2: e.target.value,
+                      },
+                    })
+                  }
+                >
+                  <MenuItem value={0}>
+                    <em>None</em>
+                  </MenuItem>
+                  {data?.Idea_USERS?.filter(
+                    (user) => user.roles == "evaluator",
+                  ).map((evaluator) => (
+                    <MenuItem key={evaluator.id} value={evaluator.id}>
+                      {evaluator.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Box>
           </DialogContent>
 
           <DialogActions sx={styles.dialogActions}>
             <Button onClick={handleDialogClose}>Cancel</Button>
-            <Button onClick={handleSave}>Save Changes</Button>
+            <Button onClick={handleSave} type="submit" loding={assignLoading}>
+              Save Changes
+            </Button>
           </DialogActions>
         </Dialog>
+
+        <AddEvaluator open={open} setOpen={setOpen} />
       </Paper>
     </Box>
   );

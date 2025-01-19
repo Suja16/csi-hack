@@ -18,7 +18,7 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import TextBox from "./TextBox";
+import TextBox from "../../../ui/TextBox";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Delete from "@mui/icons-material/Delete";
@@ -155,7 +155,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
           baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
-        }
+        },
       );
       if (response.status === 200 && response.data.error == false) {
         setIsSubmitting(false);
@@ -181,7 +181,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
           baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
-        }
+        },
       );
       console.log(response.data);
       setSnackBarMessage("Left team successfully");
@@ -261,28 +261,35 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
             textTransform: "none",
           }}
           onClick={() =>
-            navigator.clipboard.writeText(eventData.Participant.team.invite_code)
+            navigator.clipboard.writeText(
+              eventData.Participant.team.invite_code,
+            )
           }
         >
           {eventData.Participant.team.invite_code}
         </Button>
         {!submitted &&
-          userData.id === eventData.Participant.team.leader_id &&
-          eventData.Participant.team.Participant.length == 4 ? (
+        userData.id === eventData.Participant.team.leader_id &&
+        eventData.Participant.team.Participant.length == 4 ? (
           <>
-            <Button variant="contained" onClick={handleClickOpen} sx={{ padding: "1rem", marginTop: "3rem" }}>
-              Upload <br />  Attachments
+            <Button
+              variant="contained"
+              onClick={handleClickOpen}
+              sx={{ padding: "1rem", marginTop: "3rem" }}
+            >
+              Upload <br /> Attachments
             </Button>
-            <Dialog open={open} onClose={handleClose} >
-              <DialogTitle variant="subtitle1" sx={{ margin: 2 }}>Upload Your Attachment</DialogTitle>
-              <DialogContent >
+            <Dialog open={open} onClose={handleClose}>
+              <DialogTitle variant="subtitle1" sx={{ margin: 2 }}>
+                Upload Your Attachment
+              </DialogTitle>
+              <DialogContent>
                 <Grid2
                   container
                   component="form"
                   onSubmit={handleSubmit(onSubmit)}
                   justifyContent="center"
                   sx={{ padding: "3" }}
-
                 >
                   <Grid2 item size={10}>
                     <TextBox
@@ -293,7 +300,6 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
                       helperText={errors?.video?.message}
                       error={!!errors?.video?.message}
                       width="50%"
-
                     />
                   </Grid2>
                   <Grid2 item size={5}>
@@ -394,7 +400,11 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
                     <Button
                       variant="contained"
                       type="submit"
-                      sx={{ padding: "1rem", marginTop: "1rem", marginX: "auto" }}
+                      sx={{
+                        padding: "1rem",
+                        marginTop: "1rem",
+                        marginX: "auto",
+                      }}
                       disabled={isSubmitting}
                     >
                       Submit
@@ -432,7 +442,6 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
           </Grid2>
         )}
       </Grid2>
-
     </Grid2>
   );
 };
