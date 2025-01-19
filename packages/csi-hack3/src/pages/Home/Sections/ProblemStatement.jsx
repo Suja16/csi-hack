@@ -239,7 +239,7 @@ const ProblemStatementCard = () => {
               }}
             >
               <Typography variant="h6" component="div">
-                {selectedPS.title}
+                {selectedPS.category}
               </Typography>
               <IconButton
                 onClick={() => setSelectedPS(null)}
