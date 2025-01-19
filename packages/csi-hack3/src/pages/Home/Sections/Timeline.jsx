@@ -214,7 +214,29 @@ const HackathonTimeline = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <Typography variant="h3" align="center" gutterBottom>
+          <Typography
+            variant="h2"
+            align="center"
+            sx={{
+              fontWeight: 900,
+              color: 'primary.main',
+              marginBottom: (theme) => theme.spacing(6),
+              textTransform: 'uppercase',
+              position: 'relative',
+              fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+              '&::after': {
+                content: '""',
+                position: 'absolute',
+                bottom: '-15px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: '80px',
+                height: '4px',
+                backgroundColor: 'secondary.main',
+                borderRadius: '2px',
+              },
+            }}
+          >
             Hackathon Timeline
           </Typography>
         </motion.div>
