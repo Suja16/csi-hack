@@ -51,13 +51,28 @@ const Team = () => {
       minHeight="100vh"
       padding="2rem"
     >
-      <Grid2 item size={{ xs: 12, md: 6 }}>
-        <HeaderBox header={"Team Name: " + eventData.Participant.team.name}>
-          <TeamDetails
-            setShowSnackBar={setShowSnackBar}
-            setSnackBarMessage={setSnackBarMessage}
-          />
-        </HeaderBox>
+      <Grid2 item container spacing={1} size={{ xs: 12, md: 6 }}>
+        <Grid2 item size={12}>
+          <HeaderBox header={"Team Name: " + eventData.Participant.team.name}>
+            <TeamDetails
+              setShowSnackBar={setShowSnackBar}
+              setSnackBarMessage={setSnackBarMessage}
+            />
+          </HeaderBox>
+        </Grid2>
+        <Grid2 item size={12}>
+          <HeaderBox header={"Important Instructions"}>
+            <Typography variant="overline">
+              * Only the team leader is required to submit the PPT template.<br />
+              * The submission must be in PDF Format.<br />
+              * The submission must be in the template as provided by the organiser.<br />
+              * The submission should not exceed 7 slides.<br />
+              * The header slide must be included in the submission.<br />
+              * The utilisation of space is up to the discretion of the participants, so long as it is visible for evaluators to read and understand.<br />
+              * The font size must not be less than 18 points and must be in Marcellus font.<br />
+            </Typography>
+          </HeaderBox>
+        </Grid2>
       </Grid2>
       <Grid2 item size={{ xs: 12, md: 6 }}>
         <HeaderBox header="Steps to Register">
