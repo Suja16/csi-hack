@@ -368,9 +368,9 @@ const Hero = () => {
               py: { xs: 1, sm: 1.25, md: 1.5 },
               borderRadius: isMobile ? "4px" : "6px",
               fontSize: {
-                xs: "0.9rem",
-                sm: "1rem",
-                md: "1.1rem",
+                xs: "1rem",
+                sm: "1.5rem",
+                md: "2rem",
               },
               fontWeight: 600,
               textTransform: "none",
