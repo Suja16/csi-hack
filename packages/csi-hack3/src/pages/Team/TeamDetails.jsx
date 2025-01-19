@@ -417,12 +417,9 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
             display="flex"
             flexDirection="column"
             alignItems="center"
-            marginTop="7rem"
+            marginTop="3rem"
           >
-            <Typography variant="h5" marginBlock="1rem">
-              Your Submission
-            </Typography>
-            <Typography variant="body1">
+            <Typography variant="h6" textAlign="center">
               {submitted
                 ? "Your submission has been recorded."
                 : eventData.Participant.team.Participant.length != 4
