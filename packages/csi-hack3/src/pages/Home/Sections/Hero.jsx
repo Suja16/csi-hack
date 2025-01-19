@@ -413,14 +413,7 @@ const Hero = () => {
           },
         }}
       >
-        Welcome to iDEA, the Union Bank of India Hackathon, a groundbreaking
-        initiative of the Union Bank of India in collaboration with KJ Somaiya
-        School of Engineering (KJSSE), Somaiya Vidyavihar University (SVU) and
-        under the guidance of the Indian Banks&apos; Association (IBA), and the
-        Department of Financial Services (DFS). This hackathon represents a
-        concerted effort under the Ministry of Finance&apos;s vision to foster
-        innovation and excellence in the realms of financial technology
-        (fintech) and cybersecurity.
+        PSB Hackathon Series' brings to you, the iDEA Hackathon, presented by the Union Bank of India. One of the largest student led hackathon initiatives, under the guidance of Department of Financial Services, Indian Banks' Association and organised by Somaiya Vidyavihar University
       </Typography>
       <RegistrationForm
         open={isModalOpen}
