@@ -87,7 +87,7 @@ const HackathonGuidelines = () => {
         maxWidth: 1200,
         margin: "20px auto",
         padding: "15px",
-        paddingBottom: "6px",
+        paddingBottom: "0px",
         borderRadius: "12px",
         boxShadow: 3,
         position: "relative",
