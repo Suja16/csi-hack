@@ -38,14 +38,31 @@ const ProblemStatementCard = () => {
   const theme = useTheme();
 
   return (
-    <Container maxWidth="xl" sx={{ py: 6 }} id="ps">
+    <Container maxWidth="xl" sx={{
+      py: 6,
+    }} id="ps"
+    >
       <Typography
         variant="h2"
+        align="center"
         sx={{
-          mb: 6,
-          color: theme.palette.primary.main,
-          fontWeight: 600,
-          textAlign: "center",
+          fontWeight: 900,
+          color: 'primary.main',
+          marginBottom: (theme) => theme.spacing(6),
+          textTransform: 'uppercase',
+          position: 'relative',
+          fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+          '&::after': {
+            content: '""',
+            position: 'absolute',
+            bottom: '-15px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '80px',
+            height: '4px',
+            backgroundColor: 'secondary.main',
+            borderRadius: '2px',
+          },
         }}
       >
         Problem Statements
@@ -479,7 +496,7 @@ const ProblemStatementCard = () => {
           </>
         )}
       </Dialog>
-    </Container>
+    </Container >
   );
 };
 
