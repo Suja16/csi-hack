@@ -28,7 +28,8 @@
   "scripts": {
     "dev": "yarn workspace csi-hack2 dev",
     "dev:admin": "yarn workspace admin dev",
-    "dev:mentor" : "yarn workspace mentor dev"
+    "dev:mentor" : "yarn workspace mentor dev",
+    "dev:evaluator": "yarn workspace evaluator dev"
   },
   "devDependencies": {
     "typescript": "^5.7.2",
