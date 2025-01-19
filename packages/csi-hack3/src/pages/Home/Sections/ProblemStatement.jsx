@@ -38,30 +38,33 @@ const ProblemStatementCard = () => {
   const theme = useTheme();
 
   return (
-    <Container maxWidth="xl" sx={{
-      py: 6,
-    }} id="ps"
+    <Container
+      maxWidth="xl"
+      sx={{
+        py: 6,
+      }}
+      id="ps"
     >
       <Typography
         variant="h2"
         align="center"
         sx={{
           fontWeight: 900,
-          color: 'primary.main',
+          color: "primary.main",
           marginBottom: (theme) => theme.spacing(6),
-          textTransform: 'uppercase',
-          position: 'relative',
-          fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
-          '&::after': {
+          textTransform: "uppercase",
+          position: "relative",
+          fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
+          "&::after": {
             content: '""',
-            position: 'absolute',
-            bottom: '-15px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: '80px',
-            height: '4px',
-            backgroundColor: 'secondary.main',
-            borderRadius: '2px',
+            position: "absolute",
+            bottom: "-15px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "80px",
+            height: "4px",
+            backgroundColor: "secondary.main",
+            borderRadius: "2px",
           },
         }}
       >
@@ -90,7 +93,6 @@ const ProblemStatementCard = () => {
                 textAlign: { xs: "center", md: "left" },
               }}
             >
-              {/* Image Section with Animation */}
               <motion.div
                 initial="offscreen"
                 whileInView="onscreen"
@@ -107,8 +109,6 @@ const ProblemStatementCard = () => {
                   marginBottom: { xs: "20px", md: "0" },
                 }}
               >
-
-
                 <motion.div
                   variants={cardVariants}
                   style={{
@@ -170,53 +170,26 @@ const ProblemStatementCard = () => {
                   }}
                 />
                 <Typography
-                  variant="h3"
+                  variant="h4"
                   sx={{
                     color: theme.palette.primary.main,
                     fontWeight: 600,
+                    fontSize: "1.5rem",
                     mb: 2,
                   }}
                 >
                   {ps.title}
                 </Typography>
                 <Typography
-                  sx={{
-                    color: "text.secondary",
-                    mb: 2,
-                    fontSize: "1.1rem",
-                  }}
-                >
-                  {ps.domain}
-                </Typography>
-                <Typography
+                  variant="body2"
                   sx={{
                     mb: 3,
-                    fontSize: "1.1rem",
+                    fontSize: "1rem",
                     lineHeight: 1.6,
                   }}
                 >
-                  {ps.shortDesc}
+                  {ps.objective}
                 </Typography>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: 1,
-                    mb: 3,
-                    justifyContent: { xs: "center", md: "flex-start" },
-                  }}
-                >
-                  {ps.keyPoints.map((point, index) => (
-                    <Chip
-                      key={index}
-                      label={point}
-                      sx={{
-                        bgcolor: "rgba(0, 87, 156, 0.1)",
-                        color: theme.palette.primary.main,
-                      }}
-                    />
-                  ))}
-                </Box>
                 <Box
                   onClick={() => setSelectedPS(ps)}
                   sx={{
@@ -265,7 +238,7 @@ const ProblemStatementCard = () => {
                 alignItems: "center",
               }}
             >
-              <Typography variant="h4" component="div">
+              <Typography variant="h6" component="div">
                 {selectedPS.title}
               </Typography>
               <IconButton
@@ -300,203 +273,43 @@ const ProblemStatementCard = () => {
                   },
                 }}
               >
-                {selectedPS.id === 1 && (
-                  <>
-                    <Typography
-                      variant="h3"
-                      style={{ color: theme.palette.primary.main }}
-                    >
-                      Objective:
-                    </Typography>
-                    <Typography>{selectedPS.content.objective}</Typography>
-                    <div style={{ width: "100%" }}>
-                      <Typography
-                        variant="h3"
-                        style={{ color: theme.palette.primary.main }}
-                      >
-                        Core Components of the Solution:
-                      </Typography>
-                      <ul>
-                        {selectedPS.content.coreComponents.map(
-                          (component, index) => (
-                            <li key={index}>
-                              <Typography variant="h4">{component}</Typography>
-                            </li>
-                          ),
-                        )}
-                      </ul>
-                    </div>
-                    <Typography
-                      variant="h3"
-                      style={{
-                        color: theme.palette.primary.main,
-                        marginTop: "2rem",
-                      }}
-                    >
-                      Real-Life Use Case: Vatsalya’s Interaction with the System
-                    </Typography>
-                    <div style={{ width: "100%" }}>
-                      <Typography>
-                        <strong>
-                          Scenario 1: Existing Customer (Vatsalya)
-                        </strong>
-                      </Typography>
-                      <ul>
-                        {selectedPS.content.realLifeUseCase.existingCustomer.map(
-                          (scenario, index) => (
-                            <li key={index}>
-                              <Typography variant="h4">{scenario}</Typography>
-                            </li>
-                          ),
-                        )}
-                      </ul>
-                    </div>
-                    <div style={{ width: "100%" }}>
-                      <Typography>
-                        <strong>Scenario 2: New Customer</strong>
-                      </Typography>
-                      <ul>
-                        {selectedPS.content.realLifeUseCase.newCustomer.map(
-                          (scenario, index) => (
-                            <li key={index}>
-                              <Typography variant="h4">{scenario}</Typography>
-                            </li>
-                          ),
-                        )}
-                      </ul>
-                    </div>
-                    <Typography
-                      variant="h2"
-                      style={{ color: theme.palette.primary.main }}
-                    >
-                      Expected Solution:
-                    </Typography>
+                <Typography variant="h3">Objective:</Typography>
+                <Typography>{selectedPS.objective}</Typography>
+                <Typography variant="h3">Core Components:</Typography>
+                <ul>
+                  {selectedPS.coreComponents.map((component, index) => (
+                    <li key={index}>
+                      <Typography>{component}</Typography>
+                    </li>
+                  ))}
+                </ul>
+                <Typography variant="h3">Real-Life Use Cases:</Typography>
+                {selectedPS.realLifeUseCases.map((useCase, index) => (
+                  <div key={index}>
+                    <Typography variant="body1">{useCase.scenario}</Typography>
                     <ul>
-                      {selectedPS.content.expectedSolution.map(
-                        (solution, index) => (
-                          <li key={index}>
-                            <Typography variant="h4">{solution}</Typography>
-                          </li>
-                        ),
-                      )}
+                      {useCase.description.map((desc, idx) => (
+                        <li key={idx}>
+                          <Typography>{desc}</Typography>
+                        </li>
+                      ))}
                     </ul>
-                  </>
-                )}
-                {selectedPS.id === 2 && (
-                  <>
-                    <Typography>
-                      {selectedPS.content.description.join(" ")}
-                    </Typography>
-                    <Typography
-                      variant="h2"
-                      style={{ color: theme.palette.primary.main }}
-                    >
-                      Example Scenario: Arnav’s Challenge
-                    </Typography>
-                    <Typography>
-                      {selectedPS.content.exampleScenario}
-                    </Typography>
-                    <Typography
-                      variant="h2"
-                      style={{ color: theme.palette.primary.main }}
-                    >
-                      Expected Solution:
-                    </Typography>
-                    {selectedPS.content.expectedSolution.map(
-                      (solution, index) => (
-                        <div key={index}>
-                          <Typography variant="h3">{solution.title}</Typography>
-                          <ul>
-                            {solution.points.map((point, idx) => (
-                              <li key={idx}>
-                                <Typography>{point}</Typography>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ),
-                    )}
-                  </>
-                )}
-                {selectedPS.id === 3 && (
-                  <>
-                    <Typography>{selectedPS.content.description}</Typography>
-                    <div style={{ width: "100%" }}>
-                      <div style={{ paddingLeft: "3px" }}>
-                        <Typography
-                          variant="h2"
-                          style={{
-                            color: theme.palette.primary.main,
-                            letterSpacing: "3px",
-                          }}
-                        >
-                          Financial Institutions Struggle With:
-                        </Typography>
-                      </div>
-                      <ul>
-                        {selectedPS.content.financialInstitutionsStruggleWith.map(
-                          (struggle, index) => (
-                            <li key={index}>
-                              <Typography variant="h3">{struggle}</Typography>
-                            </li>
-                          ),
-                        )}
-                      </ul>
-                    </div>
-                    <Typography
-                      variant="h2"
-                      style={{ color: theme.palette.primary.main }}
-                    >
-                      Real-Life Example: Naman’s Journey
-                    </Typography>
-                    <Typography>
-                      <strong>
-                        Scenario 1: Fraudulent Activity Detection:
-                      </strong>{" "}
-                      {
-                        selectedPS.content.realLifeExample
-                          .fraudulentActivityDetection
-                      }
-                    </Typography>
-                    <Typography>
-                      <strong>Scenario 2: Personalized Services:</strong>{" "}
-                      {selectedPS.content.realLifeExample.personalizedServices}
-                    </Typography>
-                    <Typography>
-                      <strong>Scenario 3: Insider Threat Prevention:</strong>{" "}
-                      {
-                        selectedPS.content.realLifeExample
-                          .insiderThreatPrevention
-                      }
-                    </Typography>
-                    <Typography
-                      variant="h2"
-                      style={{ color: theme.palette.primary.main }}
-                    >
-                      Expected Solution:
-                    </Typography>
-                    {selectedPS.content.expectedSolution.map(
-                      (solution, index) => (
-                        <div key={index}>
-                          <Typography variant="h3">{solution.title}</Typography>
-                          <ul>
-                            {solution.points.map((point, idx) => (
-                              <li key={idx}>
-                                <Typography>{point}</Typography>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ),
-                    )}
-                  </>
-                )}
+                  </div>
+                ))}
+                <Typography variant="h3">Expected Solution:</Typography>
+                <ul>
+                  {selectedPS.expectedSolution.map((solution, index) => (
+                    <li key={index}>
+                      <Typography>{solution}</Typography>
+                    </li>
+                  ))}
+                </ul>
               </Box>
             </DialogContent>
           </>
         )}
       </Dialog>
-    </Container >
+    </Container>
   );
 };
 
