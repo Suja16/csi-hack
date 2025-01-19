@@ -9,15 +9,18 @@ import {
   useTheme,
   CircularProgress,
   Snackbar,
+  useMediaQuery,
 } from "@mui/material";
 import TeamDetails from "./TeamDetails";
 import RegisterSteps from "./RegisterSteps";
 import timeline from "../../assets/carousel/desktop/timeline.png";
+import timelineMobile from "@assets/carousel/mobile/timeline.png";
 
 const Team = () => {
   const { userData, eventData } = useContext(UserDataContext);
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [snackBarMessage, setSnackBarMessage] = useState("");
+  const isMobile = useMediaQuery("(max-width:900px)");
 
   const theme = useTheme();
   console.log(eventData);
@@ -63,13 +66,24 @@ const Team = () => {
         <Grid2 item size={12}>
           <HeaderBox header={"Important Instructions"}>
             <Typography variant="overline">
-              * Only the team leader is required to submit the PPT template.<br />
-              * The submission must be in PDF Format.<br />
-              * The submission must be in the template as provided by the organiser.<br />
-              * The submission should not exceed 7 slides.<br />
-              * The header slide must be included in the submission.<br />
-              * The utilisation of space is up to the discretion of the participants, so long as it is visible for evaluators to read and understand.<br />
-              * The font size must not be less than 18 points and must be in Marcellus font.<br />
+              * Only the team leader is required to submit the PPT template.
+              <br />
+              * The submission must be in PDF Format.
+              <br />
+              * The submission must be in the template as provided by the
+              organiser.
+              <br />
+              * The submission should not exceed 7 slides.
+              <br />
+              * The header slide must be included in the submission.
+              <br />
+              * The utilisation of space is up to the discretion of the
+              participants, so long as it is visible for evaluators to read and
+              understand.
+              <br />
+              * The font size must not be less than 18 points and must be in
+              Marcellus font.
+              <br />
             </Typography>
           </HeaderBox>
         </Grid2>
@@ -81,7 +95,7 @@ const Team = () => {
       </Grid2>
       <Grid2 item size={12}>
         <HeaderBox header="Event Timeline">
-          <img width="100%" src={timeline} alt="" />
+          <img width="100%" src={isMobile ? timelineMobile : timeline} alt="" />
         </HeaderBox>
       </Grid2>
       <Snackbar
