@@ -7,7 +7,7 @@ const theme = createTheme({
       main: "#00579C", // Primary color
     },
     secondary: {
-      main: "#9c27b0", // Secondary color
+      main: "#B22629", // Secondary color
     },
     error: {
       main: "#D20000",
@@ -17,16 +17,17 @@ const theme = createTheme({
     },
   },
   typography: {
+    fontFamily: "Roboto, Kantumruy Pro, Montserrat, Arial, sans-serif",
     h1: {
-      fontFamily: "Montserrat",
-      fontWeight: 400,
-      fontSize: "75px",
+      fontFamily: "Kantumruy Pro",
+      fontWeight: 600,
+      // fontSize: "75px",
       lineHeight: "75px",
-      letterSpacing: "-0.2px",
+      letterSpacing: "0.4rem",
     },
     h2: {
       fontFamily: "Montserrat",
-      fontWeight: 400,
+      fontWeight: 500,
       fontSize: "64px",
       lineHeight: "64px",
       letterSpacing: "-0.2px",
@@ -43,13 +44,28 @@ const theme = createTheme({
       fontWeight: 400,
       fontSize: "36px",
       lineHeight: "42px",
+      letterSpacing: "-0.2px",
+    },
+    h5: {
+      fontFamily: "Montserrat",
+      fontWeight: 400,
+      fontSize: "28px",
+      lineHeight: "32px",
+      letterSpacing: "-0.2px",
+    },
+    h6: {
+      fontFamily: "Montserrat",
+      fontWeight: 400,
+      fontSize: "23px",
+      lineHeight: "28px",
+      letterSpacing: "-0.2px",
     },
     body1: {
       fontFamily: "Montserrat",
       fontWeight: 500,
       fontSize: "16px",
       lineHeight: "18px",
-      letterSpacing: "20%",
+      letterSpacing: "-0.2px",
     },
     subtitle1: {
       fontFamily: "Montserrat",
