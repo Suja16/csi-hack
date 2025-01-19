@@ -48,7 +48,7 @@ const AnimatedTitle = () => {
   const getFontSize = () => {
     if (isMobile) return "2.7rem";
     if (isTablet) return "3.5rem";
-    return "5.5rem";
+    return "4.8rem";
   };
 
   if (isMobile) {
@@ -367,9 +367,9 @@ const Hero = () => {
               py: { xs: 1, sm: 1.25, md: 1.5 },
               borderRadius: isMobile ? "4px" : "6px",
               fontSize: {
-                xs: "1rem",
-                sm: "1.5rem",
-                md: "2rem",
+                xs: "0.8rem",
+                sm: "1rem",
+                md: "1.5rem",
               },
               fontWeight: 600,
               textTransform: "none",
