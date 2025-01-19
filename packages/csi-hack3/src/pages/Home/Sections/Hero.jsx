@@ -62,13 +62,12 @@ const AnimatedTitle = () => {
         }}
       >
         <div className="flex flex-col items-center gap-4">
-          {/* IDEA Animation */}
           <div className="overflow-hidden">
-            {"IDEA".split("").map((letter, index) => (
+            {"iDEA".split("").map((letter, index) => (
               <motion.span
                 key={`idea-${index}`}
                 initial={{
-                  x: index < "IDEA".length / 2 ? -100 : 100,
+                  x: index < "iDEA".length / 2 ? -100 : 100,
                   opacity: 0,
                   scale: 0.5,
                 }}
@@ -79,7 +78,7 @@ const AnimatedTitle = () => {
                 }}
                 transition={{
                   duration: 1.5,
-                  delay: Math.abs(index - "IDEA".length / 2) * 0.06,
+                  delay: Math.abs(index - "iDEA".length / 2) * 0.06,
                   ease: [0.215, 0.61, 0.355, 1],
                   opacity: { duration: 0.4 },
                   scale: { duration: 0.6 },
@@ -148,11 +147,11 @@ const AnimatedTitle = () => {
         maxWidth: isTablet ? "90vw" : "80vw"
       }}
     >
-      {"IDEA HACKATHON".split("").map((letter, index) => (
+      {"iDEA HACKATHON".split("").map((letter, index) => (
         <motion.span
           key={index}
           initial={{
-            x: index < "IDEA HACKATHON".length / 2 ? -100 : 100,
+            x: index < "iDEA HACKATHON".length / 2 ? -100 : 100,
             opacity: 0,
             scale: 0.5,
           }}
@@ -163,7 +162,7 @@ const AnimatedTitle = () => {
           }}
           transition={{
             duration: 1.5,
-            delay: Math.abs(index - "IDEA HACKATHON".length / 2) * 0.06,
+            delay: Math.abs(index - "iDEA HACKATHON".length / 2) * 0.06,
             ease: [0.215, 0.61, 0.355, 1],
             opacity: { duration: 0.4 },
             scale: { duration: 0.6 },
