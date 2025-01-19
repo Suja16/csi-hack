@@ -2,182 +2,135 @@ import genai from "@assets/ps/genai.png";
 import cybersecurity from "@assets/ps/cybersecurity.png";
 import fintech from "@assets/ps/fintech.png";
 
-const problemStatements = [
+const problemStatementsData = [
   {
     id: 1,
-    title: "AI-Powered Customer Service System",
-    shortDesc:
-      "Facial recognition and service automation system for Union Bank",
-    domain: "GEN AI",
-    image: genai,
-    content: {
-      objective:
-        "The goal is to design and implement a highly accurate facial recognition system that can authenticate and accept customer service queries via video/audio recordings and create appointments for customer support. The system should streamline the process for both new and existing customers, while enhancing security, fraud prevention, and customer experience. The solution needs to provide a service ticket with a detailed analytical snapshot of the customer's profile and direct customers to the right business unit based on their needs.",
-      coreComponents: [
-        "Facial Recognition Authentication",
-        "Video/Audio Query Acceptance",
-        "Service Ticket Creation",
-        "Customer Redirection for New Customers",
-        "AI-Powered Risk Mitigation and Data Gathering",
-        "Feedback Module for Continuous Improvement",
-        "Cost-Effective and Deployable to Rural Branches",
-      ],
-      realLifeUseCase: {
-        existingCustomer: [
-          "Vatsalya is an existing customer of the Union Bank Of India and needs assistance with a loan query. He opens the mobile banking app of Union Bank, Vyom and is prompted by the Union Bank’s Chatbot UVA to record a short video explaining his question.",
-          "The facial recognition system authenticates his identity using the facial model stored in the app, along with his Aadhaar-based authentication.",
-          "The system creates a service ticket and pulls an analytical snapshot of Vatsalya’s financial profile, highlighting his credit score, previous loan applications, and spending habits. Based on this data, the system suggests a loan option with the relevant details.",
-          "Vatsalya receives an appointment confirmation for a video call with a customer service representative to discuss the loan options further.",
-        ],
-        newCustomer: [
-          "A new customer, Ravi, downloads the Union Bank Of India’s mobile app Vyom and begins the onboarding process. He uploads his Aadhaar and PAN card details.",
-          "The system fetches information from these records, assesses Ravi’s financial background, and routes him to the loan department because his profile indicates he is interested in a housing loan.",
-          "Ravi’s service ticket is generated with an analytical snapshot that includes his credit score, income, and potential eligibility for various loan options.",
-          "Ravi is then directed to the loan officer, who receives the ticket with personalized suggestions for Ravi based on the data.",
-        ],
-      },
-      expectedSolution: [
-        "The solution should integrate a face training model within the Union bank of India’s mobile app Vyom for fraud prevention, utilizing AADHAAR-based authentication to verify customer identities and enable edge processing. This will ensure secure transactions and minimize identity fraud risks, even in remote areas.",
-        "A feedback module should generate AI-driven suggestions for branches and staff, analyzing customer interactions and transaction patterns to enhance service quality and deriving actionable insights for better customer service and resource allocation.",
-      ],
-    },
-    category: "Authentication & Service",
-    keyPoints: [
-      "Facial Recognition",
-      "Service Automation",
-      "Customer Analytics",
+    category: "Fintech",
+    title: "Business Analytics-Based Appointment Management System for Efficient Customer Service",
+    objective: "The goal is to design and implement an advanced facial recognition system that securely authenticates customers and facilitates seamless handling of service queries via video or audio recordings. The system should enable efficient appointment scheduling for customer support, enhancing security, fraud prevention, and the overall customer experience. Additionally, the solution must generate service tickets containing a detailed analytical snapshot of the customer's profile and direct them to the appropriate business unit based on their requirements.",
+    coreComponents: [
+      "Facial Recognition Authentication",
+      "Video/Audio Query Acceptance",
+      "Service Ticket Creation",
+      "Customer Redirection (Existing and New Customers)",
+      "AI-Powered Risk Mitigation and Data Analytics",
+      "Feedback Module for Continuous Improvement",
+      "Cost-Effectiveness and Scalability to Rural Branches"
     ],
+    realLifeUseCases: [
+      {
+        scenario: "Existing Customer (Vatsalya)",
+        description: [
+          "Vatsalya is an existing customer of Union Bank of India. He requires assistance with a loan query.",
+          "Vatsalya logs into the Union Bank’s mobile app, Vyom, and is prompted by the bank’s chatbot, UVA, to record a short video explaining his question.",
+          "The facial recognition system authenticates his identity using his stored facial model and Aadhaar-based verification.",
+          "A service ticket is created, including an analytical snapshot of Vatsalya’s profile, such as his credit score, past loan applications, and spending patterns.",
+          "Based on this data, the system recommends a suitable loan product and its details.",
+          "Vatsalya receives an appointment confirmation for a video call with a customer service representative to discuss the loan options further."
+        ]
+      },
+      {
+        scenario: "New Customer (Ravi)",
+        description: [
+          "Ravi, a new customer, downloads the Union Bank of India’s app, Vyom, and begins the onboarding process.",
+          "He uploads his Aadhaar and PAN card details, which the system uses to fetch and verify his financial background.",
+          "The system identifies Ravi’s interest in a housing loan based on the data provided.",
+          "A service ticket is generated, including Ravi’s credit score, income, and loan eligibility details.",
+          "Ravi is routed to the loan department, where a loan officer receives the service ticket along with personalized suggestions based on Ravi’s profile."
+        ]
+      },
+      {
+        scenario: "Customer Prioritization Based on Holdings/Assets",
+        description: [
+          "Union Bank implements a priority system to enhance customer satisfaction by considering the holdings or assets of customers.",
+          "Example Scenario: Two customers, A and B, approach the bank with service queries. Customer A has holdings valued at ₹X, while Customer B has holdings of ₹Y, where X > Y.",
+          "The system analyzes their respective financial profiles and prioritizes Customer A for faster service, as his holdings indicate higher contribution or engagement with the bank.",
+          "This preference system ensures a balanced allocation of resources while maintaining fairness and transparency."
+        ]
+      }
+    ],
+    expectedSolution: [
+      "The proposed solution should integrate a robust face training model within Union Bank of India’s mobile app, Vyom, for fraud prevention, leveraging Aadhaar-based authentication to verify customer identities and enable edge processing. This will ensure secure transactions and minimize identity fraud risks, even in remote areas.",
+      "Additionally, the solution must include:",
+      "Customer Prioritization Logic: Algorithms to dynamically adjust service priorities based on holdings or asset value, ensuring high-value customers receive timely assistance.",
+      "AI-Driven Feedback Mechanism: A feedback module generating actionable insights for branches and staff by analyzing customer interactions and transaction patterns. This will help improve service quality, optimize resource allocation, and identify areas for operational enhancement.",
+      "By providing personalized and data-driven experiences, the solution will improve customer engagement, strengthen security, and enable scalable deployment, even in rural regions."
+    ],
+    image: fintech
   },
   {
     id: 2,
-    title: "Phishing Domain Takedown System",
-    shortDesc: "Streamlined process for handling cybersecurity threats",
-    domain: "CYBERSECURITY",
-    image: cybersecurity,
-    content: {
-      description: [
-        "Many times, it is observed that not all domain registrars or hosting providers are cooperative when it comes to requests for phishing domain takedowns, especially if they operate in jurisdictions where state actors or threat actors benefit from relaxed cybersecurity laws. Public Sector Banks (PSBs) in India face significant challenges in the timely takedown of suspicious, malicious, or phishing domains impersonating their entities.",
-        "In several instances, third-party takedown service providers have been unable to successfully remove such phishing domains or fraudulent applications. Furthermore, there is an absence of a well-defined, centralized mechanism provided by any authority to address these issues. Specifically, difficulties arise in identifying a single point of contact or department responsible for handling such cases, as well as a lack of clear guidelines on how to proceed with these requests.",
-        "This often leads to delays in resolving these threats, potentially compromising the security of customers.",
-      ],
-      exampleScenario:
-        "Arnav, a cybersecurity specialist at a Union Bank Of India, discovers a phishing website impersonating their bank. The fraudulent website is collecting sensitive customer information, posing a significant threat. Despite contacting third-party takedown service providers, the domain remains active due to non-cooperation from the registrar, located in a jurisdiction with lax cybersecurity regulations. This delay risks exposing customer data and eroding trust in the institution.",
-      expectedSolution: [
-        {
-          title: "Streamlined Takedown Processes",
-          points: [
-            "A clear and efficient mechanism for reporting phishing domains and fraudulent applications to the right stakeholders.",
-            "Templates or guidelines for PSBs to escalate and follow up on takedown requests from the appropriate Government authority.",
-          ],
-        },
-        {
-          title: "Centralized Coordination",
-          points: [
-            "A centralized platform or framework to ensure coordination among banks, government, cybersecurity experts, and service providers.",
-            "Efficient coordination facilitation between the right department and the Bank.",
-            "Mechanisms to overcome jurisdictional challenges and non-cooperative registrars.",
-          ],
-        },
-      ],
-    },
-    category: "Security",
-    keyPoints: [
-      "Domain Takedown",
-      "Threat Management",
-      "Security Coordination",
+    category: "Cybersecurity",
+    title: "Need for Government Agencies Assistance for takedown of Malicious/Phishing domain",
+    objective: "Public Sector Banks (PSBs) in India often face significant hurdles in the swift takedown of phishing domains or fraudulent applications impersonating their entities. These challenges are amplified by non-cooperative domain registrars and hosting providers, particularly those in jurisdictions with lax cybersecurity laws or where threat actors benefit from state protection.",
+    coreComponents: [
+      "Streamlined Takedown Processes",
+      "Clear Reporting Mechanisms",
+      "Standardized Templates and Guidelines",
+      "Centralized Coordination",
+      "Unified Platform",
+      "Enhanced Collaboration",
+      "Jurisdictional Workarounds"
     ],
+    realLifeUseCases: [
+      {
+        scenario: "Arnav’s Challenge",
+        description: [
+          "Arnav, a cybersecurity specialist at Union Bank of India, identifies a phishing website impersonating the bank. This website is actively collecting sensitive customer information, posing a severe threat. Despite engaging third-party takedown service providers, the domain remains active due to registrar non-cooperation, as it operates in a region with minimal enforcement of cybersecurity regulations. The prolonged delay exposes customer data, risking financial loss and eroding the bank’s credibility."
+        ]
+      }
+    ],
+    expectedSolution: [
+      "Building a Unified Cybersecurity Framework for Phishing Takedowns",
+      "Solution Design: Centralized Takedown Platform",
+      "Automated Detection: Integrate AI-powered tools and threat intelligence for real-time identification of phishing domains.",
+      "Streamlined Reporting: Provide an API or interface for reporting malicious activities directly to government agencies, Computer Emergency Response Teams (CERTs), or other regulatory bodies.",
+      "Progress Tracking: Offer real-time updates on the status of takedown requests for all stakeholders.",
+      "Global Registrar Integration: Build partnerships with international registrars and hosting providers for expedited takedowns.",
+      "Potential Impact",
+      "Reduced Response Time: Accelerate the takedown process to minimize customer exposure to threats.",
+      "Enhanced Trust: Strengthen customer confidence by demonstrating proactive cybersecurity measures.",
+      "Support Law Enforcement: Facilitate evidence collection and collaboration for prosecuting cybercriminals.",
+      "Secured Digital Ecosystem: Protect critical financial infrastructure by mitigating phishing and malicious domain risks efficiently."
+    ],
+    image: cybersecurity
   },
   {
     id: 3,
-    title: "GenAI Financial Crime Prevention",
-    shortDesc: "AI-powered system for detecting and preventing financial fraud",
-    domain: "FINTECH",
-    image: fintech,
-    content: {
-      description:
-        "With the rise of digital banking, financial institutions face an increasing threat of financial crimes like money laundering and fraud. This document explores how Generative AI (GenAI) can help address these challenges through large-scale data analysis to provide real-time, actionable insights. Hypothetical use cases involving individuals like Naman and Arnav illustrate practical applications.",
-      financialInstitutionsStruggleWith: [
-        "Customer profiling and onboarding",
-        "Complex transaction networks",
-        "Cross-border transactions",
-        "Short lifespan fraudulent accounts",
-        "High false-positive rates in fraud detection",
-        "Advanced evasion techniques by fraudsters",
-        "Customer analysis",
-        "Insider threats / fraud detection",
-      ],
-      realLifeExample: {
-        fraudulentActivityDetection:
-          "Naman receives a large sum from an unfamiliar account, and subsequent international transactions are flagged as 'smurfing' (money laundering), freezing the account for review.",
-        personalizedServices:
-          "GenAI notices Naman’s frequent foreign transactions and recommends a travel-friendly credit card.",
-        insiderThreatPrevention:
-          "GenAI detects unauthorized access to Naman’s transaction history by an employee and alerts the compliance team.",
-      },
-      expectedSolution: [
-        {
-          title: "Customer Analytics",
-          points: [
-            "Analyzing Customer Behavior: GenAI identifies unusual spending patterns.",
-            "Predicting Banking Trends: GenAI forecasts emerging trends by analyzing real-time data.",
-            "Personalized Services: GenAI tailors services to customers based on financial habits.",
-          ],
-        },
-        {
-          title: "Insider Threats and Fraud Detection",
-          points: [
-            "Identifying Anomalies: GenAI flags deviations in user activity.",
-            "Recognizing Fraud Patterns: GenAI detects sophisticated fraud patterns.",
-            "Detecting Insider Threats: GenAI monitors employee actions to identify malicious activities.",
-          ],
-        },
-        {
-          title: "Customer Profiling and Onboarding",
-          points: [
-            "Implement AI-driven identity verification models for dynamic customer profiling, ensuring accurate risk assessments.",
-            "Simplify onboarding by utilizing AADHAAR-based authentication and real-time data processing for seamless registration while complying with regulatory requirements.",
-          ],
-        },
-        {
-          title: "Complex Transaction Networks",
-          points: [
-            "Use AI-powered transaction monitoring to analyze large-scale transaction networks and detect unusual patterns or fraudulent activities in real time.",
-            "Implement pattern recognition techniques to identify suspicious cross-network transactions and trigger alerts for further investigation.",
-          ],
-        },
-        {
-          title: "Cross-border Transactions",
-          points: [
-            "Apply GenAI models to flag cross-border transactions that deviate from usual patterns or involve high-risk countries.",
-            "Introduce transaction profiling to better detect money laundering or other illegal activities involving international payments.",
-          ],
-        },
-        {
-          title: "Short Lifespan Fraudulent Accounts",
-          points: [
-            "Deploy AI-based algorithms to detect rapid account creation, usage, and closure cycles, which are common in fraudulent activity.",
-            "Monitor accounts for abnormal behavior to flag and block potential fraud before accounts are deactivated.",
-          ],
-        },
-        {
-          title: "High False-Positive Rates in Fraud Detection",
-          points: [
-            "Integrate machine learning models that learn from historical data to refine fraud detection algorithms, reducing false-positive rates.",
-            "Develop context-aware systems that distinguish legitimate transactions from fraudulent ones based on customer profiles and historical activity.",
-          ],
-        },
-        {
-          title: "Advanced Evasion Techniques by Fraudsters",
-          points: [
-            "Use adaptive AI models capable of identifying evolving fraud tactics, including obfuscated transactions and synthetic identities.",
-            "Continuously update the fraud detection system with new data to counter advanced evasion techniques and fraudster methods.",
-          ],
-        },
-      ],
-    },
-    category: "Fraud Prevention",
-    keyPoints: ["Fraud Detection", "Customer Analytics", "Risk Management"],
-  },
+    category: "Generative AI",
+    title: "Leveraging GenAI for Customer Analytics and Fraud Detection in Banking",
+    objective: "Combating Financial Crimes in the Age of Digital Banking with Generative AI",
+    coreComponents: [
+      "Customer Profiling and Onboarding",
+      "Complex Transaction Networks",
+      "Cross-Border Transactions",
+      "Short Lifespan Fraudulent Accounts",
+      "High False-Positive Rates",
+      "Advanced Evasion Techniques",
+      "Insider Threats"
+    ],
+    realLifeUseCases: [
+      {
+        scenario: "Naman’s Journey in a Digital Banking World",
+        description: [
+          "Scenario 1: Fraud Detection",
+          "Naman receives a large sum from an unfamiliar account, followed by flagged international transactions suspected of 'smurfing' (a money laundering technique). His account is frozen for investigation.",
+          "Scenario 2: Personalized Services",
+          "GenAI recognizes Naman’s frequent international transactions and suggests a travel-friendly credit card tailored to his needs.",
+          "Scenario 3: Insider Threat Detection",
+          "GenAI flags unauthorized access to Naman’s transaction data by an internal employee, immediately alerting the compliance team to investigate."
+        ]
+      }
+    ],
+    expectedSolution: [
+      "The proposed solution should integrate a robust face training model within Union Bank of India’s mobile app, Vyom, for fraud prevention, leveraging Aadhaar-based authentication to verify customer identities and enable edge processing. This will ensure secure transactions and minimize identity fraud risks, even in remote areas.",
+      "Additionally, the solution must include:",
+      "Customer Prioritization Logic: Algorithms to dynamically adjust service priorities based on holdings or asset value, ensuring high-value customers receive timely assistance.",
+      "AI-Driven Feedback Mechanism: A feedback module generating actionable insights for branches and staff by analyzing customer interactions and transaction patterns. This will help improve service quality, optimize resource allocation, and identify areas for operational enhancement.",
+      "By providing personalized and data-driven experiences, the solution will improve customer engagement, strengthen security, and enable scalable deployment, even in rural regions."
+    ],
+    image: genai
+  }
 ];
 
-export default problemStatements;
+export default problemStatementsData;
