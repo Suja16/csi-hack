@@ -1,10 +1,13 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme, useMediaQuery } from '@mui/material';
 import FilePresentation from '@mui/icons-material/Description';
 import VideoIcon from '@mui/icons-material/Videocam';
 import EvaluationIcon from '@mui/icons-material/AssignmentTurnedIn';
 import RsvpIcon from '@mui/icons-material/CheckCircle';
 
 const RegisterSteps = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const steps = [
     {
       title: "Upload Presentation",
@@ -32,8 +35,14 @@ const RegisterSteps = () => {
     <Box
       sx={{
         maxWidth: 800,
-        margin: '20px auto',
-        padding: '24px',
+        margin: {
+          xs: '10px',
+          sm: '20px auto',
+        },
+        padding: {
+          xs: '16px',
+          sm: '24px',
+        },
         borderRadius: '12px',
       }}
     >
@@ -43,7 +52,10 @@ const RegisterSteps = () => {
           '&::before': {
             content: '""',
             position: 'absolute',
-            left: '7px',
+            left: {
+              xs: '7px',
+              sm: '7px',
+            },
             top: '16px',
             bottom: '16px',
             width: '2px',
@@ -56,10 +68,27 @@ const RegisterSteps = () => {
             key={index}
             sx={{
               display: 'flex',
-              alignItems: 'flex-start',
-              gap: 3,
+              flexDirection: {
+                xs: 'column',
+                sm: 'row',
+              },
+              alignItems: {
+                xs: 'flex-start',
+                sm: 'flex-start',
+              },
+              gap: {
+                xs: 2,
+                sm: 3,
+              },
               position: 'relative',
-              mb: index !== steps.length - 1 ? 6 : 0,
+              mb: index !== steps.length - 1 ? {
+                xs: 4,
+                sm: 6,
+              } : 0,
+              pl: {
+                xs: 4,
+                sm: 0,
+              },
             }}
           >
             {/* Dot */}
@@ -72,14 +101,32 @@ const RegisterSteps = () => {
                 border: 4,
                 borderColor: 'background.paper',
                 position: 'absolute',
-                left: 0,
+                left: {
+                  xs: 0,
+                  sm: 0,
+                },
+                top: {
+                  xs: 2,
+                  sm: 2,
+                },
               }}
             />
-
             {/* Content */}
-            <Box sx={{ ml: 5, flex: 1 }}>
+            <Box
+              sx={{
+                ml: {
+                  xs: 0,
+                  sm: 5,
+                },
+                flex: 1,
+                order: {
+                  xs: 2,
+                  sm: 1,
+                },
+              }}
+            >
               <Typography
-                variant="h6"
+                variant={isMobile ? "subtitle1" : "h6"}
                 component="h3"
                 sx={{
                   fontWeight: 'bold',
@@ -93,17 +140,26 @@ const RegisterSteps = () => {
                 variant="body1"
                 sx={{
                   color: 'text.secondary',
+                  fontSize: {
+                    xs: '0.875rem',
+                    sm: '1rem',
+                  },
                 }}
               >
                 {step.description}
               </Typography>
             </Box>
-
             {/* Icon */}
             <Box
               sx={{
-                width: 64,
-                height: 64,
+                width: {
+                  xs: 48,
+                  sm: 64,
+                },
+                height: {
+                  xs: 48,
+                  sm: 64,
+                },
                 border: 2,
                 borderColor: 'grey.200',
                 borderRadius: 2,
@@ -111,11 +167,26 @@ const RegisterSteps = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 flexShrink: 0,
+                order: {
+                  xs: 1,
+                  sm: 2,
+                },
+                alignSelf: {
+                  xs: 'flex-start',
+                  sm: 'center',
+                },
+                ml: {
+                  xs: 0,
+                  sm: 2,
+                },
               }}
             >
               <step.icon
                 sx={{
-                  fontSize: 32,
+                  fontSize: {
+                    xs: 24,
+                    sm: 32,
+                  },
                   color: 'primary.main',
                 }}
               />
