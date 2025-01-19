@@ -65,7 +65,7 @@ const theme = createTheme({
       fontWeight: 500,
       fontSize: "16px",
       lineHeight: "18px",
-      letterSpacing: "20%",
+      letterSpacing: "-0.2px",
     },
     subtitle1: {
       fontFamily: "Montserrat",

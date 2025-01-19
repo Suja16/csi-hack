@@ -251,7 +251,7 @@ const Faq = () => {
                     color: "black",
                     textDecoration: "none",
                     "&:hover": {
-                      textDecoration: "underline",
+                      textDecoration: "none",
                     },
                     textAlign: "start",
                     marginRight: 2,
