@@ -1,5 +1,24 @@
 import { gql } from "@apollo/client";
 
+
+export const LOGIN_QUERY = gql`
+  query Login($name: String, $password: String) {
+    Idea_USERS(
+      where: {
+        name: { _eq: $name }
+        password: { _eq: $password }
+        
+      }
+    ) {
+      id
+      name
+      email
+      roles
+    }
+  }
+`;
+
+
 export const TEAM_QUERY = gql`
   query TeamQuery($approved: Boolean, $search: String) {
     Team(
