@@ -9,6 +9,8 @@ const data = {
   logout: () => {},
   loginLoading: false,
   setLoginLoading: () => {},
+  isModalOpen: false,
+  setIsModalOpen: () => {},
 };
 
 const UserDataContext = createContext(data);

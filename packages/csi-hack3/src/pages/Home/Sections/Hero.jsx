@@ -223,7 +223,6 @@ const AnimatedWord = ({ word, isMobile }) => {
 
 const Hero = () => {
   const [wordIndex, setWordIndex] = useState(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const {
@@ -233,6 +232,8 @@ const Hero = () => {
     setEventData,
     loginLoading,
     setLoginLoading,
+    isModalOpen,
+    setIsModalOpen,
   } = useContext(UserDataContext);
   const navigate = useNavigate();
 

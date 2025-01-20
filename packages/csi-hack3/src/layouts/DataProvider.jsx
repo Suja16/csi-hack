@@ -9,6 +9,7 @@ function DataProvider() {
   const [userData, setUserData] = useState();
   const [eventData, setEventData] = useState();
   const [loginLoading, setLoginLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const login = useGoogleLogin({
     onSuccess: async ({ code }) => {
@@ -32,6 +33,9 @@ function DataProvider() {
         },
       );
       setEventData(participantResponse.data.event);
+      if (!participantResponse.data.event?.Participant) {
+        setIsModalOpen(true);
+      }
       setLoginLoading(false);
       // if (participantResponse.data.event.Participant) {
       //   setIsLoding(false);
@@ -109,6 +113,8 @@ function DataProvider() {
         logout,
         loginLoading,
         setLoginLoading,
+        isModalOpen,
+        setIsModalOpen,
       }}
     >
       <Outlet />
