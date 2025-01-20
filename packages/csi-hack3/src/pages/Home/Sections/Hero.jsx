@@ -357,7 +357,7 @@ const Hero = () => {
           whileTap="tap"
           style={{
             background:
-              "linear-gradient(-45deg, #00579C, #B22629, #00579C, #D9D9D9)",
+              "linear-gradient(45deg, #00579C, #00579C, #B22629, #D9D9D9)",
             backgroundSize: "200% 200%",
             borderRadius: isMobile ? "6px" : "8px",
             padding: "2px",
