@@ -1,10 +1,13 @@
 import { useLazyQuery } from '@apollo/client';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LOGIN_QUERY } from '../queries';
+
 function Login({ setIsAuthenticated }) {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -49,15 +52,28 @@ function Login({ setIsAuthenticated }) {
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4 }}>
-      <h1>Login</h1>
+    <Box
+    sx={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '50vh',
+      backgroundColor: '#f5f5f5',
+      overflow: 'hidden', // Disable scrollbar
+    }}
+  >
+    <Paper elevation={3} sx={{ padding: 4, maxWidth: 400, width: '100%' }}>
+      <Typography variant="h4" component="h1" gutterBottom align="center">
+        Login
+      </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
           label="Name"
           variant="outlined"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          sx={{ mb: 2, width: '300px' }}
+          fullWidth
+          margin="normal"
         />
         <TextField
           label="Password"
@@ -65,14 +81,20 @@ function Login({ setIsAuthenticated }) {
           variant="outlined"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          sx={{ mb: 2, width: '300px' }}
+          fullWidth
+          margin="normal"
         />
-        <Button type="submit" variant="contained" color="primary" sx={{ width: '300px' }}>
+        <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
           Login
         </Button>
       </form>
-      {message && <p>{message}</p>}
-    </Box>
+      {message && (
+        <Typography color="error" align="center" sx={{ mt: 2 }}>
+          {message}
+        </Typography>
+      )}
+    </Paper>
+  </Box>
   );
 }
 
