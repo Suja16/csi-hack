@@ -1,14 +1,9 @@
 import { gql } from "@apollo/client";
 
-
 export const LOGIN_QUERY = gql`
-  query Login($name: String, $password: String) {
+  query Login($email: String, $password: String) {
     Idea_USERS(
-      where: {
-        name: { _eq: $name }
-        password: { _eq: $password }
-        
-      }
+      where: { email: { _eq: $email }, password: { _eq: $password } }
     ) {
       id
       name
@@ -17,7 +12,6 @@ export const LOGIN_QUERY = gql`
     }
   }
 `;
-
 
 export const TEAM_QUERY = gql`
   query TeamQuery($approved: Boolean, $search: String) {
@@ -119,27 +113,36 @@ export const STATS_QUERY = gql`
       id
       submissions
     }
-    Idea_USERS_aggregate(where: {roles: {_eq: evaluator}}) {
+    Idea_USERS_aggregate(where: { roles: { _eq: evaluator } }) {
       aggregate {
         count
       }
     }
-    feedbacks_aggregate(where: {totalscore: {_is_null: false}}) {
+    feedbacks_aggregate(where: { totalscore: { _is_null: false } }) {
       aggregate {
         count
       }
     }
-    maleCount: Participant_aggregate(where: {User: {gender: {_eq: "MALE"}}, Event: {id: {_eq: 47}}}) {
+    maleCount: Participant_aggregate(
+      where: { User: { gender: { _eq: "MALE" } }, Event: { id: { _eq: 47 } } }
+    ) {
       aggregate {
         count
       }
     }
-    femaleCount: Participant_aggregate(where: {User: {gender: {_eq: "FEMALE"}}, Event: {id: {_eq: 47}}}) {
+    femaleCount: Participant_aggregate(
+      where: { User: { gender: { _eq: "FEMALE" } }, Event: { id: { _eq: 47 } } }
+    ) {
       aggregate {
         count
       }
     }
-    female_team_count:Team_aggregate(where: {Participants: {User: {gender: {_eq: "FEMALE"}}}, Participants_aggregate: {count: {predicate: {_eq: 4}}}}) {
+    female_team_count: Team_aggregate(
+      where: {
+        Participants: { User: { gender: { _eq: "FEMALE" } } }
+        Participants_aggregate: { count: { predicate: { _eq: 4 } } }
+      }
+    ) {
       aggregate {
         count
       }
