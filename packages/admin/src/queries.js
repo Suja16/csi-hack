@@ -138,10 +138,7 @@ export const STATS_QUERY = gql`
       }
     }
     female_team_count: Team_aggregate(
-      where: {
-        Participants: { User: { gender: { _eq: "FEMALE" } } }
-        Participants_aggregate: { count: { predicate: { _eq: 4 } } }
-      }
+      where: { Participants: { User: { gender: { _eq: "FEMALE" } } } }
     ) {
       aggregate {
         count
