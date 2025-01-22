@@ -298,6 +298,12 @@ const EvaluatorsTable = () => {
     <Box sx={styles.root}>
       <Paper sx={styles.paper} elevation={3}>
         <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+          <TextField
+            label="Search Teams"
+            variant="outlined"
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
           <Button
             variant="contained"
             color="primary"
@@ -305,12 +311,6 @@ const EvaluatorsTable = () => {
           >
             Add Evaluator
           </Button>
-          <TextField
-            label="Search Teams"
-            variant="outlined"
-            value={searchQuery}
-            onChange={handleSearchChange}
-          />
         </Box>
         <DataGrid
           rows={filteredRows}
