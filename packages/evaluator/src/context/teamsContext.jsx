@@ -1,32 +1,18 @@
+import { useMediaQuery } from "@mui/material";
 import React, { createContext, useState, useContext } from "react";
 
 const TeamsContext = createContext(null);
 
 // TeamsProvider component that will wrap your app and provide the teams data
 export const TeamsProvider = ({ children }) => {
-  const [teams, setTeams] = useState([
-    {
-      id: 1,
-      name: "Team A",
-      youtube: "https://youtu.be/QuwzdyDCjak?si=1qCkneJ8HMO2Fjyq",
-      ppt: "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FRESUME.pdf32ec80d5-f066-4797-9d86-f16e11ed71ac?alt=media&token=193996af-e8fa-4ff3-acff-d046fc47e43b",
-    },
-    {
-      id: 2,
-      name: "Team B",
-      youtube: "https://youtu.be/QuwzdyDCjak?si=1qCkneJ8HMO2Fjyq",
-      ppt: "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FRESUME.pdf32ec80d5-f066-4797-9d86-f16e11ed71ac?alt=media&token=193996af-e8fa-4ff3-acff-d046fc47e43b",
-    },
-    {
-      id: 3,
-      name: "Team C",
-      youtube: "https://youtu.be/QuwzdyDCjak?si=1qCkneJ8HMO2Fjyq",
-      ppt: "https://firebasestorage.googleapis.com/v0/b/hackathoncsi-9dc45.firebasestorage.app/o/files%2FRESUME.pdf32ec80d5-f066-4797-9d86-f16e11ed71ac?alt=media&token=193996af-e8fa-4ff3-acff-d046fc47e43b",
-    },
-  ]);
+  const [teams, setTeams] = useState(null);
+  const [selectedTeam, setSelectedTeam] = useState(null);
+  const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const isMobile = useMediaQuery("(max-width:600px)");
+
 
   return (
-    <TeamsContext.Provider value={{ teams, setTeams }}>
+    <TeamsContext.Provider value={{ teams, setTeams , selectedTeam, setSelectedTeam , isSidebarOpen, setSidebarOpen , isMobile}}>
       {children}
     </TeamsContext.Provider>
   );

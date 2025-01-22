@@ -2,27 +2,24 @@ import "react";
 import {
   Drawer,
   List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
   Tooltip,
+  Box,
+  Typography,
+  Button,
+  Toolbar,
+  IconButton,
 } from "@mui/material";
-import { People } from "@mui/icons-material";
-import { Link, useLocation } from "react-router-dom";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
-import HowToRegIcon from "@mui/icons-material/HowToReg";
-import BarChartIcon from "@mui/icons-material/BarChart";
 import { useTeams } from "../context/teamsContext";
+import MenuIcon from "@mui/icons-material/Menu";
+import MenuOpenIcon from "@mui/icons-material/MenuOpen";
+import logo from "../assets/idea.png";
 
-const Sidebar = ({ isSidebarOpen }) => {
+const Sidebar = () => {
   const location = useLocation();
-  const { teams } = useTeams();
-
-  const menuItems = [
-    { label: "All Teams", icon: <People />, path: "/allteams" },
-    { label: "Add Evaluators", icon: <HowToRegIcon />, path: "/evaluators" },
-    { label: "Statistics", icon: <BarChartIcon />, path: "/statistics" },
-  ];
+  const { teams, setSelectedTeam, isSidebarOpen, setSidebarOpen } = useTeams();
 
   return (
     <Drawer
@@ -30,12 +27,13 @@ const Sidebar = ({ isSidebarOpen }) => {
       sx={{
         display: { xs: isSidebarOpen ? "block" : "none", sm: "block" },
         width: isSidebarOpen ? "15rem" : "3.75rem",
+        position: {xs: "fixed", lg: "relative"},
+        zIndex:"10",
         flexShrink: 0,
         "& .MuiDrawer-paper": {
-          width: isSidebarOpen ? "15rem" : "3.75rem",
+          width: isSidebarOpen ? "15rem" : "4rem",
           boxSizing: "border-box",
           position: "fixed",
-          top: "4rem",
           left: 0,
           background: "#fff",
           borderRadius: "0.625rem",
@@ -46,43 +44,88 @@ const Sidebar = ({ isSidebarOpen }) => {
       }}
       anchor="left"
     >
+      <Toolbar>
+        {/* Menu Icon to toggle Sidebar */}
+        <IconButton
+          edge="start"
+          color="black"
+          onClick={() => setSidebarOpen(!isSidebarOpen)}
+          sx={{ marginRight: 2 }}
+        >
+          {isSidebarOpen ? <MenuOpenIcon /> : <MenuIcon />}
+        </IconButton>
+
+        {isSidebarOpen && (
+          <Box
+            component="img"
+            src={logo}
+            alt="App Logo"
+            sx={{
+              height: "40px",
+              width: "150px",
+              maxHeight: "100%",
+              maxWidth: "100%",
+            }}
+          />
+        )}
+      </Toolbar>
+      <Typography
+        variant="subtitle2"
+        sx={{
+          textAlign: "left",
+          p: 1,
+          pl: isSidebarOpen ? 2 : 1.3,
+          color: "#666666",
+          borderTop: "2px solid #f0f0f0",
+        }}
+      >
+        Teams
+      </Typography>
       <List>
-        {teams.map((item, index) => (
-          <Tooltip title={item.label} placement="right" arrow key={index}>
-            <ListItem
-              button
-              component={Link}
-              to={`evaluator/dashboard?team=${item.id}`}
-              sx={{
-                marginBottom: isSidebarOpen ? "0.5rem" : "1rem",
-                marginLeft: isSidebarOpen ? "1.2rem" : "0",
-                marginRight: isSidebarOpen ? "0.5rem" : "0",
-                backgroundColor:
-                  location.pathname === item.path ? "#d0efff" : "transparent",
-                borderRadius: "0.5rem",
-                "&:hover": {
-                  backgroundColor: "#c0dceb",
-                },
-                "& .MuiListItemText-root": {
-                  color: "black",
-                },
-                "& .MuiListItemIcon-root": {
+        {teams ? (
+          teams.map((item, index) => (
+            <Tooltip title={item.label} placement="right" arrow key={index}>
+              <Button
+                onClick={() => setSelectedTeam(teams[index])}
+                variant="button"
+                sx={{
+                  width: "100%",
+                  minHeight: "3.75rem",
+                  display: "flex",
+                  justifyContent: "left",
+                  pl: 3,
+                  pb: 2,
+                  borderRadius: 0,
+                  textTransform: "none",
                   color:
                     location.pathname === item.path
                       ? "rgba(21, 101, 192, 1)"
                       : "black",
-                },
-              }}
-            >
-              {isSidebarOpen && (
-                <ListItemText
-                  primary={item.name}
-                  sx={{ whiteSpace: "nowrap", minWidth: "0" }}
-                />
-              )}
-            </ListItem>
-          </Tooltip>
-        ))}
+                  backgroundColor:
+                    location.pathname === item.path ? "#d0efff" : "transparent",
+                  "&:hover": { backgroundColor: "#c0dceb" },
+
+                  gap: 2,
+                  mb: 1,
+                }}
+              >
+                <PeopleAltIcon />
+                <Typography variant="h6">{isSidebarOpen && item.name}</Typography>
+              </Button>
+            </Tooltip>
+          ))
+        ) : (
+          <Box
+            sx={{
+              height: "30vh",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Typography variant="h5">Loading...</Typography>
+          </Box>
+        )}
       </List>
     </Drawer>
   );

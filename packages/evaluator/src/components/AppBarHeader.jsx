@@ -1,52 +1,49 @@
-import "react";
-import PropTypes from "prop-types";
-import { AppBar, Toolbar, IconButton, Box } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import { useTeams } from "../context/teamsContext";
 import logo from "../assets/idea.png";
 
-const AppBarHeader = ({ toggleSidebar, isSidebarOpen }) => {
+export default function AppBarHeader() {
+  const { isSidebarOpen, setSidebarOpen } = useTeams();
+
   return (
-    <AppBar
-      position="fixed"
-      sx={{
-        zIndex: (theme) => theme.zIndex.drawer + 1,
-        backgroundColor: "white",
-        boxShadow: "none",
-        borderBottom: "0.5px solid black",
-      }}
-    >
-      <Toolbar>
-        {/* Menu Icon to toggle Sidebar */}
-        <IconButton
-          edge="start"
-          color="black"
-          onClick={toggleSidebar}
-          sx={{ marginRight: 2 }}
-        >
-          {isSidebarOpen ? <MenuOpenIcon /> : <MenuIcon />}
-        </IconButton>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar sx={{ bgcolor: "#ffffff" }} position="fixed">
+        <Toolbar sx={{ display: "flex", justifyContent: "start" , alignItems: "center"}}>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            onClick={() => setSidebarOpen(!isSidebarOpen)}
+            sx={{ mr: 2 , mt:1 }}
+          >
+            {isSidebarOpen ? (
+              <MenuOpenIcon sx={{ color: "black" }} />
+            ) : (
+              <MenuIcon sx={{ color: "black" }} />
+            )}
+          </IconButton>
 
-        {/* App Logo */}
-        <Box
-          component="img"
-          src={logo}
-          alt="App Logo"
-          sx={{
-            height: "40px",
-            width: "150px",
-            maxHeight: "100%",
-            maxWidth: "100%",
-          }}
-        />
-      </Toolbar>
-    </AppBar>
+          <Box
+            component="img"
+            src={logo} // Make sure to update this path
+            alt="App Logo"
+            sx={{
+              height: "40px",
+              width: "150px",
+              maxHeight: "100%",
+              maxWidth: "100%",
+            }}
+          />
+        </Toolbar>
+      </AppBar>
+    </Box>
   );
-};
-
-AppBarHeader.propTypes = {
-  toggleSidebar: PropTypes.func.isRequired,
-  isSidebarOpen: PropTypes.bool.isRequired,
-};
-
-export default AppBarHeader;
+}

@@ -4,18 +4,20 @@ import { useTeams } from "../context/teamsContext";
 import { Box, Grid, Paper, Typography } from "@mui/material";
 import YouTube from "react-youtube";
 import HackathonEvaluatorInputs from "./EvaluatorInputs";
+import NewEevaluatorsInput from "./NewEevaluatorsInput";
+import CircularProgress from "@mui/material/CircularProgress";
+import FullscreenIcon from "@mui/icons-material/Fullscreen";
 
 const TeamDetails = () => {
   const location = useLocation();
-  const { teams } = useTeams();
-
+  const { teams, selectedTeam, setSelectedTeam, isMobile } = useTeams();
   const queryParams = new URLSearchParams(location.search);
   const teamID = queryParams.get("team");
-  const details = teams.find((team) => team.id === Number(teamID));
+  const details = teams?.find((team) => team.id === Number(teamID));
   console.log(details);
 
   const videoOpts = {
-    height: 460,
+    height: isMobile ? 360 : 460,
     width: "97%",
     playerVars: {
       autoplay: 1,
@@ -29,8 +31,23 @@ const TeamDetails = () => {
     return match ? match[1] : null;
   };
 
+  if (!teams) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          height: "60vh",
+          alignItems: "center",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
-    <Box>
+    <Box >
       <Box
         sx={{
           display: "flex",
@@ -38,7 +55,8 @@ const TeamDetails = () => {
           flexDirection: "column",
           alignItems: "center",
           gap: 3,
-          paddingBottom: 5,
+          paddingBottom: 3,  
+          // marginLeft: 3,
         }}
       >
         <Paper
@@ -49,15 +67,17 @@ const TeamDetails = () => {
             flexDirection: "column",
             // justifyContent: "space-around",
             gap: 1,
-            height: 540,
-            width: "90%",
-            minWidth: 300,
+            height: isMobile ? 440 : 540,
+            width: "85%",
           }}
         >
           <Typography variant="h4" color="#ee1f25" gutterBottom component="div">
             YouTube Video
           </Typography>
-          <YouTube videoId={getVideoId(details.youtube)} opts={videoOpts} />
+          <YouTube
+            videoId={getVideoId(selectedTeam.youtube)}
+            opts={videoOpts}
+          />
         </Paper>
 
         <Paper
@@ -66,29 +86,43 @@ const TeamDetails = () => {
             p: 2,
             display: "flex",
             flexDirection: "column",
-            // height: 570,
-            width: "90%",
-            minWidth: 300,
+            width: "85%",
             gap: 1,
           }}
         >
-          <Typography variant="h4" color="#ee1f25" gutterBottom component="div">
-            PowerPoint Presentation
-          </Typography>
+          <Box sx={{
+            display: "flex",
+            justifyContent:"center",
+            alignItems:"center",
+            gap:1,
+          }}>
+            <Typography
+              variant="h5"
+              color="#ee1f25"
+              pb={0.5}
+              component="div"
+            >
+              Presentation
+            </Typography>
+            <Typography variant="a" sx={{cursor:"pointer"}} onClick={() => window.open(selectedTeam.ppt)}>
+              <FullscreenIcon />
+            </Typography>
+          </Box>
           <Box>
             <iframe
-              src={details.ppt}
+              src={selectedTeam.ppt}
               frameBorder="0"
               width="100%"
-              height="640"
+              height={isMobile ? "400" : "600"}
               allowFullScreen={true}
               mozallowfullscreen="true"
               webkitallowfullscreen="true"
             ></iframe>
           </Box>
         </Paper>
-        <HackathonEvaluatorInputs />
       </Box>
+      {/* <HackathonEvaluatorInputs /> */}
+      <NewEevaluatorsInput />
     </Box>
   );
 };

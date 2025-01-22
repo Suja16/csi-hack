@@ -23,7 +23,7 @@ const outOf10List = [
 ];
 
 const HackathonEvaluator = () => {
-  const { teams } = useTeams();
+  const { teams, selectedTeam, setSelectedTeam } = useTeams();
   const queryParams = new URLSearchParams(location.search);
   const teamID = queryParams.get("team");
   const details = teams.find((team) => team.id === Number(teamID));
@@ -47,24 +47,6 @@ const HackathonEvaluator = () => {
     setTotalScore(newTotal);
   }, [scores]);
 
-  const handleScoreChange = (criteriaName, value) => {
-    const cleanValue = value.replace(/\D/g, "");
-
-    if (cleanValue === "") {
-      setScores((prev) => ({ ...prev, [criteriaName]: "" }));
-      return;
-    }
-
-    const numValue = parseInt(cleanValue);
-    const maxScore = [...outOf20List, ...outOf10List].find(
-      (criteria) => criteria.name === criteriaName
-    ).maxScore;
-
-    if (numValue >= 0 && numValue <= maxScore) {
-      setScores((prev) => ({ ...prev, [criteriaName]: numValue.toString() }));
-    }
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("Submitted scores:", scores);
@@ -87,13 +69,13 @@ const HackathonEvaluator = () => {
       </Typography>
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
         <TextField
+          required
           sx={{ width: "60px", mt: marginToVal ? marginToVal : 0 }}
           variant="outlined"
           value={scores[criteria.name]}
           onChange={(e) => handleScoreChange(criteria.name, e.target.value)}
           placeholder="0"
           size="small"
-          //   helperText={`(0-${criteria.maxScore})`}
         />
         <Typography sx={{ fontWeight: 600, fontSize: "1.1rem" }}>
           /{criteria.maxScore}
@@ -103,73 +85,11 @@ const HackathonEvaluator = () => {
   );
 
   return (
-    // <Box sx={{ width:"96%", p: 3 }}>
-    //   <Paper elevation={5} sx={{ p: 4}}>
-    //     <Typography
-    //       variant="h4"
-    //       component="h1"
-    //       gutterBottom
-    //       align="center"
-    //       sx={{ color: '#ee1f25', mb: 4 }}
-    //     >
-    //       Hackathon Team Evaluation
-    //     </Typography>
-
-    //     <form onSubmit={handleSubmit}>
-    //       <Box sx={{ display: 'flex',flexDirection:{xs:"column" , lg:"row"}, justifyContent:"space-between" }}>
-    //         {/* Left column - 10 point criteria */}
-    //         <Box sx={{  width:{xs:"80%", lg:"35%"}, px:4}}>
-    //           {outOf10List.map((criteria) => (
-    //             <ScoreInput key={criteria.name} criteria={criteria} />
-    //           ))}
-    //         </Box>
-
-    //         {/* Right column - 20 point criteria */}
-    //         <Box sx={{ width:{xs:"80%", lg:"50%"} , px:4}}>
-    //           {outOf20List.map((criteria) => (
-    //             <ScoreInput key={criteria.name} criteria={criteria} />
-    //           ))}
-    //         </Box>
-    //       </Box>
-
-    //       <Box
-    //         sx={{
-    //           mt: 4,
-    //           display: 'flex',
-    //           justifyContent: 'space-between',
-    //           alignItems: 'center'
-    //         }}
-    //       >
-    //         <Typography variant="h6">
-    //           Total Score: {totalScore}/
-    //           {[...outOf20List, ...outOf10List].reduce(
-    //             (sum, criteria) => sum + criteria.maxScore,
-    //             0
-    //           )}
-    //         </Typography>
-    //         <Button
-    //           type="submit"
-    //           variant="contained"
-    //           sx={{
-    //             bgcolor: '#ee1f25',
-    //             '&:hover': {
-    //               bgcolor: '#d31920'
-    //             }
-    //           }}
-    //           size="large"
-    //         >
-    //           Submit Evaluation
-    //         </Button>
-    //       </Box>
-    //     </form>
-    //   </Paper>
-    // </Box>
     <Box
       sx={{
-        width: "96%",
+        width: "80%",
         height: "max-content",
-        pb: 3,
-        px: 2,
+
       }}
     >
       <form onSubmit={handleSubmit}>
@@ -180,7 +100,7 @@ const HackathonEvaluator = () => {
             mb: 1,
           }}
         >
-          {details.name} Evaluation scores
+          {selectedTeam.name} Evaluation scores
         </Typography>
 
         <Box
