@@ -1,40 +1,43 @@
 import "./App.css";
-import { Box } from "@mui/material";
 import { useState } from "react";
-import AppRouter from "./AppRouter.jsx";
-import { BrowserRouter as Router } from "react-router-dom";
-import AppBarHeader from "./components/AppBarHeader.jsx";
-import Sidebar from "./components/NewSidebar.jsx";
-import { ToastContainer } from "react-toastify";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from "react-router";
+
+import UserDataContext from "./contexts/userDataContext";
+
+import LoginLayout from "./layouts/LoginLayout.jsx";
+import NavSideLayout from "./layouts/NavSideLayout.jsx";
+
+import AllTeams from "./pages/AllTeams.jsx";
+import AddEvaluators from "./pages/Evaluators.jsx";
+import LoginPage from "./pages/Login.jsx";
+import Statistics from "./pages/Statistics.jsx";
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route>
+      <Route path="/" Component={LoginLayout}>
+        <Route Component={NavSideLayout}>
+          <Route index Component={AllTeams} />
+          <Route path="addevaluators" Component={AddEvaluators} />
+          <Route path="statistics" Component={Statistics} />
+        </Route>
+      </Route>
+      <Route path="/login" Component={LoginPage} />
+    </Route>,
+  ),
+);
 
 function App() {
-  const [isSidebarOpen, setSidebarOpen] = useState(true);
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen);
-  };
-
+  const [userData, setUserData] = useState(null);
   return (
-    <Router>
-      <AppBarHeader
-        toggleSidebar={toggleSidebar}
-        isSidebarOpen={isSidebarOpen}
-      />
-      <Box sx={{ display: "flex", height: "100vh" }}>
-        <Sidebar isSidebarOpen={isSidebarOpen} />
-        <Box
-          sx={{
-            flex: 1,
-            padding: "1.05rem",
-            paddingTop: "5rem",
-            overflow: "auto",
-          }}
-        >
-          <AppRouter />
-          <ToastContainer />
-        </Box>
-      </Box>
-    </Router>
+    <UserDataContext.Provider value={{ userData, setUserData }}>
+      <RouterProvider router={router} />
+    </UserDataContext.Provider>
   );
 }
 

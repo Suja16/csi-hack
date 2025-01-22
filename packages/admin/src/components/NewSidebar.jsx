@@ -16,8 +16,8 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 const Sidebar = ({ isSidebarOpen }) => {
   const location = useLocation();
   const menuItems = [
-    { label: "All Teams", icon: <People />, path: "/allteams" },
-    { label: "Add Evaluators", icon: <HowToRegIcon />, path: "/evaluators" },
+    { label: "All Teams", icon: <People />, path: "/" },
+    { label: "Add Evaluators", icon: <HowToRegIcon />, path: "/addevaluators" },
     { label: "Statistics", icon: <BarChartIcon />, path: "/statistics" },
   ];
 
