@@ -18,8 +18,6 @@ export const TEAM_QUERY = gql`
     Team(
       where: {
         event_id: { _eq: 47 }
-        approved: { _eq: $approved }
-        _or: [{ name: { _ilike: $search } }]
       }
       order_by: { id: asc }
     ) {

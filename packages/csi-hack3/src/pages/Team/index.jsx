@@ -74,8 +74,8 @@ const Team = () => {
               <li>The content can be structured around the heading in any manner.</li>
               <li>There is no restriction with regards to the fonts, as long as it is legible.</li>
               <li>For flowcharts and other diagrams, other fonts can be utilized.</li>
-              <li>One page summary is compulsary(as required in research and references slide)</li>
-              <li><strong>Once the idea PPT(in PDF Format) is submitted, no resubmission is possible (under any circumstances).</strong></li>
+              <li>One page summary is compulsary (as required in research and references slide)</li>
+              <li><strong>Once the idea PPT (in PDF Format) is submitted, no resubmission is possible (under any circumstances).</strong></li>
               <li>Incorporate flowcharts and diagrams when required within the given space.</li>
             </ol>
           </HeaderBox>
