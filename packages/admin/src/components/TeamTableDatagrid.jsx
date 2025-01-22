@@ -10,33 +10,19 @@ import {
   TextField,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { useCallback, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom"; // Import hooks
+import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import hooks
 import Popup from "../../../ui/popup";
 import { TEAM_QUERY } from "../queries";
 import TeamDetailsPage from "./DataPopupContent";
-import FilterDropdown from "./FilterButton";
 
 export default function DataTable() {
   const navigate = useNavigate(); // For navigation
-  const location = useLocation(); // To get the current URL
-  const [isApproved, setIsApproved] = useState(true);
-  const [searchTerm, setSearchTerm] = useState(""); // State for search term
-
-  // const [data, setData] = useState(initialData); // Your data
-  const { data, loading, error } = useQuery(TEAM_QUERY, {
-    variables: {
-      approved: isApproved,
-      search: `%${searchTerm}%`,
-      skip: !searchTerm,
-    },
-  });
-
-  const [selectedRows, setSelectedRows] = useState([]);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [activeRow, setActiveRow] = useState(null);
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedRowDetails, setSelectedRowDetails] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const { data, loading, error } = useQuery(TEAM_QUERY);
 
   const columns = [
     {
@@ -129,68 +115,35 @@ export default function DataTable() {
     },
   ];
 
-  // Function to handle search and update URL
-  const handleSearch = useCallback(
-    (term) => {
-      setSearchTerm(term);
-      // Update the URL with the search term as a query parameter
-      navigate({
-        pathname: location.pathname,
-        search: `?search=${term}`, // Add search query parameter to the URL
-      });
-    },
-    [location, navigate],
-  );
-
-  // Update data when the search term in URL changes
-  // useEffect(() => {
-  //   const queryParams = new URLSearchParams(location.search);
-  //   const searchQuery = queryParams.get("search") || "";
-  //   setSearchTerm(searchQuery);
-
-  //   const filtered = initialData.filter(
-  //     (row) =>
-  //       row.teamName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //       row.submission.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //       row.leaderName.toLowerCase().includes(searchQuery.toLowerCase())
-  //   );
-  //   setData(filtered);
-  // }, [location.search]);
-
   const handlePopupOpen = (row) => {
     setSelectedRowDetails(row);
     setPopupOpen(true);
   };
 
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredRows = data?.Team.filter((team) =>
+    team.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   if (loading) return <CircularProgress />;
 
   return (
     <Paper sx={{ width: "98%", overflow: "hidden", p: 2, mr: -1 }}>
-      <Box
-        sx={{
-          display: "flex",
-          width: "100%",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexDirection: "row",
-          mb: 3,
-          mt: 1,
-          gap: 2,
-        }}
-      >
+      <Box sx={{ display: "flex", justifyContent: "flex-start", mb: 2 }}>
         <TextField
-          placeholder="Search teams..."
+          label="Search Teams"
           variant="outlined"
-          value={searchTerm}
-          onChange={(e) => handleSearch(e.target.value)} // Update URL on change
-          sx={{ minWidth: { xs: 200, md: 300 } }}
+          margin="normal"
+          value={searchQuery}
+          onChange={handleSearchChange}
         />
-        <FilterDropdown isApproved={isApproved} setIsApproved={setIsApproved} />
       </Box>
-
       <Box sx={{ height: "70vh", width: "99%" }}>
         <DataGrid
-          rows={loading ? [] : data.Team}
+          rows={filteredRows || []}
           columns={columns}
           pageSize={5}
         />

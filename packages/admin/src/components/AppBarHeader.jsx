@@ -1,11 +1,21 @@
-import "react";
 import PropTypes from "prop-types";
-import { AppBar, Toolbar, IconButton, Box } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Box, Button } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import logo from "../assets/idea.png";
+import UserDataContext from "../contexts/userDataContext";
+import { useContext } from "react";
+import { useNavigate } from "react-router";
 
 const AppBarHeader = ({ toggleSidebar, isSidebarOpen }) => {
+  const { setUserData } = useContext(UserDataContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    setUserData(null);
+    navigate("/login");
+  };
+
   return (
     <AppBar
       position="fixed"
@@ -33,12 +43,17 @@ const AppBarHeader = ({ toggleSidebar, isSidebarOpen }) => {
           src={logo}
           alt="App Logo"
           sx={{
-            height: "40px",
+            // height: "40px",
             width: "150px",
             maxHeight: "100%",
             maxWidth: "100%",
           }}
         />
+        <Box display="flex" justifyContent="flex-end" width="100%">
+          <Button variant="contained" onClick={handleLogout}>
+            Logout
+          </Button>
+        </Box>
       </Toolbar>
     </AppBar>
   );

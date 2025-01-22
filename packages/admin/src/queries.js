@@ -1,12 +1,23 @@
 import { gql } from "@apollo/client";
 
+export const LOGIN_QUERY = gql`
+  query Login($email: String, $password: String) {
+    Idea_USERS(
+      where: { email: { _eq: $email }, password: { _eq: $password } }
+    ) {
+      id
+      name
+      email
+      roles
+    }
+  }
+`;
+
 export const TEAM_QUERY = gql`
   query TeamQuery($approved: Boolean, $search: String) {
     Team(
       where: {
         event_id: { _eq: 47 }
-        approved: { _eq: $approved }
-        _or: [{ name: { _ilike: $search } }]
       }
       order_by: { id: asc }
     ) {
@@ -80,12 +91,56 @@ export const EVALUATOR_QUERY = gql`
 `;
 
 export const ASSIGN_TEAM = gql`
-  mutation MyMutation($Idea_user_Id: Int, $team_id: Int) {
-    insert_feedbacks_one(
-      object: { Idea_user_Id: $Idea_user_Id, team_id: $team_id }
+  mutation MyMutation($objects: [feedbacks_insert_input!]!) {
+    insert_feedbacks(objects: $objects) {
+      affected_rows
+    }
+  }
+`;
+// queries.js
+
+export const STATS_QUERY = gql`
+  query TeamQuery {
+    Team_aggregate {
+      aggregate {
+        count(columns: id)
+        count_submissions: count(columns: submissions, distinct: true)
+      }
+    }
+    Team(where: {}) {
+      id
+      submissions
+    }
+    Idea_USERS_aggregate(where: { roles: { _eq: evaluator } }) {
+      aggregate {
+        count
+      }
+    }
+    feedbacks_aggregate(where: { totalscore: { _is_null: false } }) {
+      aggregate {
+        count
+      }
+    }
+    maleCount: Participant_aggregate(
+      where: { User: { gender: { _eq: "MALE" } }, Event: { id: { _eq: 47 } } }
     ) {
-      Idea_user_Id
-      team_id
+      aggregate {
+        count
+      }
+    }
+    femaleCount: Participant_aggregate(
+      where: { User: { gender: { _eq: "FEMALE" } }, Event: { id: { _eq: 47 } } }
+    ) {
+      aggregate {
+        count
+      }
+    }
+    female_team_count: Team_aggregate(
+      where: { Participants: { User: { gender: { _eq: "FEMALE" } } } }
+    ) {
+      aggregate {
+        count
+      }
     }
   }
 `;

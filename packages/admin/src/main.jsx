@@ -6,6 +6,7 @@ import App from "./App.jsx";
 import { createHttpLink } from "@apollo/client";
 
 import { InMemoryCache, ApolloClient, ApolloProvider } from "@apollo/client";
+import { ToastContainer } from "react-toastify";
 
 function makeClient() {
   const httpLink = createHttpLink({
@@ -39,6 +40,7 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ApolloProvider client={client}>
       <App />
+      <ToastContainer />
     </ApolloProvider>
-  </StrictMode>
+  </StrictMode>,
 );

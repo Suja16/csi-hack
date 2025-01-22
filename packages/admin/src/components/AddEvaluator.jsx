@@ -1,19 +1,16 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Button, Typography, Grid2, Snackbar } from "@mui/material";
+import { Box, Button, Typography, Grid2 } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 import { Close } from "@mui/icons-material";
 import { useMutation } from "@apollo/client";
 import { ADD_EVALUATOR } from "../queries";
+import { success, failure } from "../utils/snackbar";
 import Popup from "../../../ui/popup";
 import TextField from "../../../ui/TextBox";
 import addEvaluatorSchema from "../utils/addEvaluatorSchema";
-import { useEffect } from "react";
-import { useState } from "react";
 
-export default function AddEvaluator({ open, setOpen }) {
-  const [showSnackBar, setShowSnackBar] = useState(false);
-  const [message, setMessage] = useState("");
-
+export default function AddEvaluator({ open, setOpen, refetch }) {
   const {
     formState: { errors },
     handleSubmit,
@@ -24,11 +21,20 @@ export default function AddEvaluator({ open, setOpen }) {
     resolver: yupResolver(addEvaluatorSchema),
   });
 
-  const [addEvaluator, { loading, error }] = useMutation(ADD_EVALUATOR);
+  const [addEvaluator, { loading }] = useMutation(ADD_EVALUATOR, {
+    onCompleted: () => {
+      setOpen(false);
+      success("Evaluator added successfully");
+      reset();
+      refetch();
+    },
+    onError: (error) => {
+      failure(error.message);
+    },
+  });
 
-  const onSubmit = async (data) => {
-    console.log(data);
-    await addEvaluator({
+  const onSubmit = (data) => {
+    addEvaluator({
       variables: {
         name: data.name,
         email: data.email,
@@ -37,21 +43,7 @@ export default function AddEvaluator({ open, setOpen }) {
         roles: "evaluator",
       },
     });
-    setMessage("Evaluator added successfully");
-    setShowSnackBar(true);
-    setTimeout(() => {
-      setShowSnackBar(false);
-      setOpen(false);
-      reset();
-    }, 3000);
   };
-
-  useEffect(() => {
-    if (error) {
-      setMessage(error.message);
-      setShowSnackBar(true);
-    }
-  }, [error]);
 
   return (
     <Popup
@@ -108,22 +100,16 @@ export default function AddEvaluator({ open, setOpen }) {
             helperText={errors.password?.message}
           />
         </Grid2>
-        <Button
+        <LoadingButton
           type="submit"
           variant="contained"
           color="primary"
           loading={loading}
+          disabled={loading}
         >
           Add Evaluator
-        </Button>
+        </LoadingButton>
       </Grid2>
-      <Snackbar
-        open={showSnackBar}
-        autoHideDuration={2000}
-        onClose={() => setShowSnackBar(false)}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        message={message}
-      />
     </Popup>
   );
 }
