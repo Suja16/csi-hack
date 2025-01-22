@@ -1,11 +1,9 @@
-import { useLazyQuery } from "@apollo/client";
-import Box from "@mui/material/Box";
-import { LoadingButton } from "@mui/lab";
-import Paper from "@mui/material/Paper";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
 import { useState, useContext } from "react";
+import { useLazyQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
+import { Box, Paper, TextField, Typography, InputAdornment, IconButton, Link, Divider } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import { Visibility, VisibilityOff, Email, Lock } from "@mui/icons-material";
 import { LOGIN_QUERY } from "../queries";
 import { failure } from "../utils/snackbar";
 import UserDataContext from "../contexts/userDataContext";
@@ -15,8 +13,8 @@ import csiKJSCE from "../assets/csiKJSCE.png";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const { setUserData } = useContext(UserDataContext);
-
   const navigate = useNavigate();
 
   const [login, { loading }] = useLazyQuery(LOGIN_QUERY, {
@@ -43,70 +41,102 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email || !password) {
-      failure("Please enter both name and password");
+      failure("Please enter both email and password");
       return;
     }
     login();
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
     <Box
       sx={{
         display: "flex",
-        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        overflow: "hidden",
-        height: "90vh",
+        minHeight: "100vh",
+        backgroundColor: "#f5f5f5",
       }}
     >
-      <Box
-        position="fixed"
-        top={0}
-        left="50%"
+      <Paper
+        elevation={3}
         sx={{
-          transform: "translateX(-50%)",
+          padding: 4,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          maxWidth: 400,
+          width: "100%",
         }}
-        display="flex"
-        justifyContent="center"
-        gap={2}
-        marginTop={4}
       >
-        <img src={ideaLogo} alt="iDEA Logo" height="100" />
-        <img src={csiKJSCE} alt="CSI KJSCE" height="100" />
-      </Box>
-      <Typography variant="h4" component="h1" gutterBottom align="center">
-        Login as Evaluator
-      </Typography>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          label="Email"
-          variant="outlined"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          fullWidth
-          margin="normal"
-        />
-        <TextField
-          label="Password"
-          type="password"
-          variant="outlined"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          fullWidth
-          margin="normal"
-        />
-        <LoadingButton
-          type="submit"
-          variant="contained"
-          color="primary"
-          fullWidth
-          loading={loading}
-          sx={{ mt: 2 }}
-        >
-          Login
-        </LoadingButton>
-      </form>
+        <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
+          <img src={ideaLogo || "/placeholder.svg"} alt="iDEA Logo" height="60" style={{ marginRight: "16px" }} />
+          <img src={csiKJSCE || "/placeholder.svg"} alt="CSI KJSCE" height="60" />
+        </Box>
+        <Typography variant="h4" component="h1" gutterBottom align="center" sx={{ mb: 3 }}>
+          Login as Evaluator
+        </Typography>
+        <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+          <TextField
+            label="Email"
+            variant="outlined"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            fullWidth
+            margin="normal"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Email />
+                </InputAdornment>
+              ),
+            }}
+          />
+          <TextField
+            label="Password"
+            type={showPassword ? "text" : "password"}
+            variant="outlined"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            fullWidth
+            margin="normal"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Lock />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton aria-label="toggle password visibility" onClick={togglePasswordVisibility} edge="end">
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <LoadingButton
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            loading={loading}
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Login
+          </LoadingButton>
+        </form>
+        {/* <Link href="#" variant="body2" sx={{ mt: 2 }}> */}
+        {/*   Forgot password? */}
+        {/* </Link> */}
+        <Divider sx={{ width: "100%", mt: 3, mb: 2 }} />
+        {/* <Typography variant="body2" color="text.secondary" align="center"> */}
+        {/*   &copy; {new Date().getFullYear()} iDEA KJSCE. All rights reserved. */}
+        {/* </Typography> */}
+      </Paper>
     </Box>
   );
 }
