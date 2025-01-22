@@ -12,6 +12,7 @@ import {
   Paper,
   Select,
   Typography,
+  CircularProgress,
   Snackbar,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
@@ -290,7 +291,7 @@ const EvaluatorsTable = () => {
     [handleEditClick],
   );
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <CircularProgress />;
 
   if (error) return <p>Error: {error.message}</p>;
 

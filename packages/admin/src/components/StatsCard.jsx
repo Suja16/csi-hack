@@ -3,7 +3,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import InfoIcon from "@mui/icons-material/Info";
 import PeopleIcon from "@mui/icons-material/People";
 import GenderIcon from "@mui/icons-material/Wc";
-import { Card, CardContent, CardHeader, Typography } from "@mui/material";
+import { Card, CardContent, CardHeader, Typography, CircularProgress } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import PropTypes from "prop-types";
 import React from "react";
@@ -40,7 +40,7 @@ const StatsGrid = () => {
   const { data, loading, error } = useQuery(STATS_QUERY);
   console.log(data);
 
-  if (loading) return <Typography>Loading...</Typography>;
+  if (loading) return <CircularProgress />;
   if (error) return <Typography>Error: {error.message}</Typography>;
 
   const teamCount = data?.Team_aggregate?.aggregate?.count ?? 0;
