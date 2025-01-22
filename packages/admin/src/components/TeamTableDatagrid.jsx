@@ -7,6 +7,7 @@ import {
   CircularProgress,
   IconButton,
   Paper,
+  TextField,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
@@ -19,6 +20,7 @@ export default function DataTable() {
   const navigate = useNavigate(); // For navigation
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedRowDetails, setSelectedRowDetails] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { data, loading, error } = useQuery(TEAM_QUERY);
 
@@ -118,13 +120,30 @@ export default function DataTable() {
     setPopupOpen(true);
   };
 
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredRows = data?.Team.filter((team) =>
+    team.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   if (loading) return <CircularProgress />;
 
   return (
     <Paper sx={{ width: "98%", overflow: "hidden", p: 2, mr: -1 }}>
+      <Box sx={{ display: "flex", justifyContent: "flex-start", mb: 2 }}>
+        <TextField
+          label="Search Teams"
+          variant="outlined"
+          margin="normal"
+          value={searchQuery}
+          onChange={handleSearchChange}
+        />
+      </Box>
       <Box sx={{ height: "70vh", width: "99%" }}>
         <DataGrid
-          rows={loading ? [] : data.Team}
+          rows={filteredRows || []}
           columns={columns}
           pageSize={5}
         />
