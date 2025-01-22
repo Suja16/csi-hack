@@ -70,7 +70,7 @@ const Team = () => {
               <li>The template provided is to be followed as is.</li>
               <li>The solution must <strong>not exceed 8 slides,</strong> i.e, 1 Header slide + 1 Team Details slide + 6 content slides.</li>
               <li>The slide titles must be retained as it is, and their positions should not be changed.</li>
-              <li>The headings for the submission cannot be changed.</li>
+              <li>The headings for the submission must not be changed.</li>
               <li>The content can be structured around the heading in any manner.</li>
               <li>There is no restriction with regards to the fonts, as long as it is legible.</li>
               <li>For flowcharts and other diagrams, other fonts can be utilized.</li>
