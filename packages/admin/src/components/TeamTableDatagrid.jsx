@@ -11,18 +11,16 @@ import {
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import hooks
 import Popup from "../../../ui/popup";
 import { TEAM_QUERY } from "../queries";
 import TeamDetailsPage from "./DataPopupContent";
 
 export default function DataTable() {
-  const navigate = useNavigate(); // For navigation
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedRowDetails, setSelectedRowDetails] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const { data, loading, error } = useQuery(TEAM_QUERY);
+  const { data, loading } = useQuery(TEAM_QUERY);
 
   const columns = [
     {
@@ -125,7 +123,7 @@ export default function DataTable() {
   };
 
   const filteredRows = data?.Team.filter((team) =>
-    team.name.toLowerCase().includes(searchQuery.toLowerCase())
+    team.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   if (loading) return <CircularProgress />;
@@ -142,11 +140,7 @@ export default function DataTable() {
         />
       </Box>
       <Box sx={{ height: "70vh", width: "99%" }}>
-        <DataGrid
-          rows={filteredRows || []}
-          columns={columns}
-          pageSize={5}
-        />
+        <DataGrid rows={filteredRows || []} columns={columns} pageSize={5} />
       </Box>
 
       <Popup dialogProps={{ open: popupOpen }}>

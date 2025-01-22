@@ -1,7 +1,15 @@
 import { useState, useContext } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
-import { Box, Paper, TextField, Typography, InputAdornment, IconButton, Link, Divider } from "@mui/material";
+import {
+  Box,
+  Paper,
+  TextField,
+  Typography,
+  InputAdornment,
+  IconButton,
+  Divider,
+} from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { Visibility, VisibilityOff, Email, Lock } from "@mui/icons-material";
 import { LOGIN_QUERY } from "../queries";
@@ -73,10 +81,25 @@ function Login() {
         }}
       >
         <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
-          <img src={ideaLogo || "/placeholder.svg"} alt="iDEA Logo" height="60" style={{ marginRight: "16px" }} />
-          <img src={csiKJSCE || "/placeholder.svg"} alt="CSI KJSCE" height="60" />
+          <img
+            src={ideaLogo || "/placeholder.svg"}
+            alt="iDEA Logo"
+            height="60"
+            style={{ marginRight: "16px" }}
+          />
+          <img
+            src={csiKJSCE || "/placeholder.svg"}
+            alt="CSI KJSCE"
+            height="60"
+          />
         </Box>
-        <Typography variant="h4" component="h1" gutterBottom align="center" sx={{ mb: 3 }}>
+        <Typography
+          variant="h4"
+          component="h1"
+          gutterBottom
+          align="center"
+          sx={{ mb: 3 }}
+        >
           Login as Evaluator
         </Typography>
         <form onSubmit={handleSubmit} style={{ width: "100%" }}>
@@ -111,7 +134,11 @@ function Login() {
               ),
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton aria-label="toggle password visibility" onClick={togglePasswordVisibility} edge="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={togglePasswordVisibility}
+                    edge="end"
+                  >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
