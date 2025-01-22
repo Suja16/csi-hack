@@ -8,6 +8,7 @@ import {
   DialogTitle,
   FormControl,
   InputLabel,
+  TextField,
   MenuItem,
   Paper,
   Select,
@@ -152,17 +153,6 @@ const EvaluatorsTable = () => {
     }
   }, [editDialog.data, assignTeam]);
 
-  // useEffect(() => {
-  //   if (editDialog.open) {
-  //     const teamToEdit = data.Team.find(
-  //       (team) => team.id === editDialog.data.id,
-  //     );
-  //     if (teamToEdit) {
-  //       setEditDialog((prev) => ({ ...prev, data: teamToEdit }));
-  //     }
-  //   }
-  // }, [editDialog.open, data?.Team]);
-
   const columns = useMemo(
     () => [
       {
@@ -291,6 +281,15 @@ const EvaluatorsTable = () => {
     [handleEditClick],
   );
 
+  const [searchQuery, setSearchQuery] = useState("");
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredRows = data?.Team.filter((team) =>
+    team.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   if (loading) return <CircularProgress />;
 
   if (error) return <p>Error: {error.message}</p>;
@@ -298,18 +297,23 @@ const EvaluatorsTable = () => {
   return (
     <Box sx={styles.root}>
       <Paper sx={styles.paper} elevation={3}>
-        <Box display="flex" justifyContent="flex-start">
+        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
           <Button
             variant="contained"
             color="primary"
             onClick={() => setOpen(true)}
-            sx={{ mb: 2 }}
           >
             Add Evaluator
           </Button>
+          <TextField
+            label="Search Teams"
+            variant="outlined"
+            value={searchQuery}
+            onChange={handleSearchChange}
+          />
         </Box>
         <DataGrid
-          rows={data.Team}
+          rows={filteredRows}
           columns={columns}
           loading={loading}
           disableSelectionOnClick
