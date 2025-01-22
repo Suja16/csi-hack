@@ -64,23 +64,6 @@ const registrationSchema = yup.object({
 
   why_this_hackathon: yup.string().notRequired(),
 
-  resume: yup
-    .mixed()
-    .required("Resume is required")
-    .test("minimumFiles", "Resume is required", (value) => {
-      return value.length > 0 && value[0];
-    })
-    .test("fileType", "Only PDF files are allowed", (value) => {
-      return (
-        value.length > 0 && value[0] && value[0].type === "application/pdf"
-      );
-    })
-    .test("fileSize", "File size must be less than 2MB", (value) => {
-      return value.length > 0 && value[0] && value[0].size <= 2 * 1024 * 1024; // 2MB in bytes
-    }),
-
-  resume_link: yup.string().required(),
-
   photo_id: yup
     .mixed()
     .required("Photo ID is required")

@@ -59,30 +59,9 @@ export default function RegistrationForm({ open, onClose }) {
   });
 
   const teamChoice = watch("team_choice");
-  const resume = watch("resume");
   const photo_id = watch("photo_id");
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const uploadResume = async () => {
-      if (resume && resume[0]) {
-        try {
-          setIsLoading(true);
-          const oldResumeLink = getValues("resume_link");
-          if (oldResumeLink) {
-            deleteFile(oldResumeLink);
-          }
-          const url = await uploadFile(resume[0]);
-          setValue("resume_link", url);
-          setIsLoading(false);
-        } catch (e) {
-          console.error(e);
-        }
-      }
-    };
-    uploadResume();
-  }, [resume]);
 
   useEffect(() => {
     const uploadPhoto = async () => {
@@ -167,18 +146,6 @@ export default function RegistrationForm({ open, onClose }) {
       return;
     }
 
-    // upload resume
-    // const resumeURLPromise = uploadFile(resume[0]);
-
-    // upload photo id
-    // const photoIdURLPromise = uploadFile(photo_id[0]);
-
-    // const [resumeURL, photoIdURL] = await Promise.all([
-    //   resumeURLPromise,
-    //   photoIdURLPromise,
-    // ]);
-
-    more_details.resume = data.resume_link;
     more_details.photo_id = data.photo_id_link;
 
     if (data.team_choice === "create") {
@@ -335,24 +302,14 @@ export default function RegistrationForm({ open, onClose }) {
           />
         </Grid2>
         <Grid2 item size={1}>
-          {/* <TextBox
-            name="gender"
-            label="GENDER"
-            register={register}
-            placeholder={"MALE / FEMALE"}
-            helperText={errors?.gender?.message}
-            error={!!errors?.gender?.message}
-          /> */}
           <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">*GENDER</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                // value={gender}
                 name="gender"
                 label="GENDER"
-                // onChange={handleChange}
                 {...register("gender")}
               >
                 <MenuItem value="MALE">MALE</MenuItem>
@@ -363,24 +320,14 @@ export default function RegistrationForm({ open, onClose }) {
           </Box>
         </Grid2>
         <Grid2 item size={1}>
-          {/* <TextBox
-            name="degree"
-            label="DEGREE"
-            register={register}
-            placeholder={"Enter your Degree"}
-            helperText={errors?.degree?.message}
-            error={!!errors?.degree?.message}
-          /> */}
           <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">*DEGREE</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                // value={degree}
                 name="degree"
                 label="DEGREE"
-                // onChange={handleDegreeChange}
                 {...register("degree")}
               >
                 <MenuItem value="B.E/B.Tech">B.E / B.TECH</MenuItem>
@@ -500,37 +447,6 @@ export default function RegistrationForm({ open, onClose }) {
             rows={3}
           />
         </Grid2>
-        <Grid2 item size={1}>
-          <Button
-            component="label"
-            role={undefined}
-            variant="text"
-            tabIndex={-1}
-            startIcon={
-              resume && resume[0] ? (
-                <Tooltip title="Delete File">
-                  <Delete />
-                </Tooltip>
-              ) : (
-                <CloudUploadIcon />
-              )
-            }
-            sx={{ padding: "1rem" }}
-          >
-            {resume && resume[0] ? "" : "Upload Resume"}
-            <VisuallyHiddenInput
-              name="resume"
-              type="file"
-              accept="application/pdf"
-              {...register("resume")}
-            />
-          </Button>
-          {resume && resume[0] && (
-            <>
-              <Typography variant="caption">{resume[0].name}</Typography>
-            </>
-          )}
-        </Grid2>
         <Grid2 item size={1} display="flex" gap="1rem" alignItems="center">
           <Button
             component="label"
@@ -560,11 +476,6 @@ export default function RegistrationForm({ open, onClose }) {
               <Typography variant="caption">{photo_id[0].name}</Typography>
             </>
           )}
-        </Grid2>
-        <Grid2 item size={1}>
-          <Typography variant="caption" color="error">
-            {errors?.resume?.message}
-          </Typography>
         </Grid2>
         <Grid2 item size={1}>
           <Typography variant="caption" color="error">
