@@ -19,14 +19,14 @@ import ideaLogo from "../assets/idea.png";
 import csiKJSCE from "../assets/csiKJSCE.png";
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const { setUserData } = useContext(UserDataContext);
   const navigate = useNavigate();
 
   const [login, { loading }] = useLazyQuery(LOGIN_QUERY, {
-    variables: { email, password },
+    // variables: { email, password },
     onCompleted: (data) => {
       console.log("Query completed:", data);
       if (!data.Idea_USERS[0]) {
@@ -48,11 +48,13 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
     if (!email || !password) {
       failure("Please enter both email and password");
       return;
     }
-    login();
+    login({ variables: { email, password } });
   };
 
   const togglePasswordVisibility = () => {
@@ -106,8 +108,7 @@ function Login() {
           <TextField
             label="Email"
             variant="outlined"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            name="email"
             fullWidth
             margin="normal"
             InputProps={{
@@ -122,8 +123,7 @@ function Login() {
             label="Password"
             type={showPassword ? "text" : "password"}
             variant="outlined"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
             fullWidth
             margin="normal"
             InputProps={{
