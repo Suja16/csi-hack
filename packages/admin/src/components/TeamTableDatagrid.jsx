@@ -126,8 +126,6 @@ export default function DataTable() {
     team.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
-  if (loading) return <CircularProgress />;
-
   return (
     <Paper sx={{ width: "98%", overflow: "hidden", p: 2, mr: -1 }}>
       <Box sx={{ display: "flex", justifyContent: "flex-start", mb: 2 }}>
@@ -140,7 +138,11 @@ export default function DataTable() {
         />
       </Box>
       <Box sx={{ height: "70vh", width: "99%" }}>
-        <DataGrid rows={filteredRows || []} columns={columns} pageSize={5} />
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <DataGrid rows={filteredRows || []} columns={columns} pageSize={5} />
+        )}
       </Box>
 
       <Popup dialogProps={{ open: popupOpen }}>

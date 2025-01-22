@@ -19,14 +19,11 @@ import ideaLogo from "../assets/idea.png";
 import csiKJSCE from "../assets/csiKJSCE.png";
 
 function Login() {
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const { setUserData } = useContext(UserDataContext);
   const navigate = useNavigate();
 
   const [login, { loading }] = useLazyQuery(LOGIN_QUERY, {
-    // variables: { email, password },
     onCompleted: (data) => {
       console.log("Query completed:", data);
       if (!data.Idea_USERS[0]) {

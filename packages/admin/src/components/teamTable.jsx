@@ -8,20 +8,17 @@ import {
   TableRow,
   Paper,
   TextField,
-  Checkbox,
   IconButton,
   Box,
   Menu,
   MenuItem,
-  Button,
 } from "@mui/material";
-import { MoreVert, ArrowUpward, ArrowDownward } from "@mui/icons-material";
+import { ArrowUpward, ArrowDownward } from "@mui/icons-material";
 import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import FilterDropdown from "./FilterButton";
 import Popup from "../../../ui/popup";
-import { Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import TeamDetailsPage from "./DataPopupContent";
 
@@ -651,7 +648,7 @@ export default function DataTable() {
       (row) =>
         row.teamName.toLowerCase().includes(term.toLowerCase()) ||
         row.submission.toLowerCase().includes(term.toLowerCase()) ||
-        row.leaderName.toLowerCase().includes(term.toLowerCase())
+        row.leaderName.toLowerCase().includes(term.toLowerCase()),
     );
     setData(filtered);
   }, []);
@@ -675,7 +672,7 @@ export default function DataTable() {
       });
       setData(sorted);
     },
-    [data, sortDirection]
+    [data, sortDirection],
   );
 
   const handleSelectAll = useCallback(
@@ -686,7 +683,7 @@ export default function DataTable() {
         setSelectedRows([]);
       }
     },
-    [data]
+    [data],
   );
 
   const handleSelectRow = useCallback((id) => {

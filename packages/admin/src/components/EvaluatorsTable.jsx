@@ -14,7 +14,6 @@ import {
   Select,
   Typography,
   CircularProgress,
-  Snackbar,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useCallback, useMemo, useState } from "react";
@@ -79,7 +78,12 @@ const EvaluatorsTable = () => {
       evaluator2: null,
     },
   });
-  const { data, loading, error, refetch } = useQuery(EVALUATOR_QUERY);
+  const { data, loading, refetch } = useQuery(EVALUATOR_QUERY, {
+    onError: (error) => {
+      console.error("Error fetching data:", error);
+      failure("An error occurred while fetching data");
+    },
+  });
   const [assignTeam, { loading: assignLoading }] = useMutation(ASSIGN_TEAM, {
     onCompleted: () => {
       refetch();
@@ -287,17 +291,18 @@ const EvaluatorsTable = () => {
   };
 
   const filteredRows = data?.Team.filter((team) =>
-    team.name.toLowerCase().includes(searchQuery.toLowerCase())
+    team.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
-
-  if (loading) return <CircularProgress />;
-
-  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <Box sx={styles.root}>
       <Paper sx={styles.paper} elevation={3}>
-        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          mb={2}
+        >
           <TextField
             label="Search Teams"
             variant="outlined"
@@ -312,15 +317,21 @@ const EvaluatorsTable = () => {
             Add Evaluator
           </Button>
         </Box>
-        <DataGrid
-          rows={filteredRows}
-          columns={columns}
-          loading={loading}
-          disableSelectionOnClick
-          pageSize={5}
-          rowsPerPageOptions={[5, 10, 20]}
-          sx={{ "& .MuiDataGrid-virtualScroller": { minHeight: "300px" } }}
-        />
+        {loading ? (
+          <Box>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <DataGrid
+            rows={filteredRows}
+            columns={columns}
+            loading={loading}
+            disableSelectionOnClick
+            pageSize={5}
+            rowsPerPageOptions={[5, 10, 20]}
+            sx={{ "& .MuiDataGrid-virtualScroller": { minHeight: "300px" } }}
+          />
+        )}
         <Dialog
           open={editDialog.open}
           onClose={handleDialogClose}
