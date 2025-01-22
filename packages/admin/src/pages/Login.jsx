@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { LOGIN_QUERY } from "../queries";
 import { failure } from "../utils/snackbar";
 import UserDataContext from "../contexts/userDataContext";
+import ideaLogo from "../assets/idea.png";
+import csiKJSCE from "../assets/csiKJSCE.png";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -51,46 +53,60 @@ function Login() {
     <Box
       sx={{
         display: "flex",
+        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
         overflow: "hidden",
         height: "90vh",
       }}
     >
-      <Paper elevation={3} sx={{ padding: 4, maxWidth: 400, width: "100%" }}>
-        <Typography variant="h4" component="h1" gutterBottom align="center">
+      <Box
+        position="fixed"
+        top={0}
+        left="50%"
+        sx={{
+          transform: "translateX(-50%)",
+        }}
+        display="flex"
+        justifyContent="center"
+        gap={2}
+        marginTop={4}
+      >
+        <img src={ideaLogo} alt="iDEA Logo" height="100" />
+        <img src={csiKJSCE} alt="CSI KJSCE" height="100" />
+      </Box>
+      <Typography variant="h4" component="h1" gutterBottom align="center">
+        Login as Evaluator
+      </Typography>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          label="Email"
+          variant="outlined"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Password"
+          type="password"
+          variant="outlined"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+        <LoadingButton
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          loading={loading}
+          sx={{ mt: 2 }}
+        >
           Login
-        </Typography>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            label="Email"
-            variant="outlined"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            label="Password"
-            type="password"
-            variant="outlined"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            fullWidth
-            margin="normal"
-          />
-          <LoadingButton
-            type="submit"
-            variant="contained"
-            color="primary"
-            fullWidth
-            loading={loading}
-            sx={{ mt: 2 }}
-          >
-            Login
-          </LoadingButton>
-        </form>
-      </Paper>
+        </LoadingButton>
+      </form>
     </Box>
   );
 }
