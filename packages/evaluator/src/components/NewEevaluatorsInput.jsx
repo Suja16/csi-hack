@@ -1,9 +1,15 @@
-import { Box, Button, Paper, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
-import { useTeams } from "../context/teamsContext";
+import {
+  Box,
+  Button,
+  Paper,
+  TextField,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
+import { useState } from "react";
 
-function NewEevaluatorsInput(props) {
-  const { isMobile } = useTeams();
+function NewEevaluatorsInput() {
+  const isMobile = useMediaQuery("(max-width:600px)");
 
   const [leftCriteria, setLeftCriteria] = useState([
     {
@@ -59,14 +65,14 @@ function NewEevaluatorsInput(props) {
       const updatedCriteria = [...leftCriteria];
       updatedCriteria[index].score = Math.min(
         Math.max(newScore, 0),
-        updatedCriteria[index].maxScore
+        updatedCriteria[index].maxScore,
       );
       setLeftCriteria(updatedCriteria);
     } else if (criteriaType === "right") {
       const updatedCriteria = [...rightCriteria];
       updatedCriteria[index].score = Math.min(
         Math.max(newScore, 0),
-        updatedCriteria[index].maxScore
+        updatedCriteria[index].maxScore,
       );
       setRightCriteria(updatedCriteria);
     }
@@ -76,11 +82,11 @@ function NewEevaluatorsInput(props) {
   const calculateTotalScore = () => {
     const totalLeftScore = leftCriteria.reduce(
       (acc, criteria) => acc + criteria.score,
-      0
+      0,
     );
     const totalRightScore = rightCriteria.reduce(
       (acc, criteria) => acc + criteria.score,
-      0
+      0,
     );
     return totalLeftScore + totalRightScore;
   };
@@ -155,7 +161,7 @@ function NewEevaluatorsInput(props) {
                         handleScoreChange(
                           "left",
                           index,
-                          parseInt(e.target.value) || 0
+                          parseInt(e.target.value) || 0,
                         )
                       }
                       variant="outlined"
@@ -223,7 +229,7 @@ function NewEevaluatorsInput(props) {
                       handleScoreChange(
                         "right",
                         index,
-                        parseInt(e.target.value) || 0
+                        parseInt(e.target.value) || 0,
                       )
                     }
                     variant="outlined"
@@ -245,8 +251,6 @@ function NewEevaluatorsInput(props) {
         sx={{
           width: "83%",
           mx: "auto",
-          display: "flex",
-          justifyContent: "center",
           mb: 3,
           minHeight: 100,
           p: 2,

@@ -1,4 +1,4 @@
-import "react";
+import { useContext } from "react";
 import {
   Drawer,
   List,
@@ -12,14 +12,14 @@ import {
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
-import { useTeams } from "../context/teamsContext";
+import TeamsContext from "../contexts/teamsContext";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
-import logo from "../assets/idea.png";
+// import logo from "../assets/idea.png";
 
-const Sidebar = () => {
+const Sidebar = ({ isSidebarOpen }) => {
   const location = useLocation();
-  const { teams, setSelectedTeam, isSidebarOpen, setSidebarOpen } = useTeams();
+  const { teams, setSelectedTeam } = useContext(TeamsContext);
 
   return (
     <Drawer
@@ -27,8 +27,8 @@ const Sidebar = () => {
       sx={{
         display: { xs: isSidebarOpen ? "block" : "none", sm: "block" },
         width: isSidebarOpen ? "15rem" : "3.75rem",
-        position: {xs: "fixed", lg: "relative"},
-        zIndex:"10",
+        position: { xs: "fixed", lg: "relative" },
+        zIndex: "10",
         flexShrink: 0,
         "& .MuiDrawer-paper": {
           width: isSidebarOpen ? "15rem" : "4rem",
@@ -46,16 +46,8 @@ const Sidebar = () => {
     >
       <Toolbar>
         {/* Menu Icon to toggle Sidebar */}
-        <IconButton
-          edge="start"
-          color="black"
-          onClick={() => setSidebarOpen(!isSidebarOpen)}
-          sx={{ marginRight: 2 }}
-        >
-          {isSidebarOpen ? <MenuOpenIcon /> : <MenuIcon />}
-        </IconButton>
 
-        {isSidebarOpen && (
+        {/* {isSidebarOpen && (
           <Box
             component="img"
             src={logo}
@@ -67,7 +59,7 @@ const Sidebar = () => {
               maxWidth: "100%",
             }}
           />
-        )}
+        )} */}
       </Toolbar>
       <Typography
         variant="subtitle2"
@@ -110,7 +102,9 @@ const Sidebar = () => {
                 }}
               >
                 <PeopleAltIcon />
-                <Typography variant="h6">{isSidebarOpen && item.name}</Typography>
+                <Typography variant="h6">
+                  {isSidebarOpen && item.name}
+                </Typography>
               </Button>
             </Tooltip>
           ))

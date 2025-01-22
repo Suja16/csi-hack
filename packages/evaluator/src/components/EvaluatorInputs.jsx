@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useTeams } from "../context/teamsContext";
+import { useState, useEffect, useContext } from "react";
+import TeamsContext from "../contexts/teamsContext";
 import {
   TextField,
   Button,
@@ -23,7 +23,7 @@ const outOf10List = [
 ];
 
 const HackathonEvaluator = () => {
-  const { teams, selectedTeam, setSelectedTeam } = useTeams();
+  const { teams, selectedTeam } = useContext(TeamsContext);
   const queryParams = new URLSearchParams(location.search);
   const teamID = queryParams.get("team");
   const details = teams.find((team) => team.id === Number(teamID));
@@ -34,15 +34,15 @@ const HackathonEvaluator = () => {
         ...acc,
         [criteria.name]: "",
       }),
-      {}
-    )
+      {},
+    ),
   );
   const [totalScore, setTotalScore] = useState(0);
 
   useEffect(() => {
     const newTotal = Object.values(scores).reduce(
       (sum, score) => sum + (parseInt(score) || 0),
-      0
+      0,
     );
     setTotalScore(newTotal);
   }, [scores]);
@@ -89,7 +89,6 @@ const HackathonEvaluator = () => {
       sx={{
         width: "80%",
         height: "max-content",
-
       }}
     >
       <form onSubmit={handleSubmit}>
@@ -158,7 +157,6 @@ const HackathonEvaluator = () => {
               sx={{
                 width: "90%",
                 height: "90%",
-                px: 3,
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-evenly",
@@ -189,7 +187,7 @@ const HackathonEvaluator = () => {
             Total Score: {totalScore}/
             {[...outOf20List, ...outOf10List].reduce(
               (sum, criteria) => sum + criteria.maxScore,
-              0
+              0,
             )}
           </Typography>
           <Button

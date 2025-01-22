@@ -5,8 +5,9 @@ import "./index.css";
 import App from "./App.jsx";
 import { createHttpLink } from "@apollo/client";
 
+import { ToastContainer } from "react-toastify";
+
 import { InMemoryCache, ApolloClient, ApolloProvider } from "@apollo/client";
-import { TeamsProvider } from "./context/teamsContext.jsx";
 
 function makeClient() {
   const httpLink = createHttpLink({
@@ -39,9 +40,8 @@ const client = makeClient();
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ApolloProvider client={client}>
-      <TeamsProvider>
-        <App />
-      </TeamsProvider>
+      <App />
+      <ToastContainer />
     </ApolloProvider>
-  </StrictMode>
+  </StrictMode>,
 );

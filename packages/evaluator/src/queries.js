@@ -1,32 +1,26 @@
 import { gql } from "@apollo/client";
 
-export const TEAM_QUERY = gql`
-  query TeamQuery ($approved: Boolean, $search: String) {
-    Team(where: { 
-      event_id: { _eq: 47 },
-      approved: { _eq: $approved },
-    _or: [
-          { name: { _ilike: $search } },
-             
-        ] }, order_by: { id: asc }) {
-      id
-      name
-      leader_id
-      approved
-      submissions
-      invite_code
-      Participants {
+export const TEAMS_QUERY = gql`
+  query Teams($_userID: Int) {
+    feedbacks(where: { Idea_user_Id: { _eq: $_userID } }) {
+      team_info_from_eventio {
+        submissions
         id
-        user_id
-        more_details
-        User {
-          photo_url
-          name
-        }
-      }
-      Leader {
         name
       }
+    }
+  }
+`;
+
+export const LOGIN_QUERY = gql`
+  query Login($email: String, $password: String) {
+    Idea_USERS(
+      where: { email: { _eq: $email }, password: { _eq: $password } }
+    ) {
+      id
+      name
+      email
+      roles
     }
   }
 `;

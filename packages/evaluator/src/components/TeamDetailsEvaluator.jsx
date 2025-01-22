@@ -1,20 +1,22 @@
-import React from "react";
+import { useContext } from "react";
 import { useLocation } from "react-router-dom";
-import { useTeams } from "../context/teamsContext";
+import TeamsContext from "../contexts/teamsContext";
 import { Box, Grid, Paper, Typography } from "@mui/material";
 import YouTube from "react-youtube";
-import HackathonEvaluatorInputs from "./EvaluatorInputs";
+import { useMediaQuery } from "@mui/material";
 import NewEevaluatorsInput from "./NewEevaluatorsInput";
 import CircularProgress from "@mui/material/CircularProgress";
 import FullscreenIcon from "@mui/icons-material/Fullscreen";
 
 const TeamDetails = () => {
-  const location = useLocation();
-  const { teams, selectedTeam, setSelectedTeam, isMobile } = useTeams();
-  const queryParams = new URLSearchParams(location.search);
-  const teamID = queryParams.get("team");
-  const details = teams?.find((team) => team.id === Number(teamID));
-  console.log(details);
+  // const location = useLocation();
+  const { teams, selectedTeam } = useContext(TeamsContext);
+  console.log(selectedTeam);
+  // const queryParams = new URLSearchParams(location.search);
+  // const teamID = queryParams.get("team");
+  // const details = teams?.find((team) => team.id === Number(teamID));
+  // console.log(details);
+  const isMobile = useMediaQuery("(max-width:600px)");
 
   const videoOpts = {
     height: isMobile ? 360 : 460,
@@ -47,7 +49,7 @@ const TeamDetails = () => {
   }
 
   return (
-    <Box >
+    <Box>
       <Box
         sx={{
           display: "flex",
@@ -55,7 +57,7 @@ const TeamDetails = () => {
           flexDirection: "column",
           alignItems: "center",
           gap: 3,
-          paddingBottom: 3,  
+          paddingBottom: 3,
           // marginLeft: 3,
         }}
       >
@@ -90,21 +92,22 @@ const TeamDetails = () => {
             gap: 1,
           }}
         >
-          <Box sx={{
-            display: "flex",
-            justifyContent:"center",
-            alignItems:"center",
-            gap:1,
-          }}>
-            <Typography
-              variant="h5"
-              color="#ee1f25"
-              pb={0.5}
-              component="div"
-            >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 1,
+            }}
+          >
+            <Typography variant="h5" color="#ee1f25" pb={0.5} component="div">
               Presentation
             </Typography>
-            <Typography variant="a" sx={{cursor:"pointer"}} onClick={() => window.open(selectedTeam.ppt)}>
+            <Typography
+              variant="a"
+              sx={{ cursor: "pointer" }}
+              onClick={() => window.open(selectedTeam.ppt)}
+            >
               <FullscreenIcon />
             </Typography>
           </Box>

@@ -1,49 +1,67 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import MenuOpenIcon from "@mui/icons-material/MenuOpen";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
+import PropTypes from "prop-types";
+import { AppBar, Toolbar, IconButton, Box, Button } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useTeams } from "../context/teamsContext";
+import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import logo from "../assets/idea.png";
+import UserDataContext from "../contexts/userDataContext";
+import { useContext } from "react";
+import { useNavigate } from "react-router";
 
-export default function AppBarHeader() {
-  const { isSidebarOpen, setSidebarOpen } = useTeams();
+const AppBarHeader = ({ toggleSidebar, isSidebarOpen }) => {
+  const { setUserData } = useContext(UserDataContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    setUserData(null);
+    navigate("/login");
+  };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar sx={{ bgcolor: "#ffffff" }} position="fixed">
-        <Toolbar sx={{ display: "flex", justifyContent: "start" , alignItems: "center"}}>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            onClick={() => setSidebarOpen(!isSidebarOpen)}
-            sx={{ mr: 2 , mt:1 }}
-          >
-            {isSidebarOpen ? (
-              <MenuOpenIcon sx={{ color: "black" }} />
-            ) : (
-              <MenuIcon sx={{ color: "black" }} />
-            )}
-          </IconButton>
+    <AppBar
+      position="fixed"
+      sx={{
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+        backgroundColor: "white",
+        boxShadow: "none",
+        borderBottom: "0.5px solid black",
+      }}
+    >
+      <Toolbar>
+        {/* Menu Icon to toggle Sidebar */}
+        <IconButton
+          edge="start"
+          color="black"
+          onClick={toggleSidebar}
+          sx={{ marginRight: 2 }}
+        >
+          {isSidebarOpen ? <MenuOpenIcon /> : <MenuIcon />}
+        </IconButton>
 
-          <Box
-            component="img"
-            src={logo} // Make sure to update this path
-            alt="App Logo"
-            sx={{
-              height: "40px",
-              width: "150px",
-              maxHeight: "100%",
-              maxWidth: "100%",
-            }}
-          />
-        </Toolbar>
-      </AppBar>
-    </Box>
+        {/* App Logo */}
+        <Box
+          component="img"
+          src={logo}
+          alt="App Logo"
+          sx={{
+            // height: "40px",
+            width: "150px",
+            maxHeight: "100%",
+            maxWidth: "100%",
+          }}
+        />
+        <Box display="flex" justifyContent="flex-end" width="100%">
+          <Button variant="contained" onClick={handleLogout}>
+            Logout
+          </Button>
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
-}
+};
+
+AppBarHeader.propTypes = {
+  toggleSidebar: PropTypes.func.isRequired,
+  isSidebarOpen: PropTypes.bool.isRequired,
+};
+
+export default AppBarHeader;

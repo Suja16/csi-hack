@@ -99,7 +99,7 @@ function Login() {
           align="center"
           sx={{ mb: 3 }}
         >
-          Login as Evaluator
+          Login as Admin
         </Typography>
         <form onSubmit={handleSubmit} style={{ width: "100%" }}>
           <TextField
