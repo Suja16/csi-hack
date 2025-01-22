@@ -65,26 +65,19 @@ const Team = () => {
         </Grid2>
         <Grid2 item size={12}>
           <HeaderBox header={"Important Instructions"}>
-            <Typography variant="overline">
-              * Only the team leader is required to submit the PPT template.
-              <br />
-              * The submission must be in PDF Format.
-              <br />
-              * The submission must be in the template as provided by the
-              organiser.
-              <br />
-              * The submission should not exceed 7 slides.
-              <br />
-              * The header slide must be included in the submission.
-              <br />
-              * The utilisation of space is up to the discretion of the
-              participants, so long as it is visible for evaluators to read and
-              understand.
-              <br />
-              * The font size must not be less than 18 points and must be in
-              Marcellus font.
-              <br />
-            </Typography>
+            <ol>
+              <li>Only the team leader is required to submit the PPT template.</li>
+              <li>The template provided is to be followed as is.</li>
+              <li>The solution must <strong>not exceed 8 slides,</strong> i.e, 1 Header slide + 1 Team Details slide + 6 content slides.</li>
+              <li>The slide titles must be retained as it is, and their positions should not be changed.</li>
+              <li>The headings for the submission cannot be changed.</li>
+              <li>The content can be structured around the heading in any manner.</li>
+              <li>There is no restriction with regards to the fonts, as long as it is legible.</li>
+              <li>For flowcharts and other diagrams, other fonts can be utilized.</li>
+              <li>One page summary is compulsary(as required in research and references slide)</li>
+              <li><strong>Once the idea PPT(in PDF Format) is submitted, no resubmission is possible (under any circumstances).</strong></li>
+              <li>Incorporate flowcharts and diagrams when required within the given space.</li>
+            </ol>
           </HeaderBox>
         </Grid2>
       </Grid2>
@@ -104,7 +97,7 @@ const Team = () => {
         onClose={() => setShowSnackBar(false)}
         message={snackBarMessage}
       />
-    </Grid2>
+    </Grid2 >
   );
 };
 

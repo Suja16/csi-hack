@@ -3,7 +3,7 @@ import { Box, Typography, useTheme } from "@mui/material";
 const HeaderBox = ({ header, children }) => {
   const theme = useTheme();
   return (
-    <Box display="flex" flexDirection="column" >
+    <Box display="flex" flexDirection="column" height="100%">
       <Box
         bgcolor={theme.palette.primary.main}
         sx={{
