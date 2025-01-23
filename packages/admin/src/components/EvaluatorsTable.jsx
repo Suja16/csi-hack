@@ -6,10 +6,12 @@ import {
   TextField,
   CircularProgress,
   Autocomplete,
+  Stack
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { useQuery, useMutation } from "@apollo/client";
 import { EVALUATOR_QUERY, ASSIGN_TEAM } from "../queries";
 import AddEvaluator from "./AddEvaluator";
@@ -17,6 +19,11 @@ import { success, failure } from "../utils/snackbar";
 
 const EvaluatorsTable = () => {
   const [editMode, setEditMode] = useState(null);
+  const [originalValues, setOriginalValues] = useState({
+    mentor: null,
+    evaluator1: null,
+    evaluator2: null,
+  });
   const [pendingChanges, setPendingChanges] = useState({
     mentor: null,
     evaluator1: null,
@@ -32,12 +39,17 @@ const EvaluatorsTable = () => {
     },
   });
 
-  const [assignTeam, { loading: assignLoading }] = useMutation(ASSIGN_TEAM, {
+  const [assignTeam] = useMutation(ASSIGN_TEAM, {
     onCompleted: () => {
       refetch();
       success("Assigned successfully");
       setEditMode(null);
       setPendingChanges({
+        mentor: null,
+        evaluator1: null,
+        evaluator2: null,
+      });
+      setOriginalValues({
         mentor: null,
         evaluator1: null,
         evaluator2: null,
@@ -86,6 +98,11 @@ const EvaluatorsTable = () => {
     }
   }, [pendingChanges, assignTeam]);
 
+  const handleCancelChanges = useCallback(() => {
+    setPendingChanges(originalValues);
+    setEditMode(null);
+  }, [originalValues]);
+
   const handleEditModeToggle = useCallback((teamId) => {
     if (editMode === teamId) {
       setEditMode(null);
@@ -99,11 +116,14 @@ const EvaluatorsTable = () => {
       const currentMentor = team.feedbacks_from_idea.find(f => f.Idea_USER.roles === "mentor")?.Idea_USER;
       const currentEvaluators = team.feedbacks_from_idea.filter(f => f.Idea_USER.roles === "evaluator").map(f => f.Idea_USER);
 
-      setPendingChanges({
+      const initialValues = {
         mentor: currentMentor || null,
         evaluator1: currentEvaluators[0] || null,
         evaluator2: currentEvaluators[1] || null,
-      });
+      };
+
+      setOriginalValues(initialValues);
+      setPendingChanges(initialValues);
       setEditMode(teamId);
     }
   }, [data?.Team, editMode]);
@@ -214,18 +234,31 @@ const EvaluatorsTable = () => {
     {
       field: "actions",
       headerName: "Actions",
-      width: 120,
+      width: 200,
       renderCell: (params) => {
         if (editMode === params.row.id) {
           return (
-            <Button
-              startIcon={<SaveIcon />}
-              onClick={() => handleSaveChanges(params.row.id)}
-              size="small"
-              sx={{ fontWeight: "bold", textTransform: "none" }}
-            >
-              Save
-            </Button>
+            <Stack direction="row" spacing={1}>
+              <Button
+                startIcon={<SaveIcon />}
+                onClick={() => handleSaveChanges(params.row.id)}
+                size="small"
+                variant="contained"
+                color="primary"
+                sx={{ fontWeight: "bold", textTransform: "none" }}
+              >
+                Save
+              </Button>
+              <Button
+                onClick={handleCancelChanges}
+                size="small"
+                variant="outlined"
+                color="secondary"
+                sx={{ fontWeight: "bold", textTransform: "none" }}
+              >
+                Cancel
+              </Button>
+            </Stack>
           );
         }
         return (
@@ -245,7 +278,8 @@ const EvaluatorsTable = () => {
     pendingChanges,
     data,
     handleEditModeToggle,
-    handleSaveChanges
+    handleSaveChanges,
+    handleCancelChanges
   ]);
 
   const filteredRows = data?.Team.filter((team) =>
