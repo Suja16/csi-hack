@@ -6,22 +6,28 @@ import UserDataContext from "../contexts/userDataContext";
 import TeamsContext from "../contexts/teamsContext";
 
 export default function LoginLayout() {
-  console.log("INSIDE LOGIN LAYOUT");
   const { userData } = useContext(UserDataContext);
   const [teams, setTeams] = useState(null);
   const [selectedTeam, setSelectedTeam] = useState(null);
 
-  const [getTeamsData, { loading }] = useLazyQuery(TEAMS_QUERY, {
+  const [getTeamsData] = useLazyQuery(TEAMS_QUERY, {
+    fetchPolicy: "network-only",
     onCompleted: (data) => {
       console.log(data);
-      const formattedData = data.feedbacks.map((feedback) => ({
-        id: feedback.team_info_from_eventio.id,
-        name: feedback.team_info_from_eventio.name,
-        ppt: feedback.team_info_from_eventio.submissions.ppt,
-        youtube: feedback.team_info_from_eventio.submissions.video,
-      }));
+      const formattedData = data.feedbacks
+        .filter(
+          (feedback) => feedback.team_info_from_eventio.submissions !== null,
+        )
+        .map((feedback) => ({
+          id: feedback.team_info_from_eventio.id,
+          name: feedback.team_info_from_eventio.name,
+          ppt: feedback.team_info_from_eventio.submissions.ppt,
+          youtube: feedback.team_info_from_eventio.submissions.video,
+          evaluation: feedback.metric_score,
+        }));
+      console.log(formattedData);
       setTeams(formattedData);
-      setSelectedTeam(formattedData[0]);
+      setSelectedTeam(formattedData[0] || null);
     },
     onError: (error) => {
       console.error("Query error:", error);
@@ -49,6 +55,7 @@ export default function LoginLayout() {
         setTeams,
         selectedTeam,
         setSelectedTeam,
+        refetch: () => getTeamsData({ variables: { _userID: userData.id } }),
       }}
     >
       <Outlet />

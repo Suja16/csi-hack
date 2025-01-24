@@ -11,7 +11,6 @@ import FullscreenIcon from "@mui/icons-material/Fullscreen";
 const TeamDetails = () => {
   // const location = useLocation();
   const { teams, selectedTeam } = useContext(TeamsContext);
-  console.log(selectedTeam);
   // const queryParams = new URLSearchParams(location.search);
   // const teamID = queryParams.get("team");
   // const details = teams?.find((team) => team.id === Number(teamID));
@@ -44,6 +43,23 @@ const TeamDetails = () => {
         }}
       >
         <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (!selectedTeam) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          height: "60vh",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h4" color="error">
+          No team selected
+        </Typography>
       </Box>
     );
   }

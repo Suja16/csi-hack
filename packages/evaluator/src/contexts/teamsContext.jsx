@@ -5,6 +5,7 @@ const data = {
   setTeams: () => {},
   selectedTeam: null,
   setSelectedTeam: () => {},
+  refetch: () => {},
 };
 
 const TeamsContext = createContext(data);

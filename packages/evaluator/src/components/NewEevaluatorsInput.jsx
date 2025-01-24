@@ -1,15 +1,21 @@
 import {
   Box,
-  Button,
   Paper,
   TextField,
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import { useState } from "react";
+import { LoadingButton } from "@mui/lab";
+import { useState, useContext } from "react";
+import { useMutation } from "@apollo/client";
+import { UPDATE_SCORES } from "../queries";
+import TeamsContext from "../contexts/teamsContext";
+import UserDataContext from "../contexts/userDataContext";
 
 function NewEevaluatorsInput() {
   const isMobile = useMediaQuery("(max-width:600px)");
+  const { selectedTeam, refetch } = useContext(TeamsContext);
+  const { userData } = useContext(UserDataContext);
 
   const [leftCriteria, setLeftCriteria] = useState([
     {
@@ -59,6 +65,15 @@ function NewEevaluatorsInput() {
     },
   ]);
 
+  const [updateScores, { loading }] = useMutation(UPDATE_SCORES, {
+    onCompleted: () => {
+      refetch();
+    },
+    onError: (error) => {
+      console.error("Mutation error:", error);
+    },
+  });
+
   // Handle score change
   const handleScoreChange = (criteriaType, index, newScore) => {
     if (criteriaType === "left") {
@@ -94,10 +109,32 @@ function NewEevaluatorsInput() {
   const handleSubmit = () => {
     const totalScore = calculateTotalScore();
     const AllScores = [...leftCriteria, ...rightCriteria];
-    console.log("Total Score Submitted:", totalScore);
-    console.log("ALl Scores:", AllScores);
     // You can send the data to a server or process it further
+    updateScores({
+      variables: {
+        metric_score: AllScores,
+        team_id: selectedTeam.id,
+        user_id: userData.id,
+        totalscore: totalScore,
+      },
+    });
   };
+  if (selectedTeam.evaluation) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          height: "60vh",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h4" color="textSecondary">
+          Evaluation already completed
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <>
@@ -318,16 +355,17 @@ function NewEevaluatorsInput() {
           </Box>
         </Box>
         <Box>
-          <Button
+          <LoadingButton
             variant="contained"
             color="primary"
             sx={{ width: "9rem", height: "2.4rem", bgcolor: "#eb272e" }}
             onClick={handleSubmit}
+            loading={loading}
           >
             <Typography variant="h6" sx={{ color: "white" }}>
               Submit
             </Typography>
-          </Button>
+          </LoadingButton>
         </Box>
       </Paper>
     </>

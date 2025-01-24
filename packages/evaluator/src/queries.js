@@ -8,6 +8,7 @@ export const TEAMS_QUERY = gql`
         id
         name
       }
+      metric_score
     }
   }
 `;
@@ -21,6 +22,24 @@ export const LOGIN_QUERY = gql`
       name
       email
       roles
+    }
+  }
+`;
+
+export const UPDATE_SCORES = gql`
+  mutation UpdateScores(
+    $metric_score: jsonb
+    $team_id: Int!
+    $user_id: Int
+    $totalscore: Int
+  ) {
+    update_feedbacks(
+      where: {
+        _and: { team_id: { _eq: $team_id }, Idea_user_Id: { _eq: $user_id } }
+      }
+      _set: { metric_score: $metric_score, totalscore: $totalscore }
+    ) {
+      affected_rows
     }
   }
 `;

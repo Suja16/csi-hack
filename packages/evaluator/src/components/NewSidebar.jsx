@@ -74,7 +74,7 @@ const Sidebar = ({ isSidebarOpen }) => {
         Teams
       </Typography>
       <List>
-        {teams ? (
+        {teams && teams[0] ? (
           teams.map((item, index) => (
             <Tooltip title={item.label} placement="right" arrow key={index}>
               <Button
@@ -117,7 +117,9 @@ const Sidebar = ({ isSidebarOpen }) => {
               justifyContent: "center",
             }}
           >
-            <Typography variant="h5">Loading...</Typography>
+            <Typography variant="h6">
+              {teams && teams.length === 0 ? "No teams" : "Loading..."}
+            </Typography>
           </Box>
         )}
       </List>
