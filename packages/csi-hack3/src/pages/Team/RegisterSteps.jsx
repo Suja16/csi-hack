@@ -3,6 +3,7 @@ import FilePresentation from "@mui/icons-material/Description";
 import VideoIcon from "@mui/icons-material/Videocam";
 import EvaluationIcon from "@mui/icons-material/AssignmentTurnedIn";
 import RsvpIcon from "@mui/icons-material/CheckCircle";
+import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 
 const RegisterSteps = () => {
   const steps = [
@@ -44,8 +45,26 @@ const RegisterSteps = () => {
         download="iDEA Hackathon PPT Submission Template.pptx"
         target="_blank"
       >
-        <Button variant="contained" color="secondary">
+        <Button
+          variant="contained"
+          color="secondary"
+          startIcon={<CloudDownloadIcon />}
+          sx={{ mb: 1 }}
+        >
           Download PPT Template
+        </Button>
+      </a>
+      <a
+        href="/consent.pdf"
+        download="iDEA Hackathon Consent Letter Format.pdf"
+        target="_blank"
+      >
+        <Button
+          variant="contained"
+          color="secondary"
+          startIcon={<CloudDownloadIcon />}
+        >
+          Download Consent Letter Format
         </Button>
       </a>
       <Box
