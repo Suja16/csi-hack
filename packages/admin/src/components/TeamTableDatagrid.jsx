@@ -14,11 +14,13 @@ import { useState } from "react";
 import Popup from "../../../ui/popup";
 import { TEAM_QUERY } from "../queries";
 import TeamDetailsPage from "./DataPopupContent";
+import NewFilterDropdown from "./NewFilterButton";
 
 export default function DataTable() {
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedRowDetails, setSelectedRowDetails] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [filters, setFilters] = useState({ approved: null, submitted: null }); // State for filters
 
   const { data, loading } = useQuery(TEAM_QUERY);
 
@@ -122,13 +124,20 @@ export default function DataTable() {
     setSearchQuery(event.target.value);
   };
 
-  const filteredRows = data?.Team.filter((team) =>
-    team.name.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
+  const filteredRows = data?.Team.filter((team) => {
+    const matchesSearchQuery = team.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesApprovedFilter = filters.approved === null || team.approved === filters.approved;
+    const matchesSubmittedFilter = 
+      filters.submitted === null || 
+      (filters.submitted ? team.submissions !== null : team.submissions === null);
+    
+    return matchesSearchQuery && matchesApprovedFilter && matchesSubmittedFilter;
+  });
+  
 
   return (
     <Paper sx={{ width: "98%", overflow: "hidden", p: 2, mr: -1 }}>
-      <Box sx={{ display: "flex", justifyContent: "flex-start", mb: 2 }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
         <TextField
           label="Search Teams"
           variant="outlined"
@@ -136,6 +145,9 @@ export default function DataTable() {
           value={searchQuery}
           onChange={handleSearchChange}
         />
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <NewFilterDropdown filters={filters} setFilters={setFilters} />
+        </Box>
       </Box>
       <Box sx={{ height: "70vh", width: "99%" }}>
         {loading ? (
