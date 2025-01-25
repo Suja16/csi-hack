@@ -113,11 +113,21 @@ const Footer = () => {
               <Link
                 href="tel:+918657432101"
                 color="inherit"
-                sx={{ display: "flex", alignItems: "center" }}
+                sx={{ display: "flex", alignItems: "center", mb: 1 }}
               >
                 <Phone fontSize="small" sx={{ mr: 1 }} />
                 <Typography variant="body2" sx={{ fontSize: "0.875rem" }}>
                   +91 8657432101
+                </Typography>
+              </Link>
+              <Link
+                href="tel:+918851595284"
+                color="inherit"
+                sx={{ display: "flex", alignItems: "center" }}
+              >
+                <Phone fontSize="small" sx={{ mr: 1 }} />
+                <Typography variant="body2" sx={{ fontSize: "0.875rem" }}>
+                  +91 8851595284
                 </Typography>
               </Link>
               <Box
