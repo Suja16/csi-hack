@@ -3,67 +3,88 @@ import {
   Paper,
   TextField,
   Typography,
+  Button,
   useMediaQuery,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
-import { useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useMutation } from "@apollo/client";
 import { UPDATE_SCORES } from "../queries";
 import TeamsContext from "../contexts/teamsContext";
-import UserDataContext from "../contexts/userDataContext";
+import { useParams } from "react-router";
+import Popup from "../../../ui/popup";
+
+const leftDefault = [
+  {
+    name: "Feasibility",
+    score: 0,
+    maxScore: 10,
+    description: "Evaluate the practical viability of implementation",
+  },
+  {
+    name: "Complexity",
+    score: 0,
+    maxScore: 10,
+    description: "Assess the technical complexity and scope",
+  },
+  {
+    name: "Overall Team Composition",
+    score: 0,
+    maxScore: 10,
+    description: "Rate the team's skills and collaboration",
+  },
+  {
+    name: "Presentation Skills",
+    score: 0,
+    maxScore: 10,
+    description: "Evaluate clarity and effectiveness of presentation",
+  },
+];
+const rightDefault = [
+  {
+    name: "Novelty of Proposed Solution",
+    score: 0,
+    maxScore: 20,
+    description: "Assess innovation and uniqueness of approach",
+  },
+  {
+    name: "Methodology",
+    score: 0,
+    maxScore: 20,
+    description: "Evaluate the approach and problem-solving methods",
+  },
+  {
+    name: "Technology Stack",
+    score: 0,
+    maxScore: 20,
+    description: "Rate the chosen technologies and implementation",
+  },
+];
 
 function NewEevaluatorsInput() {
   const isMobile = useMediaQuery("(max-width:600px)");
-  const { selectedTeam, refetch } = useContext(TeamsContext);
-  const { userData } = useContext(UserDataContext);
+  const { id } = useParams();
+  const { allTeams, refetch } = useContext(TeamsContext);
+  const disabled = allTeams[id].totalscore !== null;
 
-  const [leftCriteria, setLeftCriteria] = useState([
-    {
-      name: "Feasibility",
-      score: 8,
-      maxScore: 10,
-      description: "Evaluate the practical viability of implementation",
-    },
-    {
-      name: "Complexity",
-      score: 0,
-      maxScore: 10,
-      description: "Assess the technical complexity and scope",
-    },
-    {
-      name: "Overall Team Composition",
-      score: 0,
-      maxScore: 10,
-      description: "Rate the team's skills and collaboration",
-    },
-    {
-      name: "Presentation Skills",
-      score: 0,
-      maxScore: 10,
-      description: "Evaluate clarity and effectiveness of presentation",
-    },
-  ]);
+  const [leftCriteria, setLeftCriteria] = useState(leftDefault);
 
-  const [rightCriteria, setRightCriteria] = useState([
-    {
-      name: "Novelty of Proposed Solution",
-      score: 0,
-      maxScore: 20,
-      description: "Assess innovation and uniqueness of approach",
-    },
-    {
-      name: "Methodology",
-      score: 0,
-      maxScore: 20,
-      description: "Evaluate the approach and problem-solving methods",
-    },
-    {
-      name: "Technology Stack",
-      score: 0,
-      maxScore: 20,
-      description: "Rate the chosen technologies and implementation",
-    },
-  ]);
+  const [rightCriteria, setRightCriteria] = useState(rightDefault);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (allTeams[id].metric_score) {
+      const metricScores = allTeams[id].metric_score;
+      const leftScores = metricScores.slice(0, 4);
+      const rightScores = metricScores.slice(4, 7);
+      setLeftCriteria(leftScores);
+      setRightCriteria(rightScores);
+    } else {
+      setLeftCriteria(leftDefault);
+      setRightCriteria(rightDefault);
+    }
+  }, [allTeams, id]);
 
   const [updateScores, { loading }] = useMutation(UPDATE_SCORES, {
     onCompleted: () => {
@@ -107,34 +128,18 @@ function NewEevaluatorsInput() {
   };
 
   const handleSubmit = () => {
+    setIsOpen(false);
     const totalScore = calculateTotalScore();
     const AllScores = [...leftCriteria, ...rightCriteria];
     // You can send the data to a server or process it further
     updateScores({
       variables: {
+        id,
         metric_score: AllScores,
-        team_id: selectedTeam.id,
-        user_id: userData.id,
         totalscore: totalScore,
       },
     });
   };
-  if (selectedTeam.evaluation) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          height: "60vh",
-          alignItems: "center",
-        }}
-      >
-        <Typography variant="h4" color="textSecondary">
-          Evaluation already completed
-        </Typography>
-      </Box>
-    );
-  }
 
   return (
     <>
@@ -194,6 +199,7 @@ function NewEevaluatorsInput() {
                   >
                     <TextField
                       value={criteria.score}
+                      disabled={disabled}
                       onChange={(e) =>
                         handleScoreChange(
                           "left",
@@ -262,6 +268,7 @@ function NewEevaluatorsInput() {
                 >
                   <TextField
                     value={criteria.score}
+                    disabled={disabled}
                     onChange={(e) =>
                       handleScoreChange(
                         "right",
@@ -359,8 +366,9 @@ function NewEevaluatorsInput() {
             variant="contained"
             color="primary"
             sx={{ width: "9rem", height: "2.4rem", bgcolor: "#eb272e" }}
-            onClick={handleSubmit}
+            onClick={() => setIsOpen(true)}
             loading={loading}
+            disabled={disabled}
           >
             <Typography variant="h6" sx={{ color: "white" }}>
               Submit
@@ -368,6 +376,58 @@ function NewEevaluatorsInput() {
           </LoadingButton>
         </Box>
       </Paper>
+      <Popup
+        dialogProps={{
+          open: isOpen,
+          onClose: () => setIsOpen(false),
+          maxWidth: "sm",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+            height: "100%",
+            p: 1,
+          }}
+        >
+          <Typography variant="h5" color="secondary">
+            Are you sure you want to submit the evaluation?
+          </Typography>
+          <Typography variant="body3" marginBottom={1}>
+            You cannot change the evaluation once submitted
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              gap: 2,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              variant="contained"
+              color="secondary"
+              sx={{ width: "9rem", height: "2.4rem" }}
+              onClick={handleSubmit}
+            >
+              <Typography variant="h6">Yes</Typography>
+            </Button>
+            <Button
+              variant="outlined"
+              color="primary"
+              sx={{ width: "9rem", height: "2.4rem" }}
+              onClick={() => setIsOpen(false)}
+            >
+              <Typography variant="h6">No</Typography>
+            </Button>
+          </Box>
+        </Box>
+      </Popup>
     </>
   );
 }

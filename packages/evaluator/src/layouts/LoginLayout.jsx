@@ -1,5 +1,5 @@
-import { useContext, useState, useEffect } from "react";
-import { Outlet, Navigate } from "react-router";
+import { useContext, useState, useEffect, useMemo } from "react";
+import { Outlet, Navigate, useNavigate } from "react-router";
 import { useLazyQuery } from "@apollo/client";
 import { TEAMS_QUERY } from "../queries";
 import UserDataContext from "../contexts/userDataContext";
@@ -7,25 +7,42 @@ import TeamsContext from "../contexts/teamsContext";
 
 export default function LoginLayout() {
   const { userData } = useContext(UserDataContext);
-  const [teams, setTeams] = useState(null);
-  const [selectedTeam, setSelectedTeam] = useState(null);
+  const [allTeams, setAllTeams] = useState({});
+  const [firstLoad, isFirstLoad] = useState(false);
+  const navigate = useNavigate();
+
+  const evaluatedTeams = useMemo(() => {
+    const d = {};
+    Object.keys(allTeams).forEach((teamId) => {
+      if (allTeams[teamId].totalscore !== null) {
+        d[teamId] = allTeams[teamId];
+      }
+    });
+    return d;
+  }, [allTeams]);
+
+  const nonEvaluatedTeams = useMemo(() => {
+    const d = {};
+    Object.keys(allTeams).forEach((teamId) => {
+      if (allTeams[teamId].totalscore === null) {
+        d[teamId] = allTeams[teamId];
+      }
+    });
+    if (!firstLoad) {
+      isFirstLoad(false);
+      navigate(`/teams/${Object.keys(d)[0]}`);
+    }
+    return d;
+  }, [allTeams]);
 
   const [getTeamsData] = useLazyQuery(TEAMS_QUERY, {
     fetchPolicy: "network-only",
     onCompleted: (data) => {
-      const formattedData = data.feedbacks
-        .filter(
-          (feedback) => feedback.team_info_from_eventio.submissions !== null,
-        )
-        .map((feedback) => ({
-          id: feedback.team_info_from_eventio.id,
-          name: feedback.team_info_from_eventio.name,
-          ppt: feedback.team_info_from_eventio.submissions.ppt,
-          youtube: feedback.team_info_from_eventio.submissions.video,
-          evaluation: feedback.metric_score,
-        }));
-      setTeams(formattedData);
-      setSelectedTeam(formattedData[0] || null);
+      const d = {};
+      data.feedbacks.forEach((feedback) => {
+        d[feedback.id] = feedback;
+      });
+      setAllTeams(d);
     },
     onError: (error) => {
       console.error("Query error:", error);
@@ -44,10 +61,9 @@ export default function LoginLayout() {
   return (
     <TeamsContext.Provider
       value={{
-        teams,
-        setTeams,
-        selectedTeam,
-        setSelectedTeam,
+        allTeams,
+        evaluatedTeams,
+        nonEvaluatedTeams,
         refetch: () => getTeamsData({ variables: { _userID: userData.id } }),
       }}
     >

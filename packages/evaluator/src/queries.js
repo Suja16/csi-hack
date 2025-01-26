@@ -9,6 +9,8 @@ export const TEAMS_QUERY = gql`
         name
       }
       metric_score
+      totalscore
+      id
     }
   }
 `;
@@ -28,19 +30,12 @@ export const LOGIN_QUERY = gql`
 `;
 
 export const UPDATE_SCORES = gql`
-  mutation UpdateScores(
-    $metric_score: jsonb
-    $team_id: Int!
-    $user_id: Int
-    $totalscore: Int
-  ) {
-    update_feedbacks(
-      where: {
-        _and: { team_id: { _eq: $team_id }, Idea_user_Id: { _eq: $user_id } }
-      }
+  mutation UpdateScores($id: Int!, $metric_score: jsonb, $totalscore: Int) {
+    update_feedbacks_by_pk(
+      pk_columns: { id: $id }
       _set: { metric_score: $metric_score, totalscore: $totalscore }
     ) {
-      affected_rows
+      id
     }
   }
 `;

@@ -12,7 +12,8 @@ import UserDataContext from "./contexts/userDataContext";
 import LoginLayout from "./layouts/LoginLayout.jsx";
 import NavSideLayout from "./layouts/NavSideLayout.jsx";
 
-import AllTeams from "./pages/AllTeams.jsx";
+import TeamDetails from "./pages/TeamDetails.jsx";
+import AllDone from "./pages/AllDone.jsx";
 import Login from "./pages/Login.jsx";
 
 const router = createBrowserRouter(
@@ -20,7 +21,8 @@ const router = createBrowserRouter(
     <Route>
       <Route path="/" Component={LoginLayout}>
         <Route Component={NavSideLayout}>
-          <Route index Component={AllTeams} />
+          <Route index Component={AllDone} />
+          <Route path="teams/:id" Component={TeamDetails} />
         </Route>
       </Route>
       <Route path="/login" Component={Login} />
