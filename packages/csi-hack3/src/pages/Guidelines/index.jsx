@@ -19,7 +19,7 @@ const HackathonGuidelines = () => {
       title: "Preparation Before the Hackathon",
       items: [
         "Understand the Theme: Read about the hackathon's theme or problem statement beforehand.",
-        "Form a Team: Create a diverse team of 4 members",
+        "Form a Team: Create a diverse team of 4 members ( Members must be from the same college ).",
         "Gather Tools: Install necessary software, SDKs, or development environments.",
         "Research: Familiarize yourself with APIs, datasets, or platforms allowed or provided.",
         "Prototype: Sketch out a rough idea or wireframe of your project to guide development.",

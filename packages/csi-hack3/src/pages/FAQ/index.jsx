@@ -77,7 +77,7 @@ const Faq = () => {
       questions: [
         {
           question: "How many members can be in a team?",
-          answer: "Teams must consist of 4 members only.",
+          answer: "Teams must consist of 4 members only and they must be from the same college.",
         },
         {
           question: "Does a team need to qualify first?",
