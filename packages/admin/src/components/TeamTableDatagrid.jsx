@@ -97,6 +97,20 @@ export default function DataTable() {
       ),
     },
     {
+      field: "score",
+      headerName: "Score",
+      width: 160,
+      sortable: false,
+      filterable: false,
+      disableColumnMenu: true,
+      renderHeader: () => (
+        <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Score</div>
+      ),
+      renderCell: () => (
+        <div style={{ display: "flex" }}>No Score</div>
+      ),
+    },
+    {
       field: "moreDetails",
       headerName: "More Details",
       width: 160,
