@@ -23,7 +23,7 @@ const TIMELINE_DATA = [
     icon: EditIcon
   },
   {
-    date: "27th Jan 2025",
+    date: "3rd Feb 2025",
     title: "Last Date for Idea Submission",
     content: "Final day to submit your groundbreaking ideas. Don't miss this deadline!",
     icon: SendIcon
