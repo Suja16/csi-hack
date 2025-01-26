@@ -106,10 +106,28 @@ export default function DataTable() {
       renderHeader: () => (
         <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Score</div>
       ),
-      renderCell: () => (
-        <div style={{ display: "flex" }}>No Score</div>
-      ),
-    },
+      renderCell: (params) => {
+        const feedbacks = params.row.feedbacks_from_idea || [];
+        const evaluatorFeedbacks = feedbacks.filter(
+          (feedback) => feedback.Idea_USER?.roles === "evaluator"
+        );
+        const totalScore = evaluatorFeedbacks.reduce(
+          (sum, feedback) => sum + (feedback.totalscore || 0),
+          0
+        );
+    
+        // Print the scores in the console
+        // if (evaluatorFeedbacks.length > 0) {
+        //   console.log(`Team ID: ${params.row.id}, Scores:`, evaluatorFeedbacks, `Total Score: ${totalScore}`);
+        // }
+    
+        return (
+          <div style={{ display: "flex"}}>
+            {evaluatorFeedbacks.length > 0 ? totalScore : "No Score"}
+          </div>
+        );
+      },
+    },        
     {
       field: "moreDetails",
       headerName: "More Details",
