@@ -8,19 +8,15 @@ export const LOGIN_QUERY = gql`
       id
       name
       email
+      password
       roles
     }
   }
 `;
 
 export const TEAM_QUERY = gql`
-  query TeamQuery($approved: Boolean, $search: String) {
-    Team(
-      where: {
-        event_id: { _eq: 47 }
-      }
-      order_by: { id: asc }
-    ) {
+  query TeamQuery {
+    Team(where: { event_id: { _eq: 47 } }, order_by: { id: asc }) {
       id
       name
       leader_id
@@ -38,6 +34,13 @@ export const TEAM_QUERY = gql`
       }
       Leader {
         name
+      }
+      feedbacks_from_idea {
+        metric_score
+        totalscore
+        Idea_USER {
+          roles
+        }
       }
     }
   }

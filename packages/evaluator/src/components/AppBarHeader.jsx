@@ -14,6 +14,8 @@ const AppBarHeader = ({ toggleSidebar, isSidebarOpen }) => {
   const handleLogout = () => {
     setUserData(null);
     navigate("/login");
+    localStorage.removeItem("email");
+    localStorage.removeItem("password");
   };
 
   return (
