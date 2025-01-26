@@ -9,7 +9,7 @@ const RegisterSteps = () => {
   const steps = [
     {
       title: "Upload Presentation",
-      description: "Submit your team's PPT showcasing your project idea.",
+      description: "Submit your team's PPT (in PDF Format) showcasing your project idea. ",
       icon: FilePresentation,
     },
     {
@@ -40,33 +40,43 @@ const RegisterSteps = () => {
         borderRadius: "12px",
       }}
     >
-      <a
-        href="/template.pptx"
-        download="iDEA Hackathon PPT Submission Template.pptx"
-        target="_blank"
+      {/* Download Boxes */}
+      <Box
+      sx={{
+        maxWidth: 800,
+        margin: "auto",
+        justifyContent: 'space-evenly',
+        display: 'flex',
+      }}
       >
-        <Button
-          variant="contained"
-          color="secondary"
-          startIcon={<CloudDownloadIcon />}
-          sx={{ mb: 1 }}
+        <a
+          href="/template.pptx"
+          download="iDEA Hackathon PPT Submission Template.pptx"
+          target="_blank"
         >
-          Download PPT Template
-        </Button>
-      </a>
-      <a
-        href="/consent.pdf"
-        download="iDEA Hackathon Consent Letter Format.pdf"
-        target="_blank"
-      >
-        <Button
-          variant="contained"
-          color="secondary"
-          startIcon={<CloudDownloadIcon />}
+          <Button
+            variant="contained"
+            color="secondary"
+            startIcon={<CloudDownloadIcon />}
+            sx={{ mb: 1 }}
+          >
+            Download PPT Template
+          </Button>
+        </a>
+        <a
+          href="/consent.pdf"
+          download="iDEA Hackathon Consent Letter Format.pdf"
+          target="_blank"
         >
-          Download Consent Letter Format
-        </Button>
-      </a>
+          <Button
+            variant="contained"
+            color="secondary"
+            startIcon={<CloudDownloadIcon />}
+          >
+            Download Consent Letter Format
+          </Button>
+        </a>
+      </Box>
       <Box
         marginTop="2rem"
         sx={{
@@ -75,7 +85,7 @@ const RegisterSteps = () => {
             content: '""',
             position: "absolute",
             left: "7px",
-            top: "16px",
+            top: "20px",
             bottom: "16px",
             width: "2px",
             backgroundColor: "grey.200",
@@ -104,6 +114,7 @@ const RegisterSteps = () => {
                 borderColor: "background.paper",
                 position: "absolute",
                 left: 0,
+                top: 8,
               }}
             />
 

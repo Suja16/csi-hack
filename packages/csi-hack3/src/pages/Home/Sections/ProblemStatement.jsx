@@ -200,7 +200,7 @@ const ProblemStatementCard = () => {
                     color: "white",
                     px: 3,
                     py: 1,
-                    borderRadius: 1,
+                    borderRadius: 1.5,
                     transition: "all 0.3s",
                     "&:hover": {
                       bgcolor: theme.palette.primary.dark,

@@ -88,7 +88,7 @@ const Team = () => {
       </Grid2>
       <Grid2 item size={12}>
         <HeaderBox header="Event Timeline">
-          <img width="100%" src={isMobile ? timelineMobile : timeline} alt="" />
+          <img width="100%" src={isMobile ? timelineMobile : timeline} alt=""  style={{borderRadius:"8px"}}/>
         </HeaderBox>
       </Grid2>
       <Snackbar
