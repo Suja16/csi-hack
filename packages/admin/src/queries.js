@@ -8,6 +8,7 @@ export const LOGIN_QUERY = gql`
       id
       name
       email
+      password
       roles
     }
   }
@@ -15,12 +16,7 @@ export const LOGIN_QUERY = gql`
 
 export const TEAM_QUERY = gql`
   query TeamQuery($approved: Boolean, $search: String) {
-    Team(
-      where: {
-        event_id: { _eq: 47 }
-      }
-      order_by: { id: asc }
-    ) {
+    Team(where: { event_id: { _eq: 47 } }, order_by: { id: asc }) {
       id
       name
       leader_id

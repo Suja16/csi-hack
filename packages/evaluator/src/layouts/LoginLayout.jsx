@@ -13,7 +13,6 @@ export default function LoginLayout() {
   const [getTeamsData] = useLazyQuery(TEAMS_QUERY, {
     fetchPolicy: "network-only",
     onCompleted: (data) => {
-      console.log(data);
       const formattedData = data.feedbacks
         .filter(
           (feedback) => feedback.team_info_from_eventio.submissions !== null,
@@ -25,7 +24,6 @@ export default function LoginLayout() {
           youtube: feedback.team_info_from_eventio.submissions.video,
           evaluation: feedback.metric_score,
         }));
-      console.log(formattedData);
       setTeams(formattedData);
       setSelectedTeam(formattedData[0] || null);
     },
@@ -35,15 +33,10 @@ export default function LoginLayout() {
   });
 
   useEffect(() => {
-    console.log(userData);
     if (userData) {
       getTeamsData({ variables: { _userID: userData.id } });
     }
   }, [userData, getTeamsData]);
-
-  useEffect(() => {
-    console.log(teams);
-  }, [teams]);
 
   if (!userData) {
     return <Navigate to="/login" />;

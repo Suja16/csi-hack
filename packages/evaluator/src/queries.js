@@ -21,6 +21,7 @@ export const LOGIN_QUERY = gql`
       id
       name
       email
+      password
       roles
     }
   }

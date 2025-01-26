@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import {
@@ -25,7 +25,6 @@ function Login() {
 
   const [login, { loading }] = useLazyQuery(LOGIN_QUERY, {
     onCompleted: (data) => {
-      console.log("Query completed:", data);
       if (!data.Idea_USERS[0]) {
         failure("Invalid credentials");
         return;
@@ -33,6 +32,8 @@ function Login() {
       if (data.Idea_USERS[0].roles === "evaluator") {
         setUserData(data.Idea_USERS[0]);
         navigate("/");
+        localStorage.setItem("email", data.Idea_USERS[0].email);
+        localStorage.setItem("password", data.Idea_USERS[0].password);
       } else {
         failure("Invalid credentials");
       }
@@ -57,6 +58,15 @@ function Login() {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+  const email = localStorage.getItem("email");
+  const password = localStorage.getItem("password");
+
+  useEffect(() => {
+    if (email && password) {
+      login({ variables: { email, password } });
+    }
+  }, [email, password, login]);
 
   return (
     <Box
@@ -106,6 +116,7 @@ function Login() {
             label="Email"
             variant="outlined"
             name="email"
+            required
             fullWidth
             margin="normal"
             InputProps={{
@@ -121,6 +132,7 @@ function Login() {
             type={showPassword ? "text" : "password"}
             variant="outlined"
             name="password"
+            required
             fullWidth
             margin="normal"
             InputProps={{
