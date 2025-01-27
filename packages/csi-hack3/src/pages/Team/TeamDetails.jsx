@@ -7,6 +7,8 @@ import {
   Button,
   Tooltip,
   useTheme,
+  FormControl,
+  FormLabel,
   FormControlLabel,
   Checkbox,
   styled,
@@ -14,21 +16,30 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Radio,
+  RadioGroup,
 } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import TextBox from "../../../../ui/TextBox";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import LoadingButton from "@mui/lab/LoadingButton";
 import Delete from "@mui/icons-material/Delete";
 import { useEffect } from "react";
 import { uploadFile } from "../../utils/uploadFile";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import { success } from "../../utils/snackbar";
 
 const formSchema = yup.object({
+  domain: yup
+    .string()
+    .is(["FINTECH", "CYBERSECURITY", "GENAI"], "Invalid Domain.")
+    .required("Domain is required"),
+
   video: yup.string().required("Video URL is required"),
+
   ppt: yup
     .mixed()
     .required("PPT is required")
@@ -111,11 +122,11 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
       video: "",
       ppt: null,
       consent: null,
+      domain: "FINTECH",
     },
   });
 
   useEffect(() => {
-    console.log(errors);
     if (eventData.Participant.team.submissions) {
       setSubmitted(true);
     }
@@ -145,6 +156,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
       ppt: pptUrl,
       consent: consentUrl,
       acceptance: data.acceptance,
+      domain: data.domain,
     };
     try {
       const response = await axios.post(
@@ -160,6 +172,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
       if (response.status === 200 && response.data.error == false) {
         setIsSubmitting(false);
         setSubmitted(true);
+        success("Submission successful!");
       } else if (response.data.error == true) {
         setIsSubmitting(false);
         window.alert(response.data.message);
@@ -292,6 +305,39 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
                   sx={{ padding: "3" }}
                 >
                   <Grid2 item size={10}>
+                    <FormControl sx={{ mb: 2 }}>
+                      <FormLabel id="demo-row-radio-buttons-group-label">
+                        Domain
+                      </FormLabel>
+                      <Controller
+                        name="domain"
+                        control={control}
+                        render={({ field }) => (
+                          <RadioGroup
+                            row
+                            aria-labelledby="demo-row-radio-buttons-group-label"
+                            name="row-radio-buttons-group"
+                            {...field}
+                          >
+                            <FormControlLabel
+                              value="FINTECH"
+                              control={<Radio />}
+                              label="FinTech"
+                            />
+                            <FormControlLabel
+                              value="CYBERSECURITY"
+                              control={<Radio />}
+                              label="Cybersecurity"
+                            />
+                            <FormControlLabel
+                              value="GENAI"
+                              control={<Radio />}
+                              label="GenAI"
+                            />
+                          </RadioGroup>
+                        )}
+                      />
+                    </FormControl>
                     <TextBox
                       name="video"
                       label="VIDEO URL"
@@ -300,6 +346,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
                       helperText={errors?.video?.message}
                       error={!!errors?.video?.message}
                       width="50%"
+                      sx={{ mb: 2 }}
                     />
                   </Grid2>
                   <Grid2 item size={5}>
@@ -323,6 +370,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
                       <VisuallyHiddenInput
                         name="ppt"
                         type="file"
+                        accept="application/pdf"
                         {...register("ppt")}
                       />
                     </Button>
@@ -397,7 +445,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
                     </Typography>
                   </Grid2>
                   <Grid2 item size={10}>
-                    <Button
+                    <LoadingButton
                       variant="contained"
                       type="submit"
                       sx={{
@@ -405,10 +453,11 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
                         marginTop: "1rem",
                         marginX: "auto",
                       }}
+                      loading={isSubmitting}
                       disabled={isSubmitting}
                     >
                       Submit
-                    </Button>
+                    </LoadingButton>
                   </Grid2>
                   <Typography variant="caption" color="error" marginTop="3rem">
                     *Only team leader is required to submit attachments

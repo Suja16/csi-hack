@@ -7,6 +7,7 @@ import theme from "../../ui/theme.js";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import { ToastContainer } from "react-toastify";
 
 const globalStyles = (
   <GlobalStyles
@@ -27,6 +28,7 @@ createRoot(document.getElementById("root")).render(
         <App />
         <Analytics />
         <SpeedInsights />
+        <ToastContainer />
       </GoogleOAuthProvider>
     </ThemeProvider>
   </StrictMode>,
