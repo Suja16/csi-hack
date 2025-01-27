@@ -15,7 +15,7 @@ const RegisterSteps = () => {
     },
     {
       title: "Upload Video",
-      description: "Share a 1-minute video pitch explaining your project.",
+      description: "Share a 90 second video pitch explaining your project.",
       icon: VideoIcon,
     },
     {
