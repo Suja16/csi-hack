@@ -9,7 +9,8 @@ const RegisterSteps = () => {
   const steps = [
     {
       title: "Upload Presentation",
-      description: "Submit your team's PPT (in PDF Format) showcasing your project idea. ",
+      description:
+        "Submit your team's PPT (in PDF Format) showcasing your project idea. ",
       icon: FilePresentation,
     },
     {
@@ -42,12 +43,14 @@ const RegisterSteps = () => {
     >
       {/* Download Boxes */}
       <Box
-      sx={{
-        maxWidth: 800,
-        margin: "auto",
-        justifyContent: 'space-evenly',
-        display: 'flex',
-      }}
+        sx={{
+          maxWidth: 800,
+          margin: "auto",
+          justifyContent: "space-evenly",
+          display: "flex",
+          gap: 2,
+          flexDirection: { xs: "column", sm: "row" },
+        }}
       >
         <a
           href="/template.pptx"
