@@ -123,11 +123,16 @@ const problemStatementsData = [
       }
     ],
     expectedSolution: [
-      "The proposed solution should integrate a robust face training model within Union Bank of India’s mobile app, Vyom, for fraud prevention, leveraging Aadhaar-based authentication to verify customer identities and enable edge processing. This will ensure secure transactions and minimize identity fraud risks, even in remote areas.",
+      "The proposed solution should leverage Generative AI to enhance fraud detection and prevention in digital banking, addressing key challenges such as money laundering, fraud, and insider threats. The solution will integrate GenAI-powered systems into the banking infrastructure to analyze transaction patterns, customer behavior, and employee activities in real time.",
       "Additionally, the solution must include:",
-      "Customer Prioritization Logic: Algorithms to dynamically adjust service priorities based on holdings or asset value, ensuring high-value customers receive timely assistance.",
-      "AI-Driven Feedback Mechanism: A feedback module generating actionable insights for branches and staff by analyzing customer interactions and transaction patterns. This will help improve service quality, optimize resource allocation, and identify areas for operational enhancement.",
-      "By providing personalized and data-driven experiences, the solution will improve customer engagement, strengthen security, and enable scalable deployment, even in rural regions."
+      "AI-Powered Risk Assessment: Use GenAI to create accurate customer risk profiles during onboarding, ensuring a frictionless process while maintaining robust security. Synthetic data generation will help train systems to identify high-risk customers effectively.",
+      "Real-Time Anomaly Detection: Deploy GenAI models to analyze complex transaction networks and flag suspicious activities, such as smurfing or unusual transaction patterns, with minimal false positives.",
+      "Cross-Border Transaction Monitoring: Implement GenAI to assess jurisdictional risks and generate risk scores for international payments, ensuring compliance with global regulations.",
+      "Predictive Account Monitoring: Train GenAI models to detect and prevent the rapid creation, usage, and deactivation of fraudulent accounts by simulating fraudulent behavior patterns.",
+      "Adaptive Fraud Detection: Continuously update fraud detection systems using GenAI to simulate and adapt to advanced evasion techniques, such as obfuscated transactions and synthetic identities.",
+      "Insider Threat Mitigation: Use GenAI to analyze employee behavior and access logs, identifying anomalies that may indicate insider threats and alerting compliance teams for immediate action.",
+      "Personalized Customer Services: Leverage GenAI to analyze customer transaction histories and provide tailored recommendations, such as travel-friendly credit cards or foreign exchange services, enhancing customer engagement.",
+      "By integrating Generative AI into the banking ecosystem, the solution will improve fraud detection accuracy, reduce false positives, ensure regulatory compliance, and deliver a seamless and personalized customer experience, even in remote and rural areas."
     ],
     image: genai
   }
