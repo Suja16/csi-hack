@@ -45,14 +45,19 @@ export default function AddEvaluator({ open, setOpen, refetch }) {
     });
   };
 
+  const handleClose = () => {
+    reset();
+    setOpen(false);
+  };
+
   return (
     <Popup
-      dialogProps={{ open, onClose: () => setOpen(false), maxWidth: "md" }}
+      dialogProps={{ open, onClose: handleClose, maxWidth: "md" }}
     >
       <Box display="flex" justifyContent="space-between" padding={2}>
         <Typography variant="h5">Add Evaluator</Typography>
-        <Button>
-          <Close onClick={() => setOpen(false)} />
+        <Button onClick={handleClose}>
+          <Close />
         </Button>
       </Box>
       <Grid2
@@ -98,6 +103,43 @@ export default function AddEvaluator({ open, setOpen, refetch }) {
             register={register}
             error={errors.password}
             helperText={errors.password?.message}
+          />
+        </Grid2>
+        <Grid2 item size={1}>
+          <TextField
+            name="domain"
+            label="Domain"
+            select
+            register={register}
+            error={errors.domain}
+            helperText={errors.domain?.message}
+            SelectProps={{
+              native: true,
+            }}
+          >
+            <option value="" disabled>Select an option</option>
+            <option value="Fintech">Fintech</option>
+            <option value="Cybersecurity">Cybersecurity</option>
+            <option value="GenAI">GenAI</option>
+          </TextField>
+        </Grid2>
+        <Grid2 item size={1}>
+          <TextField
+            name="years_of_exp"
+            label="Years of Experience"
+            type="number"
+            register={register}
+            error={errors.years_of_exp}
+            helperText={errors.years_of_exp?.message}
+          />
+        </Grid2>
+        <Grid2 item size={1}>
+          <TextField
+            name="current_company"
+            label="Current Company"
+            register={register}
+            error={errors.current_company}
+            helperText={errors.current_company?.message}
           />
         </Grid2>
         <LoadingButton
