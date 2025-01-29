@@ -1,6 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import { CssBaseline, GlobalStyles, ThemeProvider } from "@mui/material";
+import theme from "../../ui/theme.js";
 
 import App from "./App.jsx";
 import { createHttpLink } from "@apollo/client";
@@ -36,11 +38,26 @@ function makeClient() {
 // Create the Apollo Client instance
 const client = makeClient();
 
+const globalStyles = (
+  <GlobalStyles
+    styles={{
+      body: {
+        scrollbarWidth: "thin",
+        scrollbarColor: "#314e77 transparent",
+      },
+    }}
+  />
+);
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ApolloProvider client={client}>
-      <App />
-      <ToastContainer />
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {globalStyles}
+        <App />
+        <ToastContainer />
+      </ThemeProvider>
     </ApolloProvider>
   </StrictMode>,
 );

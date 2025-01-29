@@ -30,6 +30,7 @@ export const TEAM_QUERY = gql`
         User {
           photo_url
           name
+          gender
         }
       }
       Leader {
@@ -73,15 +74,29 @@ export const ADD_EVALUATOR = gql`
 `;
 
 export const EVALUATOR_QUERY = gql`
-  query MyQuery {
+  query EvaluatorQuery {
     Team(order_by: { id: asc }) {
       id
       name
+      approved
+      submissions
+      Participants {
+        id
+        user_id
+        more_details
+        User {
+          photo_url
+          name
+          gender
+        }
+      }
       feedbacks_from_idea {
         Idea_USER {
           id
           roles
           name
+          domain
+          type
         }
       }
     }
@@ -89,6 +104,8 @@ export const EVALUATOR_QUERY = gql`
       id
       name
       roles
+      domain
+      type
     }
   }
 `;
