@@ -8,6 +8,7 @@ import {
   IconButton,
   Paper,
   TextField,
+  Tooltip,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
@@ -131,7 +132,29 @@ export default function DataTable() {
 
         return (
           <div style={{ display: "flex" }}>
-            {evaluatorFeedbacks.length > 0 ? totalScore : "No Score"}
+            <Tooltip
+              title={
+                <>
+                  Evaluator 1: {evaluatorFeedbacks[0]?.totalscore || "-"}
+                  <br />
+                  Evaluator 2: {evaluatorFeedbacks[1]?.totalscore || "-"}
+                </>
+              }
+              slotProps={{
+                popper: {
+                  modifiers: [
+                    {
+                      name: "offset",
+                      options: {
+                        offset: [0, -25],
+                      },
+                    },
+                  ],
+                },
+              }}
+            >
+              {evaluatorFeedbacks.length > 0 ? totalScore : "-"}
+            </Tooltip>
           </div>
         );
       },
