@@ -1,262 +1,174 @@
-import { useContext, useEffect, useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { useParams, useNavigate } from "react-router";
-import {
-  Box,
-  Button,
-  Paper,
-  Typography,
-  Link,
-  useMediaQuery,
-} from "@mui/material";
+import { Box, Button, Paper, Typography, Link, Container, Chip, IconButton, Tooltip, Stack } from "@mui/material";
 import YouTube from "react-youtube";
+import { NavigateBefore, NavigateNext } from "@mui/icons-material";
 import NewEevaluatorsInput from "../components/NewEevaluatorsInput";
-import FullscreenIcon from "@mui/icons-material/Fullscreen";
 import TeamsContext from "../contexts/teamsContext";
 
 const TeamDetails = () => {
   const { id } = useParams();
-  const { allTeams, nonEvaluatedTeams } = useContext(TeamsContext);
   const navigate = useNavigate();
+  const { allTeams, nonEvaluatedTeams } = useContext(TeamsContext);
 
   const selectedTeam = useMemo(() => {
-    const data = {};
-    data.name = allTeams[id]?.team_info_from_eventio.name;
-    data.youtube = allTeams[id]?.team_info_from_eventio.submissions?.video;
-    data.ppt = allTeams[id]?.team_info_from_eventio.submissions?.ppt;
-    data.metric_score = allTeams[id]?.metric_score;
-    data.totalscore = allTeams[id]?.totalscore;
+    const team = allTeams[id]?.team_info_from_eventio;
+    if (!team) return {};
 
-    if (!data.youtube) {
-      data.videoId = null;
-      return data;
-    }
-    const regex =
-      /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|\S+\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-    const match = data.youtube.match(regex);
-    data.videoId = match ? match[1] : null;
+    const youtube = team.submissions?.video;
+    const videoId = youtube?.match(
+      /(?:youtube\.com\/(?:[^/\n\s]+\/\S+\/|\S+\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+    )?.[1];
 
-    return data;
+    return {
+      name: team.name,
+      youtube,
+      videoId,
+      ppt: team.submissions?.ppt,
+      metric_score: allTeams[id]?.metric_score,
+      totalscore: allTeams[id]?.totalscore,
+    };
   }, [allTeams, id]);
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" }); // wont work for some reason
-  }, [id]);
-
-  const isMobile = useMediaQuery("(max-width:600px)");
-
-  const videoOpts = {
-    height: isMobile ? 360 : 460,
-    width: "97%",
-    playerVars: {
-      autoplay: 1,
-    },
+  const handleNavigation = (direction) => {
+    const keys = Object.keys(nonEvaluatedTeams);
+    const index = keys.indexOf(id);
+    const newIndex =
+      direction === "next" ? (index === keys.length - 1 ? 0 : index + 1) : index <= 0 ? keys.length - 1 : index - 1;
+    navigate(`/teams/${keys[newIndex]}`);
   };
+
+  const ContentSection = ({ title, onClick, children }) => (
+    <Paper
+      elevation={3}
+      sx={{
+        p: 2,
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        height: "100%",
+      }}
+    >
+      <Stack direction="row" justifyContent="space-between" alignItems="center">
+        <Typography variant="h6" color="primary">
+          {title}
+        </Typography>
+        {onClick && (
+          <Tooltip title="Open in new tab">
+            <Button color="primary" onClick={onClick}>
+              Open in new tab
+            </Button>
+          </Tooltip>
+        )}
+      </Stack>
+      {children}
+    </Paper>
+  );
 
   if (!selectedTeam.youtube) {
     return (
-      <Box>
-        <Typography variant="h4">
-          This team has not made a submission yet.
-        </Typography>
-        <Box display="flex" justifyContent="space-between" padding={2}>
+      <Container maxWidth="lg">
+        <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="80vh" gap={4}>
+          <Typography variant="h4">This team has not made a submission yet.</Typography>
+        </Box>
+      </Container>
+    );
+  }
+
+  return (
+    <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+      <Stack spacing={2} sx={{ mb: 4 }}>
+        <Typography variant="h4">{selectedTeam.name}</Typography>
+        {selectedTeam.totalscore && <Chip label="Evaluated" color="success" sx={{ maxWidth: 100 }} />}
+      </Stack>
+
+      <Box display="flex" flexDirection={{ xs: "column", md: "row" }} gap={2} sx={{ mb: 2 }}>
+        <Box flex={7} display="flex" flexDirection="column" gap={2}>
+          <ContentSection title="Presentation" onClick={() => window.open(selectedTeam.ppt)}>
+            <Box sx={{ height: 480 }}>
+              <iframe
+                src={selectedTeam.ppt}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  border: 0,
+                }}
+                allowFullScreen
+                mozallowfullscreen="true"
+                webkitallowfullscreen="true"
+              />
+            </Box>
+          </ContentSection>
+
+          <ContentSection title="Submission Video" onClick={() => window.open(selectedTeam.youtube, "_blank")}>
+            {selectedTeam.videoId ? (
+              <Box sx={{ width: "100%", paddingTop: "56.25%", position: "relative" }}>
+                <YouTube
+                  videoId={selectedTeam.videoId}
+                  opts={{
+                    height: "100%",
+                    width: "100%",
+                    playerVars: { autoplay: 0 },
+                  }}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                  }}
+                />
+              </Box>
+            ) : selectedTeam.youtube.includes("drive.google.com") ? (
+              <Box sx={{ height: 480 }}>
+                <iframe
+                  src={selectedTeam.youtube}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    border: 0,
+                  }}
+                  allowFullScreen
+                  mozallowfullscreen="true"
+                  webkitallowfullscreen="true"
+                />
+              </Box>
+            ) : (
+              <Link href={selectedTeam.youtube} target="_blank">
+                {selectedTeam.youtube}
+              </Link>
+            )}
+          </ContentSection>
+        </Box>
+
+        <Box flex={5}>
+          <ContentSection title="Evaluation">
+            <NewEevaluatorsInput />
+          </ContentSection>
+        </Box>
+      </Box>
+
+      <Box sx={{ mt: 2 }}>
+        <Box display="flex" justifyContent="space-between">
           <Button
             color="primary"
             variant="contained"
-            sx={{
-              p: 2,
-            }}
-            onClick={() => {
-              const keys = Object.keys(nonEvaluatedTeams);
-              const index = keys.indexOf(id);
-              if (!index) {
-                navigate(`/teams/${keys[keys.length - 1]}`);
-              } else if (index === 0) {
-                navigate(`/teams/${keys[keys.length - 1]}`);
-              } else {
-                navigate(`/teams/${keys[index - 1]}`);
-              }
-            }}
+            startIcon={<NavigateBefore />}
+            onClick={() => handleNavigation("prev")}
           >
             Previous Team
           </Button>
           <Button
             color="primary"
             variant="contained"
-            sx={{
-              p: 2,
-            }}
-            onClick={() => {
-              const keys = Object.keys(nonEvaluatedTeams);
-              const index = keys.indexOf(id);
-              if (index === keys.length - 1) {
-                navigate(`/teams/${keys[0]}`);
-              } else {
-                navigate(`/teams/${keys[index + 1]}`);
-              }
-            }}
+            endIcon={<NavigateNext />}
+            onClick={() => handleNavigation("next")}
           >
             Next Team
           </Button>
         </Box>
       </Box>
-    );
-  }
-  return (
-    <Box>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 3,
-          paddingBottom: 3,
-          // marginLeft: 3,
-        }}
-      >
-        {selectedTeam.totalscore && (
-          <Typography variant="h4">
-            This team has already been evaluated.
-          </Typography>
-        )}
-        {selectedTeam.youtube && (
-          <>
-            {selectedTeam.videoId ? (
-              <Paper
-                elevation={3}
-                sx={{
-                  p: 2,
-                  display: "flex",
-                  flexDirection: "column",
-                  // justifyContent: "space-around",
-                  gap: 1,
-                  height: isMobile ? 440 : 540,
-                  width: "85%",
-                }}
-              >
-                <Typography
-                  variant="h5"
-                  color="#ee1f25"
-                  gutterBottom
-                  component="div"
-                >
-                  YouTube Video
-                </Typography>
-
-                <YouTube
-                  key={selectedTeam.id}
-                  videoId={selectedTeam.videoId}
-                  opts={videoOpts}
-                />
-              </Paper>
-            ) : (
-              <Box>
-                <Typography
-                  variant="h5"
-                  color="#ee1f25"
-                  pb={0.5}
-                  component="div"
-                >
-                  Video URL
-                </Typography>
-                <Link href={selectedTeam.youtube} target="_blank">
-                  {selectedTeam.youtube}
-                </Link>
-              </Box>
-            )}
-
-            <Paper
-              elevation={3}
-              sx={{
-                p: 2,
-                display: "flex",
-                flexDirection: "column",
-                width: "85%",
-                gap: 1,
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: 1,
-                }}
-              >
-                <Typography
-                  variant="h5"
-                  color="#ee1f25"
-                  pb={0.5}
-                  component="div"
-                >
-                  Presentation
-                </Typography>
-                <Typography
-                  variant="a"
-                  sx={{ cursor: "pointer" }}
-                  onClick={() => window.open(selectedTeam.ppt)}
-                >
-                  <FullscreenIcon />
-                </Typography>
-              </Box>
-              <Box>
-                <iframe
-                  src={selectedTeam.ppt}
-                  frameBorder="0"
-                  width="100%"
-                  height={isMobile ? "400" : "600"}
-                  allowFullScreen={true}
-                  mozallowfullscreen="true"
-                  webkitallowfullscreen="true"
-                ></iframe>
-              </Box>
-            </Paper>
-          </>
-        )}
-      </Box>
-      {/* <HackathonEvaluatorInputs /> */}
-      <NewEevaluatorsInput />
-      <Box display="flex" justifyContent="space-between" padding={2}>
-        <Button
-          color="primary"
-          variant="contained"
-          sx={{
-            p: 2,
-          }}
-          onClick={() => {
-            const keys = Object.keys(nonEvaluatedTeams);
-            const index = keys.indexOf(id);
-            if (index == -1) {
-              navigate(`/teams/${keys[keys.length - 1]}`);
-            } else if (index === 0) {
-              navigate(`/teams/${keys[keys.length - 1]}`);
-            } else {
-              navigate(`/teams/${keys[index - 1]}`);
-            }
-          }}
-        >
-          Previous Team
-        </Button>
-        <Button
-          color="primary"
-          variant="contained"
-          sx={{
-            p: 2,
-          }}
-          onClick={() => {
-            const keys = Object.keys(nonEvaluatedTeams);
-            const index = keys.indexOf(id);
-            if (index === keys.length - 1) {
-              navigate(`/teams/${keys[0]}`);
-            } else {
-              navigate(`/teams/${keys[index + 1]}`);
-            }
-          }}
-        >
-          Next Team
-        </Button>
-      </Box>
-    </Box>
+    </Container>
   );
 };
 

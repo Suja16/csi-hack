@@ -151,7 +151,7 @@ function NewEevaluatorsInput() {
           display: "flex",
           justifyContent: isMobile ? "center" : "space-between",
           alignItems: "center",
-          flexDirection: isMobile ? "column" : "row",
+          flexDirection: isMobile ? "column" : "column",
           gap: 3,
         }}
       >
@@ -302,7 +302,7 @@ function NewEevaluatorsInput() {
           justifyContent: "space-between",
           alignItems: "center",
           flexDirection: isMobile ? "column" : "row",
-          gap: isMobile ? 2 : 0,
+          gap: isMobile ? 2 : 5,
         }}
       >
         <Box
@@ -332,10 +332,10 @@ function NewEevaluatorsInput() {
                 color: "black",
                 fontWeight: 600,
                 mr: 1,
-                fontSize: isMobile ? "2rem" : "3rem",
+                fontSize: isMobile ? "1rem" : "2.5rem",
               }}
             >
-              Total Score:{" "}
+              Total Score:
             </Typography>
             <Box sx={{ display: "flex" }}>
               <Typography
@@ -343,7 +343,7 @@ function NewEevaluatorsInput() {
                 sx={{
                   color: "black",
                   fontWeight: 600,
-                  fontSize: isMobile ? "2rem" : "3rem",
+                  fontSize: isMobile ? "1rem" : "2.5rem",
                 }}
               >
                 {calculateTotalScore()}
@@ -353,7 +353,7 @@ function NewEevaluatorsInput() {
                 sx={{
                   color: "#71717a",
                   fontWeight: 600,
-                  fontSize: isMobile ? "2rem" : "3rem",
+                  fontSize: isMobile ? "1rem" : "2.5rem",
                 }}
               >
                 /100
@@ -365,12 +365,12 @@ function NewEevaluatorsInput() {
           <LoadingButton
             variant="contained"
             color="primary"
-            sx={{ width: "9rem", height: "2.4rem", bgcolor: "#eb272e" }}
+            sx={{ width: "6rem", height: "2.4rem", bgcolor: "#eb272e" }}
             onClick={() => setIsOpen(true)}
             loading={loading}
             disabled={disabled}
           >
-            <Typography variant="h6" sx={{ color: "white" }}>
+            <Typography variant="button" sx={{ color: "white" }}>
               Submit
             </Typography>
           </LoadingButton>
