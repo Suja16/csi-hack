@@ -55,11 +55,15 @@ const CsvUploader = ({ open, onClose, refetch }) => {
                     const evaluators = results.data.map(row => {
                         if (!row.Name || !row.Email || !row.Phone_number) return null;
 
+                        const emailPrefix = row.Email.split('@')[0];
+                        const phoneDigit = row.Phone_number.trim().slice(-1);
+                        const generatedPassword = emailPrefix + phoneDigit;
+
                         return {
                             name: row.Name.trim(),
                             email: row.Email.trim(),
                             phone_no: row.Phone_number.trim(),
-                            password: "rohan",
+                            password: generatedPassword,
                             roles: "evaluator",
                             domain: row.Domain ? row.Domain.trim() : "",
                             type: row.Type ? row.Type.trim() : "",
