@@ -36,11 +36,17 @@ export default function AddEvaluator({ open, setOpen, refetch }) {
   const onSubmit = (data) => {
     addEvaluator({
       variables: {
-        name: data.name,
-        email: data.email,
-        phone_no: data.phone_number,
-        password: data.password,
-        roles: "evaluator",
+      name: data.name,
+      email: data.email,
+      phone_no: data.phone_number,
+      password: data.password,
+      roles: "evaluator",
+      domain: data.domain,
+      type: data.type_of_evaluator,
+      metadata: {
+        years_of_exp: data.years_of_exp,
+        current_company: data.current_company,
+      },
       },
     });
   };
@@ -118,9 +124,9 @@ export default function AddEvaluator({ open, setOpen, refetch }) {
             }}
           >
             <option value="" disabled>Select an option</option>
-            <option value="Fintech">Fintech</option>
-            <option value="Cybersecurity">Cybersecurity</option>
-            <option value="GenAI">GenAI</option>
+            <option value="FINTECH">Fintech</option>
+            <option value="CYBERSECURITY">Cybersecurity</option>
+            <option value="GENAI">GenAI</option>
           </TextField>
         </Grid2>
         <Grid2 item size={1}>
@@ -142,12 +148,30 @@ export default function AddEvaluator({ open, setOpen, refetch }) {
             helperText={errors.current_company?.message}
           />
         </Grid2>
+        <Grid2 item size={1}>
+          <TextField
+            name="type_of_evaluator"
+            label="Type of Evaluator"
+            select
+            register={register}
+            error={errors.type_of_evaluator}
+            helperText={errors.type_of_evaluator?.message}
+            SelectProps={{
+              native: true,
+            }}
+          >
+            <option value="" disabled>Select an option</option>
+            <option value="bank">Bank</option>
+            <option value="internal">Internal</option>
+          </TextField>
+        </Grid2>
         <LoadingButton
           type="submit"
           variant="contained"
           color="primary"
           loading={loading}
           disabled={loading}
+          sx={{ marginTop: 2 , padding: 1.5}}
         >
           Add Evaluator
         </LoadingButton>

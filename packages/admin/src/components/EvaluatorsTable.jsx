@@ -17,6 +17,7 @@ import { EVALUATOR_QUERY, ASSIGN_TEAM } from "../queries";
 import AddEvaluator from "./AddEvaluator";
 import { success, failure } from "../utils/snackbar";
 import NewFilterDropdown from "./NewFilterButton";
+import CsvUploader from "./csvUploader";
 
 const EvaluatorsTable = () => {
   const [editMode, setEditMode] = useState(null);
@@ -41,6 +42,7 @@ const EvaluatorsTable = () => {
     team_completion: [],
     submission_validity: [],
   });
+  const [openCsvUploader, setOpenCsvUploader] = useState(false);
 
   const { data, loading, refetch } = useQuery(EVALUATOR_QUERY, {
     onError: (error) => {
@@ -398,10 +400,18 @@ const EvaluatorsTable = () => {
             <Button
               variant="contained"
               color="primary"
+              onClick={() => setOpenCsvUploader(true)}
+            >
+              Upload File
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
               onClick={() => setOpen(true)}
             >
               Add Evaluator
             </Button>
+            <CsvUploader open={openCsvUploader} onClose={() => setOpenCsvUploader(false)} />
             <NewFilterDropdown filters={filters} setFilters={setFilters} />
           </Box>
         </Box>
