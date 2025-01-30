@@ -4,6 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import {
   Box,
+  Button,
   CircularProgress,
   IconButton,
   Paper,
@@ -15,6 +16,9 @@ import Popup from "../../../ui/popup";
 import { TEAM_QUERY } from "../queries";
 import TeamDetailsPage from "./DataPopupContent";
 import NewFilterDropdown from "./NewFilterButton";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import SubmissionsAdminPopupContent from "./SubmissionsAdminPopupContent";
+import { filter } from "motion/react-client";
 
 export default function DataTable() {
   const [popupOpen, setPopupOpen] = useState(false);
@@ -23,6 +27,9 @@ export default function DataTable() {
   const [filters, setFilters] = useState({ approved: null, submitted: null }); // State for filters
 
   const { data, loading } = useQuery(TEAM_QUERY);
+
+  const [submissionPopup, setSubmissionPopup] = useState(false);
+  const [submissionData, setSubmissionData] = useState(null);
 
   const columns = [
     {
@@ -37,7 +44,8 @@ export default function DataTable() {
         </div>
       ),
       renderCell: (params) => (
-        <div style={{ display: "flex", paddingLeft: 20 }}>{params.value}</div>
+        console.log(params),
+        (<div style={{ display: "flex", paddingLeft: 20 }}>{params.id}</div>)
       ),
     },
     {
@@ -77,7 +85,14 @@ export default function DataTable() {
       ),
       renderCell: (params) =>
         params.value ? (
-          <Check sx={{ color: "green" }} />
+          <Button
+            onClick={() => {
+              setSubmissionPopup(true);
+              setSubmissionData(params.value);
+            }}
+          >
+            <VisibilityIcon sx={{ color: "green" }} />
+          </Button>
         ) : (
           <Close sx={{ color: "red" }} />
         ),
@@ -115,19 +130,19 @@ export default function DataTable() {
           (sum, feedback) => sum + (feedback.totalscore || 0),
           0
         );
-    
+
         // Print the scores in the console
         // if (evaluatorFeedbacks.length > 0) {
         //   console.log(`Team ID: ${params.row.id}, Scores:`, evaluatorFeedbacks, `Total Score: ${totalScore}`);
         // }
-    
+
         return (
-          <div style={{ display: "flex"}}>
+          <div style={{ display: "flex" }}>
             {evaluatorFeedbacks.length > 0 ? totalScore : "No Score"}
           </div>
         );
       },
-    },        
+    },
     {
       field: "moreDetails",
       headerName: "More Details",
@@ -157,19 +172,36 @@ export default function DataTable() {
   };
 
   const filteredRows = data?.Team.filter((team) => {
-    const matchesSearchQuery = team.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesApprovedFilter = filters.approved === null || team.approved === filters.approved;
-    const matchesSubmittedFilter = 
-      filters.submitted === null || 
-      (filters.submitted ? team.submissions !== null : team.submissions === null);
-    
-    return matchesSearchQuery && matchesApprovedFilter && matchesSubmittedFilter;
+    const matchesSearchQuery = team.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const matchesApprovedFilter =
+      filters.approved === null || team.approved === filters.approved;
+    const matchesSubmittedFilter =
+      filters.submitted === null ||
+      (filters.submitted
+        ? team.submissions !== null
+        : team.submissions === null);
+
+    return (
+      matchesSearchQuery && matchesApprovedFilter && matchesSubmittedFilter
+    );
   });
-  
+
+  let newFilteredRowsWithUpdatedId = filteredRows?.map((row, index) => {
+    return { ...row, id: index + 1 };
+  });
 
   return (
     <Paper sx={{ width: "98%", overflow: "hidden", p: 2, mr: -1 }}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 2,
+        }}
+      >
         <TextField
           label="Search Teams"
           variant="outlined"
@@ -185,7 +217,11 @@ export default function DataTable() {
         {loading ? (
           <CircularProgress />
         ) : (
-          <DataGrid rows={filteredRows || []} columns={columns} pageSize={5} />
+          <DataGrid
+            rows={newFilteredRowsWithUpdatedId || []}
+            columns={columns}
+            pageSize={5}
+          />
         )}
       </Box>
 
@@ -197,6 +233,16 @@ export default function DataTable() {
           <CloseIcon />
         </IconButton>
         <TeamDetailsPage teamData={selectedRowDetails} />
+      </Popup>
+
+      <Popup dialogProps={{ open: submissionPopup }}>
+        <IconButton
+          onClick={() => setSubmissionPopup(false)}
+          sx={{ position: "absolute", right: 8, top: 8, color: "grey.500" }}
+        >
+          <CloseIcon />
+        </IconButton>
+        <SubmissionsAdminPopupContent data={submissionData} />
       </Popup>
     </Paper>
   );

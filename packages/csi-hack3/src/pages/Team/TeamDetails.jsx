@@ -157,6 +157,8 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
       consent: consentUrl,
       acceptance: data.acceptance,
       domain: data.domain,
+      valid: null,
+      timestamp: new Date().toISOString(),
     };
     try {
       const response = await axios.post(
@@ -167,7 +169,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
           baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
-        },
+        }
       );
       if (response.status === 200 && response.data.error == false) {
         setIsSubmitting(false);
@@ -194,7 +196,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
           baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
-        },
+        }
       );
       console.log(response.data);
       setSnackBarMessage("Left team successfully");
@@ -275,7 +277,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
           }}
           onClick={() =>
             navigator.clipboard.writeText(
-              eventData.Participant.team.invite_code,
+              eventData.Participant.team.invite_code
             )
           }
         >
