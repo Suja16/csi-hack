@@ -9,6 +9,7 @@ import {
   IconButton,
   Paper,
   TextField,
+  Tooltip,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
@@ -24,7 +25,15 @@ export default function DataTable() {
   const [popupOpen, setPopupOpen] = useState(false);
   const [selectedRowDetails, setSelectedRowDetails] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [filters, setFilters] = useState({ approved: null, submitted: null }); // State for filters
+  const [filters, setFilters] = useState({
+    approved: [],
+    submitted: [],
+    domain: [],
+    pwd: [],
+    all_women: [],
+    team_completion: [],
+    submission_validity: [],
+  });
 
   const { data, loading } = useQuery(TEAM_QUERY);
 
@@ -124,11 +133,11 @@ export default function DataTable() {
       renderCell: (params) => {
         const feedbacks = params.row.feedbacks_from_idea || [];
         const evaluatorFeedbacks = feedbacks.filter(
-          (feedback) => feedback.Idea_USER?.roles === "evaluator"
+          (feedback) => feedback.Idea_USER?.roles === "evaluator",
         );
         const totalScore = evaluatorFeedbacks.reduce(
           (sum, feedback) => sum + (feedback.totalscore || 0),
-          0
+          0,
         );
 
         // Print the scores in the console
@@ -138,7 +147,29 @@ export default function DataTable() {
 
         return (
           <div style={{ display: "flex" }}>
-            {evaluatorFeedbacks.length > 0 ? totalScore : "No Score"}
+            <Tooltip
+              title={
+                <>
+                  Evaluator 1: {evaluatorFeedbacks[0]?.totalscore || "-"}
+                  <br />
+                  Evaluator 2: {evaluatorFeedbacks[1]?.totalscore || "-"}
+                </>
+              }
+              slotProps={{
+                popper: {
+                  modifiers: [
+                    {
+                      name: "offset",
+                      options: {
+                        offset: [0, -25],
+                      },
+                    },
+                  ],
+                },
+              }}
+            >
+              {evaluatorFeedbacks.length > 0 ? totalScore : "-"}
+            </Tooltip>
           </div>
         );
       },
@@ -175,16 +206,50 @@ export default function DataTable() {
     const matchesSearchQuery = team.name
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
+
     const matchesApprovedFilter =
-      filters.approved === null || team.approved === filters.approved;
+      filters.approved.length === 0 || filters.approved.includes(team.approved);
+
     const matchesSubmittedFilter =
-      filters.submitted === null ||
-      (filters.submitted
-        ? team.submissions !== null
-        : team.submissions === null);
+      filters.submitted.length === 0 ||
+      filters.submitted.includes(Boolean(team.submissions));
+
+    const matchesDomainFilter =
+      filters.domain.length === 0 ||
+      filters.domain.includes(team.submissions?.domain);
+
+    const matchesPwdFilter = filters.pwd.length === 0 || team.pwd;
+
+    const matchesAllWomenFilter =
+      filters.all_women.length === 0 ||
+      team.Participants.every(
+        (participant) => participant.User.gender === "FEMALE",
+      );
+
+    const matchesTeamCompleteFilter =
+      filters.team_completion.length === 0 ||
+      !filters.team_completion.includes(true) ||
+      team.Participants.length === 4;
+
+    const matchesTeamIncompleteFilter =
+      filters.team_completion.length === 0 ||
+      !filters.team_completion.includes(false) ||
+      team.Participants.length < 4;
+
+    const matchesValidSubmissionFilter =
+      filters.submission_validity.length === 0 ||
+      filters.submission_validity.includes(team.submissions?.valid);
 
     return (
-      matchesSearchQuery && matchesApprovedFilter && matchesSubmittedFilter
+      matchesSearchQuery &&
+      matchesApprovedFilter &&
+      matchesSubmittedFilter &&
+      matchesDomainFilter &&
+      matchesPwdFilter &&
+      matchesAllWomenFilter &&
+      matchesTeamCompleteFilter &&
+      matchesTeamIncompleteFilter &&
+      matchesValidSubmissionFilter
     );
   });
 

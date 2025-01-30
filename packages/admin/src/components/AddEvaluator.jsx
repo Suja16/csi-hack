@@ -36,23 +36,34 @@ export default function AddEvaluator({ open, setOpen, refetch }) {
   const onSubmit = (data) => {
     addEvaluator({
       variables: {
-        name: data.name,
-        email: data.email,
-        phone_no: data.phone_number,
-        password: data.password,
-        roles: "evaluator",
+      name: data.name,
+      email: data.email,
+      phone_no: data.phone_number,
+      password: data.password,
+      roles: "evaluator",
+      domain: data.domain,
+      type: data.type_of_evaluator,
+      metadata: {
+        years_of_exp: data.years_of_exp,
+        current_company: data.current_company,
+      },
       },
     });
   };
 
+  const handleClose = () => {
+    reset();
+    setOpen(false);
+  };
+
   return (
     <Popup
-      dialogProps={{ open, onClose: () => setOpen(false), maxWidth: "md" }}
+      dialogProps={{ open, onClose: handleClose, maxWidth: "md" }}
     >
       <Box display="flex" justifyContent="space-between" padding={2}>
         <Typography variant="h5">Add Evaluator</Typography>
-        <Button>
-          <Close onClick={() => setOpen(false)} />
+        <Button onClick={handleClose}>
+          <Close />
         </Button>
       </Box>
       <Grid2
@@ -100,12 +111,67 @@ export default function AddEvaluator({ open, setOpen, refetch }) {
             helperText={errors.password?.message}
           />
         </Grid2>
+        <Grid2 item size={1}>
+          <TextField
+            name="domain"
+            label="Domain"
+            select
+            register={register}
+            error={errors.domain}
+            helperText={errors.domain?.message}
+            SelectProps={{
+              native: true,
+            }}
+          >
+            <option value="" disabled>Select an option</option>
+            <option value="FINTECH">Fintech</option>
+            <option value="CYBERSECURITY">Cybersecurity</option>
+            <option value="GENAI">GenAI</option>
+          </TextField>
+        </Grid2>
+        <Grid2 item size={1}>
+          <TextField
+            name="years_of_exp"
+            label="Years of Experience"
+            type="number"
+            register={register}
+            error={errors.years_of_exp}
+            helperText={errors.years_of_exp?.message}
+          />
+        </Grid2>
+        <Grid2 item size={1}>
+          <TextField
+            name="current_company"
+            label="Current Company"
+            register={register}
+            error={errors.current_company}
+            helperText={errors.current_company?.message}
+          />
+        </Grid2>
+        <Grid2 item size={1}>
+          <TextField
+            name="type_of_evaluator"
+            label="Type of Evaluator"
+            select
+            register={register}
+            error={errors.type_of_evaluator}
+            helperText={errors.type_of_evaluator?.message}
+            SelectProps={{
+              native: true,
+            }}
+          >
+            <option value="" disabled>Select an option</option>
+            <option value="bank">Bank</option>
+            <option value="internal">Internal</option>
+          </TextField>
+        </Grid2>
         <LoadingButton
           type="submit"
           variant="contained"
           color="primary"
           loading={loading}
           disabled={loading}
+          sx={{ marginTop: 2 , padding: 1.5}}
         >
           Add Evaluator
         </LoadingButton>

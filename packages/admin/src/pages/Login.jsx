@@ -25,7 +25,6 @@ function Login() {
 
   const [login, { loading }] = useLazyQuery(LOGIN_QUERY, {
     onCompleted: (data) => {
-      console.log("Query completed:", data);
       if (!data.Idea_USERS[0]) {
         failure("Invalid credentials");
         return;

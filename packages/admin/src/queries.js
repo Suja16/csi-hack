@@ -30,6 +30,7 @@ export const TEAM_QUERY = gql`
         User {
           photo_url
           name
+          gender
         }
       }
       Leader {
@@ -53,6 +54,9 @@ export const ADD_EVALUATOR = gql`
     $password: String
     $phone_no: numeric
     $roles: Roles_enum
+    $domain: String
+    $type: EvaluatorTypes_enum
+    $metadata: jsonb
   ) {
     insert_Idea_USERS_one(
       object: {
@@ -61,6 +65,9 @@ export const ADD_EVALUATOR = gql`
         password: $password
         phone_no: $phone_no
         roles: $roles
+        domain: $domain
+        type: $type
+        metadata: $metadata
       }
     ) {
       name
@@ -68,20 +75,37 @@ export const ADD_EVALUATOR = gql`
       phone_no
       roles
       email
+      domain
+      type
+      metadata
     }
   }
 `;
 
 export const EVALUATOR_QUERY = gql`
-  query MyQuery {
+  query EvaluatorQuery {
     Team(order_by: { id: asc }) {
       id
       name
+      approved
+      submissions
+      Participants {
+        id
+        user_id
+        more_details
+        User {
+          photo_url
+          name
+          gender
+        }
+      }
       feedbacks_from_idea {
         Idea_USER {
           id
           roles
           name
+          domain
+          type
         }
       }
     }
@@ -89,6 +113,8 @@ export const EVALUATOR_QUERY = gql`
       id
       name
       roles
+      domain
+      type
     }
   }
 `;
