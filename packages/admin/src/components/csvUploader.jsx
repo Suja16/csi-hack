@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Box, Typography, IconButton, List, ListItem, ListItemText, ListItemIcon, Tooltip } from '@mui/material';
-import { CloudUpload, Close, CheckCircle, Error } from '@mui/icons-material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Box, Typography, IconButton, Snackbar, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Alert } from '@mui/material';
+import { CloudUpload, Close } from '@mui/icons-material';
 import { useMutation } from '@apollo/client';
 import { ADD_EVALUATOR } from '../queries';
 import Papa from 'papaparse';
@@ -9,6 +9,9 @@ const CsvUploader = ({ open, onClose, refetch }) => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [loading, setLoading] = useState(false);
     const [results, setResults] = useState([]);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [errorSnackbarOpen, setErrorSnackbarOpen] = useState(false);
+    const [errorDialogOpen, setErrorDialogOpen] = useState(false);
 
     const [addEvaluator] = useMutation(ADD_EVALUATOR);
 
@@ -85,12 +88,21 @@ const CsvUploader = ({ open, onClose, refetch }) => {
 
                 setResults(uploadResults);
                 setLoading(false);
+                if (uploadResults.some(result => !result.success)) {
+                    setErrorSnackbarOpen(true);
+                } else {
+                    setSnackbarOpen(true);
+                }
                 if (typeof refetch === 'function') {
                     refetch();
                 }
+                
             }
         });
     };
+
+    const successCount = results.filter(result => result.success).length;
+    const errorDetails = results.filter(result => !result.success).map(result => ({ name: result.name, error: result.error }));
 
     return (
         <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
@@ -124,37 +136,60 @@ const CsvUploader = ({ open, onClose, refetch }) => {
                         <IconButton onClick={handleFileRemove}><Close /></IconButton>
                     </Box>
                 )}
-                {results.length > 0 && (
-                    <List>
-                        {results.map((result, index) => (
-                            <ListItem key={index}>
-                                <ListItemText primary={result.name} />
-                                <ListItemIcon>
-                                    {result.success ? (
-                                        <CheckCircle color="success" />
-                                    ) : (
-                                        <Tooltip title={result.error || "Error"}>
-                                            <Error color="error" />
-                                        </Tooltip>
-                                    )}
-                                </ListItemIcon>
-                            </ListItem>
-                        ))}
-                    </List>
-                )}
             </DialogContent>
             <DialogActions>
-                {results.length > 0 && results.every(result => result.success || result.error) ? (
-                    <Button onClick={handleClose} variant="contained" color="primary">Close</Button>
-                ) : (
-                    <>
-                        <Button onClick={handleClose}>Cancel</Button>
-                        <Button variant="contained" color="primary" onClick={handleSubmit} disabled={!selectedFile || loading}>
-                            {loading ? 'Uploading...' : 'Submit'}
-                        </Button>
-                    </>
-                )}
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button variant="contained" color="primary" onClick={handleSubmit} disabled={!selectedFile || loading}>
+                    {loading ? 'Uploading...' : 'Submit'}
+                </Button>
             </DialogActions>
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={6000}
+                onClose={() => setSnackbarOpen(false)}
+            >
+                <Alert onClose={() => setSnackbarOpen(false)} severity="success">
+                    Successfully Mutated {successCount} entries
+                </Alert>
+            </Snackbar>
+            <Snackbar
+                open={errorSnackbarOpen}
+                autoHideDuration={6000}
+                onClose={() => setErrorSnackbarOpen(false)}
+            >
+                <Alert onClose={() => setErrorSnackbarOpen(false)} severity="error">
+                    Unable to mutate few entries
+                    <Button color="secondary" size="small" onClick={() => setErrorDialogOpen(true)}>
+                        Show Errors
+                    </Button>
+                </Alert>
+            </Snackbar>
+            <Dialog open={errorDialogOpen} onClose={() => setErrorDialogOpen(false)}>
+                <DialogTitle>Error Details</DialogTitle>
+                <DialogContent dividers style={{ maxHeight: '400px', overflowY: 'auto' }}>
+                    <TableContainer component={Paper}>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Name</TableCell>
+                                    <TableCell>Message</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {errorDetails.map((detail, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell>{detail.name}</TableCell>
+                                        <TableCell>{detail.error}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setErrorDialogOpen(false)} color="primary">Close</Button>
+                </DialogActions>
+            </Dialog>
         </Dialog>
     );
 };
