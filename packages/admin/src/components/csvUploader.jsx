@@ -1,25 +1,23 @@
 import { useState } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Box, Typography, IconButton } from '@mui/material';
-import { CloudUpload, Close } from '@mui/icons-material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Box, Typography, IconButton, List, ListItem, ListItemText, ListItemIcon, Tooltip } from '@mui/material';
+import { CloudUpload, Close, CheckCircle, Error } from '@mui/icons-material';
 import { useMutation } from '@apollo/client';
 import { ADD_EVALUATOR } from '../queries';
-import { success, failure } from '../utils/snackbar';
 import Papa from 'papaparse';
 
 const CsvUploader = ({ open, onClose, refetch }) => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [results, setResults] = useState([]);
 
-    const [addEvaluator] = useMutation(ADD_EVALUATOR, {
-        onError: (error) => failure(error.message)
-    });
+    const [addEvaluator] = useMutation(ADD_EVALUATOR);
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file && file.type === 'text/csv') {
             setSelectedFile(file);
         } else {
-            failure('Please select a valid CSV file');
+            alert('Please select a valid CSV file');
         }
     };
 
@@ -29,19 +27,20 @@ const CsvUploader = ({ open, onClose, refetch }) => {
         if (file && file.type === 'text/csv') {
             setSelectedFile(file);
         } else {
-            failure('Please select a valid CSV file');
+            alert('Please select a valid CSV file');
         }
     };
 
     const handleFileRemove = () => setSelectedFile(null);
     const handleClose = () => {
         setSelectedFile(null);
+        setResults([]);
         onClose();
     };
 
     const handleSubmit = async () => {
         if (!selectedFile) {
-            failure("Please select a CSV file");
+            alert("Please select a CSV file");
             return;
         }
 
@@ -51,43 +50,44 @@ const CsvUploader = ({ open, onClose, refetch }) => {
             header: true,
             skipEmptyLines: true,
             complete: async (results) => {
-                try {
-                    const evaluators = results.data.map(row => {
-                        if (!row.Name || !row.Email || !row.Phone_number) return null;
+                const evaluators = results.data.map(row => {
+                    if (!row.Name || !row.Email || !row.Phone_number) return null;
 
-                        const emailPrefix = row.Email.split('@')[0];
-                        const phoneDigit = row.Phone_number.trim().slice(-1);
-                        const generatedPassword = emailPrefix + phoneDigit;
+                    const emailPrefix = row.Email.split('@')[0];
+                    const phoneDigit = row.Phone_number.trim().slice(-1);
+                    const generatedPassword = emailPrefix + phoneDigit;
 
-                        return {
-                            name: row.Name.trim(),
-                            email: row.Email.trim(),
-                            phone_no: row.Phone_number.trim(),
-                            password: generatedPassword,
-                            roles: "evaluator",
-                            domain: row.Domain ? row.Domain.trim() : "",
-                            type: row.Type ? row.Type.trim() : "",
-                            metadata: {
-                                years_of_exp: parseInt(row["Years of experience"], 10) || 0,
-                                current_company: row.Company ? row.Company.trim() : ""
-                            }
-                        };
-                    }).filter(Boolean);
+                    return {
+                        name: row.Name.trim(),
+                        email: row.Email.trim(),
+                        phone_no: row.Phone_number.trim(),
+                        password: generatedPassword,
+                        roles: "evaluator",
+                        domain: row.Domain ? row.Domain.trim() : "",
+                        type: row.Type ? row.Type.trim() : "",
+                        metadata: {
+                            years_of_exp: parseInt(row["Years of experience"], 10) || 0,
+                            current_company: row.Company ? row.Company.trim() : ""
+                        }
+                    };
+                }).filter(Boolean);
 
-                    await Promise.all(
-                        evaluators.map(evaluator => addEvaluator({ variables: evaluator }))
-                    );
+                const uploadResults = await Promise.all(
+                    evaluators.map(async evaluator => {
+                        try {
+                            await addEvaluator({ variables: evaluator });
+                            return { name: evaluator.name, success: true };
+                        } catch (error) {
+                            return { name: evaluator.name, success: false, error: error.message };
+                        }
+                    })
+                );
 
-                    success("All evaluators added successfully");
-                    if (typeof refetch === 'function') {
-                        refetch();
-                    }
-                    handleClose();
-                } catch (error) {
-                    failure("Error processing CSV file");
-                    console.error(error);
-                }
+                setResults(uploadResults);
                 setLoading(false);
+                if (typeof refetch === 'function') {
+                    refetch();
+                }
             }
         });
     };
@@ -124,12 +124,36 @@ const CsvUploader = ({ open, onClose, refetch }) => {
                         <IconButton onClick={handleFileRemove}><Close /></IconButton>
                     </Box>
                 )}
+                {results.length > 0 && (
+                    <List>
+                        {results.map((result, index) => (
+                            <ListItem key={index}>
+                                <ListItemText primary={result.name} />
+                                <ListItemIcon>
+                                    {result.success ? (
+                                        <CheckCircle color="success" />
+                                    ) : (
+                                        <Tooltip title={result.error || "Error"}>
+                                            <Error color="error" />
+                                        </Tooltip>
+                                    )}
+                                </ListItemIcon>
+                            </ListItem>
+                        ))}
+                    </List>
+                )}
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
-                <Button variant="contained" color="primary" onClick={handleSubmit} disabled={!selectedFile || loading}>
-                    {loading ? 'Uploading...' : 'Submit'}
-                </Button>
+                {results.length > 0 && results.every(result => result.success || result.error) ? (
+                    <Button onClick={handleClose} variant="contained" color="primary">Close</Button>
+                ) : (
+                    <>
+                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button variant="contained" color="primary" onClick={handleSubmit} disabled={!selectedFile || loading}>
+                            {loading ? 'Uploading...' : 'Submit'}
+                        </Button>
+                    </>
+                )}
             </DialogActions>
         </Dialog>
     );
