@@ -1,14 +1,7 @@
 # csi-hack yaay
--. .- -- .- -. / .... --- - - .. .
-no
-..
-why are we still here
-just to suffer
-..
-.
-_
-__
-___
-meow meow
-hello
-see ya
+When the night
+Has come
+And the land is dark
+And the moon
+Is the only
+Light we'll see
