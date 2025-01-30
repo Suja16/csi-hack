@@ -165,6 +165,12 @@ const EvaluatorsTable = () => {
         renderCell: (params) => params.value,
       },
       {
+        field: "domain",
+        headerName: "Domain",
+        flex: 1,
+        renderCell: (params) => params.row.submissions?.domain || "-",
+      },
+      {
         field: "mentorAssigned",
         headerName: "Mentor Assigned",
         flex: 1,
@@ -193,7 +199,7 @@ const EvaluatorsTable = () => {
           return (
             params.row?.feedbacks_from_idea.find(
               (user) => user.Idea_USER.roles === "mentor",
-            )?.Idea_USER.name || "Not Assigned"
+            )?.Idea_USER.name || "-"
           );
         },
       },
@@ -206,7 +212,8 @@ const EvaluatorsTable = () => {
             data?.Idea_USERS?.filter(
               (user) =>
                 user.roles === "evaluator" &&
-                user.id !== pendingChanges.evaluator2?.id,
+                user.type === "internal" &&
+                user.domain === params.row.submissions?.domain,
             ) || [];
 
           if (editMode === params.row.id) {
@@ -233,7 +240,7 @@ const EvaluatorsTable = () => {
           return (
             params.row?.feedbacks_from_idea.filter(
               (user) => user.Idea_USER.roles === "evaluator",
-            )[0]?.Idea_USER.name || "Not Assigned"
+            )[0]?.Idea_USER.name || "-"
           );
         },
       },
@@ -246,7 +253,8 @@ const EvaluatorsTable = () => {
             data?.Idea_USERS?.filter(
               (user) =>
                 user.roles === "evaluator" &&
-                user.id !== pendingChanges.evaluator1?.id,
+                user.id === "bank" &&
+                user.domain === params.row.submissions?.domain,
             ) || [];
 
           if (editMode === params.row.id) {
@@ -273,7 +281,7 @@ const EvaluatorsTable = () => {
           return (
             params.row?.feedbacks_from_idea.filter(
               (user) => user.Idea_USER.roles === "evaluator",
-            )[1]?.Idea_USER.name || "Not Assigned"
+            )[1]?.Idea_USER.name || "-"
           );
         },
       },
@@ -411,7 +419,10 @@ const EvaluatorsTable = () => {
             >
               Add Evaluator
             </Button>
-            <CsvUploader open={openCsvUploader} onClose={() => setOpenCsvUploader(false)} />
+            <CsvUploader
+              open={openCsvUploader}
+              onClose={() => setOpenCsvUploader(false)}
+            />
             <NewFilterDropdown filters={filters} setFilters={setFilters} />
           </Box>
         </Box>
