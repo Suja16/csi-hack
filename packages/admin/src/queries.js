@@ -126,7 +126,17 @@ export const ASSIGN_TEAM = gql`
     }
   }
 `;
-// queries.js
+
+export const EDIT_TEAM = gql`
+  mutation EditTeam($old_user_Id: Int, $team_id: Int, $Idea_user_Id: Int) {
+    update_feedbacks(
+      where: { Idea_user_Id: { _eq: $old_user_Id }, team_id: { _eq: $team_id } }
+      _set: { Idea_user_Id: $Idea_user_Id }
+    ) {
+      affected_rows
+    }
+  }
+`;
 
 export const STATS_QUERY = gql`
   query TeamQuery {

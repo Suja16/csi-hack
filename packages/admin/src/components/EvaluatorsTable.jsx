@@ -13,7 +13,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useQuery, useMutation } from "@apollo/client";
-import { EVALUATOR_QUERY, ASSIGN_TEAM } from "../queries";
+import { EVALUATOR_QUERY, ASSIGN_TEAM, EDIT_TEAM } from "../queries";
 import AddEvaluator from "./AddEvaluator";
 import { success, failure } from "../utils/snackbar";
 import NewFilterDropdown from "./NewFilterButton";
@@ -72,29 +72,79 @@ const EvaluatorsTable = () => {
     },
   });
 
+  const [editTeam] = useMutation(EDIT_TEAM, {
+    onCompleted: () => {
+      refetch();
+      success("Edited successfully");
+      setEditMode(null);
+      setPendingChanges({
+        mentor: null,
+        evaluator1: null,
+        evaluator2: null,
+      });
+      setOriginalValues({
+        mentor: null,
+        evaluator1: null,
+        evaluator2: null,
+      });
+    },
+    onError: (error) => {
+      failure(error.message);
+    },
+  });
+
   const handleSaveChanges = useCallback(
     async (teamId) => {
       const assignmentObjects = [];
+      const updateObjects = [];
 
       if (pendingChanges.mentor) {
-        assignmentObjects.push({
-          Idea_user_Id: pendingChanges.mentor.id,
-          team_id: teamId,
-        });
+        if (!originalValues.mentor) {
+          assignmentObjects.push({
+            Idea_user_Id: pendingChanges.mentor.id,
+            team_id: teamId,
+          });
+        } else if (originalValues.mentor.id !== pendingChanges.mentor.id) {
+          updateObjects.push({
+            Idea_user_Id: pendingChanges.mentor.id,
+            team_id: teamId,
+            old_user_Id: originalValues.mentor.id,
+          });
+        }
       }
 
       if (pendingChanges.evaluator1) {
-        assignmentObjects.push({
-          Idea_user_Id: pendingChanges.evaluator1.id,
-          team_id: teamId,
-        });
+        if (!originalValues.evaluator1) {
+          assignmentObjects.push({
+            Idea_user_Id: pendingChanges.evaluator1.id,
+            team_id: teamId,
+          });
+        } else if (
+          originalValues.evaluator1.id !== pendingChanges.evaluator1.id
+        ) {
+          updateObjects.push({
+            Idea_user_Id: pendingChanges.evaluator1.id,
+            team_id: teamId,
+            old_user_Id: originalValues.evaluator1.id,
+          });
+        }
       }
 
       if (pendingChanges.evaluator2) {
-        assignmentObjects.push({
-          Idea_user_Id: pendingChanges.evaluator2.id,
-          team_id: teamId,
-        });
+        if (!originalValues.evaluator2) {
+          assignmentObjects.push({
+            Idea_user_Id: pendingChanges.evaluator2.id,
+            team_id: teamId,
+          });
+        } else if (
+          originalValues.evaluator2.id !== pendingChanges.evaluator2.id
+        ) {
+          updateObjects.push({
+            Idea_user_Id: pendingChanges.evaluator2.id,
+            team_id: teamId,
+            old_user_Id: originalValues.evaluator2.id,
+          });
+        }
       }
 
       if (assignmentObjects.length > 0) {
@@ -109,8 +159,21 @@ const EvaluatorsTable = () => {
           failure("Failed to save assignments");
         }
       }
+
+      updateObjects.map((object) =>
+        editTeam({
+          variables: {
+            team_id: object.team_id,
+            Idea_user_Id: object.Idea_user_Id,
+            old_user_Id: object.old_user_Id,
+          },
+        }).catch((error) => {
+          console.error("Error updating assignment:", error);
+          failure("Failed to update assignment");
+        }),
+      );
     },
-    [pendingChanges, assignTeam],
+    [originalValues, pendingChanges, assignTeam, editTeam],
   );
 
   const handleCancelChanges = useCallback(() => {
@@ -132,9 +195,6 @@ const EvaluatorsTable = () => {
         const currentMentor = team.feedbacks_from_idea.find(
           (f) => f.Idea_USER.roles === "mentor",
         )?.Idea_USER;
-        const currentEvaluators = team.feedbacks_from_idea
-          .filter((f) => f.Idea_USER.roles === "evaluator")
-          .map((f) => f.Idea_USER);
         const internalEvaluator = team.feedbacks_from_idea.find(
           (f) =>
             f.Idea_USER.roles === "evaluator" && f.Idea_USER.type == "internal",
@@ -143,7 +203,6 @@ const EvaluatorsTable = () => {
           (f) =>
             f.Idea_USER.roles === "evaluator" && f.Idea_USER.type == "bank",
         );
-        console.log(bankEvaluator);
 
         const initialValues = {
           mentor: currentMentor || null,
