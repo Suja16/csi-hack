@@ -1,9 +1,40 @@
 import { Box, Button, Typography } from "@mui/material";
 import React from "react";
-import { Link, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { SUBMISSIONS_QUERY } from "../queries";
 
-function SubmissionsAdminPopupContent({ data }) {
-  // {ppt, valid, video, domain, consent, acceptance}
+function SubmissionsAdminPopupContent({ data, setSubmissionPopup }) {
+  const [updateSubmission] = useMutation(SUBMISSIONS_QUERY);
+
+  const handleValidClick = async () => {
+    try {
+      const response = await updateSubmission({
+        variables: {
+          id: data.id,
+          submissions: { ...data.submission, valid: true }, // Set submission as valid
+        },
+      });
+      console.log("Valid Submission Updated:", response);
+    } catch (error) {
+      console.error("Error updating submission:", error);
+    }
+  };
+
+  const handleNotValidClick = async () => {
+    try {
+      const response = await updateSubmission({
+        variables: {
+          id: data.id,
+          submissions: { ...data.submission, valid: false }, // Set submission as not valid
+        },
+      });
+      console.log("Not Valid Submission Updated:", response);
+    } catch (error) {
+      console.error("Error updating submission:", error);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -13,7 +44,12 @@ function SubmissionsAdminPopupContent({ data }) {
       }}
     >
       <Box>
-        <iframe src={data.ppt} frameborder="0" width="100%" height="480px" />
+        <iframe
+          src={data.submission.ppt}
+          frameborder="0"
+          width="100%"
+          height="480px"
+        />
         <Box
           sx={{
             width: "100%",
@@ -21,12 +57,12 @@ function SubmissionsAdminPopupContent({ data }) {
             justifyContent: "space-between",
           }}
         >
-          <Link to={data.video} target="_blank">
+          <Link to={data.submission.video} target="_blank">
             <Button variant="contained" sx={{ mt: 2 }}>
               Watch video
             </Button>
           </Link>
-          <Link to={data.ppt} target="_blank">
+          <Link to={data.submission.ppt} target="_blank">
             <Button variant="contained" sx={{ mt: 2 }}>
               Watch Full ppt
             </Button>
@@ -43,10 +79,24 @@ function SubmissionsAdminPopupContent({ data }) {
             pt: 1,
           }}
         >
-          <Button variant="contained" sx={{ bgcolor: "red" }}>
+          <Button
+            variant="contained"
+            sx={{ bgcolor: "red" }}
+            onClick={() => {
+              handleNotValidClick();
+              setSubmissionPopup(false);
+            }} // Trigger Not Valid status
+          >
             <Typography variant="button">Not Valid</Typography>
           </Button>
-          <Button variant="contained" sx={{ bgcolor: "green" }}>
+          <Button
+            variant="contained"
+            sx={{ bgcolor: "green" }}
+            onClick={() => {
+              handleValidClick();
+              setSubmissionPopup(false);
+            }} // Trigger Valid status
+          >
             <Typography variant="button">Valid</Typography>
           </Button>
         </Box>

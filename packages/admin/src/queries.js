@@ -173,3 +173,14 @@ export const STATS_QUERY = gql`
     }
   }
 `;
+
+export const SUBMISSIONS_QUERY = gql`
+  mutation MyMutation2($submissions: jsonb, $id: Int!) {
+    update_Team_by_pk(
+      pk_columns: { id: $id }
+      _set: { submissions: $submissions }
+    ) {
+      id
+    }
+  }
+`;

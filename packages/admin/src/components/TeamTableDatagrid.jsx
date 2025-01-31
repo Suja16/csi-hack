@@ -53,8 +53,8 @@ export default function DataTable() {
         </div>
       ),
       renderCell: (params) => (
-        console.log(params),
-        (<div style={{ display: "flex", paddingLeft: 20 }}>{params.id}</div>)
+        // console.log(params),
+        <div style={{ display: "flex", paddingLeft: 20 }}>{params.id}</div>
       ),
     },
     {
@@ -83,6 +83,30 @@ export default function DataTable() {
         <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Approved</div>
       ),
     },
+    // {
+    //   field: "submissions",
+    //   width: 220,
+    //   sortable: false,
+    //   filterable: false,
+    //   disableColumnMenu: true,
+    //   renderHeader: () => (
+    //     <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Submission</div>
+    //   ),
+    //   renderCell: (params) =>
+    //     params.value ? (
+    //       <Button
+    //         onClick={() => {
+    //           console.log("My params : ",params.value);
+    //           setSubmissionPopup(true);
+    //           setSubmissionData(params.value);
+    //         }}
+    //       >
+    //         <VisibilityIcon sx={{ color: "green" }} />
+    //       </Button>
+    //     ) : (
+    //       <Close sx={{ color: "red" }} />
+    //     ),
+    // },
     {
       field: "submissions",
       width: 220,
@@ -96,8 +120,14 @@ export default function DataTable() {
         params.value ? (
           <Button
             onClick={() => {
+              // Pass the team ID and submission data together
+              const teamWithSubmission = {
+                id: params.row.id,
+                submission: params.value,
+              };
+              // console.log("Team with Submission: ", teamWithSubmission);
               setSubmissionPopup(true);
-              setSubmissionData(params.value);
+              setSubmissionData(teamWithSubmission); // Set both team ID and submission data
             }}
           >
             <VisibilityIcon sx={{ color: "green" }} />
@@ -106,6 +136,7 @@ export default function DataTable() {
           <Close sx={{ color: "red" }} />
         ),
     },
+
     {
       field: "leaderName",
       headerName: "Leader Name",
@@ -133,11 +164,11 @@ export default function DataTable() {
       renderCell: (params) => {
         const feedbacks = params.row.feedbacks_from_idea || [];
         const evaluatorFeedbacks = feedbacks.filter(
-          (feedback) => feedback.Idea_USER?.roles === "evaluator",
+          (feedback) => feedback.Idea_USER?.roles === "evaluator"
         );
         const totalScore = evaluatorFeedbacks.reduce(
           (sum, feedback) => sum + (feedback.totalscore || 0),
-          0,
+          0
         );
 
         // Print the scores in the console
@@ -223,7 +254,7 @@ export default function DataTable() {
     const matchesAllWomenFilter =
       filters.all_women.length === 0 ||
       team.Participants.every(
-        (participant) => participant.User.gender === "FEMALE",
+        (participant) => participant.User.gender === "FEMALE"
       );
 
     const matchesTeamCompleteFilter =
@@ -282,11 +313,7 @@ export default function DataTable() {
         {loading ? (
           <CircularProgress />
         ) : (
-          <DataGrid
-            rows={newFilteredRowsWithUpdatedId || []}
-            columns={columns}
-            pageSize={5}
-          />
+          <DataGrid rows={filteredRows || []} columns={columns} pageSize={5} />
         )}
       </Box>
 
@@ -307,7 +334,10 @@ export default function DataTable() {
         >
           <CloseIcon />
         </IconButton>
-        <SubmissionsAdminPopupContent data={submissionData} />
+        <SubmissionsAdminPopupContent
+          setSubmissionPopup={setSubmissionPopup}
+          data={submissionData}
+        />
       </Popup>
     </Paper>
   );
