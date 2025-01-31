@@ -1,14 +1,16 @@
 # csi-hack yaay
--. .- -- .- -. / .... --- - - .. .
-no
-..
-why are we still here
-just to suffer
-..
-.
-_
-__
-___
-meow meow
-hello
-see ya
+Kun Faya Kun
+
+Kun Faya Kun
+
+Faya Kun,
+
+Faya Kun, Faya Kun, Faya Kun
+
+Kun Faya Kun
+
+Kun Faya Kun
+
+Faya Kun,
+
+Faya Kun, Faya Kun, Faya Kun

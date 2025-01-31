@@ -135,11 +135,20 @@ const EvaluatorsTable = () => {
         const currentEvaluators = team.feedbacks_from_idea
           .filter((f) => f.Idea_USER.roles === "evaluator")
           .map((f) => f.Idea_USER);
+        const internalEvaluator = team.feedbacks_from_idea.find(
+          (f) =>
+            f.Idea_USER.roles === "evaluator" && f.Idea_USER.type == "internal",
+        );
+        const bankEvaluator = team.feedbacks_from_idea.find(
+          (f) =>
+            f.Idea_USER.roles === "evaluator" && f.Idea_USER.type == "bank",
+        );
+        console.log(bankEvaluator);
 
         const initialValues = {
           mentor: currentMentor || null,
-          evaluator1: currentEvaluators[0] || null,
-          evaluator2: currentEvaluators[1] || null,
+          evaluator1: internalEvaluator?.Idea_USER || null,
+          evaluator2: bankEvaluator?.Idea_USER || null,
         };
 
         setOriginalValues(initialValues);
@@ -163,6 +172,12 @@ const EvaluatorsTable = () => {
         headerName: "Team Name",
         flex: 1,
         renderCell: (params) => params.value,
+      },
+      {
+        field: "domain",
+        headerName: "Domain",
+        flex: 1,
+        renderCell: (params) => params.row.submissions?.domain || "-",
       },
       {
         field: "mentorAssigned",
@@ -193,7 +208,7 @@ const EvaluatorsTable = () => {
           return (
             params.row?.feedbacks_from_idea.find(
               (user) => user.Idea_USER.roles === "mentor",
-            )?.Idea_USER.name || "Not Assigned"
+            )?.Idea_USER.name || "-"
           );
         },
       },
@@ -206,7 +221,8 @@ const EvaluatorsTable = () => {
             data?.Idea_USERS?.filter(
               (user) =>
                 user.roles === "evaluator" &&
-                user.id !== pendingChanges.evaluator2?.id,
+                user.type === "internal" &&
+                user.domain === params.row.submissions?.domain,
             ) || [];
 
           if (editMode === params.row.id) {
@@ -232,8 +248,10 @@ const EvaluatorsTable = () => {
 
           return (
             params.row?.feedbacks_from_idea.filter(
-              (user) => user.Idea_USER.roles === "evaluator",
-            )[0]?.Idea_USER.name || "Not Assigned"
+              (user) =>
+                user.Idea_USER.roles === "evaluator" &&
+                user.Idea_USER.type === "internal",
+            )[0]?.Idea_USER.name || "-"
           );
         },
       },
@@ -246,7 +264,8 @@ const EvaluatorsTable = () => {
             data?.Idea_USERS?.filter(
               (user) =>
                 user.roles === "evaluator" &&
-                user.id !== pendingChanges.evaluator1?.id,
+                user.type === "bank" &&
+                user.domain === params.row.submissions?.domain,
             ) || [];
 
           if (editMode === params.row.id) {
@@ -272,8 +291,10 @@ const EvaluatorsTable = () => {
 
           return (
             params.row?.feedbacks_from_idea.filter(
-              (user) => user.Idea_USER.roles === "evaluator",
-            )[1]?.Idea_USER.name || "Not Assigned"
+              (user) =>
+                user.Idea_USER.roles === "evaluator" &&
+                user.Idea_USER.type === "bank",
+            )[0]?.Idea_USER.name || "-"
           );
         },
       },
@@ -411,7 +432,10 @@ const EvaluatorsTable = () => {
             >
               Add Evaluator
             </Button>
-            <CsvUploader open={openCsvUploader} onClose={() => setOpenCsvUploader(false)} />
+            <CsvUploader
+              open={openCsvUploader}
+              onClose={() => setOpenCsvUploader(false)}
+            />
             <NewFilterDropdown filters={filters} setFilters={setFilters} />
           </Box>
         </Box>
