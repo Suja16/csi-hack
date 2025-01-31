@@ -135,11 +135,20 @@ const EvaluatorsTable = () => {
         const currentEvaluators = team.feedbacks_from_idea
           .filter((f) => f.Idea_USER.roles === "evaluator")
           .map((f) => f.Idea_USER);
+        const internalEvaluator = team.feedbacks_from_idea.find(
+          (f) =>
+            f.Idea_USER.roles === "evaluator" && f.Idea_USER.type == "internal",
+        );
+        const bankEvaluator = team.feedbacks_from_idea.find(
+          (f) =>
+            f.Idea_USER.roles === "evaluator" && f.Idea_USER.type == "bank",
+        );
+        console.log(bankEvaluator);
 
         const initialValues = {
           mentor: currentMentor || null,
-          evaluator1: currentEvaluators[0] || null,
-          evaluator2: currentEvaluators[1] || null,
+          evaluator1: internalEvaluator?.Idea_USER || null,
+          evaluator2: bankEvaluator?.Idea_USER || null,
         };
 
         setOriginalValues(initialValues);
@@ -239,7 +248,9 @@ const EvaluatorsTable = () => {
 
           return (
             params.row?.feedbacks_from_idea.filter(
-              (user) => user.Idea_USER.roles === "evaluator",
+              (user) =>
+                user.Idea_USER.roles === "evaluator" &&
+                user.Idea_USER.type === "internal",
             )[0]?.Idea_USER.name || "-"
           );
         },
@@ -280,8 +291,10 @@ const EvaluatorsTable = () => {
 
           return (
             params.row?.feedbacks_from_idea.filter(
-              (user) => user.Idea_USER.roles === "evaluator",
-            )[1]?.Idea_USER.name || "-"
+              (user) =>
+                user.Idea_USER.roles === "evaluator" &&
+                user.Idea_USER.type === "bank",
+            )[0]?.Idea_USER.name || "-"
           );
         },
       },

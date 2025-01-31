@@ -53,8 +53,7 @@ export default function DataTable() {
         </div>
       ),
       renderCell: (params) => (
-        console.log(params),
-        (<div style={{ display: "flex", paddingLeft: 20 }}>{params.id}</div>)
+        <div style={{ display: "flex", paddingLeft: 20 }}>{params.id}</div>
       ),
     },
     {
