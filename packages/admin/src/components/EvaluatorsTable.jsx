@@ -253,7 +253,7 @@ const EvaluatorsTable = () => {
             data?.Idea_USERS?.filter(
               (user) =>
                 user.roles === "evaluator" &&
-                user.id === "bank" &&
+                user.type === "bank" &&
                 user.domain === params.row.submissions?.domain,
             ) || [];
 
