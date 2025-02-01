@@ -15,5 +15,4 @@ Faya Kun,
 
 Faya Kun, Faya Kun, Faya Kun
 
-Kadam Badhade
-.
+sajara savera 
