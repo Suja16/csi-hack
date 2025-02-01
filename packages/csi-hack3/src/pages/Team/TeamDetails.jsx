@@ -549,6 +549,9 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
                   <Typography variant="caption" color="error" marginTop="3rem">
                     *Only team leader is required to submit attachments
                   </Typography>
+                  <Typography variant="caption" color="error" marginTop="1rem">
+                    *You can upload the consent form later also
+                  </Typography>
                 </Grid2>
               </DialogContent>
               <DialogActions>
