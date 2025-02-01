@@ -207,7 +207,10 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
       // console.log("Data to be uploaded : ", { team_id: eventData.Participant.team.id, updatedSubmissions })
       const response = await axios.post(
         "/api/v1/event/p/team-submission",
-        { team_id: eventData.Participant.team.id, submissions : updatedSubmissions },
+        {
+          team_id: eventData.Participant.team.id,
+          submissions: updatedSubmissions,
+        },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -259,6 +262,36 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
     }
   };
 
+  const DeleteTeam = async () => {
+    try {
+      const response = await axios.post(
+        "/api/v1/event/p/delete-team",
+        {
+          team_id: eventData.Participant.team.id,
+          event_id: import.meta.env.VITE_EVENT_ID,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+          baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
+        }
+      );
+      console.log(response.data);
+      setSnackBarMessage("Deleted team successfully");
+      setShowSnackBar(true);
+      setTimeout(() => navigate("/"), 5000);
+      setTimeout(() => setShowSnackBar(false), 5000);
+    } catch (error) {
+      console.error(error);
+      if (error.response?.data.error) {
+        setSnackBarMessage(error.response.data.message);
+        setShowSnackBar(true);
+        setTimeout(() => setShowSnackBar(false), 5000);
+      }
+    }
+  };
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -266,7 +299,6 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
   const handleClose = () => {
     setOpen(false);
   };
-
 
   return (
     <Grid2 container justifyContent="center">
@@ -386,6 +418,25 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
         >
           {eventData.Participant.team.invite_code}
         </Button>
+        {userData.id !== eventData.Participant.team.leader_id && (
+          <Button
+            variant="contained"
+            sx={{ marginTop: "0.6rem", bgcolor: "#d03731" }}
+            onClick={leaveTeam}
+          >
+            Leave Team
+          </Button>
+        )}
+        {userData.id === eventData.Participant.team.leader_id && (
+          <Button
+            variant="contained"
+            sx={{ marginTop: "0.6rem", bgcolor: "#d03731" }}
+            onClick={DeleteTeam}
+          >
+            Delete Team
+          </Button>
+        )}
+
         {!submitted &&
         userData.id === eventData.Participant.team.leader_id &&
         eventData.Participant.team.Participant.length == 4 ? (
