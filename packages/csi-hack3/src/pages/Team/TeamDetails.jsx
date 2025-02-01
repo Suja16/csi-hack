@@ -107,8 +107,6 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
   const [open, setOpen] = useState(false);
   const [consentState, setConsentState] = useState(false);
 
-
-  
   const {
     formState: { errors },
     handleSubmit,
@@ -143,7 +141,8 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
     console.log(data);
 
     const pptUrlPromise = uploadFile(ppt[0]);
-    const consentUrlPromise = consent && consent[0] ? uploadFile(consent[0]) : Promise.resolve(null);
+    const consentUrlPromise =
+      consent && consent[0] ? uploadFile(consent[0]) : Promise.resolve(null);
 
     const [pptUrl, consentUrl] = await Promise.all([
       pptUrlPromise,
@@ -192,18 +191,23 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
   };
 
   const updateConsent = async () => {
-    setIsSubmitting(true);
-    const data = getValues();
-    const consentUrlPromise = consent && consent[0] ? uploadFile(consent[0]) : Promise.resolve(null);
-
-    const consentUrl = await consentUrlPromise;
-
-    console.log("Consent URL:", consentUrl);
-
     try {
+      setIsSubmitting(true);
+      const data = getValues();
+      const consentUrlPromise =
+        consent && consent[0] ? uploadFile(consent[0]) : Promise.resolve(null);
+
+      const consentUrl = await consentUrlPromise;
+
+      const updatedSubmissions = {
+        ...eventData.Participant.team.submissions,
+        consent: consentUrl,
+      };
+      // eventData.Participant.team.submissions = updatedSubmissions;
+      // console.log("Data to be uploaded : ", { team_id: eventData.Participant.team.id, updatedSubmissions })
       const response = await axios.post(
-        "/api/v1/event/p/update-consent",
-        { team_id: eventData.Participant.team.id, consent: consentUrl },
+        "/api/v1/event/p/team-submission",
+        { team_id: eventData.Participant.team.id, submissions : updatedSubmissions },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -213,12 +217,14 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
       );
       if (response.status === 200 && response.data.error == false) {
         setIsSubmitting(false);
-        setConsentState(true);
-        success("Consent form updated successfully!");
+        eventData.Participant.team.submissions = updatedSubmissions;
+        setSubmitted(true);
+        success("Submission successful!");
+        window.location.reload();
       } else if (response.data.error == true) {
         setIsSubmitting(false);
         window.alert(response.data.message);
-        setConsentState(false);
+        setSubmitted(false);
       }
       console.log(response.data);
     } catch (error) {
@@ -261,6 +267,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
     setOpen(false);
   };
 
+
   return (
     <Grid2 container justifyContent="center">
       <Grid2
@@ -298,51 +305,62 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
             </Typography>
           ))}
         </Box>
-        {!consentState && userData.id === eventData.Participant.team.leader_id && submitted && !(eventData.Participant.team.submissions?.consent ?? false) &&  (
-          <Grid2 >
-            <Typography sx={{color: 'red', marginBottom: '0.5rem'}}>Not yet submitted the consent form </Typography>  
-            <Button
-              component="label"
-              role={undefined}
-              variant="text"
-              tabIndex={-1}
-              startIcon={
-                consent && consent[0] ? (
-                  <Tooltip title="Delete File">
-                    <Delete />
-                  </Tooltip>
-                ) : (
-                  <CloudUploadIcon />
-                )
-              }
-              sx={{ padding: "1rem" }}
-            >
-              {consent && consent[0] ? consent[0].name : "Upload Consent Form"}
-              <VisuallyHiddenInput
-                name="consent"
-                type="file"
-                accept="application/pdf"
-                {...register("consent")}
-              />
-            </Button>
-            <LoadingButton
-              variant="contained"
-              onClick={updateConsent}
-              sx={{
-                padding: "1rem",
-                marginTop: "1rem",
-                marginX: "auto",
-              }}
-              loading={isSubmitting}
-              disabled={isSubmitting}
-            >
-              Submit
-            </LoadingButton>
-          </Grid2>
-        )}
-        {userData.id !== eventData.Participant.team.leader_id && submitted && !(eventData.Participant.team.submissions?.consent ?? false) &&  (
-          <Typography sx={{color: 'red'}}>The team leader has not yet submitted the consent form </Typography>  
-        )}
+        {!consentState &&
+          userData.id === eventData.Participant.team.leader_id &&
+          submitted &&
+          !(eventData.Participant.team.submissions?.consent ?? false) && (
+            <Grid2>
+              <Typography sx={{ color: "red", marginBottom: "0.5rem" }}>
+                Not yet submitted the consent form{" "}
+              </Typography>
+              <Button
+                component="label"
+                role={undefined}
+                variant="text"
+                tabIndex={-1}
+                startIcon={
+                  consent && consent[0] ? (
+                    <Tooltip title="Delete File">
+                      <Delete />
+                    </Tooltip>
+                  ) : (
+                    <CloudUploadIcon />
+                  )
+                }
+                sx={{ padding: "1rem" }}
+              >
+                {consent && consent[0]
+                  ? consent[0].name
+                  : "Upload Consent Form"}
+                <VisuallyHiddenInput
+                  name="consent"
+                  type="file"
+                  accept="application/pdf"
+                  {...register("consent")}
+                />
+              </Button>
+              <LoadingButton
+                variant="contained"
+                onClick={updateConsent}
+                sx={{
+                  padding: "1rem",
+                  marginTop: "1rem",
+                  marginX: "auto",
+                }}
+                loading={isSubmitting}
+                disabled={isSubmitting || !consent}
+              >
+                Submit
+              </LoadingButton>
+            </Grid2>
+          )}
+        {userData.id !== eventData.Participant.team.leader_id &&
+          submitted &&
+          !(eventData.Participant.team.submissions?.consent ?? false) && (
+            <Typography sx={{ color: "red" }}>
+              The team leader has not yet submitted the consent form{" "}
+            </Typography>
+          )}
       </Grid2>
       <Grid2
         item
@@ -484,7 +502,9 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
                       }
                       sx={{ padding: "1rem" }}
                     >
-                      {consent && consent[0] ? consent[0].name : "Upload Consent Form"}
+                      {consent && consent[0]
+                        ? consent[0].name
+                        : "Upload Consent Form"}
                       <VisuallyHiddenInput
                         name="consent"
                         type="file"
