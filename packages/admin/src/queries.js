@@ -35,6 +35,7 @@ export const TEAM_QUERY = gql`
       }
       Leader {
         name
+        college
       }
       feedbacks_from_idea {
         metric_score

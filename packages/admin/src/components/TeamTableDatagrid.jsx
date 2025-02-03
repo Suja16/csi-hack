@@ -59,7 +59,7 @@ export default function DataTable() {
     },
     {
       field: "name",
-      width: 350,
+      width: 200,
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
@@ -68,16 +68,49 @@ export default function DataTable() {
       ),
     },
     {
+      field: "college",
+      width: 200,
+      sortable: false,
+      filterable: false,
+      disableColumnMenu: true,
+      renderHeader: () => (
+        <div style={{ fontWeight: "bold", fontSize: "1rem" }}>College</div>
+      ),
+      renderCell: (params) => (
+        <div style={{ display: "flex" }}>{params.row.Leader.college}</div>
+      ),
+    },
+    {
       field: "approved",
-      width: 220,
+      width: 100,
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
       renderCell: (params) =>
         params.value ? (
-          <Check sx={{ color: "green" }} />
+          <Check
+            sx={{
+              color: "green",
+              display: "flex",
+              height: "100%",
+              width: "100%",
+              padding: 1.5,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          />
         ) : (
-          <Close sx={{ color: "red" }} />
+          <Close
+            sx={{
+              color: "red",
+              display: "flex",
+              height: "100%",
+              width: "100%",
+              padding: 1.5,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          />
         ),
       renderHeader: () => (
         <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Approved</div>
@@ -109,7 +142,7 @@ export default function DataTable() {
     // },
     {
       field: "submissions",
-      width: 220,
+      width: 120,
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
@@ -129,11 +162,28 @@ export default function DataTable() {
               setSubmissionPopup(true);
               setSubmissionData(teamWithSubmission); // Set both team ID and submission data
             }}
+            sx={{
+              display: "flex",
+              height: "100%",
+              width: "100%",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
-            <VisibilityIcon sx={{ color: "green" }} />
+            <VisibilityIcon color="primary" />
           </Button>
         ) : (
-          <Close sx={{ color: "red" }} />
+          <Close
+            sx={{
+              color: "red",
+              display: "flex",
+              height: "100%",
+              width: "100%",
+              padding: 1.5,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          />
         ),
     },
 
