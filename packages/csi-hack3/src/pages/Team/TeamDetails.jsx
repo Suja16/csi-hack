@@ -80,6 +80,10 @@ const formSchema = yup.object({
         value[0].size <= 5 * 1024 * 1024
       );
     }),
+  pwdDeclaration: yup
+    .string()
+    .oneOf(["YES", "NO"], "Invalid Option.")
+    .required("PWD declaration is required"),
   acceptance: yup
     .boolean()
     .oneOf([true], "You must accept the terms and conditions")
@@ -123,6 +127,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
       ppt: null,
       consent: null,
       domain: "FINTECH",
+      pwdDeclaration: "NO",
     },
   });
 
@@ -134,6 +139,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
 
   const ppt = watch("ppt");
   const consent = watch("consent");
+  const pwdDocument = watch("pwdDocument");
 
   const onSubmit = async () => {
     setIsSubmitting(true);
@@ -143,14 +149,18 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
     const pptUrlPromise = uploadFile(ppt[0]);
     const consentUrlPromise =
       consent && consent[0] ? uploadFile(consent[0]) : Promise.resolve(null);
+    const pwdUrlPromise =
+      pwdDocument && pwdDocument[0] ? uploadFile(pwdDocument[0]) : Promise.resolve(null);    
 
-    const [pptUrl, consentUrl] = await Promise.all([
+    const [pptUrl, consentUrl, pwdUrl] = await Promise.all([
       pptUrlPromise,
       consentUrlPromise,
+      pwdUrlPromise
     ]);
 
     console.log("PPT URL:", pptUrl);
     console.log("Consent URL:", consentUrl);
+    console.log("PWD Doc URL:", pwdUrl)
 
     const submissions = {
       video: data.video,
@@ -158,6 +168,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
       consent: consentUrl,
       acceptance: data.acceptance,
       domain: data.domain,
+      pwd: pwdUrl,
       valid: null,
       timestamp: new Date().toISOString(),
     };
@@ -581,6 +592,59 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
                       {errors?.consent?.message}
                     </Typography>
                   </Grid2>
+                  <Grid2 item size={10}>
+                    <FormControl sx={{ mb: 2 }}>
+                      <FormLabel id="pwd-radio-buttons-group-label">
+                        Do you belong to PWD category at the time of submission
+                      </FormLabel>
+                      <Controller
+                        name="pwdDeclaration"
+                        control={control}
+                        render={({ field }) => (
+                          <RadioGroup
+                            row
+                            aria-labelledby="pwd-radio-buttons-group-label"
+                            name="pwd-radio-buttons-group"
+                            {...field}
+                          >
+                            <FormControlLabel
+                              value="YES"
+                              control={<Radio />}
+                              label="Yes"
+                            />
+                            <FormControlLabel
+                              value="NO"
+                              control={<Radio />}
+                              label="No"
+                            />
+                          </RadioGroup>
+                        )}
+                      />
+                    </FormControl>
+                  </Grid2>
+                  {watch("pwdDeclaration") === "YES" && (
+                    <Grid2 item size={10}>
+                      <Button
+                        component="label"
+                        role={undefined}
+                        variant="text"
+                        tabIndex={-1}
+                        startIcon={<CloudUploadIcon />}
+                        sx={{ padding: "1rem" }}
+                      >
+                        {watch("pwdDocument") && watch("pwdDocument")[0]
+                          ? watch("pwdDocument")[0].name
+                          : "Upload PWD document"}
+                        <VisuallyHiddenInput
+                          name="pwdDocument"
+                          type="file"
+                          accept="application/pdf"
+                          {...register("pwdDocument")}
+                        />
+                      </Button>
+                      
+                    </Grid2>
+                  )}
                   <Grid2 item size={10} margin="1rem">
                     <FormControlLabel
                       control={
