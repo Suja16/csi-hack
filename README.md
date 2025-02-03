@@ -16,3 +16,5 @@ Faya Kun,
 Faya Kun, Faya Kun, Faya Kun
 
 sajara savera 
+
+mera tan barse
