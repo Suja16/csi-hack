@@ -43,7 +43,7 @@ export default function DataTable() {
   const columns = [
     {
       field: "id",
-      width: 120,
+      width: 80,
       sortable: false,
       filterable: false,
       disableColumnMenu: true,
@@ -101,8 +101,8 @@ export default function DataTable() {
           />
         ) : (
           <Close
+            color="secondary"
             sx={{
-              color: "red",
               display: "flex",
               height: "100%",
               width: "100%",
@@ -174,8 +174,8 @@ export default function DataTable() {
           </Button>
         ) : (
           <Close
+            color="secondary"
             sx={{
-              color: "red",
               display: "flex",
               height: "100%",
               width: "100%",
@@ -227,7 +227,13 @@ export default function DataTable() {
         // }
 
         return (
-          <div style={{ display: "flex" }}>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            height="100%"
+            width="100%"
+          >
             <Tooltip
               title={
                 <>
@@ -251,7 +257,7 @@ export default function DataTable() {
             >
               {evaluatorFeedbacks.length > 0 ? totalScore : "-"}
             </Tooltip>
-          </div>
+          </Box>
         );
       },
     },
@@ -263,10 +269,18 @@ export default function DataTable() {
       filterable: false,
       disableColumnMenu: true,
       renderCell: (params) => (
-        <RemoveRedEyeIcon
-          sx={{ cursor: "pointer", color: "#00579c", width: "100%" }}
+        <Button
+          sx={{
+            display: "flex",
+            height: "100%",
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
           onClick={() => handlePopupOpen(params.row)}
-        />
+        >
+          <RemoveRedEyeIcon color="primary" />
+        </Button>
       ),
       renderHeader: () => (
         <div style={{ fontWeight: "bold", fontSize: "1rem" }}>More Details</div>
