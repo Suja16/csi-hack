@@ -426,7 +426,7 @@ const EvaluatorsTable = () => {
       filters.domain.length === 0 ||
       filters.domain.includes(team.submissions?.domain);
 
-    const matchesPwdFilter = filters.pwd.length === 0 || team.pwd;
+    const matchesPwdFilter = filters.pwd.length === 0 || team.submissions?.pwd;
 
     const matchesAllWomenFilter =
       filters.all_women.length === 0 ||

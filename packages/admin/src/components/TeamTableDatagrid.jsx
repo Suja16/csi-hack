@@ -164,11 +164,11 @@ export default function DataTable() {
       renderCell: (params) => {
         const feedbacks = params.row.feedbacks_from_idea || [];
         const evaluatorFeedbacks = feedbacks.filter(
-          (feedback) => feedback.Idea_USER?.roles === "evaluator"
+          (feedback) => feedback.Idea_USER?.roles === "evaluator",
         );
         const totalScore = evaluatorFeedbacks.reduce(
           (sum, feedback) => sum + (feedback.totalscore || 0),
-          0
+          0,
         );
 
         // Print the scores in the console
@@ -249,12 +249,12 @@ export default function DataTable() {
       filters.domain.length === 0 ||
       filters.domain.includes(team.submissions?.domain);
 
-    const matchesPwdFilter = filters.pwd.length === 0 || team.pwd;
+    const matchesPwdFilter = filters.pwd.length === 0 || team.submissions?.pwd;
 
     const matchesAllWomenFilter =
       filters.all_women.length === 0 ||
       team.Participants.every(
-        (participant) => participant.User.gender === "FEMALE"
+        (participant) => participant.User.gender === "FEMALE",
       );
 
     const matchesTeamCompleteFilter =
