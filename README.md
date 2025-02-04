@@ -26,3 +26,5 @@ teri jalti lau
 katra mila to tere dar par se
 
 o maula maulaaa
+
+rangreza rangreza rangreza 
