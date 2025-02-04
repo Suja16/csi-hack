@@ -22,3 +22,7 @@ mera tan barse
 kajra andhera
 
 teri jalti lau
+
+katra mila to tere dar par se
+
+o maula maulaaa
