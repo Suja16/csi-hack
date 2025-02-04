@@ -1,30 +1,5 @@
 # csi-hack yaay
-Kun Faya Kun
 
-Kun Faya Kun
+tum logon ki
 
-Faya Kun,
-
-Faya Kun, Faya Kun, Faya Kun
-
-Kun Faya Kun
-
-Kun Faya Kun
-
-Faya Kun,
-
-Faya Kun, Faya Kun, Faya Kun
-
-sajara savera 
-
-mera tan barse
-
-kajra andhera
-
-teri jalti lau
-
-katra mila to tere dar par se
-
-o maula maulaaa
-
-rangreza rangreza rangreza 
+iss duniya mein
