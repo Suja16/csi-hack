@@ -1,5 +1,5 @@
 # csi-hack yaay
 
-tum logon ki
+tum logon ki iss duniya mein
 
-iss duniya mein
+harr kadam pe insaan galat
