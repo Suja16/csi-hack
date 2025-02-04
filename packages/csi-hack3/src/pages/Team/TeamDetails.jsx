@@ -150,17 +150,19 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
     const consentUrlPromise =
       consent && consent[0] ? uploadFile(consent[0]) : Promise.resolve(null);
     const pwdUrlPromise =
-      pwdDocument && pwdDocument[0] ? uploadFile(pwdDocument[0]) : Promise.resolve(null);    
+      pwdDocument && pwdDocument[0]
+        ? uploadFile(pwdDocument[0])
+        : Promise.resolve(null);
 
     const [pptUrl, consentUrl, pwdUrl] = await Promise.all([
       pptUrlPromise,
       consentUrlPromise,
-      pwdUrlPromise
+      pwdUrlPromise,
     ]);
 
     console.log("PPT URL:", pptUrl);
     console.log("Consent URL:", consentUrl);
-    console.log("PWD Doc URL:", pwdUrl)
+    console.log("PWD Doc URL:", pwdUrl);
 
     const submissions = {
       video: data.video,
@@ -182,7 +184,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
           baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
-        }
+        },
       );
       if (response.status === 200 && response.data.error == false) {
         setIsSubmitting(false);
@@ -227,7 +229,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
           baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
-        }
+        },
       );
       if (response.status === 200 && response.data.error == false) {
         setIsSubmitting(false);
@@ -256,7 +258,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
           baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
-        }
+        },
       );
       console.log(response.data);
       setSnackBarMessage("Left team successfully");
@@ -286,7 +288,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
           baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
-        }
+        },
       );
       console.log(response.data);
       setSnackBarMessage("Deleted team successfully");
@@ -423,7 +425,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
           }}
           onClick={() =>
             navigator.clipboard.writeText(
-              eventData.Participant.team.invite_code
+              eventData.Participant.team.invite_code,
             )
           }
         >
@@ -452,14 +454,17 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
         userData.id === eventData.Participant.team.leader_id &&
         eventData.Participant.team.Participant.length == 4 ? (
           <>
-            <Button
+            <Typography variant="h5" marginTop="3rem" textAlign="center">
+              Submissions have been closed.
+            </Typography>
+            {/* <Button
               variant="contained"
               onClick={handleClickOpen}
               sx={{ padding: "1rem", marginTop: "3rem" }}
             >
               Upload <br /> Attachments
-            </Button>
-            <Dialog open={open} onClose={handleClose}>
+            </Button> */}
+            {/* <Dialog open={open} onClose={handleClose}>
               <DialogTitle variant="subtitle1" sx={{ margin: 2 }}>
                 Upload Your Attachment
               </DialogTitle>
@@ -642,7 +647,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
                           {...register("pwdDocument")}
                         />
                       </Button>
-                      
+
                     </Grid2>
                   )}
                   <Grid2 item size={10} margin="1rem">
@@ -692,7 +697,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
               <DialogActions>
                 <Button onClick={handleClose}>Close</Button>
               </DialogActions>
-            </Dialog>
+            </Dialog> */}
           </>
         ) : (
           <Grid2
