@@ -5,7 +5,6 @@ import ProblemStatements from "./Sections/ProblemStatement";
 import Timeline from "./Sections/Timeline";
 import Hero from "./Sections/Hero";
 import OrganizerSection from "./Sections/OrganizerSection";
-import DatePopup from "../../components/DatePopup";
 
 export default function HomePage() {
   return (
@@ -14,7 +13,6 @@ export default function HomePage() {
         overflowX: "hidden",
       }}
     >
-      <DatePopup />
       <Carousel />
       <Hero />
       <ProblemStatements />
