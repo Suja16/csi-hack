@@ -6,6 +6,8 @@ import GenderIcon from "@mui/icons-material/Wc";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import SecurityIcon from "@mui/icons-material/Security";
 import SmartToyIcon from "@mui/icons-material/SmartToy";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 import {
   Card,
@@ -96,6 +98,11 @@ const StatsGrid = () => {
     (team) => team.submissions && team.submissions.domain === "GENAI",
   ).length;
 
+  const consentUploaded = data?.Team.filter(
+    (team) => team.submissions && team.submissions.consent,
+  ).length;
+  const consentNotUploaded = submissionCount - consentUploaded;
+
   // Calculate the male-female ratio
   const maleFemaleRatio =
     maleCount && femaleCount
@@ -169,6 +176,20 @@ const StatsGrid = () => {
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
         <StatsCard title="GenAI" value={genAI} icon={<SmartToyIcon />} />
+      </Grid>
+      <Grid item xs={12} sm={6} md={4}>
+        <StatsCard
+          title="Consent Uploaded"
+          value={consentUploaded}
+          icon={<CheckCircleIcon />}
+        />
+      </Grid>
+      <Grid item xs={12} sm={6} md={4}>
+        <StatsCard
+          title="Consent Skipped"
+          value={consentNotUploaded}
+          icon={<CancelIcon />}
+        />
       </Grid>
     </Grid>
   );

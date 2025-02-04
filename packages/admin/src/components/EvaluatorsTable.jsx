@@ -41,6 +41,7 @@ const EvaluatorsTable = () => {
     all_women: [],
     team_completion: [],
     submission_validity: [],
+    consent: [],
   });
   const [openCsvUploader, setOpenCsvUploader] = useState(false);
 
@@ -436,17 +437,15 @@ const EvaluatorsTable = () => {
 
     const matchesTeamCompleteFilter =
       filters.team_completion.length === 0 ||
-      !filters.team_completion.includes(true) ||
-      team.Participants.length === 4;
-
-    const matchesTeamIncompleteFilter =
-      filters.team_completion.length === 0 ||
-      !filters.team_completion.includes(false) ||
-      team.Participants.length < 4;
+      filters.team_completion.includes(Boolean(team.Participants.length === 4));
 
     const matchesValidSubmissionFilter =
       filters.submission_validity.length === 0 ||
       filters.submission_validity.includes(team.submissions?.valid);
+
+    const matchesConsentFilter =
+      filters.consent.length === 0 ||
+      filters.consent.includes(Boolean(team.submissions?.consent));
 
     return (
       matchesSearchQuery &&
@@ -456,8 +455,8 @@ const EvaluatorsTable = () => {
       matchesPwdFilter &&
       matchesAllWomenFilter &&
       matchesTeamCompleteFilter &&
-      matchesTeamIncompleteFilter &&
-      matchesValidSubmissionFilter
+      matchesValidSubmissionFilter &&
+      matchesConsentFilter
     );
   });
 

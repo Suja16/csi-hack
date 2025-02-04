@@ -19,7 +19,6 @@ import TeamDetailsPage from "./DataPopupContent";
 import NewFilterDropdown from "./NewFilterButton";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import SubmissionsAdminPopupContent from "./SubmissionsAdminPopupContent";
-import { filter } from "motion/react-client";
 
 export default function DataTable() {
   const [popupOpen, setPopupOpen] = useState(false);
@@ -33,6 +32,7 @@ export default function DataTable() {
     all_women: [],
     team_completion: [],
     submission_validity: [],
+    consent: [],
   });
 
   const { data, loading } = useQuery(TEAM_QUERY);
@@ -116,30 +116,6 @@ export default function DataTable() {
         <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Approved</div>
       ),
     },
-    // {
-    //   field: "submissions",
-    //   width: 220,
-    //   sortable: false,
-    //   filterable: false,
-    //   disableColumnMenu: true,
-    //   renderHeader: () => (
-    //     <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Submission</div>
-    //   ),
-    //   renderCell: (params) =>
-    //     params.value ? (
-    //       <Button
-    //         onClick={() => {
-    //           console.log("My params : ",params.value);
-    //           setSubmissionPopup(true);
-    //           setSubmissionData(params.value);
-    //         }}
-    //       >
-    //         <VisibilityIcon sx={{ color: "green" }} />
-    //       </Button>
-    //     ) : (
-    //       <Close sx={{ color: "red" }} />
-    //     ),
-    // },
     {
       field: "submissions",
       width: 120,
@@ -233,6 +209,42 @@ export default function DataTable() {
         ),
       renderHeader: () => (
         <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Valid</div>
+      ),
+    },
+    {
+      field: "consent",
+      width: 100,
+      sortable: false,
+      filterable: false,
+      disableColumnMenu: true,
+      renderCell: (params) =>
+        params.row.submissions?.consent ? (
+          <Check
+            sx={{
+              color: "green",
+              display: "flex",
+              height: "100%",
+              width: "100%",
+              padding: 1.5,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          />
+        ) : (
+          <Close
+            color="secondary"
+            sx={{
+              display: "flex",
+              height: "100%",
+              width: "100%",
+              padding: 1.5,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          />
+        ),
+      renderHeader: () => (
+        <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Consent</div>
       ),
     },
     {
@@ -371,17 +383,15 @@ export default function DataTable() {
 
     const matchesTeamCompleteFilter =
       filters.team_completion.length === 0 ||
-      !filters.team_completion.includes(true) ||
-      team.Participants.length === 4;
-
-    const matchesTeamIncompleteFilter =
-      filters.team_completion.length === 0 ||
-      !filters.team_completion.includes(false) ||
-      team.Participants.length < 4;
+      filters.team_completion.includes(Boolean(team.Participants.length === 4));
 
     const matchesValidSubmissionFilter =
       filters.submission_validity.length === 0 ||
       filters.submission_validity.includes(team.submissions?.valid);
+
+    const matchesConsentFilter =
+      filters.consent.length === 0 ||
+      filters.consent.includes(Boolean(team.submissions?.consent));
 
     return (
       matchesSearchQuery &&
@@ -391,8 +401,8 @@ export default function DataTable() {
       matchesPwdFilter &&
       matchesAllWomenFilter &&
       matchesTeamCompleteFilter &&
-      matchesTeamIncompleteFilter &&
-      matchesValidSubmissionFilter
+      matchesValidSubmissionFilter &&
+      matchesConsentFilter
     );
   });
 

@@ -46,6 +46,10 @@ export default function NewFilterDropdown({ filters, setFilters }) {
       { id: "invalid", label: "Invalid Submission", value: false },
       { id: "pending", label: "Pending Check", value: null },
     ],
+    consent: [
+      { id: "consent_uploaded", label: "Uploaded", value: true },
+      { id: "consent_not_uploaded", label: "Not Uploaded", value: false },
+    ],
   };
 
   const handleClick = (event) => {
