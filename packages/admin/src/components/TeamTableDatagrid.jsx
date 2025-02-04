@@ -186,7 +186,55 @@ export default function DataTable() {
           />
         ),
     },
-
+    {
+      field: "valid",
+      width: 80,
+      sortable: false,
+      filterable: false,
+      disableColumnMenu: true,
+      renderCell: (params) =>
+        params.row.submissions?.valid ? (
+          <Check
+            sx={{
+              color: "green",
+              display: "flex",
+              height: "100%",
+              width: "100%",
+              padding: 1.5,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          />
+        ) : params.row.submissions?.valid === false ? (
+          <Close
+            color="secondary"
+            sx={{
+              display: "flex",
+              height: "100%",
+              width: "100%",
+              padding: 1.5,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          />
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              height: "100%",
+              width: "100%",
+              padding: 1.5,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            -
+          </div>
+        ),
+      renderHeader: () => (
+        <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Valid</div>
+      ),
+    },
     {
       field: "leaderName",
       headerName: "Leader Name",

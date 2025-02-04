@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { useLazyQuery } from "@apollo/client";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   Box,
   Paper,
@@ -22,6 +22,7 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const { setUserData } = useContext(UserDataContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [login, { loading }] = useLazyQuery(LOGIN_QUERY, {
     onCompleted: (data) => {
@@ -31,7 +32,7 @@ function Login() {
       }
       if (data.Idea_USERS[0].roles === "admin") {
         setUserData(data.Idea_USERS[0]);
-        navigate("/");
+        navigate(location.state?.from || "/");
         localStorage.setItem("email", data.Idea_USERS[0].email);
         localStorage.setItem("password", data.Idea_USERS[0].password);
       } else {

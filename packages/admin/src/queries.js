@@ -140,16 +140,30 @@ export const EDIT_TEAM = gql`
 `;
 
 export const STATS_QUERY = gql`
-  query TeamQuery {
-    Team_aggregate {
-      aggregate {
-        count(columns: id)
-        count_submissions: count(columns: submissions, distinct: true)
-      }
-    }
-    Team(where: {}) {
-      id
+  query StatsQuery {
+    Team(where: { event_id: { _eq: 47 } }, order_by: { id: asc }) {
+      approved
       submissions
+      name
+      Participants {
+        more_details
+        User {
+          id
+          gender
+        }
+      }
+      Leader {
+        id
+        name
+        college
+      }
+      feedbacks_from_idea {
+        metric_score
+        totalscore
+        Idea_USER {
+          roles
+        }
+      }
     }
     Idea_USERS_aggregate(where: { roles: { _eq: evaluator } }) {
       aggregate {
@@ -157,27 +171,6 @@ export const STATS_QUERY = gql`
       }
     }
     feedbacks_aggregate(where: { totalscore: { _is_null: false } }) {
-      aggregate {
-        count
-      }
-    }
-    maleCount: Participant_aggregate(
-      where: { User: { gender: { _eq: "MALE" } }, Event: { id: { _eq: 47 } } }
-    ) {
-      aggregate {
-        count
-      }
-    }
-    femaleCount: Participant_aggregate(
-      where: { User: { gender: { _eq: "FEMALE" } }, Event: { id: { _eq: 47 } } }
-    ) {
-      aggregate {
-        count
-      }
-    }
-    female_team_count: Team_aggregate(
-      where: { Participants: { User: { gender: { _eq: "FEMALE" } } } }
-    ) {
       aggregate {
         count
       }

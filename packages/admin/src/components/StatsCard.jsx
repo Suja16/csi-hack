@@ -3,7 +3,17 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import InfoIcon from "@mui/icons-material/Info";
 import PeopleIcon from "@mui/icons-material/People";
 import GenderIcon from "@mui/icons-material/Wc";
-import { Card, CardContent, CardHeader, Typography, CircularProgress } from "@mui/material";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+import SecurityIcon from "@mui/icons-material/Security";
+import SmartToyIcon from "@mui/icons-material/SmartToy";
+
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  Typography,
+  CircularProgress,
+} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import PropTypes from "prop-types";
 import React from "react";
@@ -43,20 +53,53 @@ const StatsGrid = () => {
   if (loading) return <CircularProgress />;
   if (error) return <Typography>Error: {error.message}</Typography>;
 
-  const teamCount = data?.Team_aggregate?.aggregate?.count ?? 0;
+  const teamCount = data?.Team?.length ?? 0;
   const submissionCount =
-    data?.Team_aggregate?.aggregate?.count_submissions ?? 0;
+    data?.Team?.filter((team) => Boolean(team.submissions)).length ?? 0;
   const evaluatorCount = data?.Idea_USERS_aggregate?.aggregate?.count ?? 0;
   const teamEvaluated =
     data?.feedbacks_aggregate?.aggregate?.count_evaluated ?? 0;
-  const allWomenTeam = data?.female_team_count?.aggregate?.count ?? 0;
-  const maleCount = data.maleCount.aggregate.count;
-  const femaleCount = data.femaleCount.aggregate.count;
+  const allWomenTeam = data?.Team.filter(
+    (team) =>
+      team.Participants.length === 4 &&
+      team.Participants.every(
+        (participant) => participant.User.gender === "FEMALE",
+      ),
+  ).length;
+  const maleCount = data?.Team?.reduce(
+    (acc, team) =>
+      acc +
+      (team.Participants.length === 4
+        ? team.Participants.filter(
+            (participant) => participant.User.gender === "MALE",
+          ).length
+        : 0),
+    0,
+  );
+  const femaleCount = data?.Team?.reduce(
+    (acc, team) =>
+      acc +
+      (team.Participants.length === 4
+        ? team.Participants.filter(
+            (participant) => participant.User.gender === "FEMALE",
+          ).length
+        : 0),
+    0,
+  );
+  const finTech = data?.Team.filter(
+    (team) => team.submissions && team.submissions.domain === "FINTECH",
+  ).length;
+  const cyberSecurity = data?.Team.filter(
+    (team) => team.submissions && team.submissions.domain === "CYBERSECURITY",
+  ).length;
+  const genAI = data?.Team.filter(
+    (team) => team.submissions && team.submissions.domain === "GENAI",
+  ).length;
 
   // Calculate the male-female ratio
   const maleFemaleRatio =
     maleCount && femaleCount
-      ? `${maleCount}:${femaleCount}`
+      ? `${(maleCount / femaleCount).toFixed(2)}:1`
       : "Data not available";
 
   return (
@@ -105,10 +148,27 @@ const StatsGrid = () => {
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
         <StatsCard
-          title="Teams with females"
+          title="All Women Teams"
           value={allWomenTeam} // Static for now, replace with actual data if available
           icon={<GenderIcon />}
         />
+      </Grid>
+      <Grid item xs={12} sm={6} md={4}>
+        <StatsCard
+          title="FINTECH"
+          value={finTech}
+          icon={<MonetizationOnIcon />}
+        />
+      </Grid>
+      <Grid item xs={12} sm={6} md={4}>
+        <StatsCard
+          title="CYBERSECURITY"
+          value={cyberSecurity}
+          icon={<SecurityIcon />}
+        />
+      </Grid>
+      <Grid item xs={12} sm={6} md={4}>
+        <StatsCard title="GenAI" value={genAI} icon={<SmartToyIcon />} />
       </Grid>
     </Grid>
   );
