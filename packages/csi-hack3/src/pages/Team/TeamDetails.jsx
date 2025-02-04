@@ -431,7 +431,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
         >
           {eventData.Participant.team.invite_code}
         </Button>
-        {userData.id !== eventData.Participant.team.leader_id && (
+        {/* {userData.id !== eventData.Participant.team.leader_id && (
           <Button
             variant="contained"
             sx={{ marginTop: "0.6rem", bgcolor: "#d03731" }}
@@ -448,7 +448,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
           >
             Delete Team
           </Button>
-        )}
+        )} */}
 
         {!submitted &&
         userData.id === eventData.Participant.team.leader_id &&
