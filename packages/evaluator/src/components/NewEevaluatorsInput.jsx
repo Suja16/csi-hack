@@ -16,48 +16,30 @@ import Popup from "../../../ui/popup";
 
 const leftDefault = [
   {
-    name: "Feasibility",
+    name: "Novelty",
     score: 0,
-    maxScore: 10,
-    description: "Evaluate the practical viability of implementation",
+    maxScore: 30,
+    description: "Novelty of propsed solution",
   },
   {
-    name: "Complexity",
+    name: "Technical Feasibility",
     score: 0,
-    maxScore: 10,
-    description: "Assess the technical complexity and scope",
-  },
-  {
-    name: "Overall Team Composition",
-    score: 0,
-    maxScore: 10,
-    description: "Rate the team's skills and collaboration",
-  },
-  {
-    name: "Presentation Skills",
-    score: 0,
-    maxScore: 10,
-    description: "Evaluate clarity and effectiveness of presentation",
+    maxScore: 30,
+    description: "Technical Approach and Feasibility",
   },
 ];
 const rightDefault = [
   {
-    name: "Novelty of Proposed Solution",
+    name: "Business Potential",
     score: 0,
     maxScore: 20,
-    description: "Assess innovation and uniqueness of approach",
+    description: "Business model",
   },
   {
-    name: "Methodology",
+    name: "Scalability",
     score: 0,
     maxScore: 20,
-    description: "Evaluate the approach and problem-solving methods",
-  },
-  {
-    name: "Technology Stack",
-    score: 0,
-    maxScore: 20,
-    description: "Rate the chosen technologies and implementation",
+    description: "Impact and benefits",
   },
 ];
 
@@ -76,8 +58,8 @@ function NewEevaluatorsInput() {
   useEffect(() => {
     if (allTeams[id].metric_score) {
       const metricScores = allTeams[id].metric_score;
-      const leftScores = metricScores.slice(0, 4);
-      const rightScores = metricScores.slice(4, 7);
+      const leftScores = metricScores.slice(0, 2);
+      const rightScores = metricScores.slice(2, 4);
       setLeftCriteria(leftScores);
       setRightCriteria(rightScores);
     } else {
@@ -161,10 +143,10 @@ function NewEevaluatorsInput() {
         >
           <Box sx={{ width: "100%", textAlign: "left", p: 3 }}>
             <Typography variant="h5" color="#eb272e" sx={{ fontWeight: 500 }}>
-              Project Fundamentals
+              Innovation & Technical Merit
             </Typography>
             <Typography variant="body1" color="#84b4d9">
-              Core aspects of project evaluation (Max 40 points)
+              Core aspects of project evaluation (Max 60 points)
             </Typography>
             <Box
               sx={{
@@ -232,10 +214,10 @@ function NewEevaluatorsInput() {
         >
           <Box sx={{ width: "100%", textAlign: "left", p: 3 }}>
             <Typography variant="h5" color="#eb272e" sx={{ fontWeight: 500 }}>
-              Innovation & Technical Merit
+              Project Fundamentals
             </Typography>
             <Typography variant="body1" color="#84b4d9">
-              Advanced evaluation criteria (Max 60 points)
+              Advanced evaluation criteria (Max 40 points)
             </Typography>
           </Box>
           <Box sx={{ px: 3, display: "flex", flexDirection: "column", gap: 3 }}>
