@@ -709,11 +709,13 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
             marginTop="3rem"
           >
             <Typography variant="h6" textAlign="center">
-              {submitted
-                ? "Your submission has been recorded."
-                : eventData.Participant.team.Participant.length != 4
-                  ? "4 Members are required in a team."
-                  : "Your team leader has not submitted the project yet."}
+              {eventData.Participant.team.submissions?.valid === false
+                ? "Your submission was invalid."
+                : submitted
+                  ? "Your submission has been recorded."
+                  : eventData.Participant.team.Participant.length !== 4
+                    ? "4 Members are required in a team."
+                    : "Your team leader has not submitted the project yet."}
             </Typography>
           </Grid2>
         )}
