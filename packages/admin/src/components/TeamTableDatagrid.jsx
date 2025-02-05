@@ -280,6 +280,7 @@ export default function DataTable() {
           (sum, feedback) => sum + (feedback.totalscore || 0),
           0,
         );
+        const avgScore = totalScore / evaluatorFeedbacks.length;
 
         // Print the scores in the console
         // if (evaluatorFeedbacks.length > 0) {
@@ -315,7 +316,7 @@ export default function DataTable() {
                 },
               }}
             >
-              {evaluatorFeedbacks.length > 0 ? totalScore : "-"}
+              {evaluatorFeedbacks.length > 0 ? avgScore : "-"}
             </Tooltip>
           </Box>
         );
