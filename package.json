@@ -31,7 +31,8 @@
     "dev:admin": "yarn workspace admin dev",
     "dev:suja16": "yarn workspace csi-hack3 dev",
     "dev:mentor" : "yarn workspace mentor dev",
-    "dev:evaluator": "yarn workspace evaluator dev"
+    "dev:evaluator": "yarn workspace evaluator dev",
+    "dev:stats": "yarn workspace stats dev"
   },
   "devDependencies": {
     "typescript": "^5.7.2",
