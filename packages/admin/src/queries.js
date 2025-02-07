@@ -42,6 +42,7 @@ export const TEAM_QUERY = gql`
         totalscore
         Idea_USER {
           roles
+          type
         }
       }
     }
