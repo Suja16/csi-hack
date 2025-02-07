@@ -9,3 +9,4 @@ mai sahi samajh ke jo bhi karu
 tum kehte ho galat
 
 mai galat hu toh fir kon sahi
+haa mai galt galt meri baate
