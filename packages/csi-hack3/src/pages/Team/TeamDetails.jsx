@@ -708,7 +708,8 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
             alignItems="center"
             marginTop="3rem"
           >
-            <Typography variant="h6" textAlign="center">
+            {/* Remove the below block from comment to display invalid submission message */}
+            {/* <Typography variant="h6" textAlign="center">
               {eventData.Participant.team.submissions?.valid === false
                 ? "Your submission was invalid."
                 : submitted
@@ -716,6 +717,14 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
                   : eventData.Participant.team.Participant.length !== 4
                     ? "4 Members are required in a team."
                     : "Your team leader has not submitted the project yet."}
+            </Typography> */}
+
+            <Typography variant="h6" textAlign="center">
+              {submitted
+                ? "Your submission has been recorded."
+                : eventData.Participant.team.Participant.length != 4
+                  ? "4 Members are required in a team."
+                  : "Your team leader has not submitted the project yet."}
             </Typography>
           </Grid2>
         )}

@@ -20,10 +20,11 @@ const DatePopup = () => {
                 onClose={handleClose}
             >
                 <DialogTitle style={{ textAlign: 'center' }}>
-                    <Typography variant="h6"> <b>Deadline Extended!</b></Typography>
+                    <Typography variant="h6"> <b>Important Update!</b></Typography>
                 </DialogTitle>
                 <DialogContent>
-                    <Typography>To ensure your team has ample time to finalize and submit your innovative ideas we have extended the deadline to <b>3rd February, 2025</b></Typography>
+                    <Typography>The moment you&apos;ve been waiting for is almost here! <b>The results will be declared on or before 10th February!</b> Stay tuned and keep an eye on your inbox.
+                    </Typography>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
