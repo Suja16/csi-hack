@@ -50,6 +50,12 @@ export default function NewFilterDropdown({ filters, setFilters }) {
       { id: "consent_uploaded", label: "Uploaded", value: true },
       { id: "consent_not_uploaded", label: "Not Uploaded", value: false },
     ],
+    evaluated: [
+      { id: "evaluated_first", label: "Evaluator 1", value: "evaluator1" },
+      { id: "evaluated_second", label: "Evaluator 2", value: "evaluator2" },
+      { id: "evaluated_both", label: "Both Evaluators", value: "both" },
+      { id: "evaluated_none", label: "None", value: "none" },
+    ],
   };
 
   const handleClick = (event) => {

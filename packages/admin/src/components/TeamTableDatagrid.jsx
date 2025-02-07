@@ -12,7 +12,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Popup from "../../../ui/popup";
 import { TEAM_QUERY } from "../queries";
 import TeamDetailsPage from "./DataPopupContent";
@@ -26,14 +26,19 @@ export default function DataTable() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState({
     approved: [],
-    submitted: [],
+    submitted: [true],
     domain: [],
     pwd: [],
     all_women: [],
     team_completion: [],
-    submission_validity: [],
+    submission_validity: [true],
     consent: [],
+    evaluated: [],
   });
+
+  useEffect(() => {
+    console.log(filters);
+  }, [filters]);
 
   const { data, loading } = useQuery(TEAM_QUERY);
 
@@ -68,6 +73,21 @@ export default function DataTable() {
       ),
     },
     {
+      field: "domain",
+      width: 200,
+      sortable: false,
+      filterable: false,
+      disableColumnMenu: true,
+      renderHeader: () => (
+        <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Domain</div>
+      ),
+      renderCell: (params) => (
+        <div style={{ display: "flex" }}>
+          {params.row.submissions?.domain ?? "-"}
+        </div>
+      ),
+    },
+    {
       field: "college",
       width: 200,
       sortable: false,
@@ -78,6 +98,20 @@ export default function DataTable() {
       ),
       renderCell: (params) => (
         <div style={{ display: "flex" }}>{params.row.Leader.college}</div>
+      ),
+    },
+    {
+      field: "leaderName",
+      headerName: "Leader Name",
+      width: 200,
+      sortable: false,
+      filterable: false,
+      disableColumnMenu: true,
+      renderHeader: () => (
+        <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Leader Name</div>
+      ),
+      renderCell: (params) => (
+        <div style={{ display: "flex" }}>{params.row.Leader.name}</div>
       ),
     },
     {
@@ -248,20 +282,6 @@ export default function DataTable() {
       ),
     },
     {
-      field: "leaderName",
-      headerName: "Leader Name",
-      width: 290,
-      sortable: false,
-      filterable: false,
-      disableColumnMenu: true,
-      renderHeader: () => (
-        <div style={{ fontWeight: "bold", fontSize: "1rem" }}>Leader Name</div>
-      ),
-      renderCell: (params) => (
-        <div style={{ display: "flex" }}>{params.row.Leader.name}</div>
-      ),
-    },
-    {
       field: "score",
       headerName: "Score",
       width: 160,
@@ -276,16 +296,24 @@ export default function DataTable() {
         const evaluatorFeedbacks = feedbacks.filter(
           (feedback) => feedback.Idea_USER?.roles === "evaluator",
         );
-        const totalScore = evaluatorFeedbacks.reduce(
-          (sum, feedback) => sum + (feedback.totalscore || 0),
-          0,
-        );
-        const avgScore = totalScore / evaluatorFeedbacks.length;
-
-        // Print the scores in the console
-        // if (evaluatorFeedbacks.length > 0) {
-        //   console.log(`Team ID: ${params.row.id}, Scores:`, evaluatorFeedbacks, `Total Score: ${totalScore}`);
-        // }
+        const evaluator1Score = evaluatorFeedbacks.find(
+          (feedback) =>
+            feedback.Idea_USER?.type === "internal" &&
+            feedback.totalscore !== null,
+        )?.totalscore;
+        const evaluator2Score = evaluatorFeedbacks.find(
+          (feedback) =>
+            feedback.Idea_USER?.type === "bank" && feedback.totalscore !== null,
+        )?.totalscore;
+        const totalScore = evaluator1Score
+          ? evaluator1Score
+          : 0 + evaluator2Score
+            ? evaluator2Score
+            : 0;
+        const avgScore =
+          totalScore /
+            evaluatorFeedbacks.filter((e) => e.totalscore !== null).length ||
+          null;
 
         return (
           <Box
@@ -298,9 +326,9 @@ export default function DataTable() {
             <Tooltip
               title={
                 <>
-                  Evaluator 1: {evaluatorFeedbacks[0]?.totalscore || "-"}
+                  Evaluator 1: {evaluator1Score || "-"}
                   <br />
-                  Evaluator 2: {evaluatorFeedbacks[1]?.totalscore || "-"}
+                  Evaluator 2: {evaluator2Score || "-"}
                 </>
               }
               slotProps={{
@@ -316,7 +344,7 @@ export default function DataTable() {
                 },
               }}
             >
-              {evaluatorFeedbacks.length > 0 ? avgScore : "-"}
+              {avgScore || "-"}
             </Tooltip>
           </Box>
         );
@@ -394,6 +422,54 @@ export default function DataTable() {
       filters.consent.length === 0 ||
       filters.consent.includes(Boolean(team.submissions?.consent));
 
+    const matchesEvaluator1Filter =
+      !filters.evaluated.includes("evaluator1") ||
+      team.feedbacks_from_idea.some(
+        (feedback) =>
+          feedback.Idea_USER?.roles === "evaluator" &&
+          feedback.Idea_USER?.type === "internal" &&
+          feedback.totalscore !== null,
+      );
+
+    const matchesEvaluator2Filter =
+      !filters.evaluated.includes("evaluator2") ||
+      team.feedbacks_from_idea.some(
+        (feedback) =>
+          feedback.Idea_USER?.roles === "evaluator" &&
+          feedback.Idea_USER?.type === "bank" &&
+          feedback.totalscore !== null,
+      );
+
+    const matchesBothEvaluatorsFilter =
+      !filters.evaluated.includes("both") ||
+      (team.feedbacks_from_idea.some(
+        (feedback) =>
+          feedback.Idea_USER?.roles === "evaluator" &&
+          feedback.Idea_USER?.type === "internal" &&
+          feedback.totalscore !== null,
+      ) &&
+        team.feedbacks_from_idea.some(
+          (feedback) =>
+            feedback.Idea_USER?.roles === "evaluator" &&
+            feedback.Idea_USER?.type === "bank" &&
+            feedback.totalscore !== null,
+        ));
+
+    const matchesNoneEvaluatorsFilter =
+      !filters.evaluated.includes("none") ||
+      (!team.feedbacks_from_idea.some(
+        (feedback) =>
+          feedback.Idea_USER?.roles === "evaluator" &&
+          feedback.Idea_USER?.type === "internal" &&
+          feedback.totalscore !== null,
+      ) &&
+        !team.feedbacks_from_idea.some(
+          (feedback) =>
+            feedback.Idea_USER?.roles === "evaluator" &&
+            feedback.Idea_USER?.type === "bank" &&
+            feedback.totalscore !== null,
+        ));
+
     return (
       matchesSearchQuery &&
       matchesApprovedFilter &&
@@ -403,7 +479,11 @@ export default function DataTable() {
       matchesAllWomenFilter &&
       matchesTeamCompleteFilter &&
       matchesValidSubmissionFilter &&
-      matchesConsentFilter
+      matchesConsentFilter &&
+      matchesEvaluator1Filter &&
+      matchesEvaluator2Filter &&
+      matchesBothEvaluatorsFilter &&
+      matchesNoneEvaluatorsFilter
     );
   });
 

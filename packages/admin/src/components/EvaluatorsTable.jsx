@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import {
   Box,
   Button,
@@ -35,14 +35,16 @@ const EvaluatorsTable = () => {
   const [open, setOpen] = useState(false);
   const [filters, setFilters] = useState({
     approved: [],
-    submitted: [],
+    submitted: [true],
     domain: [],
     pwd: [],
     all_women: [],
     team_completion: [],
-    submission_validity: [],
+    submission_validity: [true],
     consent: [],
+    evaluated: [],
   });
+
   const [openCsvUploader, setOpenCsvUploader] = useState(false);
 
   const { data, loading, refetch } = useQuery(EVALUATOR_QUERY, {
@@ -447,6 +449,54 @@ const EvaluatorsTable = () => {
       filters.consent.length === 0 ||
       filters.consent.includes(Boolean(team.submissions?.consent));
 
+    const matchesEvaluator1Filter =
+      !filters.evaluated.includes("evaluator1") ||
+      team.feedbacks_from_idea.some(
+        (feedback) =>
+          feedback.Idea_USER?.roles === "evaluator" &&
+          feedback.Idea_USER?.type === "internal" &&
+          feedback.totalscore !== null,
+      );
+
+    const matchesEvaluator2Filter =
+      !filters.evaluated.includes("evaluator2") ||
+      team.feedbacks_from_idea.some(
+        (feedback) =>
+          feedback.Idea_USER?.roles === "evaluator" &&
+          feedback.Idea_USER?.type === "bank" &&
+          feedback.totalscore !== null,
+      );
+
+    const matchesBothEvaluatorsFilter =
+      !filters.evaluated.includes("both") ||
+      (team.feedbacks_from_idea.some(
+        (feedback) =>
+          feedback.Idea_USER?.roles === "evaluator" &&
+          feedback.Idea_USER?.type === "internal" &&
+          feedback.totalscore !== null,
+      ) &&
+        team.feedbacks_from_idea.some(
+          (feedback) =>
+            feedback.Idea_USER?.roles === "evaluator" &&
+            feedback.Idea_USER?.type === "bank" &&
+            feedback.totalscore !== null,
+        ));
+
+    const matchesNoneEvaluatorsFilter =
+      !filters.evaluated.includes("none") ||
+      (!team.feedbacks_from_idea.some(
+        (feedback) =>
+          feedback.Idea_USER?.roles === "evaluator" &&
+          feedback.Idea_USER?.type === "internal" &&
+          feedback.totalscore !== null,
+      ) &&
+        !team.feedbacks_from_idea.some(
+          (feedback) =>
+            feedback.Idea_USER?.roles === "evaluator" &&
+            feedback.Idea_USER?.type === "bank" &&
+            feedback.totalscore !== null,
+        ));
+
     return (
       matchesSearchQuery &&
       matchesApprovedFilter &&
@@ -456,7 +506,11 @@ const EvaluatorsTable = () => {
       matchesAllWomenFilter &&
       matchesTeamCompleteFilter &&
       matchesValidSubmissionFilter &&
-      matchesConsentFilter
+      matchesConsentFilter &&
+      matchesEvaluator1Filter &&
+      matchesEvaluator2Filter &&
+      matchesBothEvaluatorsFilter &&
+      matchesNoneEvaluatorsFilter
     );
   });
 
