@@ -305,15 +305,13 @@ export default function DataTable() {
           (feedback) =>
             feedback.Idea_USER?.type === "bank" && feedback.totalscore !== null,
         )?.totalscore;
-        const totalScore = evaluator1Score
-          ? evaluator1Score
-          : 0 + evaluator2Score
-            ? evaluator2Score
-            : 0;
+
+        const totalScore = (evaluator1Score || 0) + (evaluator2Score || 0);
         const avgScore =
-          totalScore /
-            evaluatorFeedbacks.filter((e) => e.totalscore !== null).length ||
-          null;
+          evaluatorFeedbacks.length > 0
+            ? totalScore /
+            evaluatorFeedbacks.filter((e) => e.totalscore !== null).length
+            : null;
 
         return (
           <Box
