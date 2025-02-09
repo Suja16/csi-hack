@@ -50,7 +50,7 @@ const StatsCard = ({ title, value, icon }) => {
 
 const StatsGrid = () => {
   const { data, loading, error } = useQuery(STATS_QUERY);
-  console.log(data);
+  // console.log("Data : ", data);
 
   if (loading) return <CircularProgress />;
   if (error) return <Typography>Error: {error.message}</Typography>;
@@ -59,47 +59,52 @@ const StatsGrid = () => {
   const submissionCount =
     data?.Team?.filter((team) => Boolean(team.submissions)).length ?? 0;
   const evaluatorCount = data?.Idea_USERS_aggregate?.aggregate?.count ?? 0;
-  const teamEvaluated =
-    data?.feedbacks_aggregate?.aggregate?.count_evaluated ?? 0;
+  // const teamEvaluated =
+  //   data?.feedbacks_aggregate?.aggregate?.count_evaluated ?? 0;
+
+  const teamEvaluated = (data?.Team.filter(
+    (team) => team.submissions && team.feedbacks_from_idea?.length === 2
+  )).length;
+
   const allWomenTeam = data?.Team.filter(
     (team) =>
       team.Participants.length === 4 &&
       team.Participants.every(
-        (participant) => participant.User.gender === "FEMALE",
-      ),
+        (participant) => participant.User.gender === "FEMALE"
+      )
   ).length;
   const maleCount = data?.Team?.reduce(
     (acc, team) =>
       acc +
       (team.Participants.length === 4
         ? team.Participants.filter(
-            (participant) => participant.User.gender === "MALE",
+            (participant) => participant.User.gender === "MALE"
           ).length
         : 0),
-    0,
+    0
   );
   const femaleCount = data?.Team?.reduce(
     (acc, team) =>
       acc +
       (team.Participants.length === 4
         ? team.Participants.filter(
-            (participant) => participant.User.gender === "FEMALE",
+            (participant) => participant.User.gender === "FEMALE"
           ).length
         : 0),
-    0,
+    0
   );
   const finTech = data?.Team.filter(
-    (team) => team.submissions && team.submissions.domain === "FINTECH",
+    (team) => team.submissions && team.submissions.domain === "FINTECH"
   ).length;
   const cyberSecurity = data?.Team.filter(
-    (team) => team.submissions && team.submissions.domain === "CYBERSECURITY",
+    (team) => team.submissions && team.submissions.domain === "CYBERSECURITY"
   ).length;
   const genAI = data?.Team.filter(
-    (team) => team.submissions && team.submissions.domain === "GENAI",
+    (team) => team.submissions && team.submissions.domain === "GENAI"
   ).length;
 
   const consentUploaded = data?.Team.filter(
-    (team) => team.submissions && team.submissions.consent,
+    (team) => team.submissions && team.submissions.consent
   ).length;
   const consentNotUploaded = submissionCount - consentUploaded;
 
