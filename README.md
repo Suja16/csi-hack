@@ -9,4 +9,4 @@ mai sahi samajh ke jo bhi karu
 tum kehte ho galat
 
 mai galat hu toh fir kon sahi
-marzi se jeene ki bhi mein
+marzi se jeene ki bhi mein!
