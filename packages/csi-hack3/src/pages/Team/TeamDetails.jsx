@@ -30,7 +30,7 @@ import { useEffect } from "react";
 import { uploadFile } from "../../utils/uploadFile";
 import axios from "axios";
 import { useNavigate } from "react-router";
-import { success } from "../../utils/snackbar";
+import { failure, success } from "../../utils/snackbar";
 
 const formSchema = yup.object({
   domain: yup
@@ -110,6 +110,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
   const [submitted, setSubmitted] = useState(false);
   const [open, setOpen] = useState(false);
   const [consentState, setConsentState] = useState(false);
+  const [rsvp, setRSVP] = useState(false);
 
   const {
     formState: { errors },
@@ -184,7 +185,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
           baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
-        },
+        }
       );
       if (response.status === 200 && response.data.error == false) {
         setIsSubmitting(false);
@@ -229,7 +230,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
           baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
-        },
+        }
       );
       if (response.status === 200 && response.data.error == false) {
         setIsSubmitting(false);
@@ -258,7 +259,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
           baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
-        },
+        }
       );
       console.log(response.data);
       setSnackBarMessage("Left team successfully");
@@ -288,7 +289,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
           baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
-        },
+        }
       );
       console.log(response.data);
       setSnackBarMessage("Deleted team successfully");
@@ -312,6 +313,35 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const RSVP = async () => {
+    try {
+      setRSVP(true);
+      const response = await axios.post(
+        "/api/v1/event/p/claim-ticket/",
+        {
+          event_id: eventData.id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+          baseURL: import.meta.env.VITE_APP_SERVER_ADDRESS,
+        }
+      );
+      if (response.status === 200 && response.data.error == false) {
+        setRSVP(false);
+        success("RSVP successful!");
+        setTimeout(() => window.location.reload(), 5000);
+      }
+    } catch (error) {
+      console.error(error);
+      setRSVP(false);
+      failure("RSVP failed!");
+    }
+  };
+
+  const approved = eventData.Participant.team.approved;
 
   return (
     <Grid2 container justifyContent="center">
@@ -425,7 +455,7 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
           }}
           onClick={() =>
             navigator.clipboard.writeText(
-              eventData.Participant.team.invite_code,
+              eventData.Participant.team.invite_code
             )
           }
         >
@@ -708,24 +738,73 @@ const TeamDetails = ({ setShowSnackBar, setSnackBarMessage }) => {
             alignItems="center"
             marginTop="3rem"
           >
-            {/* Remove the below block from comment to display invalid submission message */}
-            {/* <Typography variant="h6" textAlign="center">
-              {eventData.Participant.team.submissions?.valid === false
-                ? "Your submission was invalid."
-                : submitted
-                  ? "Your submission has been recorded."
-                  : eventData.Participant.team.Participant.length !== 4
-                    ? "4 Members are required in a team."
-                    : "Your team leader has not submitted the project yet."}
-            </Typography> */}
-
             <Typography variant="h6" textAlign="center">
-              {submitted
-                ? "Your submission has been recorded."
-                : eventData.Participant.team.Participant.length != 4
-                  ? "4 Members are required in a team."
-                  : "Your team leader has not submitted the project yet."}
+              {eventData.Participant.team.submissions?.valid === false ? (
+                <Typography variant="subtitle2" textAlign="center">
+                  Your submission was invalid.
+                </Typography>
+              ) : submitted ? (
+                approved ? (
+                  <Box>
+                    {eventData.Participant.ticket_collected === false ? (
+                      <>
+                        <Typography variant="subtitle2" textAlign="center">
+                          Congratulations! You have been selected for the second
+                          round. Confirm your availability now!
+                        </Typography>
+                        <LoadingButton
+                          variant="contained"
+                          sx={{
+                            mt: 2,
+                            p: 1,
+                            px: 3,
+                          }}
+                          onClick={RSVP}
+                          loading={rsvp}
+                          disabled={rsvp}
+                        >
+                          <Typography variant="subtitle1">RSVP</Typography>
+                        </LoadingButton>
+                        <Typography
+                          sx={{
+                            fontSize: "13px",
+                            mt: 2,
+                            textAlign: "left",
+                          }}
+                        >
+                          NOTE: your participation for the hackathon will only
+                          be confirmed once RSVP'd. If this process is not
+                          complete, your team will be disqualified .
+                        </Typography>
+                      </>
+                    ) : (
+                      <Typography
+                        variant="subtitle2"
+                        textAlign="center"
+                        sx={{ mt: 2, pt: 1 }}
+                      >
+                        You have successfully RSVP'd for the event.
+                      </Typography>
+                    )}
+                  </Box>
+                ) : (
+                  <Typography variant="subtitle2" textAlign="center">
+                    Unfortunately, your application has not been approved. We
+                    appreciate the effort you put into it.
+                  </Typography>
+                )
+              ) : eventData.Participant.team.Participant.length !== 4 ? (
+                <Typography variant="subtitle2" textAlign="center">
+                  4 Members are required in a team.
+                </Typography>
+              ) : (
+                <Typography variant="subtitle2" textAlign="center">
+                  {" "}
+                  Your team leader has not submitted the project yet.{" "}
+                </Typography>
+              )}
             </Typography>
+            {/* {console.log("Event data : ", eventData)} */}
           </Grid2>
         )}
       </Grid2>
