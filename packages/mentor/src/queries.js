@@ -21,3 +21,17 @@ export const TEAM_QUERY = gql`
     }
   }
 `;
+
+export const INSERT_FEEDBACK = gql`
+  mutation MyMutation2($team_id: Int, $Idea_user_Id: Int, $remarks: String) {
+    insert_feedbacks_one(
+      object: {
+        team_id: $team_id
+        Idea_user_Id: $Idea_user_Id
+        remarks: $remarks
+      }
+    ) {
+      id
+    }
+  }
+`;
