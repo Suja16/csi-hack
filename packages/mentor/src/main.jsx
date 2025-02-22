@@ -1,10 +1,64 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import { CssBaseline, GlobalStyles, ThemeProvider } from "@mui/material";
+import theme from "../../ui/theme.js";
 
-createRoot(document.getElementById('root')).render(
+import App from "./App.jsx";
+import { createHttpLink } from "@apollo/client";
+
+import { ToastContainer } from "react-toastify";
+
+import { InMemoryCache, ApolloClient, ApolloProvider } from "@apollo/client";
+
+function makeClient() {
+  const httpLink = createHttpLink({
+    uri: import.meta.env.VITE_GRAPHQL_URL,
+    headers: {
+      "X-Hasura-Admin-Secret": import.meta.env.VITE_HASURA_GRAPHQL_ADMIN_SECRET,
+    },
+  });
+
+  return new ApolloClient({
+    cache: new InMemoryCache(),
+    link: httpLink,
+    defaultOptions: {
+      watchQuery: {
+        fetchPolicy: "network-only",
+      },
+      mutate: {
+        fetchPolicy: "network-only",
+      },
+      query: {
+        fetchPolicy: "network-only",
+      },
+    },
+  });
+}
+
+// Create the Apollo Client instance
+const client = makeClient();
+
+const globalStyles = (
+  <GlobalStyles
+    styles={{
+      body: {
+        scrollbarWidth: "thin",
+        scrollbarColor: "#314e77 transparent",
+      },
+    }}
+  />
+);
+
+createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
+    <ApolloProvider client={client}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {globalStyles}
+        <App />
+        <ToastContainer />
+      </ThemeProvider>
+    </ApolloProvider>
   </StrictMode>,
-)
+);
