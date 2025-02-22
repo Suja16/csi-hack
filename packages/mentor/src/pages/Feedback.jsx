@@ -53,16 +53,25 @@ function Feedback() {
   return (
     <Box padding={2} component="form" onSubmit={handleSubmit}>
       <Header />
-      <Box display="flex" marginY={2} alignItems="center">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        gap={2}
+        marginY={2}
+      >
         <Button
           variant="contained"
           startIcon={<ArrowBack />}
           sx={{ "& .MuiButton-startIcon": { marginRight: "0px" } }}
           onClick={() => navigate("/")}
         />
-
-        <Typography variant="h5">
-          Feedback for Team {data.Team[0].name}
+        <Typography
+          variant="h5"
+          noWrap
+          style={{ display: "inline-block", whiteSpace: "pre-line" }}
+        >
+          Team {data.Team[0].name}
         </Typography>
       </Box>
       <TextField
