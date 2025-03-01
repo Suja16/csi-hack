@@ -20,10 +20,10 @@ const DatePopup = () => {
                 onClose={handleClose}
             >
                 <DialogTitle style={{ textAlign: 'center' }}>
-                    <Typography variant="h6"> <b>Results Announced!</b></Typography>
+                    <Typography variant="h6"> <b>Hackathon Update!</b></Typography>
                 </DialogTitle>
                 <DialogContent>
-                    <Typography>The wait is over! <b>The results for the hackathon have been announced.</b> Team leaders check your inbox now to see if your team made it to the top!</Typography>
+                    <Typography>Mark your calendars! <b>The hackathon is happening on 17th-18th March.</b> Get ready to innovate, compete, and showcase your skills. Stay tuned for more details!</Typography>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">
