@@ -25,8 +25,18 @@ export const LOGIN_QUERY = gql`
       email
       password
       roles
+      type
     }
   }
+`;
+
+export const APPROVED_TEAMS = gql`
+  query ApprovedTeams {
+  Team(where: {approved: {_eq: true}}) {
+    id
+    name
+  }
+}
 `;
 
 export const UPDATE_SCORES = gql`

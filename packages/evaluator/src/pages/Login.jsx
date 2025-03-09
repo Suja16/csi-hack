@@ -34,7 +34,21 @@ function Login() {
         navigate("/");
         localStorage.setItem("email", data.Idea_USERS[0].email);
         localStorage.setItem("password", data.Idea_USERS[0].password);
-      } else {
+      } else if (data.Idea_USERS[0].roles === "offline_evaluator") {
+        setUserData(data.Idea_USERS[0]);
+        navigate("/");
+        localStorage.setItem("email", data.Idea_USERS[0].email);
+        localStorage.setItem("password", data.Idea_USERS[0].password);
+        localStorage.setItem("type", data.Idea_USERS[0].type);
+      } else if (data.Idea_USERS[0].roles === "judges") {
+        setUserData(data.Idea_USERS[0]);
+        navigate("/judges-dashboard");
+        localStorage.setItem("email", data.Idea_USERS[0].email);
+        localStorage.setItem("password", data.Idea_USERS[0].password);
+      }
+
+
+      else {
         failure("Invalid credentials");
       }
     },
@@ -109,7 +123,7 @@ function Login() {
           align="center"
           sx={{ mb: 3 }}
         >
-          Login as Evaluator
+          Login
         </Typography>
         <form onSubmit={handleSubmit} style={{ width: "100%" }}>
           <TextField

@@ -15,6 +15,7 @@ import NavSideLayout from "./layouts/NavSideLayout.jsx";
 import TeamDetails from "./pages/TeamDetails.jsx";
 import AllDone from "./pages/AllDone.jsx";
 import Login from "./pages/Login.jsx";
+import JudgesDashboard from "./pages/JudgesDashboard.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,6 +27,7 @@ const router = createBrowserRouter(
         </Route>
       </Route>
       <Route path="/login" Component={Login} />
+      <Route path="/judges-dashboard" Component={JudgesDashboard} />
     </Route>,
   ),
 );
