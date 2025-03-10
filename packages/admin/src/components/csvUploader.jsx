@@ -1,197 +1,240 @@
-import { useState } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Box, Typography, IconButton, Snackbar, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Alert } from '@mui/material';
-import { CloudUpload, Close } from '@mui/icons-material';
-import { useMutation } from '@apollo/client';
-import { ADD_EVALUATOR } from '../queries';
-import Papa from 'papaparse';
+import { useState } from "react";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Box,
+  Typography,
+  IconButton,
+  Snackbar,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Alert,
+} from "@mui/material";
+import { CloudUpload, Close } from "@mui/icons-material";
+import { useMutation } from "@apollo/client";
+import { ADD_EVALUATOR } from "../queries";
+import Papa from "papaparse";
 
 const CsvUploader = ({ open, onClose, refetch }) => {
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [results, setResults] = useState([]);
-    const [snackbarOpen, setSnackbarOpen] = useState(false);
-    const [errorSnackbarOpen, setErrorSnackbarOpen] = useState(false);
-    const [errorDialogOpen, setErrorDialogOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [results, setResults] = useState([]);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [errorSnackbarOpen, setErrorSnackbarOpen] = useState(false);
+  const [errorDialogOpen, setErrorDialogOpen] = useState(false);
 
-    const [addEvaluator] = useMutation(ADD_EVALUATOR);
+  const [addEvaluator] = useMutation(ADD_EVALUATOR);
 
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        if (file && file.type === 'text/csv') {
-            setSelectedFile(file);
-        } else {
-            alert('Please select a valid CSV file');
-        }
-    };
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type === "text/csv") {
+      setSelectedFile(file);
+    } else {
+      alert("Please select a valid CSV file");
+    }
+  };
 
-    const handleFileDrop = (event) => {
-        event.preventDefault();
-        const file = event.dataTransfer.files[0];
-        if (file && file.type === 'text/csv') {
-            setSelectedFile(file);
-        } else {
-            alert('Please select a valid CSV file');
-        }
-    };
+  const handleFileDrop = (event) => {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    if (file && file.type === "text/csv") {
+      setSelectedFile(file);
+    } else {
+      alert("Please select a valid CSV file");
+    }
+  };
 
-    const handleFileRemove = () => setSelectedFile(null);
-    const handleClose = () => {
-        setSelectedFile(null);
-        setResults([]);
-        onClose();
-    };
+  const handleFileRemove = () => setSelectedFile(null);
+  const handleClose = () => {
+    setSelectedFile(null);
+    setResults([]);
+    onClose();
+  };
 
-    const handleSubmit = async () => {
-        if (!selectedFile) {
-            alert("Please select a CSV file");
-            return;
-        }
+  const handleSubmit = async () => {
+    if (!selectedFile) {
+      alert("Please select a CSV file");
+      return;
+    }
 
-        setLoading(true);
-        
-        Papa.parse(selectedFile, {
-            header: true,
-            skipEmptyLines: true,
-            complete: async (results) => {
-                const evaluators = results.data.map(row => {
-                    if (!row.Name || !row.Email || !row.Phone_number) return null;
+    setLoading(true);
 
-                    const emailPrefix = row.Email.split('@')[0];
-                    const phoneDigit = row.Phone_number.trim().slice(-1);
-                    const generatedPassword = emailPrefix + phoneDigit;
+    Papa.parse(selectedFile, {
+      header: true,
+      skipEmptyLines: true,
+      complete: async (results) => {
+        const evaluators = results.data
+          .map((row) => {
+            if (!row.Name || !row.Email || !row.Phone_number) return null;
 
-                    return {
-                        name: row.Name.trim(),
-                        email: row.Email.trim(),
-                        phone_no: row.Phone_number.trim(),
-                        password: generatedPassword,
-                        roles: "evaluator",
-                        domain: row.Domain ? row.Domain.trim() : "",
-                        type: row.Type ? row.Type.trim() : "",
-                        metadata: {
-                            years_of_exp: parseInt(row["Years of experience"], 10) || 0,
-                            current_company: row.Company ? row.Company.trim() : ""
-                        }
-                    };
-                }).filter(Boolean);
+            const emailPrefix = row.Email.split("@")[0];
+            const phoneDigit = row.Phone_number.trim().slice(-1);
+            const generatedPassword = emailPrefix + phoneDigit;
 
-                const uploadResults = await Promise.all(
-                    evaluators.map(async evaluator => {
-                        try {
-                            await addEvaluator({ variables: evaluator });
-                            return { name: evaluator.name, success: true };
-                        } catch (error) {
-                            return { name: evaluator.name, success: false, error: error.message };
-                        }
-                    })
-                );
+            return {
+              name: row.Name.trim(),
+              email: row.Email.trim(),
+              phone_no: row.Phone_number.trim(),
+              password: generatedPassword,
+              roles: row.Role.trim(),
+              domain: row.Domain ? row.Domain.trim() : "",
+              type: row.Type ? row.Type.trim() : "",
+              metadata: {
+                years_of_exp: parseInt(row["Years of experience"], 10) || 0,
+                current_company: row.Company ? row.Company.trim() : "",
+              },
+            };
+          })
+          .filter(Boolean);
 
-                setResults(uploadResults);
-                setLoading(false);
-                if (uploadResults.some(result => !result.success)) {
-                    setErrorSnackbarOpen(true);
-                } else {
-                    setSnackbarOpen(true);
-                }
-                if (typeof refetch === 'function') {
-                    refetch();
-                }
-                
+        const uploadResults = await Promise.all(
+          evaluators.map(async (evaluator) => {
+            try {
+              await addEvaluator({ variables: evaluator });
+              return { name: evaluator.name, success: true };
+            } catch (error) {
+              return {
+                name: evaluator.name,
+                success: false,
+                error: error.message,
+              };
             }
-        });
-    };
+          }),
+        );
 
-    const successCount = results.filter(result => result.success).length;
-    const errorDetails = results.filter(result => !result.success).map(result => ({ name: result.name, error: result.error }));
+        setResults(uploadResults);
+        setLoading(false);
+        if (uploadResults.some((result) => !result.success)) {
+          setErrorSnackbarOpen(true);
+        } else {
+          setSnackbarOpen(true);
+        }
+        if (typeof refetch === "function") {
+          refetch();
+        }
+      },
+    });
+  };
 
-    return (
-        <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-            <DialogTitle>Upload CSV File</DialogTitle>
-            <DialogContent>
-                <Box
-                    border={2}
-                    borderRadius={1}
-                    borderColor="grey.300"
-                    p={3}
-                    textAlign="center"
-                    onDrop={handleFileDrop}
-                    onDragOver={(e) => e.preventDefault()}
-                    sx={{ cursor: 'pointer', '&:hover': { borderColor: 'primary.main' } }}
-                >
-                    <input
-                        type="file"
-                        accept=".csv"
-                        style={{ display: 'none' }}
-                        id="csv-upload"
-                        onChange={handleFileChange}
-                    />
-                    <label htmlFor="csv-upload">
-                        <CloudUpload fontSize="large" />
-                        <Typography variant="body1">Drag and drop a file here or click to upload</Typography>
-                    </label>
-                </Box>
-                {selectedFile && (
-                    <Box display="flex" alignItems="center" mt={2}>
-                        <Typography variant="body2">{selectedFile.name}</Typography>
-                        <IconButton onClick={handleFileRemove}><Close /></IconButton>
-                    </Box>
-                )}
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
-                <Button variant="contained" color="primary" onClick={handleSubmit} disabled={!selectedFile || loading}>
-                    {loading ? 'Uploading...' : 'Submit'}
-                </Button>
-            </DialogActions>
-            <Snackbar
-                open={snackbarOpen}
-                autoHideDuration={6000}
-                onClose={() => setSnackbarOpen(false)}
-            >
-                <Alert onClose={() => setSnackbarOpen(false)} severity="success">
-                    Successfully Mutated {successCount} entries
-                </Alert>
-            </Snackbar>
-            <Snackbar
-                open={errorSnackbarOpen}
-                autoHideDuration={6000}
-                onClose={() => setErrorSnackbarOpen(false)}
-            >
-                <Alert onClose={() => setErrorSnackbarOpen(false)} severity="error">
-                    Unable to mutate few entries
-                    <Button color="secondary" size="small" onClick={() => setErrorDialogOpen(true)}>
-                        Show Errors
-                    </Button>
-                </Alert>
-            </Snackbar>
-            <Dialog open={errorDialogOpen} onClose={() => setErrorDialogOpen(false)}>
-                <DialogTitle>Error Details</DialogTitle>
-                <DialogContent dividers style={{ maxHeight: '400px', overflowY: 'auto' }}>
-                    <TableContainer component={Paper}>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Name</TableCell>
-                                    <TableCell>Message</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {errorDetails.map((detail, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell>{detail.name}</TableCell>
-                                        <TableCell>{detail.error}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setErrorDialogOpen(false)} color="primary">Close</Button>
-                </DialogActions>
-            </Dialog>
-        </Dialog>
-    );
+  const successCount = results.filter((result) => result.success).length;
+  const errorDetails = results
+    .filter((result) => !result.success)
+    .map((result) => ({ name: result.name, error: result.error }));
+
+  return (
+    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+      <DialogTitle>Upload CSV File</DialogTitle>
+      <DialogContent>
+        <Box
+          border={2}
+          borderRadius={1}
+          borderColor="grey.300"
+          p={3}
+          textAlign="center"
+          onDrop={handleFileDrop}
+          onDragOver={(e) => e.preventDefault()}
+          sx={{ cursor: "pointer", "&:hover": { borderColor: "primary.main" } }}
+        >
+          <input
+            type="file"
+            accept=".csv"
+            style={{ display: "none" }}
+            id="csv-upload"
+            onChange={handleFileChange}
+          />
+          <label htmlFor="csv-upload">
+            <CloudUpload fontSize="large" />
+            <Typography variant="body1">
+              Drag and drop a file here or click to upload
+            </Typography>
+          </label>
+        </Box>
+        {selectedFile && (
+          <Box display="flex" alignItems="center" mt={2}>
+            <Typography variant="body2">{selectedFile.name}</Typography>
+            <IconButton onClick={handleFileRemove}>
+              <Close />
+            </IconButton>
+          </Box>
+        )}
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancel</Button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleSubmit}
+          disabled={!selectedFile || loading}
+        >
+          {loading ? "Uploading..." : "Submit"}
+        </Button>
+      </DialogActions>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={() => setSnackbarOpen(false)}
+      >
+        <Alert onClose={() => setSnackbarOpen(false)} severity="success">
+          Successfully Mutated {successCount} entries
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={errorSnackbarOpen}
+        autoHideDuration={6000}
+        onClose={() => setErrorSnackbarOpen(false)}
+      >
+        <Alert onClose={() => setErrorSnackbarOpen(false)} severity="error">
+          Unable to mutate few entries
+          <Button
+            color="secondary"
+            size="small"
+            onClick={() => setErrorDialogOpen(true)}
+          >
+            Show Errors
+          </Button>
+        </Alert>
+      </Snackbar>
+      <Dialog open={errorDialogOpen} onClose={() => setErrorDialogOpen(false)}>
+        <DialogTitle>Error Details</DialogTitle>
+        <DialogContent
+          dividers
+          style={{ maxHeight: "400px", overflowY: "auto" }}
+        >
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Message</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {errorDetails.map((detail, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{detail.name}</TableCell>
+                    <TableCell>{detail.error}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setErrorDialogOpen(false)} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Dialog>
+  );
 };
 
 export default CsvUploader;
