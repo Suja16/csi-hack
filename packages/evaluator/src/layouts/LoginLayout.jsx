@@ -1,15 +1,15 @@
 import { useContext, useState, useEffect, useMemo } from "react";
 import { Outlet, Navigate, useNavigate } from "react-router";
 import { useLazyQuery } from "@apollo/client";
-import { TEAMS_QUERY } from "../queries";
+import { APPROVED_TEAMS } from "../queries";
 import UserDataContext from "../contexts/userDataContext";
 import TeamsContext from "../contexts/teamsContext";
 
 export default function LoginLayout() {
   const { userData } = useContext(UserDataContext);
   const [allTeams, setAllTeams] = useState({});
-  const [firstLoad, isFirstLoad] = useState(false);
-  const navigate = useNavigate();
+  // const [firstLoad, isFirstLoad] = useState(false);
+  // const navigate = useNavigate();
 
   const evaluatedTeams = useMemo(() => {
     const d = {};
@@ -28,19 +28,19 @@ export default function LoginLayout() {
         d[teamId] = allTeams[teamId];
       }
     });
-    if (!firstLoad) {
-      isFirstLoad(false);
-      navigate(`/teams/${Object.keys(d)[0]}`);
-    }
+    // if (!firstLoad) {
+    //   isFirstLoad(false);
+    //   navigate(`/teams/${Object.keys(d)[0]}`);
+    // }
     return d;
   }, [allTeams]);
 
-  const [getTeamsData] = useLazyQuery(TEAMS_QUERY, {
+  const [getTeamsData] = useLazyQuery(APPROVED_TEAMS, {
     fetchPolicy: "network-only",
     onCompleted: (data) => {
       const d = {};
-      data.feedbacks.forEach((feedback) => {
-        d[feedback.id] = feedback;
+      data.Team.forEach((team) => {
+        d[team.id] = team;
       });
       setAllTeams(d);
     },

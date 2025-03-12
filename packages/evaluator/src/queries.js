@@ -32,11 +32,11 @@ export const LOGIN_QUERY = gql`
 
 export const APPROVED_TEAMS = gql`
   query ApprovedTeams {
-  Team(where: {approved: {_eq: true}}) {
-    id
-    name
+    Team(where: { approved: { _eq: true } }) {
+      id
+      name
+    }
   }
-}
 `;
 
 export const UPDATE_SCORES = gql`
@@ -44,6 +44,26 @@ export const UPDATE_SCORES = gql`
     update_feedbacks_by_pk(
       pk_columns: { id: $id }
       _set: { metric_score: $metric_score, totalscore: $totalscore }
+    ) {
+      id
+    }
+  }
+`;
+
+export const INSERT_SCORES = gql`
+  mutation INSERTSCORES(
+    $team_id: Int
+    $metric_score: jsonb
+    $totalscore: Int
+    $user_Id: Int
+  ) {
+    insert_feedbacks_one(
+      object: {
+        team_id: $team_id
+        metric_score: $metric_score
+        totalscore: $totalscore
+        Idea_user_Id: $user_Id
+      }
     ) {
       id
     }

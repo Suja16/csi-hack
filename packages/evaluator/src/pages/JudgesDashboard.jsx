@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { useContext, useRef, useEffect, useState } from "react"
-import { motion, animate } from "framer-motion"
+import { useContext, useRef, useEffect, useState } from "react";
+import { motion, animate } from "framer-motion";
 import {
   AppBar,
   Autocomplete,
@@ -21,7 +21,7 @@ import {
   Tabs,
   Tab,
   Chip,
-} from "@mui/material"
+} from "@mui/material";
 import {
   Gavel as GavelIcon,
   Logout as LogoutIcon,
@@ -30,81 +30,86 @@ import {
   Assessment as AssessmentIcon,
   Description as DescriptionIcon,
   Comment as CommentIcon,
-} from "@mui/icons-material"
-import { useQuery } from "@apollo/client"
-import UserDataContext from "../contexts/userDataContext"
-import { useNavigate } from "react-router"
-import { APPROVED_TEAMS } from "../queries"
-import { alpha } from "@mui/material/styles"
+} from "@mui/icons-material";
+import { useQuery } from "@apollo/client";
+import UserDataContext from "../contexts/userDataContext";
+import { useNavigate } from "react-router";
+import { APPROVED_TEAMS } from "../queries";
+import { alpha } from "@mui/material/styles";
+import NewEvaluatorsInput from "../components/NewEevaluatorsInput";
 
 const JudgesDashboard = () => {
-  const { setUserData } = useContext(UserDataContext)
-  const navigate = useNavigate()
-  const theme = useTheme()
-  const { data, loading, error } = useQuery(APPROVED_TEAMS)
-  const [selectedTeam, setSelectedTeam] = useState(null)
-  const [activeTab, setActiveTab] = useState(0)
-  const scrollRef = useRef(null)
+  const { setUserData } = useContext(UserDataContext);
+  const navigate = useNavigate();
+  const theme = useTheme();
+  const { data, loading, error } = useQuery(APPROVED_TEAMS);
+  const [selectedTeam, setSelectedTeam] = useState(null);
+  const [activeTab, setActiveTab] = useState(0);
+  const scrollRef = useRef(null);
 
   const handleTeamChange = (_, newValue) => {
     if (newValue) {
-      const team = data.Team.find((team) => team.id === newValue.id)
-      setSelectedTeam(team)
-      scrollToTeam(team.id)
+      const team = data.Team.find((team) => team.id === newValue.id);
+      setSelectedTeam(team);
+      scrollToTeam(team.id);
     } else {
-      setSelectedTeam(null)
+      setSelectedTeam(null);
     }
-  }
+  };
 
   const handleTeamClick = (team) => {
-    setSelectedTeam(team)
-    scrollToTeam(team.id)
-  }
+    setSelectedTeam(team);
+    scrollToTeam(team.id);
+  };
 
   const scrollToTeam = (teamId) => {
     if (scrollRef.current) {
-      const element = document.getElementById(`team-item-${teamId}`)
+      const element = document.getElementById(`team-item-${teamId}`);
       if (element) {
-        const scrollContainer = scrollRef.current
-        const elementRect = element.getBoundingClientRect()
-        const containerRect = scrollContainer.getBoundingClientRect()
+        const scrollContainer = scrollRef.current;
+        const elementRect = element.getBoundingClientRect();
+        const containerRect = scrollContainer.getBoundingClientRect();
 
         const centerPosition =
           elementRect.left +
           scrollContainer.scrollLeft -
           containerRect.left -
           containerRect.width / 2 +
-          elementRect.width / 2
+          elementRect.width / 2;
 
         const controls = animate(scrollContainer.scrollLeft, centerPosition, {
           type: "spring",
           stiffness: 300,
           damping: 30,
           onUpdate: (value) => {
-            scrollContainer.scrollLeft = value
+            scrollContainer.scrollLeft = value;
           },
-        })
+        });
 
-        return () => controls.stop()
+        return () => controls.stop();
       }
     }
-  }
+  };
 
   useEffect(() => {
     if (data && data.Team && data.Team.length > 0 && !selectedTeam) {
-      setSelectedTeam(data.Team[0])
+      setSelectedTeam(data.Team[0]);
     }
-  }, [data, selectedTeam])
+  }, [data, selectedTeam]);
 
   const handleLogout = () => {
-    setUserData(null)
-    localStorage.removeItem("email")
-    localStorage.removeItem("password")
-    navigate("/login")
-  }
+    setUserData(null);
+    localStorage.removeItem("email");
+    localStorage.removeItem("password");
+    navigate("/login");
+  };
 
   const NoTeamSelected = () => (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <Paper
         elevation={2}
         sx={{
@@ -129,7 +134,13 @@ const JudgesDashboard = () => {
             duration: 3,
           }}
         >
-          <GroupIcon sx={{ fontSize: 60, color: alpha(theme.palette.primary.main, 0.3), mb: 2 }} />
+          <GroupIcon
+            sx={{
+              fontSize: 60,
+              color: alpha(theme.palette.primary.main, 0.3),
+              mb: 2,
+            }}
+          />
         </motion.div>
         <Typography variant="h6" color="textSecondary" gutterBottom>
           No Team Selected
@@ -151,17 +162,16 @@ const JudgesDashboard = () => {
         </motion.div>
       </Paper>
     </motion.div>
-  )
+  );
 
   const TeamDetails = ({ team }) => {
-    const domains = ["FinTech", "Genai", "Cybersecurity"]
-    const domain = domains[team.id % domains.length]
+    const domains = ["FinTech", "Genai", "Cybersecurity"];
+    const domain = domains[team.id % domains.length];
 
     const mentorReview = {
       name: "Dr. Smith",
-      comment:
-        "Very good project, but could have ben better",
-    }
+      comment: "Very good project, but could have ben better",
+    };
 
     return (
       <motion.div
@@ -202,7 +212,11 @@ const JudgesDashboard = () => {
                 {team.name}
               </Typography>
               <Box display="flex" alignItems="center" mt={0.5}>
-                <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
+                <motion.div
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 }}
+                >
                   <Chip
                     label={`Team ID: ${team.id}`}
                     size="small"
@@ -210,14 +224,28 @@ const JudgesDashboard = () => {
                     sx={{ mr: 1, fontSize: "0.7rem" }}
                   />
                 </motion.div>
-                <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
-                  <Chip label={domain} size="small" color="primary" variant="outlined" sx={{ fontSize: "0.7rem" }} />
+                <motion.div
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <Chip
+                    label={domain}
+                    size="small"
+                    color="primary"
+                    variant="outlined"
+                    sx={{ fontSize: "0.7rem" }}
+                  />
                 </motion.div>
               </Box>
             </Box>
           </Box>
 
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
             <Paper
               variant="outlined"
               sx={{
@@ -230,16 +258,23 @@ const JudgesDashboard = () => {
               }}
             >
               <Box display="flex" alignItems="center" mb={1}>
-                <CommentIcon sx={{ fontSize: 18, color: theme.palette.info.main, mr: 1 }} />
+                <CommentIcon
+                  sx={{ fontSize: 18, color: theme.palette.info.main, mr: 1 }}
+                />
                 <Typography variant="subtitle2" color="info.main">
                   Mentor Review
                 </Typography>
-                
               </Box>
-              <Typography variant="body2" sx={{ fontStyle: "italic", color: "text.secondary" }}>
+              <Typography
+                variant="body2"
+                sx={{ fontStyle: "italic", color: "text.secondary" }}
+              >
                 "{mentorReview.comment}"
               </Typography>
-              <Typography variant="caption" sx={{ display: "block", mt: 1, textAlign: "right" }}>
+              <Typography
+                variant="caption"
+                sx={{ display: "block", mt: 1, textAlign: "right" }}
+              >
                 — {mentorReview.name}
               </Typography>
             </Paper>
@@ -270,30 +305,21 @@ const JudgesDashboard = () => {
           </Tabs>
 
           {activeTab === 0 && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
-              <Paper
-                variant="outlined"
-                sx={{
-                  p: 2,
-                  borderRadius: 1.5,
-                  transition: "all 0.2s",
-                  "&:hover": {
-                    borderColor: theme.palette.primary.light,
-                  },
-                }}
-              >
-                <Typography variant="subtitle2" gutterBottom display="flex" alignItems="center">
-                  <AssessmentIcon sx={{ mr: 1, fontSize: 16, color: theme.palette.primary.main }} />
-                  Evaluation Criteria
-                </Typography>
-                <Typography variant="body2" color="text.secondary">Evaluation scores </Typography>
-                {/* Evaluation form would go here */}
-              </Paper>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              <NewEvaluatorsInput teamId={selectedTeam.id} />
             </motion.div>
           )}
 
           {activeTab === 1 && (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+            >
               <Paper
                 variant="outlined"
                 sx={{
@@ -305,64 +331,87 @@ const JudgesDashboard = () => {
                   },
                 }}
               >
-                <Typography variant="subtitle2" gutterBottom display="flex" alignItems="center">
-                  <DescriptionIcon sx={{ mr: 1, fontSize: 16, color: theme.palette.primary.main }} />
+                <Typography
+                  variant="subtitle2"
+                  gutterBottom
+                  display="flex"
+                  alignItems="center"
+                >
+                  <DescriptionIcon
+                    sx={{
+                      mr: 1,
+                      fontSize: 16,
+                      color: theme.palette.primary.main,
+                    }}
+                  />
                   Problem Statement
                 </Typography>
-                <Typography variant="body2" color="text.secondary"> This problem statement is about fintech, cybersec, genai etc  etc</Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {" "}
+                  This problem statement is about fintech, cybersec, genai etc
+                  etc
+                </Typography>
               </Paper>
             </motion.div>
           )}
         </Paper>
       </motion.div>
-    )
-  }
+    );
+  };
 
   const LoadingState = () => (
     <Box sx={{ width: "100%" }}>
-      <Skeleton variant="rectangular" height={50} sx={{ mb: 2, borderRadius: 1 }} />
+      <Skeleton
+        variant="rectangular"
+        height={50}
+        sx={{ mb: 2, borderRadius: 1 }}
+      />
       <Skeleton variant="rectangular" height={300} sx={{ borderRadius: 2 }} />
     </Box>
-  )
+  );
 
   const ErrorState = () => (
     <Alert
       severity="error"
       sx={{ mb: 2, borderRadius: 2 }}
       action={
-        <Button color="inherit" size="small" onClick={() => window.location.reload()}>
+        <Button
+          color="inherit"
+          size="small"
+          onClick={() => window.location.reload()}
+        >
           RETRY
         </Button>
       }
     >
       Error loading teams: {error?.message}
     </Alert>
-  )
+  );
 
   const TeamScrollbar = ({ teams }) => {
-    const [isDragging, setIsDragging] = useState(false)
-    const [startX, setStartX] = useState(0)
-    const [scrollLeft, setScrollLeft] = useState(0)
+    const [isDragging, setIsDragging] = useState(false);
+    const [startX, setStartX] = useState(0);
+    const [scrollLeft, setScrollLeft] = useState(0);
 
     const handleMouseDown = (e) => {
-      setIsDragging(true)
-      setStartX(e.pageX - scrollRef.current.offsetLeft)
-      setScrollLeft(scrollRef.current.scrollLeft)
-      scrollRef.current.style.cursor = "grabbing"
-    }
+      setIsDragging(true);
+      setStartX(e.pageX - scrollRef.current.offsetLeft);
+      setScrollLeft(scrollRef.current.scrollLeft);
+      scrollRef.current.style.cursor = "grabbing";
+    };
 
     const handleMouseUp = () => {
-      setIsDragging(false)
-      scrollRef.current.style.cursor = "grab"
-    }
+      setIsDragging(false);
+      scrollRef.current.style.cursor = "grab";
+    };
 
     const handleMouseMove = (e) => {
-      if (!isDragging) return
-      e.preventDefault()
-      const x = e.pageX - scrollRef.current.offsetLeft
-      const walk = (x - startX) * 2 
-      scrollRef.current.scrollLeft = scrollLeft - walk
-    }
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - scrollRef.current.offsetLeft;
+      const walk = (x - startX) * 2;
+      scrollRef.current.scrollLeft = scrollLeft - walk;
+    };
 
     return (
       <Box
@@ -386,7 +435,11 @@ const JudgesDashboard = () => {
           }}
         />
 
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <Box
             ref={scrollRef}
             sx={{
@@ -418,7 +471,7 @@ const JudgesDashboard = () => {
             onMouseMove={handleMouseMove}
           >
             {teams.map((team) => {
-              const isSelected = selectedTeam && selectedTeam.id === team.id
+              const isSelected = selectedTeam && selectedTeam.id === team.id;
 
               return (
                 <motion.div
@@ -433,9 +486,15 @@ const JudgesDashboard = () => {
                   animate={{
                     opacity: 1,
                     scale: isSelected ? 1.05 : 1,
-                    backgroundColor: isSelected ? theme.palette.primary.main : alpha(theme.palette.primary.light, 0.1),
-                    color: isSelected ? theme.palette.primary.contrastText : theme.palette.text.primary,
-                    boxShadow: isSelected ? "0px 4px 8px rgba(0,0,0,0.15)" : "none",
+                    backgroundColor: isSelected
+                      ? theme.palette.primary.main
+                      : alpha(theme.palette.primary.light, 0.1),
+                    color: isSelected
+                      ? theme.palette.primary.contrastText
+                      : theme.palette.text.primary,
+                    boxShadow: isSelected
+                      ? "0px 4px 8px rgba(0,0,0,0.15)"
+                      : "none",
                     zIndex: isSelected ? 1 : 0,
                   }}
                   transition={{
@@ -485,7 +544,7 @@ const JudgesDashboard = () => {
                     </Typography>
                   </Box>
                 </motion.div>
-              )
+              );
             })}
           </Box>
         </motion.div>
@@ -503,17 +562,17 @@ const JudgesDashboard = () => {
           }}
         />
       </Box>
-    )
-  }
+    );
+  };
 
   const renderContent = () => {
-    if (loading) return <LoadingState />
-    if (error) return <ErrorState />
+    if (loading) return <LoadingState />;
+    if (error) return <ErrorState />;
 
     const teamOptions = data.Team.map((team) => ({
       label: team.name,
       id: team.id,
-    }))
+    }));
 
     return (
       <>
@@ -541,21 +600,33 @@ const JudgesDashboard = () => {
                 label="Search Teams"
                 variant="standard"
                 sx={{
-                  "& .MuiInput-underline:before": { borderBottomColor: "transparent" },
-                  "& .MuiInput-underline:hover:before": { borderBottomColor: alpha(theme.palette.primary.main, 0.3) },
+                  "& .MuiInput-underline:before": {
+                    borderBottomColor: "transparent",
+                  },
+                  "& .MuiInput-underline:hover:before": {
+                    borderBottomColor: alpha(theme.palette.primary.main, 0.3),
+                  },
                   "& .MuiInputLabel-root": { fontSize: "0.85rem" },
                 }}
               />
             )}
             onChange={handleTeamChange}
-            value={selectedTeam ? { label: selectedTeam.name, id: selectedTeam.id } : null}
+            value={
+              selectedTeam
+                ? { label: selectedTeam.name, id: selectedTeam.id }
+                : null
+            }
           />
         </Paper>
 
-        {selectedTeam ? <TeamDetails team={selectedTeam} /> : <NoTeamSelected />}
+        {selectedTeam ? (
+          <TeamDetails team={selectedTeam} />
+        ) : (
+          <NoTeamSelected />
+        )}
       </>
-    )
-  }
+    );
+  };
 
   return (
     <Box
@@ -564,7 +635,9 @@ const JudgesDashboard = () => {
         flexDirection: "column",
         height: "100vh",
         bgcolor:
-          theme.palette.mode === "light" ? alpha(theme.palette.primary.light, 0.05) : theme.palette.background.default,
+          theme.palette.mode === "light"
+            ? alpha(theme.palette.primary.light, 0.05)
+            : theme.palette.background.default,
       }}
     >
       <AppBar
@@ -578,8 +651,14 @@ const JudgesDashboard = () => {
       >
         <Toolbar sx={{ minHeight: "60px" }}>
           <Box display="flex" alignItems="center">
-            <GavelIcon sx={{ mr: 1.5, color: theme.palette.primary.main, fontSize: 24 }} />
-            <Typography variant="h6" component="div" sx={{ fontWeight: "bold", fontSize: "1.1rem" }}>
+            <GavelIcon
+              sx={{ mr: 1.5, color: theme.palette.primary.main, fontSize: 24 }}
+            />
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ fontWeight: "bold", fontSize: "1.1rem" }}
+            >
               Judges Dashboard
             </Typography>
           </Box>
@@ -619,8 +698,7 @@ const JudgesDashboard = () => {
         </Typography>
       </Box>
     </Box>
-  )
-}
+  );
+};
 
-export default JudgesDashboard
-
+export default JudgesDashboard;

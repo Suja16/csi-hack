@@ -36,7 +36,7 @@ function Login() {
         localStorage.setItem("password", data.Idea_USERS[0].password);
       } else if (data.Idea_USERS[0].roles === "offline_evaluator") {
         setUserData(data.Idea_USERS[0]);
-        navigate("/");
+        navigate("/of-evaluator-dashboard");
         localStorage.setItem("email", data.Idea_USERS[0].email);
         localStorage.setItem("password", data.Idea_USERS[0].password);
         localStorage.setItem("type", data.Idea_USERS[0].type);
@@ -45,10 +45,7 @@ function Login() {
         navigate("/judges-dashboard");
         localStorage.setItem("email", data.Idea_USERS[0].email);
         localStorage.setItem("password", data.Idea_USERS[0].password);
-      }
-
-
-      else {
+      } else {
         failure("Invalid credentials");
       }
     },
