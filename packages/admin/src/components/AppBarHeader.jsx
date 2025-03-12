@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { AppBar, Toolbar, IconButton, Box, Button } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import logo from "../assets/idea.png";
 import UserDataContext from "../contexts/userDataContext";
 import { useContext } from "react";
@@ -18,6 +19,11 @@ const AppBarHeader = ({ toggleSidebar, isSidebarOpen }) => {
     localStorage.removeItem("password");
   };
 
+  const handleExcelDownload = () => {
+    // Open the Google Sheets export URL in a new tab to download the Excel file
+    window.open('https://docs.google.com/spreadsheets/d/1rYLcFG2MODvOMWOjjz-fbzACSApmPy9nY22DyF-N3pw/export?format=xlsx', '_blank');
+  };
+
   return (
     <AppBar
       position="fixed"
@@ -29,7 +35,6 @@ const AppBarHeader = ({ toggleSidebar, isSidebarOpen }) => {
       }}
     >
       <Toolbar>
-        {/* Menu Icon to toggle Sidebar */}
         <IconButton
           edge="start"
           color="black"
@@ -39,19 +44,25 @@ const AppBarHeader = ({ toggleSidebar, isSidebarOpen }) => {
           {isSidebarOpen ? <MenuOpenIcon /> : <MenuIcon />}
         </IconButton>
 
-        {/* App Logo */}
         <Box
           component="img"
           src={logo}
           alt="App Logo"
           sx={{
-            // height: "40px",
             width: "150px",
             maxHeight: "100%",
             maxWidth: "100%",
           }}
         />
-        <Box display="flex" justifyContent="flex-end" width="100%">
+        <Box display="flex" justifyContent="flex-end" width="100%" gap={2}>
+          <Button 
+            variant="contained" 
+            color="success"
+            startIcon={<FileDownloadIcon />}
+            onClick={handleExcelDownload}
+          >
+            Download Excel
+          </Button>
           <Button variant="contained" onClick={handleLogout}>
             Logout
           </Button>
