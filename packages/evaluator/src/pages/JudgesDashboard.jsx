@@ -49,8 +49,6 @@ const JudgesDashboard = () => {
       const team = data.Team.find((team) => team.id === newValue.id);
       setSelectedTeam(team);
       scrollToTeam(team.id);
-    } else {
-      setSelectedTeam(null);
     }
   };
 
