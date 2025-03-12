@@ -30,13 +30,13 @@ import {
   Assessment as AssessmentIcon,
   Description as DescriptionIcon,
   Comment as CommentIcon,
-} from "@mui/icons-material";
-import { useQuery } from "@apollo/client";
-import UserDataContext from "../contexts/userDataContext";
-import { useNavigate } from "react-router";
-import { APPROVED_TEAMS } from "../queries";
+} from "@mui/icons-material";;
+import { useQuery } from "@apollo/client";;
+import UserDataContext from "../contexts/userDataContext";;
+import { useNavigate } from "react-router";;
+import { APPROVED_TEAMS } from "../queries";;
 import { alpha } from "@mui/material/styles";
-import NewEvaluatorsInput from "../components/NewEevaluatorsInput";
+import NewEvaluatorsInput from "../components/NewEevaluatorsInput";;
 
 const JudgesDashboard = () => {
   const { setUserData } = useContext(UserDataContext);
@@ -49,26 +49,24 @@ const JudgesDashboard = () => {
 
   const handleTeamChange = (_, newValue) => {
     if (newValue) {
-      const team = data.Team.find((team) => team.id === newValue.id);
-      setSelectedTeam(team);
-      scrollToTeam(team.id);
-    } else {
-      setSelectedTeam(null);
+      const team = data.Team.find((team) => team.id === newValue.id);;
+      setSelectedTeam(team);;
+      scrollToTeam(team.id);;;
     }
   };
 
   const handleTeamClick = (team) => {
-    setSelectedTeam(team);
-    scrollToTeam(team.id);
-  };
+    setSelectedTeam(team);;
+    scrollToTeam(team.id);;
+  };;
 
   const scrollToTeam = (teamId) => {
     if (scrollRef.current) {
-      const element = document.getElementById(`team-item-${teamId}`);
+      const element = document.getElementById(`team-item-${teamId}`);;
       if (element) {
-        const scrollContainer = scrollRef.current;
-        const elementRect = element.getBoundingClientRect();
-        const containerRect = scrollContainer.getBoundingClientRect();
+        const scrollContainer = scrollRef.current;;
+        const elementRect = element.getBoundingClientRect();;
+        const containerRect = scrollContainer.getBoundingClientRect();;
 
         const centerPosition =
           elementRect.left +
@@ -389,9 +387,34 @@ const JudgesDashboard = () => {
   );
 
   const TeamScrollbar = ({ teams }) => {
-    const [isDragging, setIsDragging] = useState(false);
-    const [startX, setStartX] = useState(0);
-    const [scrollLeft, setScrollLeft] = useState(0);
+    const [isDragging, setIsDragging] = useState(false);;
+    const [startX, setStartX] = useState(0);;
+    const [scrollLeft, setScrollLeft] = useState(0);;
+
+    useEffect(() => {
+      if (selectedTeam && scrollRef.current) {
+        const element = document.getElementById(`team-item-${selectedTeam.id}`);
+        if (element) {
+          const scrollContainer = scrollRef.current;
+          const elementRect = element.getBoundingClientRect();
+          const containerRect = scrollContainer.getBoundingClientRect();
+
+          const scrollPosition =
+            element.offsetLeft -
+            containerRect.width / 2 +
+            elementRect.width / 2;
+
+          animate(scrollContainer.scrollLeft, scrollPosition, {
+            type: "spring",
+            stiffness: 300,
+            damping: 30,
+            onUpdate: (value) => {
+              scrollContainer.scrollLeft = value;
+            },
+          });
+        }
+      }
+    }, [selectedTeam]);
 
     const handleMouseDown = (e) => {
       setIsDragging(true);
