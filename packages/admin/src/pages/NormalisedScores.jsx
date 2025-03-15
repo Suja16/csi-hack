@@ -1,4 +1,5 @@
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography, Button } from "@mui/material";
+import * as XLSX from "xlsx";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
@@ -176,6 +177,40 @@ export default function NormalisedScores() {
     );
   }
 
+  const exportToExcel = () => {
+    // Create worksheet from the rows data
+    const worksheet = XLSX.utils.json_to_sheet(rows.map(row => ({
+      'Team ID': row.team_id,
+      'Team Name': row.team_name,
+      'Leader Name': row.leader_name,
+      'College': row.college_name,
+      'Evaluation 1 Score (Raw)': row.eval1Score,
+      'Evaluation 2 Score (Raw)': row.eval2Score,
+      'Average Score': row.average,
+      'Normalized Score': row.totalScore
+    })));
+    
+    // Create workbook and add the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Normalized Scores');
+    
+    // Add stats info in a separate sheet
+    const statsData = [
+      { Metric: 'Round 1 Mean', Value: eval1Stats.mean },
+      { Metric: 'Round 1 Standard Deviation', Value: eval1Stats.stdDev },
+      { Metric: 'Round 2 Mean', Value: eval2Stats.mean },
+      { Metric: 'Round 2 Standard Deviation', Value: eval2Stats.stdDev },
+      { Metric: 'Combined Data Mean', Value: AllData.mean },
+      { Metric: 'Combined Data Standard Deviation', Value: AllData.stdDev }
+    ];
+    
+    const statsWorksheet = XLSX.utils.json_to_sheet(statsData);
+    XLSX.utils.book_append_sheet(workbook, statsWorksheet, 'Statistics');
+    
+    // Generate Excel file and trigger download
+    XLSX.writeFile(workbook, 'PSB_Hackathon_Normalised_Scores.xlsx');
+  };
+
   return (
     <Box
       sx={{
@@ -196,17 +231,32 @@ export default function NormalisedScores() {
         },
       }}
     >
-      <Typography
-        variant="h4"
-        component="h1"
-        sx={{
-          mb: 3,
-          fontWeight: "bold",
-          textAlign: "center",
-        }}
-      >
-        Union Bank - PSB Hackathon Normalised Scores
-      </Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+        <Typography
+          variant="h4"
+          component="h1"
+          sx={{
+            fontWeight: "bold",
+          }}
+        >
+          Union Bank - PSB Hackathon Normalised Scores
+        </Typography>
+        
+        <Button 
+          variant="contained"
+          onClick={exportToExcel}
+          sx={{
+            backgroundColor: "#4caf50",
+            fontSize: "1rem",
+            p: 1,
+            color: "white",
+            "&:hover": { backgroundColor: "#388e3c" },
+          }}
+        >
+          Export to Excel
+        </Button>
+      </Box>
+      
       <DataGrid
         rows={rows}
         columns={columns}
