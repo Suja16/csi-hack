@@ -676,7 +676,7 @@ function Evalution1({ teamId }) {
           </Box>
 
           <Typography variant="body2" sx={{ fontWeight: 500 }}>
-            Remarks:
+            Suggestions:
           </Typography>
           <TextField
             placeholder="Enter your remarks"
