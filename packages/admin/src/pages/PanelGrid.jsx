@@ -237,24 +237,36 @@ export default function PanelGrid() {
     // Create a map of team IDs to make merging easier
     const teamMap = new Map();
     
+    // Debug: Log the structure of metric scores from Round 1
+    console.log("Round 1 metric structure:", data["Round 1"].feedbacks[0]?.metric_score);
+    
     // Process Round 1 data
     data["Round 1"].feedbacks.forEach(feedback => {
       const teamId = feedback.team_id;
+      
+      // Create a more robust metric score mapping
+      const metricScores = {};
+      feedback.metric_score.forEach(metric => {
+        // Convert metric names to a standardized format
+        metricScores[metric.name] = metric.score;
+        
+        // Debug: Keep track of original metric names and their values
+        console.log(`Team ${feedback.team_info_from_eventio?.name}, Metric: ${metric.name}, Score: ${metric.score}`);
+      });
+      
       teamMap.set(teamId, {
         teamName: feedback.team_info_from_eventio?.name || 'Unknown Team',
         leaderName: feedback.team_info_from_eventio?.Leader?.name || 'Unknown Leader',
         collegeName: feedback.team_info_from_eventio?.Leader?.college || 'Unknown College',
         teamType: determineTeamType(feedback.team_info_from_eventio),
         round1Panel: feedback.Idea_USER?.name || 'Unknown Panel',
-        round1Scores: feedback.metric_score.reduce((obj, metric) => {
-          obj[metric.name] = metric.score;
-          return obj;
-        }, {}),
+        round1Scores: metricScores,
+        round1MetricArray: feedback.metric_score, // Store the original array for reference
         round1Total: feedback.totalscore || 0
       });
     });
     
-    // Process Round 2 data and merge
+    // Process Round 2 data and merge - similar approach
     data["Round 2"].feedbacks.forEach(feedback => {
       const teamId = feedback.team_id;
       const existingData = teamMap.get(teamId) || {
@@ -281,25 +293,33 @@ export default function PanelGrid() {
       const finalScore = team.round1Total && team.round2Total 
         ? (team.round1Total * 0.4) + (team.round2Total * 0.6)
         : team.round1Total || team.round2Total || 0;
-        
+      console.log(`Team ${team.teamName} Final Score:`, finalScore);
+      
+      // Debug the available metrics for this team
+      console.log(`Team ${team.teamName} Round 1 metrics:`, team.round1Scores);
+      
+      // Check if we have the raw metric array to pull values directly
+      const r1Metrics = team.round1MetricArray || [];
+      
+      // Get values by position in the array if possible, otherwise try by name
       return {
         'Team Name': team.teamName,
         'Leader Name': team.leaderName,
         'College': team.collegeName,
         'Team Type': team.teamType,
         'Round 1 Panel': team.round1Panel || 'N/A',
-        // Round 1 metrics
-        'R1 - Problem Definition': team.round1Scores?.['Problem Definition'] || 0,
-        'R1 - Solution Clarity': team.round1Scores?.['Solution Clarity'] || 0,
-        'R1 - Novelty': team.round1Scores?.['Novelty'] || 0,
-        'R1 - Feasibility': team.round1Scores?.['Feasibility'] || 0,
-        'R1 - Technology Stack': team.round1Scores?.['Technology Stack'] || 0,
-        'R1 - Sustainability': team.round1Scores?.['Sustainability'] || 0,
-        'R1 - Impact': team.round1Scores?.['Impact'] || 0,
-        'R1 - Impression': team.round1Scores?.["Evaluator's Impression"] || 0,
+        // Round 1 metrics - try getting by index first (more reliable), then by name
+        'R1 - Problem Definition': r1Metrics[0]?.score || team.round1Scores?.['Problem Definition'] || 0,
+        'R1 - Solution Clarity': r1Metrics[1]?.score || team.round1Scores?.['Solution Clarity'] || 0,
+        'R1 - Novelty': r1Metrics[2]?.score || team.round1Scores?.['Novelty'] || 0,
+        'R1 - Feasibility': r1Metrics[3]?.score || team.round1Scores?.['Feasibility'] || 0,
+        'R1 - Technology Stack': r1Metrics[4]?.score || team.round1Scores?.['Technology Stack'] || 0,
+        'R1 - Sustainability': r1Metrics[5]?.score || team.round1Scores?.['Sustainability'] || 0,
+        'R1 - Impact': r1Metrics[6]?.score || team.round1Scores?.['Impact'] || 0,
+        'R1 - Impression': r1Metrics[7]?.score || team.round1Scores?.["Evaluator's Impression"] || 0,
         'Round 1 Total': team.round1Total || 0,
         'Round 2 Panel': team.round2Panel || 'N/A',
-        // Round 2 metrics
+        // Round 2 metrics remain the same
         'R2 - Originality': team.round2Scores?.['originality'] || 0,
         'R2 - Completion': team.round2Scores?.['Completion'] || 0,
         'R2 - Code Quality': team.round2Scores?.['Quality '] || 0,
@@ -375,7 +395,7 @@ export default function PanelGrid() {
             }}
             onClick={handlePush}
           >
-            Push
+            Download
           </Button>
           <FormControl sx={{ minWidth: 200 }}>
             <InputLabel>Evaluation Round</InputLabel>
