@@ -194,7 +194,10 @@ export const PanelDataQueryEval1 = gql`
   query MyQuery {
     feedbacks(
       where: {
-        Idea_USER: { roles: { _eq: judges }, for: { _eq: evaluation1 } }
+        Idea_USER: {
+          roles: { _eq: offline_evaluator }
+          for: { _eq: evaluation1 }
+        }
       }
     ) {
       team_id
@@ -227,7 +230,10 @@ export const PanelDataQueryEval2 = gql`
   query MyQuery {
     feedbacks(
       where: {
-        Idea_USER: { roles: { _eq: judges }, for: { _eq: evaluation2 } }
+        Idea_USER: {
+          roles: { _eq: offline_evaluator }
+          for: { _eq: evaluation2 }
+        }
       }
     ) {
       team_id
@@ -258,33 +264,47 @@ export const PanelDataQueryEval2 = gql`
 
 export const Eval1Scores = gql`
   query MyQuery {
-  feedbacks(where: {Idea_USER: {roles: {_eq: judges}, for: {_eq: evaluation1}}}) {
-    id
-    team_id
-    totalscore
-    team_info_from_eventio {
-      name
-      Leader {
+    feedbacks(
+      where: {
+        Idea_USER: {
+          roles: { _eq: offline_evaluator }
+          for: { _eq: evaluation1 }
+        }
+      }
+    ) {
+      id
+      team_id
+      totalscore
+      team_info_from_eventio {
         name
-        college
+        Leader {
+          name
+          college
+        }
       }
     }
   }
-}
 `;
 export const Eval2Scores = gql`
   query MyQuery {
-  feedbacks(where: {Idea_USER: {roles: {_eq: judges}, for: {_eq: evaluation2}}}) {
-    id
-    team_id
-    totalscore
-    team_info_from_eventio {
-      name
-      Leader {
+    feedbacks(
+      where: {
+        Idea_USER: {
+          roles: { _eq: offline_evaluator }
+          for: { _eq: evaluation2 }
+        }
+      }
+    ) {
+      id
+      team_id
+      totalscore
+      team_info_from_eventio {
         name
-        college
+        Leader {
+          name
+          college
+        }
       }
     }
   }
-}
 `;
