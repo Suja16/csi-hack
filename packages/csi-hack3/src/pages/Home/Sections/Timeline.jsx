@@ -8,36 +8,126 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import {
-  Edit as EditIcon,
-  Send as SendIcon,
-  Notifications as NotificationsIcon,
-  EmojiEvents as EmojiEventsIcon
+  Schedule as ScheduleIcon,
+  Code as CodeIcon,
+  Restaurant as RestaurantIcon,
+  EmojiEvents as EmojiEventsIcon,
+  Groups as GroupsIcon,
+  Assessment as AssessmentIcon,
 } from '@mui/icons-material';
 import { motion, useScroll, useSpring, useInView } from 'framer-motion';
 
 const TIMELINE_DATA = [
   {
-    date: "9th Jan 2025",
-    title: "Phase 1: Registrations & Idea Submission",
-    content: "Registrations go live and idea submission begins. Get ready to showcase your innovative ideas!",
-    icon: EditIcon
+    time: "8:00 AM - 9:00 AM",
+    title: "Registration + Breakfast",
+    content: "Arrive early to register, have breakfast, and prepare for the exciting day ahead!",
+    day: "Day 1",
+    icon: ScheduleIcon
   },
   {
-    date: "3rd Feb 2025",
-    title: "Last Date for Idea Submission",
-    content: "Final day to submit your groundbreaking ideas. Don't miss this deadline!",
-    icon: SendIcon
+    time: "9:00 AM - 9:30 AM",
+    title: "Dispersal towards allocated rooms & Orientation",
+    content: "Get familiar with your allocated room and receive important orientation information.",
+    day: "Day 1",
+    icon: GroupsIcon
   },
   {
-    date: "7th Feb 2025",
-    title: "Announcement of Phase 1 Results",
-    content: "The moment of truth! Find out if your idea has been selected for the next phase.",
-    icon: NotificationsIcon
+    time: "9:30 AM - 1:00 PM",
+    title: "Coding Round 1",
+    content: "First coding session of the hackathon. Get started on your innovative ideas!",
+    day: "Day 1",
+    icon: CodeIcon
   },
   {
-    date: "To Be Announced",
-    title: "Phase 2: Hackathon",
-    content: "Get ready for the main event! Details of Phase 2 will be revealed soon. Stay tuned!",
+    time: "1:00 PM - 2:00 PM",
+    title: "Lunch",
+    content: "Refuel with lunch to keep your energy up for the next coding round.",
+    day: "Day 1",
+    icon: RestaurantIcon
+  },
+  {
+    time: "2:00 PM - 5:00 PM",
+    title: "Coding Round 2",
+    content: "Continue developing your projects in this extended coding session.",
+    day: "Day 1",
+    icon: CodeIcon
+  },
+  {
+    time: "5:00 PM - 6:00 PM",
+    title: "Snacks",
+    content: "Take a short break and enjoy some snacks before diving back into coding.",
+    day: "Day 1",
+    icon: RestaurantIcon
+  },
+  {
+    time: "6:00 PM - 9:00 PM",
+    title: "Coding Round 3 + Evaluation Round 1",
+    content: "Third coding session along with the first evaluation of your progress.",
+    day: "Day 1",
+    icon: AssessmentIcon
+  },
+  {
+    time: "9:00 PM - 10:00 PM",
+    title: "Dinner",
+    content: "Dinner time! Recharge for the night coding session ahead.",
+    day: "Day 1",
+    icon: RestaurantIcon
+  },
+  {
+    time: "10:00 PM - 1:00 AM",
+    title: "Coding Round 4",
+    content: "Keep the momentum going in this night coding session.",
+    day: "Day 1",
+    icon: CodeIcon
+  },
+  {
+    time: "1:00 AM - 2:00 AM",
+    title: "Midnight Snacks",
+    content: "Grab some midnight snacks to fuel your late-night coding efforts.",
+    day: "Day 2",
+    icon: RestaurantIcon
+  },
+  {
+    time: "2:00 AM - 8:00 AM",
+    title: "Coding Round 5",
+    content: "The overnight coding marathon continues! Push through to make significant progress.",
+    day: "Day 2",
+    icon: CodeIcon
+  },
+  {
+    time: "8:00 AM - 9:00 AM",
+    title: "Breakfast",
+    content: "Start your second day with a nutritious breakfast.",
+    day: "Day 2",
+    icon: RestaurantIcon
+  },
+  {
+    time: "9:00 AM - 9:30 AM",
+    title: "Coding Round 6",
+    content: "Final sprint to polish your projects before evaluations.",
+    day: "Day 2",
+    icon: CodeIcon
+  },
+  {
+    time: "10:00 AM - 11:30 AM",
+    title: "Evaluation Round 2",
+    content: "Present your work for the second round of evaluations.",
+    day: "Day 2",
+    icon: AssessmentIcon
+  },
+  {
+    time: "12:00 PM - 2:00 PM",
+    title: "Power Judging + Lunch",
+    content: "Final judging of projects alongside lunch on day 2.",
+    day: "Day 2",
+    icon: EmojiEventsIcon
+  },
+  {
+    time: "3:00 PM - 6:00 PM",
+    title: "Conclusion",
+    content: "Awards ceremony, closing remarks, and celebration of your achievements!",
+    day: "Day 2",
     icon: EmojiEventsIcon
   }
 ];
@@ -123,6 +213,10 @@ const TimelineCard = ({ data, isLeft, inView, isMobile }) => {
     }
   };
 
+  const getBadgeColor = (day) => {
+    return day === "Day 1" ? "primary.main" : "secondary.main";
+  };
+
   return (
     <motion.div
       variants={variants}
@@ -130,18 +224,34 @@ const TimelineCard = ({ data, isLeft, inView, isMobile }) => {
       animate={inView ? "visible" : "hidden"}
       style={{
         position: 'absolute',
-        width: isMobile ? 'calc(100% - 48px)' : '47%', // Increase width to 50% in desktop mode
+        width: isMobile ? 'calc(100% - 48px)' : '47%',
         left: isMobile ? '48px' : isLeft ? '0' : 'auto',
         right: isMobile ? 'auto' : isLeft ? 'auto' : '0'
       }}
     >
       <Paper elevation={3} sx={{ p: { xs: 2, md: 3 } }}>
         <motion.div variants={contentVariants}>
-          <motion.div variants={contentVariants}>
-            <Typography variant="subtitle2" color="secondary" gutterBottom>
-              {data.date}
-            </Typography>
-          </motion.div>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+            <motion.div variants={contentVariants}>
+              <Typography variant="subtitle2" color="text.secondary" gutterBottom>
+                {data.time}
+              </Typography>
+            </motion.div>
+            <motion.div variants={contentVariants}>
+              <Typography
+                variant="caption"
+                sx={{
+                  backgroundColor: getBadgeColor(data.day),
+                  color: 'white',
+                  px: 1,
+                  py: 0.5,
+                  borderRadius: 1
+                }}
+              >
+                {data.day}
+              </Typography>
+            </motion.div>
+          </Box>
           <motion.div variants={contentVariants}>
             <Typography variant="h6" gutterBottom>
               {data.title}
@@ -173,8 +283,8 @@ const TimelineItem = ({ data, index }) => {
       ref={ref}
       sx={{
         position: 'relative',
-        height: { xs: 200, md: 256 },
-        mb: { xs: 6, md: 8 },
+        height: { xs: 180, md: 200 },
+        mb: { xs: 4, md: 5 },
         '&:last-child': { mb: 0 }
       }}
     >
@@ -188,7 +298,6 @@ const TimelineItem = ({ data, index }) => {
     </Box>
   );
 };
-
 
 const HackathonTimeline = () => {
   const containerRef = React.useRef(null);
@@ -250,7 +359,7 @@ const HackathonTimeline = () => {
             variant="body1"
             align="center"
             color="text.secondary"
-            sx={{ maxWidth: 600, mx: 'auto', mb: 6 }}
+            sx={{ maxWidth: 700, mx: 'auto', mb: 6 }}
           >
             Join us on this exciting journey of innovation and creativity.
             Mark these dates on your calendar and prepare to showcase your skills!
@@ -287,7 +396,7 @@ const HackathonTimeline = () => {
 
           {TIMELINE_DATA.map((item, index) => (
             <TimelineItem
-              key={item.title}
+              key={`${item.day}-${item.time}`}
               data={item}
               index={index}
             />
@@ -297,6 +406,5 @@ const HackathonTimeline = () => {
     </Container>
   );
 };
-
 
 export default HackathonTimeline;

@@ -30,13 +30,63 @@ import {
   Assessment as AssessmentIcon,
   Description as DescriptionIcon,
   Comment as CommentIcon,
-} from "@mui/icons-material";;
-import { useQuery } from "@apollo/client";;
-import UserDataContext from "../contexts/userDataContext";;
-import { useNavigate } from "react-router";;
-import { APPROVED_TEAMS } from "../queries";;
+} from "@mui/icons-material";
+import { useQuery } from "@apollo/client";
+import UserDataContext from "../contexts/userDataContext";
+import { useNavigate } from "react-router";
+import { APPROVED_TEAMS } from "../queries";
 import { alpha } from "@mui/material/styles";
-import NewEvaluatorsInput from "../components/NewEevaluatorsInput";;
+import NewEvaluatorsInput from "../components/NewEevaluatorsInput";
+
+const dropdownVariants = {
+  open: (height = 1000) => ({
+    clipPath: `circle(${height * 2 + 200}px at calc(100% - 40px) 40px)`,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 20,
+      restDelta: 2,
+      opacity: { duration: 0.3 },
+    },
+  }),
+  closed: {
+    clipPath: "circle(30px at calc(100% - 40px) 40px)",
+    opacity: 0,
+    transition: {
+      delay: 0.2,
+      type: "spring",
+      stiffness: 400,
+      damping: 40,
+      opacity: { duration: 0.2 },
+    },
+  },
+};
+
+const listVariants = {
+  open: {
+    transition: { staggerChildren: 0.07, delayChildren: 0.2 },
+  },
+  closed: {
+    transition: { staggerChildren: 0.05, staggerDirection: -1 },
+  },
+};
+
+const itemVariants = {
+  open: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      y: { stiffness: 1000, velocity: -100 },
+    },
+  },
+  closed: {
+    y: 50,
+    opacity: 0,
+    transition: {
+      y: { stiffness: 1000 },
+    },
+  },
+};
 
 const JudgesDashboard = () => {
   const { setUserData } = useContext(UserDataContext);
@@ -46,27 +96,32 @@ const JudgesDashboard = () => {
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [activeTab, setActiveTab] = useState(0);
   const scrollRef = useRef(null);
+  const [evaluatedTeams] = useState([
+    { id: 1, name: "penguin" },
+    { id: 2, name: "Euclidians" },
+  ]);
+  const [showEvaluatedTeams, setShowEvaluatedTeams] = useState(false);
 
   const handleTeamChange = (_, newValue) => {
     if (newValue) {
-      const team = data.Team.find((team) => team.id === newValue.id);;
-      setSelectedTeam(team);;
-      scrollToTeam(team.id);;;
+      const team = data.Team.find((team) => team.id === newValue.id);
+      setSelectedTeam(team);
+      scrollToTeam(team.id);
     }
   };
 
   const handleTeamClick = (team) => {
-    setSelectedTeam(team);;
-    scrollToTeam(team.id);;
-  };;
+    setSelectedTeam(team);
+    scrollToTeam(team.id);
+  };
 
   const scrollToTeam = (teamId) => {
     if (scrollRef.current) {
-      const element = document.getElementById(`team-item-${teamId}`);;
+      const element = document.getElementById(`team-item-${teamId}`);
       if (element) {
-        const scrollContainer = scrollRef.current;;
-        const elementRect = element.getBoundingClientRect();;
-        const containerRect = scrollContainer.getBoundingClientRect();;
+        const scrollContainer = scrollRef.current;
+        const elementRect = element.getBoundingClientRect();
+        const containerRect = scrollContainer.getBoundingClientRect();
 
         const centerPosition =
           elementRect.left +
@@ -387,9 +442,9 @@ const JudgesDashboard = () => {
   );
 
   const TeamScrollbar = ({ teams }) => {
-    const [isDragging, setIsDragging] = useState(false);;
-    const [startX, setStartX] = useState(0);;
-    const [scrollLeft, setScrollLeft] = useState(0);;
+    const [isDragging, setIsDragging] = useState(false);
+    const [startX, setStartX] = useState(0);
+    const [scrollLeft, setScrollLeft] = useState(0);
 
     useEffect(() => {
       if (selectedTeam && scrollRef.current) {
@@ -672,27 +727,173 @@ const JudgesDashboard = () => {
           color: theme.palette.text.primary,
         }}
       >
-        <Toolbar sx={{ minHeight: "60px" }}>
+        <Toolbar sx={{ minHeight: { xs: "56px", sm: "60px" } }}>
           <Box display="flex" alignItems="center">
             <GavelIcon
-              sx={{ mr: 1.5, color: theme.palette.primary.main, fontSize: 24 }}
+              sx={{
+                mr: 1,
+                color: theme.palette.primary.main,
+                fontSize: { xs: 20, sm: 24 },
+              }}
             />
             <Typography
               variant="h6"
               component="div"
-              sx={{ fontWeight: "bold", fontSize: "1.1rem" }}
+              sx={{
+                fontWeight: "bold",
+                fontSize: { xs: "0.9rem", sm: "1.1rem" },
+                display: { xs: "none", sm: "block" },
+              }}
             >
               Judges Dashboard
             </Typography>
           </Box>
           <Box sx={{ flexGrow: 1 }} />
+
+          <Box
+            onClick={() => setShowEvaluatedTeams(!showEvaluatedTeams)}
+            sx={{
+              mx: { xs: 1, sm: 2 },
+              px: { xs: 1.5, sm: 2 },
+              py: 0.5,
+              borderRadius: 1.5,
+              cursor: "pointer",
+              bgcolor: alpha(theme.palette.primary.main, 0.1),
+              "&:hover": {
+                bgcolor: alpha(theme.palette.primary.main, 0.15),
+              },
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+            }}
+          >
+            <AssessmentIcon
+              sx={{ fontSize: { xs: 16, sm: 20 }, color: "primary.main" }}
+            />
+            <Typography
+              variant="h6"
+              color="primary"
+              sx={{
+                fontWeight: "bold",
+                fontSize: { xs: "0.9rem", sm: "1.1rem" },
+              }}
+            >
+              {evaluatedTeams.length}
+            </Typography>
+          </Box>
+
+          {showEvaluatedTeams && (
+            <motion.div
+              initial="closed"
+              animate="open"
+              variants={dropdownVariants}
+              style={{
+                position: "absolute",
+                top: "70px",
+                right: "50%",
+                transform: "translateX(50%)",
+                zIndex: 1000,
+              }}
+            >
+              <Paper
+                sx={{
+                  width: "auto",
+                  minWidth: "200px",
+                  maxWidth: "90vw",
+                  p: 1.5,
+                  boxShadow: 3,
+                  overflow: "hidden",
+                  backgroundColor: "background.paper",
+                }}
+              >
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                >
+                  <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                    <AssessmentIcon
+                      sx={{ fontSize: 16, mr: 1, color: "primary.main" }}
+                    />
+                    <Typography variant="subtitle2">
+                      Evaluated Teams (dummy)
+                    </Typography>
+                  </Box>
+                </motion.div>
+
+                <Divider sx={{ mb: 1 }} />
+
+                <motion.ul
+                  variants={listVariants}
+                  style={{
+                    listStyle: "none",
+                    padding: 0,
+                    margin: 0,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "8px",
+                  }}
+                >
+                  {evaluatedTeams.map((team, index) => (
+                    <motion.li
+                      key={team.id}
+                      variants={itemVariants}
+                      whileHover={{ scale: 1.02, x: 5 }}
+                      whileTap={{ scale: 0.98 }}
+                      style={{
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <motion.span
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{
+                          delay: index * 0.1 + 0.2,
+                          type: "spring",
+                          stiffness: 500,
+                          damping: 25,
+                        }}
+                        style={{
+                          width: 6,
+                          height: 6,
+                          borderRadius: "50%",
+                          backgroundColor: theme.palette.primary.main,
+                          marginRight: 8,
+                          opacity: 0.7,
+                          display: "inline-block",
+                        }}
+                      />
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{
+                          fontSize: "0.8rem",
+                          fontWeight: 500,
+                        }}
+                      >
+                        {team.name}
+                      </Typography>
+                    </motion.li>
+                  ))}
+                </motion.ul>
+              </Paper>
+            </motion.div>
+          )}
+
           <Button
             variant="outlined"
             color="primary"
             size="small"
             onClick={handleLogout}
-            startIcon={<LogoutIcon sx={{ fontSize: 18 }} />}
-            sx={{ borderRadius: 1.5, fontSize: "0.8rem" }}
+            startIcon={<LogoutIcon sx={{ fontSize: { xs: 16, sm: 18 } }} />}
+            sx={{
+              borderRadius: 1.5,
+              fontSize: { xs: "0.75rem", sm: "0.8rem" },
+              ml: { xs: 1, sm: 2 },
+              px: { xs: 1, sm: 2 },
+            }}
           >
             Logout
           </Button>
