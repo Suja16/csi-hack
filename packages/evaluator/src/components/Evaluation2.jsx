@@ -21,83 +21,104 @@ import Popup from "../../../ui/popup";
 
 const innovationCriteria = [
   {
-    name: "Problem Definition",
-    score: 0,
-    maxScore: 10,
-    description: "Meeting the requirements of problem definition",
-  },
-  {
-    name: "Solution Clarity",
-    score: 0,
-    maxScore: 10,
-    description: "Clarity of solution",
-  },
-  {
-    name: "Novelty",
+    name: "Originality of solution",
     score: 0,
     maxScore: 20,
-    description: "Novelty of method and Implementation",
+    description: "Originality of solution",
   },
 ];
 
 const technicalCriteria = [
   {
-    name: "Feasibility",
+    name: "Completion of solution",
     score: 0,
     maxScore: 20,
-    description: "Feasibility of solution",
+    description: "Completion of solution",
   },
   {
-    name: "Technology Stack",
+    name: "Quality of Code",
     score: 0,
     maxScore: 10,
-    description: "Technology Stack",
+    description: "Quality of Code",
+  },
+];
+
+const userExperienceCriteria = [
+  {
+    name: "Ease of use and interface design",
+    score: 0,
+    maxScore: 20,
+    description: "Ease of use and interface design",
+  },
+];
+
+const businessPotentialCriteria = [
+  {
+    name: "Commercialization and Entrepreneurship viability",
+    score: 0,
+    maxScore: 20,
+    description: "Commercialization and Entrepreneurship viability",
+  },
+  {
+    name: "Market Ready",
+    score: 0,
+    maxScore: 10,
+    description: "Market Ready",
   },
 ];
 
 const scalabilityCriteria = [
   {
-    name: "Sustainability",
+    name: "Potential to scale the solution to larger user base or application",
     score: 0,
-    maxScore: 10,
-    description: "Sustainability (Long Term Usable and Scalable)",
+    maxScore: 20,
+    description:
+      "Potential to scale the solution to larger user base or application",
   },
   {
-    name: "Impact",
+    name: "Future Work Progression",
     score: 0,
     maxScore: 10,
-    description: "Scale of impact (Usability of Solution)",
+    description: "Future Work Progression",
   },
 ];
 
-const impressionCriteria = [
+const teamPotentialCriteria = [
   {
-    name: "Evaluator's Impression",
+    name: "Incorporated Suggestion Recommended in Round 1",
+    score: 0,
+    maxScore: 10,
+    description: "Incorporated Suggestion Recommended in Round 1",
+  },
+  {
+    name: "Evaluators Impression",
     score: 0,
     maxScore: 10,
     description: "Overall impression of the evaluator",
   },
 ];
 
-function NewEvaluatorsInput({ teamId }) {
+function Evaluation1({ teamId }) {
   const theme = useTheme();
   const isXsScreen = useMediaQuery(theme.breakpoints.down("xs"));
   const isSmScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const isMdScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   const primaryColor = "#eb272e";
   const secondaryColor = "#84b4d9";
 
   const { allTeams, refetch } = useContext(TeamsContext);
   const { userData } = useContext(UserDataContext);
-  console.log(userData.id);
   const id = teamId;
   const disabled = false;
 
   const [innovation, setInnovation] = useState(innovationCriteria);
   const [technical, setTechnical] = useState(technicalCriteria);
+  const [userExperience, setUserExperience] = useState(userExperienceCriteria);
+  const [businessPotential, setBusinessPotential] = useState(
+    businessPotentialCriteria,
+  );
   const [scalability, setScalability] = useState(scalabilityCriteria);
-  const [impression, setImpression] = useState(impressionCriteria);
+  const [teamPotential, setTeamPotential] = useState(teamPotentialCriteria);
 
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedSection, setHighlightedSection] = useState(null);
@@ -105,21 +126,24 @@ function NewEvaluatorsInput({ teamId }) {
   useEffect(() => {
     if (allTeams[id]?.metric_score) {
       const metricScores = allTeams[id].metric_score;
-      setInnovation(metricScores.slice(0, 3));
-      setTechnical(metricScores.slice(3, 5));
-      setScalability(metricScores.slice(5, 7));
-      setImpression(metricScores.slice(7, 8));
+      setInnovation(metricScores.slice(0, 1));
+      setTechnical(metricScores.slice(1, 3));
+      setUserExperience(metricScores.slice(3, 4));
+      setBusinessPotential(metricScores.slice(4, 6));
+      setScalability(metricScores.slice(6, 8));
+      setTeamPotential(metricScores.slice(8, 10));
     } else {
       setInnovation(innovationCriteria);
       setTechnical(technicalCriteria);
+      setUserExperience(userExperienceCriteria);
+      setBusinessPotential(businessPotentialCriteria);
       setScalability(scalabilityCriteria);
-      setImpression(impressionCriteria);
+      setTeamPotential(teamPotentialCriteria);
     }
   }, [allTeams, id]);
 
   const [insertScores, { loading }] = useMutation(INSERT_SCORES, {
     onCompleted: () => {
-      console.log("HO GAYA");
       refetch();
     },
     onError: (error) => {
@@ -127,29 +151,57 @@ function NewEvaluatorsInput({ teamId }) {
     },
   });
 
-  // Handle score change
   const handleScoreChange = (criteriaType, index, newScore) => {
     const updatedValue = Math.min(
       Math.max(newScore, 0),
       getCriteriaByType(criteriaType)[index].maxScore,
     );
 
-    if (criteriaType === "innovation") {
-      const updated = [...innovation];
-      updated[index].score = updatedValue;
-      setInnovation(updated);
-    } else if (criteriaType === "technical") {
-      const updated = [...technical];
-      updated[index].score = updatedValue;
-      setTechnical(updated);
-    } else if (criteriaType === "scalability") {
-      const updated = [...scalability];
-      updated[index].score = updatedValue;
-      setScalability(updated);
-    } else if (criteriaType === "impression") {
-      const updated = [...impression];
-      updated[index].score = updatedValue;
-      setImpression(updated);
+    switch (criteriaType) {
+      case "innovation":
+        setInnovation((prev) =>
+          prev.map((item, i) =>
+            i === index ? { ...item, score: updatedValue } : item,
+          ),
+        );
+        break;
+      case "technical":
+        setTechnical((prev) =>
+          prev.map((item, i) =>
+            i === index ? { ...item, score: updatedValue } : item,
+          ),
+        );
+        break;
+      case "userExperience":
+        setUserExperience((prev) =>
+          prev.map((item, i) =>
+            i === index ? { ...item, score: updatedValue } : item,
+          ),
+        );
+        break;
+      case "businessPotential":
+        setBusinessPotential((prev) =>
+          prev.map((item, i) =>
+            i === index ? { ...item, score: updatedValue } : item,
+          ),
+        );
+        break;
+      case "scalability":
+        setScalability((prev) =>
+          prev.map((item, i) =>
+            i === index ? { ...item, score: updatedValue } : item,
+          ),
+        );
+        break;
+      case "teamPotential":
+        setTeamPotential((prev) =>
+          prev.map((item, i) =>
+            i === index ? { ...item, score: updatedValue } : item,
+          ),
+        );
+        break;
+      default:
+        break;
     }
   };
 
@@ -159,38 +211,57 @@ function NewEvaluatorsInput({ teamId }) {
         return innovation;
       case "technical":
         return technical;
+      case "userExperience":
+        return userExperience;
+      case "businessPotential":
+        return businessPotential;
       case "scalability":
         return scalability;
-      case "impression":
-        return impression;
+      case "teamPotential":
+        return teamPotential;
       default:
         return [];
     }
   };
 
-  // Calculate total score and category scores
   const calculateScores = () => {
     const innovationScore = innovation.reduce(
       (acc, item) => acc + item.score,
       0,
     );
     const technicalScore = technical.reduce((acc, item) => acc + item.score, 0);
+    const userExperienceScore = userExperience.reduce(
+      (acc, item) => acc + item.score,
+      0,
+    );
+    const businessPotentialScore = businessPotential.reduce(
+      (acc, item) => acc + item.score,
+      0,
+    );
     const scalabilityScore = scalability.reduce(
       (acc, item) => acc + item.score,
       0,
     );
-    const impressionScore = impression.reduce(
+    const teamPotentialScore = teamPotential.reduce(
       (acc, item) => acc + item.score,
       0,
     );
+
     const totalScore =
-      innovationScore + technicalScore + scalabilityScore + impressionScore;
+      innovationScore +
+      technicalScore +
+      userExperienceScore +
+      businessPotentialScore +
+      scalabilityScore +
+      teamPotentialScore;
 
     return {
       innovationScore,
       technicalScore,
+      userExperienceScore,
+      businessPotentialScore,
       scalabilityScore,
-      impressionScore,
+      teamPotentialScore,
       totalScore,
     };
   };
@@ -201,8 +272,10 @@ function NewEvaluatorsInput({ teamId }) {
     const allScores = [
       ...innovation,
       ...technical,
+      ...userExperience,
+      ...businessPotential,
       ...scalability,
-      ...impression,
+      ...teamPotential,
     ];
 
     insertScores({
@@ -215,14 +288,13 @@ function NewEvaluatorsInput({ teamId }) {
     });
   };
 
-  // Get color for score percentage visualization
   const getScoreColor = (score, maxScore) => {
     const percentage = (score / maxScore) * 100;
-    if (percentage >= 80) return "#4caf50"; // Green
-    if (percentage >= 60) return "#8bc34a"; // Light Green
-    if (percentage >= 40) return "#ffc107"; // Yellow
-    if (percentage >= 20) return "#ff9800"; // Orange
-    return "#f44336"; // Red
+    if (percentage >= 80) return "#4caf50";
+    if (percentage >= 60) return "#8bc34a";
+    if (percentage >= 40) return "#ffc107";
+    if (percentage >= 20) return "#ff9800";
+    return "#f44336";
   };
 
   const renderCriteriaSection = (
@@ -440,354 +512,132 @@ function NewEvaluatorsInput({ teamId }) {
   const {
     innovationScore,
     technicalScore,
+    userExperienceScore,
+    businessPotentialScore,
     scalabilityScore,
-    impressionScore,
+    teamPotentialScore,
     totalScore,
   } = calculateScores();
 
-  // Calculate total percentage
-  const totalPercentage = (totalScore / 100) * 100;
-  const scoreColor = getScoreColor(totalScore, 100);
+  const totalPercentage = (totalScore / 150) * 100;
+  const scoreColor = getScoreColor(totalScore, 150);
 
   return (
     <>
-      <Box
-        sx={{
-          width: "95%",
-          maxWidth: "800px",
-          mx: "auto",
-          mb: 4,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-          gap: 3,
-        }}
-      >
+      <Box sx={{ width: "95%", maxWidth: "800px", mx: "auto", mb: 4 }}>
         {renderCriteriaSection(
           innovation,
           "Innovation",
-          "Innovation evaluation criteria",
-          40,
+          "Originality of solution",
+          20,
           "innovation",
-          "#e91e63", // Pink
-          "#f48fb1",
+          "#e91e63",
         )}
 
         {renderCriteriaSection(
           technical,
           "Technical Feasibility",
-          "Technical evaluation criteria",
+          "Technical implementation quality",
           30,
           "technical",
-          "#2196f3", // Blue
-          "#90caf9",
+          "#2196f3",
+        )}
+
+        {renderCriteriaSection(
+          userExperience,
+          "User Experience",
+          "Interface and usability",
+          20,
+          "userExperience",
+          "#9c27b0",
+        )}
+
+        {renderCriteriaSection(
+          businessPotential,
+          "Business Potential",
+          "Market viability and readiness",
+          30,
+          "businessPotential",
+          "#009688",
         )}
 
         {renderCriteriaSection(
           scalability,
           "Scalability",
-          "Scalability evaluation criteria",
-          20,
+          "Growth potential and future work",
+          30,
           "scalability",
-          "#ff9800", // Orange
-          "#ffcc80",
+          "#ff9800",
         )}
 
         {renderCriteriaSection(
-          impression,
-          "Evaluator's Impression",
-          "Overall impression",
-          10,
-          "impression",
-          "#4caf50", // Green
-          "#a5d6a7",
+          teamPotential,
+          "Team Potential",
+          "Team performance and evaluation",
+          20,
+          "teamPotential",
+          "#ff5722",
         )}
-      </Box>
 
-      <Paper
-        elevation={4}
-        sx={{
-          width: "95%",
-          maxWidth: "800px",
-          mx: "auto",
-          mb: 5,
-          p: { xs: 2, sm: 2.5, md: 3 },
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexDirection: isSmScreen ? "column" : "row",
-          gap: isSmScreen ? 3 : 3,
-          borderRadius: "12px",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <Box
-          sx={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            height: "6px",
-            bgcolor: "#e0e0e0",
-          }}
-        >
-          <Box
-            sx={{
-              height: "100%",
-              width: `${totalPercentage}%`,
-              bgcolor: scoreColor,
-              transition: "width 0.5s ease",
-            }}
-          />
-        </Box>
-
-        <Box
-          sx={{
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            gap: 1.5,
-            pt: 1,
-          }}
-        >
-          <Box sx={{ width: "100%", textAlign: "left" }}>
-            <Typography
-              sx={{
-                color: "#424242",
-                fontSize: isSmScreen ? "0.9rem" : "1rem",
-                fontWeight: 500,
-                textTransform: "uppercase",
-                letterSpacing: "1px",
-                mb: 1,
-              }}
-            >
-              Category Scores
-            </Typography>
-
-            <Box
-              sx={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: { xs: 1.5, sm: 2, md: 3 },
-                mt: 1,
-                mb: 2,
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1,
-                  p: 1,
-                  bgcolor: alpha("#e91e63", 0.1),
-                  borderRadius: "6px",
-                }}
-              >
-                <Box
-                  sx={{
-                    width: "12px",
-                    height: "12px",
-                    bgcolor: "#e91e63",
-                    borderRadius: "50%",
-                  }}
-                />
-                <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                  Innovation: {innovationScore}/40
-                </Typography>
-              </Box>
-
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1,
-                  p: 1,
-                  bgcolor: alpha("#2196f3", 0.1),
-                  borderRadius: "6px",
-                }}
-              >
-                <Box
-                  sx={{
-                    width: "12px",
-                    height: "12px",
-                    bgcolor: "#2196f3",
-                    borderRadius: "50%",
-                  }}
-                />
-                <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                  Technical: {technicalScore}/30
-                </Typography>
-              </Box>
-
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1,
-                  p: 1,
-                  bgcolor: alpha("#ff9800", 0.1),
-                  borderRadius: "6px",
-                }}
-              >
-                <Box
-                  sx={{
-                    width: "12px",
-                    height: "12px",
-                    bgcolor: "#ff9800",
-                    borderRadius: "50%",
-                  }}
-                />
-                <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                  Scalability: {scalabilityScore}/20
-                </Typography>
-              </Box>
-
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1,
-                  p: 1,
-                  bgcolor: alpha("#4caf50", 0.1),
-                  borderRadius: "6px",
-                }}
-              >
-                <Box
-                  sx={{
-                    width: "12px",
-                    height: "12px",
-                    bgcolor: "#4caf50",
-                    borderRadius: "50%",
-                  }}
-                />
-                <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                  Impression: {impressionScore}/10
-                </Typography>
-              </Box>
-            </Box>
+        <Paper elevation={4} sx={{ p: 3, mt: 3, borderRadius: "12px" }}>
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, mb: 2 }}>
+            <ScoreChip
+              label={`Innovation: ${innovationScore}/20`}
+              color="#e91e63"
+            />
+            <ScoreChip
+              label={`Technical: ${technicalScore}/30`}
+              color="#2196f3"
+            />
+            <ScoreChip
+              label={`UX: ${userExperienceScore}/20`}
+              color="#9c27b0"
+            />
+            <ScoreChip
+              label={`Business: ${businessPotentialScore}/30`}
+              color="#009688"
+            />
+            <ScoreChip
+              label={`Scalability: ${scalabilityScore}/30`}
+              color="#ff9800"
+            />
+            <ScoreChip
+              label={`Team: ${teamPotentialScore}/20`}
+              color="#ff5722"
+            />
           </Box>
 
-          <Divider sx={{ my: 1 }} />
+          <Divider sx={{ my: 2 }} />
 
           <Box
             sx={{
-              width: "100%",
               display: "flex",
-              alignItems: "center",
               justifyContent: "space-between",
-              mt: 1,
+              alignItems: "center",
             }}
           >
-            <Typography
-              variant={isSmScreen ? "h6" : "h5"}
-              sx={{
-                color: "#212121",
-                fontWeight: 600,
-              }}
-            >
-              Total Score
-            </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-                p: 1,
-                px: 2,
-                bgcolor: alpha(scoreColor, 0.1),
-                borderRadius: "8px",
-                border: `1px solid ${alpha(scoreColor, 0.3)}`,
-              }}
-            >
-              <Typography
-                variant={isSmScreen ? "h5" : "h4"}
-                sx={{
-                  color: scoreColor,
-                  fontWeight: 700,
-                }}
-              >
+            <Typography variant="h6">Total Score</Typography>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+              <Typography variant="h4" color={scoreColor}>
                 {totalScore}
               </Typography>
-              <Typography
-                variant={isSmScreen ? "body1" : "h6"}
-                sx={{
-                  color: "#757575",
-                  fontWeight: 500,
-                }}
-              >
-                /100
-              </Typography>
+              <Typography variant="body1">/150</Typography>
             </Box>
           </Box>
-        </Box>
 
-        <Box
-          sx={{
-            width: isSmScreen ? "100%" : "auto",
-            display: "flex",
-            justifyContent: isSmScreen ? "center" : "flex-end",
-            mt: isSmScreen ? 2 : 0,
-          }}
-        >
           <LoadingButton
+            fullWidth
             variant="contained"
-            color="primary"
-            fullWidth={isSmScreen}
-            sx={{
-              width: isSmScreen ? "100%" : "8rem",
-              height: "3rem",
-              bgcolor: !disabled ? primaryColor : "#9e9e9e",
-              borderRadius: "8px",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-              maxWidth: isSmScreen ? "300px" : "auto",
-              transition: "all 0.3s ease",
-              "&:hover": {
-                bgcolor: !disabled ? "#d81b60" : "#9e9e9e",
-                transform: !disabled ? "translateY(-2px)" : "none",
-                boxShadow: !disabled
-                  ? "0 6px 16px rgba(0,0,0,0.15)"
-                  : "0 4px 12px rgba(0,0,0,0.1)",
-              },
-            }}
+            sx={{ mt: 3, bgcolor: primaryColor }}
             onClick={() => setIsOpen(true)}
             loading={loading}
-            disabled={disabled}
-            loadingIndicator={
-              <LinearProgress color="inherit" sx={{ width: "100%" }} />
-            }
           >
-            <Typography
-              variant="button"
-              sx={{
-                color: "white",
-                fontWeight: 600,
-                letterSpacing: "0.5px",
-                textTransform: "uppercase",
-              }}
-            >
-              Submit
-            </Typography>
+            Submit Evaluation
           </LoadingButton>
-        </Box>
-      </Paper>
+        </Paper>
+      </Box>
 
-      <Popup
-        dialogProps={{
-          open: isOpen,
-          onClose: () => setIsOpen(false),
-          maxWidth: "sm",
-          fullWidth: true,
-          sx: {
-            "& .MuiDialog-paper": {
-              borderRadius: "12px",
-              boxShadow: "0 8px 32px rgba(0,0,0,0.15)",
-            },
-          },
-        }}
-      >
+      <Popup dialogProps={{ open: isOpen, onClose: () => setIsOpen(false) }}>
         <Box
           sx={{
             display: "flex",
@@ -886,4 +736,24 @@ function NewEvaluatorsInput({ teamId }) {
   );
 }
 
-export default NewEvaluatorsInput;
+const ScoreChip = ({ label, color }) => (
+  <Box
+    sx={{
+      display: "flex",
+      alignItems: "center",
+      padding: "4px 12px",
+      borderRadius: "16px",
+      bgcolor: alpha(color, 0.1),
+      border: `1px solid ${alpha(color, 0.3)}`,
+    }}
+  >
+    <Box
+      sx={{ width: 8, height: 8, bgcolor: color, borderRadius: "50%", mr: 1 }}
+    />
+    <Typography variant="body2" sx={{ fontWeight: 500 }}>
+      {label}
+    </Typography>
+  </Box>
+);
+
+export default Evaluation1;

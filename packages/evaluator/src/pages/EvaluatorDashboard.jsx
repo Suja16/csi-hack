@@ -15,8 +15,6 @@ import {
   Grid,
   Divider,
   Avatar,
-  Skeleton,
-  Alert,
   useTheme,
   Tabs,
   Tab,
@@ -31,12 +29,12 @@ import {
   Description as DescriptionIcon,
   Comment as CommentIcon,
 } from "@mui/icons-material";
-import { useQuery } from "@apollo/client";
 import UserDataContext from "../contexts/userDataContext";
+import TeamsContext from "../contexts/teamsContext";
 import { useNavigate } from "react-router";
-import { APPROVED_TEAMS } from "../queries";
 import { alpha } from "@mui/material/styles";
-import NewEvaluatorsInput from "../components/NewEevaluatorsInput";
+import Evaluation1 from "../components/Evaluation1";
+import Evaluation2 from "../components/Evaluation2";
 
 const dropdownVariants = {
   open: (height = 1000) => ({
@@ -88,11 +86,12 @@ const itemVariants = {
   },
 };
 
-const JudgesDashboard = () => {
-  const { setUserData } = useContext(UserDataContext);
+const EvaluatorDashboard = () => {
+  const { userData, setUserData } = useContext(UserDataContext);
   const navigate = useNavigate();
   const theme = useTheme();
-  const { data, loading, error } = useQuery(APPROVED_TEAMS);
+  const { allTeams } = useContext(TeamsContext);
+  const allTeamsArray = Object.values(allTeams);
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [activeTab, setActiveTab] = useState(0);
   const scrollRef = useRef(null);
@@ -104,7 +103,7 @@ const JudgesDashboard = () => {
 
   const handleTeamChange = (_, newValue) => {
     if (newValue) {
-      const team = data.Team.find((team) => team.id === newValue.id);
+      const team = allTeamsArray.find((team) => team.id === newValue.id);
       setSelectedTeam(team);
       scrollToTeam(team.id);
     }
@@ -145,10 +144,10 @@ const JudgesDashboard = () => {
   };
 
   useEffect(() => {
-    if (data && data.Team && data.Team.length > 0 && !selectedTeam) {
-      setSelectedTeam(data.Team[0]);
+    if (allTeamsArray && allTeamsArray.length > 0 && !selectedTeam) {
+      setSelectedTeam(allTeamsArray[0]);
     }
-  }, [data, selectedTeam]);
+  }, [allTeamsArray, selectedTeam]);
 
   const handleLogout = () => {
     setUserData(null);
@@ -218,12 +217,18 @@ const JudgesDashboard = () => {
   );
 
   const TeamDetails = ({ team }) => {
-    const domains = ["FinTech", "Genai", "Cybersecurity"];
-    const domain = domains[team.id % domains.length];
+    const domain = team.domain;
+    console.log(team.feedbacks_from_idea);
+    const mentorFeedback = team?.feedbacks_from_idea.find((feedback) =>
+      userData.for == "evaluation1"
+        ? feedback.Idea_USER.roles == "mentor"
+        : feedback.Idea_USER.roles == "offline_evaluator" && feedback.remarks,
+    );
 
     const mentorReview = {
-      name: "Dr. Smith",
-      comment: "Very good project, but could have ben better",
+      role: userData.for == "evaluation1" ? "Mentor" : "Evaluator 1",
+      name: mentorFeedback ? mentorFeedback.Idea_USER.name : "",
+      comment: mentorFeedback ? mentorFeedback.remarks : "",
     };
 
     return (
@@ -299,38 +304,40 @@ const JudgesDashboard = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <Paper
-              variant="outlined"
-              sx={{
-                p: 2,
-                mt: 2,
-                mb: 3,
-                borderRadius: 1.5,
-                backgroundColor: alpha(theme.palette.info.light, 0.05),
-                borderColor: alpha(theme.palette.info.main, 0.2),
-              }}
-            >
-              <Box display="flex" alignItems="center" mb={1}>
-                <CommentIcon
-                  sx={{ fontSize: 18, color: theme.palette.info.main, mr: 1 }}
-                />
-                <Typography variant="subtitle2" color="info.main">
-                  Mentor Review
+            {mentorFeedback && (
+              <Paper
+                variant="outlined"
+                sx={{
+                  p: 2,
+                  mt: 2,
+                  mb: 3,
+                  borderRadius: 1.5,
+                  backgroundColor: alpha(theme.palette.info.light, 0.05),
+                  borderColor: alpha(theme.palette.info.main, 0.2),
+                }}
+              >
+                <Box display="flex" alignItems="center" mb={1}>
+                  <CommentIcon
+                    sx={{ fontSize: 18, color: theme.palette.info.main, mr: 1 }}
+                  />
+                  <Typography variant="subtitle2" color="info.main">
+                    {mentorReview.role} Review
+                  </Typography>
+                </Box>
+                <Typography
+                  variant="body2"
+                  sx={{ fontStyle: "italic", color: "text.secondary" }}
+                >
+                  "{mentorReview.comment}"
                 </Typography>
-              </Box>
-              <Typography
-                variant="body2"
-                sx={{ fontStyle: "italic", color: "text.secondary" }}
-              >
-                "{mentorReview.comment}"
-              </Typography>
-              <Typography
-                variant="caption"
-                sx={{ display: "block", mt: 1, textAlign: "right" }}
-              >
-                — {mentorReview.name}
-              </Typography>
-            </Paper>
+                <Typography
+                  variant="caption"
+                  sx={{ display: "block", mt: 1, textAlign: "right" }}
+                >
+                  — {mentorReview.name}
+                </Typography>
+              </Paper>
+            )}
           </motion.div>
 
           <Divider sx={{ my: 2 }} />
@@ -363,7 +370,11 @@ const JudgesDashboard = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
             >
-              <NewEvaluatorsInput teamId={selectedTeam.id} />
+              {userData.for == "evaluation1" ? (
+                <Evaluation1 teamId={selectedTeam.id} />
+              ) : (
+                <Evaluation2 teamId={selectedTeam.id} />
+              )}
             </motion.div>
           )}
 
@@ -412,35 +423,6 @@ const JudgesDashboard = () => {
     );
   };
 
-  const LoadingState = () => (
-    <Box sx={{ width: "100%" }}>
-      <Skeleton
-        variant="rectangular"
-        height={50}
-        sx={{ mb: 2, borderRadius: 1 }}
-      />
-      <Skeleton variant="rectangular" height={300} sx={{ borderRadius: 2 }} />
-    </Box>
-  );
-
-  const ErrorState = () => (
-    <Alert
-      severity="error"
-      sx={{ mb: 2, borderRadius: 2 }}
-      action={
-        <Button
-          color="inherit"
-          size="small"
-          onClick={() => window.location.reload()}
-        >
-          RETRY
-        </Button>
-      }
-    >
-      Error loading teams: {error?.message}
-    </Alert>
-  );
-
   const TeamScrollbar = ({ teams }) => {
     const [isDragging, setIsDragging] = useState(false);
     const [startX, setStartX] = useState(0);
@@ -469,7 +451,7 @@ const JudgesDashboard = () => {
           });
         }
       }
-    }, [selectedTeam]);
+    }, []);
 
     const handleMouseDown = (e) => {
       setIsDragging(true);
@@ -644,17 +626,14 @@ const JudgesDashboard = () => {
   };
 
   const renderContent = () => {
-    if (loading) return <LoadingState />;
-    if (error) return <ErrorState />;
-
-    const teamOptions = data.Team.map((team) => ({
+    const teamOptions = allTeamsArray.map((team) => ({
       label: team.name,
       id: team.id,
     }));
 
     return (
       <>
-        <TeamScrollbar teams={data.Team} />
+        <TeamScrollbar teams={allTeamsArray} />
 
         <Paper
           elevation={1}
@@ -925,4 +904,4 @@ const JudgesDashboard = () => {
   );
 };
 
-export default JudgesDashboard;
+export default EvaluatorDashboard;

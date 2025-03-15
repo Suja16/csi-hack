@@ -29,20 +29,9 @@ function Login() {
         failure("Invalid credentials");
         return;
       }
-      if (data.Idea_USERS[0].roles === "evaluator") {
+      if (data.Idea_USERS[0].roles === "offline_evaluator") {
         setUserData(data.Idea_USERS[0]);
         navigate("/");
-        localStorage.setItem("email", data.Idea_USERS[0].email);
-        localStorage.setItem("password", data.Idea_USERS[0].password);
-      } else if (data.Idea_USERS[0].roles === "offline_evaluator") {
-        setUserData(data.Idea_USERS[0]);
-        navigate("/of-evaluator-dashboard");
-        localStorage.setItem("email", data.Idea_USERS[0].email);
-        localStorage.setItem("password", data.Idea_USERS[0].password);
-        localStorage.setItem("type", data.Idea_USERS[0].type);
-      } else if (data.Idea_USERS[0].roles === "judges") {
-        setUserData(data.Idea_USERS[0]);
-        navigate("/judges-dashboard");
         localStorage.setItem("email", data.Idea_USERS[0].email);
         localStorage.setItem("password", data.Idea_USERS[0].password);
       } else {
