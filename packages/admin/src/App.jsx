@@ -16,6 +16,8 @@ import AllTeams from "./pages/AllTeams.jsx";
 import AddEvaluators from "./pages/Evaluators.jsx";
 import LoginPage from "./pages/Login.jsx";
 import Statistics from "./pages/Statistics.jsx";
+import PanelGrid from "./pages/PanelGrid.jsx";
+import NormalisedScores from "./pages/NormalisedScores.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,6 +27,8 @@ const router = createBrowserRouter(
           <Route index Component={AllTeams} />
           <Route path="addevaluators" Component={AddEvaluators} />
           <Route path="statistics" Component={Statistics} />
+          <Route path="panels" Component={PanelGrid} />
+          <Route path="normalised" Component={NormalisedScores} />
         </Route>
       </Route>
       <Route path="/login" Component={LoginPage} />

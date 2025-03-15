@@ -7,7 +7,7 @@ import {
   ListItemIcon,
   Tooltip,
 } from "@mui/material";
-import { People } from "@mui/icons-material";
+import { People, Score } from "@mui/icons-material";
 import { Link, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
@@ -19,6 +19,8 @@ const Sidebar = ({ isSidebarOpen }) => {
     { label: "All Teams", icon: <People />, path: "/" },
     { label: "Add Evaluators", icon: <HowToRegIcon />, path: "/addevaluators" },
     { label: "Statistics", icon: <BarChartIcon />, path: "/statistics" },
+    { label: "Panels", icon: <People />, path: "/panels" },
+    { label: "Normalised scores", icon: <Score />, path: "/Normalised" },
   ];
 
   return (
