@@ -679,11 +679,21 @@ function Evalution1({ teamId }) {
             Suggestions:
           </Typography>
           <TextField
-            placeholder="Enter your remarks"
-            value={remark}
-            onChange={(e) => setRemark(e.target.value)}
-            disabled={disabled}
-          />
+          placeholder="Enter your suggestions"
+          value={remark}
+          onChange={(e) => setRemark(e.target.value)}
+          disabled={disabled}
+          multiline
+          minRows={2}
+          maxRows={6}
+          fullWidth
+          sx={{
+            width: '100%',
+            '& .MuiOutlinedInput-root': {
+              transition: 'height 0.2s ease',
+            }
+          }}
+        />
 
           <Divider sx={{ my: 1 }} />
 
