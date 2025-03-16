@@ -18,6 +18,7 @@ import { INSERT_SCORES } from "../queries";
 import TeamsContext from "../contexts/teamsContext";
 import UserDataContext from "../contexts/userDataContext";
 import Popup from "../../../ui/popup";
+import { failure, success } from "../utils/snackbar";
 
 const innovationCriteria = [
   {
@@ -91,6 +92,7 @@ function Evalution1({ teamId }) {
   const { userData } = useContext(UserDataContext);
   const id = teamId;
   const [disabled, setDisabled] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
   const [innovation, setInnovation] = useState(innovationCriteria);
   const [technical, setTechnical] = useState(technicalCriteria);
@@ -106,13 +108,17 @@ function Evalution1({ teamId }) {
       (feedback) => feedback.Idea_USER.for == "evaluation1",
     );
     if (feedback) {
-      const metricScores = feedback.metric_score;
-      setInnovation(metricScores.slice(0, 3));
-      setTechnical(metricScores.slice(3, 5));
-      setScalability(metricScores.slice(5, 7));
-      setImpression(metricScores.slice(7, 8));
-      setRemark(feedback.remarks || "");
-      setDisabled(true);
+      if (feedback.Idea_user_Id != userData.id) {
+        setHidden(true);
+      } else {
+        const metricScores = feedback.metric_score;
+        setInnovation(metricScores.slice(0, 3));
+        setTechnical(metricScores.slice(3, 5));
+        setScalability(metricScores.slice(5, 7));
+        setImpression(metricScores.slice(7, 8));
+        setRemark(feedback.remarks || "");
+        setDisabled(true);
+      }
     } else {
       setInnovation(innovationCriteria);
       setTechnical(technicalCriteria);
@@ -124,10 +130,13 @@ function Evalution1({ teamId }) {
 
   const [insertScores, { loading }] = useMutation(INSERT_SCORES, {
     onCompleted: () => {
+      setDisabled(true);
       refetch();
+      success("Evaluation submitted successfully");
     },
     onError: (error) => {
       console.error("Mutation error:", error);
+      failure("An error occurred during submission");
     },
   });
 
@@ -200,6 +209,16 @@ function Evalution1({ teamId }) {
   };
 
   const handleSubmit = () => {
+    refetch();
+    const feedback = allTeams[id]?.feedbacks_from_idea.find(
+      (feedback) => feedback.Idea_USER.for == "evaluation1",
+    );
+    if (feedback) {
+      if (feedback.Idea_user_Id != userData.id) {
+        setHidden(true);
+      }
+      return;
+    }
     setIsOpen(false);
     const { totalScore } = calculateScores();
     const allScores = [
@@ -454,6 +473,33 @@ function Evalution1({ teamId }) {
   const totalPercentage = (totalScore / 100) * 100;
   const scoreColor = getScoreColor(totalScore, 100);
 
+  if (hidden) {
+    return (
+      <Box
+        sx={{
+          width: "95%",
+          maxWidth: "800px",
+          mx: "auto",
+          mb: 4,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          gap: 3,
+        }}
+      >
+        <Typography
+          variant="h6"
+          color="textSecondary"
+          textAlign="center"
+          fontWeight="600"
+        >
+          This team was evaluated by another panel
+        </Typography>
+      </Box>
+    );
+  }
+
   return (
     <>
       <Box
@@ -679,21 +725,21 @@ function Evalution1({ teamId }) {
             Suggestions:
           </Typography>
           <TextField
-          placeholder="Enter your suggestions"
-          value={remark}
-          onChange={(e) => setRemark(e.target.value)}
-          disabled={disabled}
-          multiline
-          minRows={2}
-          maxRows={6}
-          fullWidth
-          sx={{
-            width: '100%',
-            '& .MuiOutlinedInput-root': {
-              transition: 'height 0.2s ease',
-            }
-          }}
-        />
+            placeholder="Enter your suggestions"
+            value={remark}
+            onChange={(e) => setRemark(e.target.value)}
+            disabled={disabled}
+            multiline
+            minRows={2}
+            maxRows={6}
+            fullWidth
+            sx={{
+              width: "100%",
+              "& .MuiOutlinedInput-root": {
+                transition: "height 0.2s ease",
+              },
+            }}
+          />
 
           <Divider sx={{ my: 1 }} />
 

@@ -18,6 +18,7 @@ import { INSERT_SCORES } from "../queries";
 import TeamsContext from "../contexts/teamsContext";
 import UserDataContext from "../contexts/userDataContext";
 import Popup from "../../../ui/popup";
+import { failure, success } from "../utils/snackbar";
 
 const innovationCriteria = [
   {
@@ -109,7 +110,7 @@ function Evaluation1({ teamId }) {
   const { allTeams, refetch } = useContext(TeamsContext);
   const { userData } = useContext(UserDataContext);
   const id = teamId;
-  const disabled = false;
+  const [disabled, setDisabled] = useState(false);
 
   const [innovation, setInnovation] = useState(innovationCriteria);
   const [technical, setTechnical] = useState(technicalCriteria);
@@ -124,14 +125,18 @@ function Evaluation1({ teamId }) {
   const [highlightedSection, setHighlightedSection] = useState(null);
 
   useEffect(() => {
-    if (allTeams[id]?.metric_score) {
-      const metricScores = allTeams[id].metric_score;
+    const feedback = allTeams[id]?.feedbacks_from_idea.find(
+      (feedback) => feedback.Idea_USER.for == "evaluation2",
+    );
+    if (feedback) {
+      const metricScores = feedback.metric_score;
       setInnovation(metricScores.slice(0, 1));
       setTechnical(metricScores.slice(1, 3));
       setUserExperience(metricScores.slice(3, 4));
       setBusinessPotential(metricScores.slice(4, 6));
       setScalability(metricScores.slice(6, 8));
       setTeamPotential(metricScores.slice(8, 10));
+      setDisabled(true);
     } else {
       setInnovation(innovationCriteria);
       setTechnical(technicalCriteria);
@@ -139,15 +144,19 @@ function Evaluation1({ teamId }) {
       setBusinessPotential(businessPotentialCriteria);
       setScalability(scalabilityCriteria);
       setTeamPotential(teamPotentialCriteria);
+      setDisabled(false);
     }
   }, [allTeams, id]);
 
   const [insertScores, { loading }] = useMutation(INSERT_SCORES, {
     onCompleted: () => {
+      setDisabled(true);
       refetch();
+      success("Evaluation submitted successfully");
     },
     onError: (error) => {
       console.error("Mutation error:", error);
+      failure("An error occurred during submission");
     },
   });
 
@@ -267,6 +276,13 @@ function Evaluation1({ teamId }) {
   };
 
   const handleSubmit = () => {
+    refetch();
+    const feedback = allTeams[id]?.feedbacks_from_idea.find(
+      (feedback) => feedback.Idea_USER.for == "evaluation1",
+    );
+    if (feedback) {
+      return;
+    }
     setIsOpen(false);
     const { totalScore } = calculateScores();
     const allScores = [

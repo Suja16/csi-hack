@@ -29,7 +29,10 @@ function Login() {
         failure("Invalid credentials");
         return;
       }
-      if (data.Idea_USERS[0].roles === "offline_evaluator") {
+      if (
+        data.Idea_USERS[0].roles === "offline_evaluator" ||
+        data.Idea_USERS[0].roles === "judges"
+      ) {
         setUserData(data.Idea_USERS[0]);
         navigate("/");
         localStorage.setItem("email", data.Idea_USERS[0].email);

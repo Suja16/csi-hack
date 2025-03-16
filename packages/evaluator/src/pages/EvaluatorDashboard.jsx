@@ -35,6 +35,7 @@ import { useNavigate } from "react-router";
 import { alpha } from "@mui/material/styles";
 import Evaluation1 from "../components/Evaluation1";
 import Evaluation2 from "../components/Evaluation2";
+import Judge from "../components/Judge";
 
 const dropdownVariants = {
   open: (height = 1000) => ({
@@ -95,10 +96,15 @@ const EvaluatorDashboard = () => {
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [activeTab, setActiveTab] = useState(0);
   const scrollRef = useRef(null);
-  const [evaluatedTeams] = useState([
-    { id: 1, name: "penguin" },
-    { id: 2, name: "Euclidians" },
-  ]);
+  const evaluatedTeams = allTeamsArray.filter((team) =>
+    team.feedbacks_from_idea.find((feedback) =>
+      userData.for == "evaluation1"
+        ? feedback.Idea_USER.for == "evaluation1"
+        : userData.for == "evaluation2"
+          ? feedback.Idea_USER.for == "evaluation2"
+          : feedback.Idea_USER.roles == "judges",
+    ),
+  );
   const [showEvaluatedTeams, setShowEvaluatedTeams] = useState(false);
 
   const handleTeamChange = (_, newValue) => {
@@ -218,11 +224,13 @@ const EvaluatorDashboard = () => {
 
   const TeamDetails = ({ team }) => {
     const domain = team.domain;
-    console.log(team.feedbacks_from_idea);
-    const mentorFeedback = team?.feedbacks_from_idea.find((feedback) =>
-      userData.for == "evaluation1"
-        ? feedback.Idea_USER.roles == "mentor"
-        : feedback.Idea_USER.roles == "offline_evaluator" && feedback.remarks,
+    const mentorFeedback = team?.feedbacks_from_idea.find(
+      (feedback) =>
+        userData.roles != "judges" &&
+        (userData.for == "evaluation1"
+          ? feedback.Idea_USER.roles == "mentor"
+          : feedback.Idea_USER.roles == "offline_evaluator" &&
+            feedback.remarks),
     );
 
     const mentorReview = {
@@ -370,7 +378,9 @@ const EvaluatorDashboard = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
             >
-              {userData.for == "evaluation1" ? (
+              {userData.roles == "judges" ? (
+                <Judge teamId={selectedTeam.id} />
+              ) : userData.for == "evaluation1" ? (
                 <Evaluation1 teamId={selectedTeam.id} />
               ) : (
                 <Evaluation2 teamId={selectedTeam.id} />
@@ -769,7 +779,7 @@ const EvaluatorDashboard = () => {
               style={{
                 position: "absolute",
                 top: "70px",
-                right: "50%",
+                right: "20%",
                 transform: "translateX(50%)",
                 zIndex: 1000,
               }}
@@ -794,9 +804,7 @@ const EvaluatorDashboard = () => {
                     <AssessmentIcon
                       sx={{ fontSize: 16, mr: 1, color: "primary.main" }}
                     />
-                    <Typography variant="subtitle2">
-                      Evaluated Teams (dummy)
-                    </Typography>
+                    <Typography variant="subtitle2">Evaluated Teams</Typography>
                   </Box>
                 </motion.div>
 
