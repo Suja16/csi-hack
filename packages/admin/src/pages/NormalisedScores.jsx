@@ -4,7 +4,7 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { Eval1Scores, Eval2Scores } from "../queries";
-
+import DownloadIcon from '@mui/icons-material/Download';
 export default function NormalisedScores() {
   const { data: eval1Data, loading: eval1loading } = useQuery(Eval1Scores);
   const { data: eval2Data, loading: eval2loading } = useQuery(Eval2Scores);
@@ -221,11 +221,15 @@ export default function NormalisedScores() {
     // Create worksheet from the rows data
     const worksheet = XLSX.utils.json_to_sheet(rows.map(row => ({
       'Team ID': row.team_id,
+      'Eval1 Panel': row.eval1panel,
+      'Eval2 Panel': row.eval2panel,
       'Team Name': row.team_name,
+      'Domain': row.domain,
       'Leader Name': row.leader_name,
       'College': row.college_name,
-      'Evaluation 1 Score (Raw)': row.eval1Score,
-      'Evaluation 2 Score (Raw)': row.eval2Score,
+      'Evaluation 1 Score': row.eval1Score,
+      'Evaluation 2 Score': row.eval2Score,
+      'Sum': row.Sum,
       'Average Score': row.average,
       'Normalized Score': row.totalScore
     })));
@@ -271,17 +275,31 @@ export default function NormalisedScores() {
         },
       }}
     >
-      <Typography
-        variant="h4"
-        component="h1"
-        sx={{
-          mb: 3,
-          fontWeight: "bold",
-          textAlign: "center",
-        }}
-      >
-        The Union Bank - PSB Hackathon Normalised Scores
-      </Typography>
+      <Box sx={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        mb: 3 
+      }}>
+        <Typography
+          variant="h4"
+          component="h1"
+          sx={{
+            fontWeight: "bold",
+          }}
+        >
+          The Union Bank - PSB Hackathon Normalised Scores
+        </Typography>
+        
+        <Button 
+          variant="contained" 
+          color="primary" 
+          onClick={exportToExcel}
+          startIcon={<DownloadIcon />}
+        >
+          Export to Excel
+        </Button>
+      </Box>
       
       <DataGrid
         rows={rows}
