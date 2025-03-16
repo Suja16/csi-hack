@@ -120,6 +120,7 @@ function Evaluation1({ teamId }) {
   );
   const [scalability, setScalability] = useState(scalabilityCriteria);
   const [teamPotential, setTeamPotential] = useState(teamPotentialCriteria);
+  const [remark, setRemark] = useState("");
 
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedSection, setHighlightedSection] = useState(null);
@@ -136,6 +137,7 @@ function Evaluation1({ teamId }) {
       setBusinessPotential(metricScores.slice(4, 6));
       setScalability(metricScores.slice(6, 8));
       setTeamPotential(metricScores.slice(8, 10));
+      setRemark(feedback.remarks || "");
       setDisabled(true);
     } else {
       setInnovation(innovationCriteria);
@@ -144,6 +146,7 @@ function Evaluation1({ teamId }) {
       setBusinessPotential(businessPotentialCriteria);
       setScalability(scalabilityCriteria);
       setTeamPotential(teamPotentialCriteria);
+      setRemark("");
       setDisabled(false);
     }
   }, [allTeams, id]);
@@ -300,6 +303,7 @@ function Evaluation1({ teamId }) {
         user_Id: userData.id,
         metric_score: allScores,
         totalscore: totalScore,
+        remarks: remark,
       },
     });
   };
@@ -623,6 +627,31 @@ function Evaluation1({ teamId }) {
               color="#ff5722"
             />
           </Box>
+
+          <Typography
+            variant="body2"
+            sx={{ fontWeight: 500 }}
+            textAlign="left"
+            marginY={1}
+          >
+            Suggestions:
+          </Typography>
+          <TextField
+            placeholder="Enter your suggestions"
+            value={remark}
+            onChange={(e) => setRemark(e.target.value)}
+            disabled={disabled}
+            multiline
+            minRows={2}
+            maxRows={6}
+            fullWidth
+            sx={{
+              width: "100%",
+              "& .MuiOutlinedInput-root": {
+                transition: "height 0.2s ease",
+              },
+            }}
+          />
 
           <Divider sx={{ my: 2 }} />
 
