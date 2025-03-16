@@ -55,14 +55,14 @@ const AppBarHeader = ({ toggleSidebar, isSidebarOpen }) => {
           }}
         />
         <Box display="flex" justifyContent="flex-end" width="100%" gap={2}>
-          <Button 
+          {/* <Button 
             variant="contained" 
             color="success"
             startIcon={<FileDownloadIcon />}
             onClick={handleExcelDownload}
           >
             Download Excel
-          </Button>
+          </Button> */}
           <Button variant="contained" onClick={handleLogout}>
             Logout
           </Button>

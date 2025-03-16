@@ -74,7 +74,7 @@ function Feedback() {
 
     insertFeedback({
       variables: {
-        team_id: parseInt(id),
+        team_id: data.Team[0].id,
         Idea_user_Id: userData.id,
         remarks: feedback,
       },

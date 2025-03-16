@@ -189,3 +189,122 @@ export const SUBMISSIONS_QUERY = gql`
     }
   }
 `;
+
+export const PanelDataQueryEval1 = gql`
+  query MyQuery {
+    feedbacks(
+      where: {
+        Idea_USER: {
+          roles: { _eq: offline_evaluator }
+          for: { _eq: evaluation1 }
+        }
+      }
+    ) {
+      team_id
+      team_info_from_eventio {
+        name
+        leader_id
+        Leader {
+          name
+          gender
+          college
+        }
+        Participants {
+          User {
+            gender
+            is_somaiya_student
+            name
+          }
+        }
+      }
+      metric_score
+      totalscore
+      Idea_USER {
+        name
+      }
+    }
+  }
+`;
+
+export const PanelDataQueryEval2 = gql`
+  query MyQuery {
+    feedbacks(
+      where: {
+        Idea_USER: {
+          roles: { _eq: offline_evaluator }
+          for: { _eq: evaluation2 }
+        }
+      }
+    ) {
+      team_id
+      team_info_from_eventio {
+        name
+        leader_id
+        Leader {
+          name
+          gender
+          college
+        }
+        Participants {
+          User {
+            gender
+            is_somaiya_student
+            name
+          }
+        }
+      }
+      metric_score
+      totalscore
+      Idea_USER {
+        name
+      }
+    }
+  }
+`;
+
+export const Eval1Scores = gql`
+  query MyQuery {
+    feedbacks(
+      where: {
+        Idea_USER: {
+          roles: { _eq: offline_evaluator }
+          for: { _eq: evaluation1 }
+        }
+      }
+    ) {
+      id
+      team_id
+      totalscore
+      team_info_from_eventio {
+        name
+        Leader {
+          name
+          college
+        }
+      }
+    }
+  }
+`;
+export const Eval2Scores = gql`
+  query MyQuery {
+    feedbacks(
+      where: {
+        Idea_USER: {
+          roles: { _eq: offline_evaluator }
+          for: { _eq: evaluation2 }
+        }
+      }
+    ) {
+      id
+      team_id
+      totalscore
+      team_info_from_eventio {
+        name
+        Leader {
+          name
+          college
+        }
+      }
+    }
+  }
+`;

@@ -1,19 +1,34 @@
 import { gql } from "@apollo/client";
 
-export const TEAMS_QUERY = gql`
-  query Teams($_userID: Int) {
-    feedbacks(where: { Idea_user_Id: { _eq: $_userID } }) {
-      team_info_from_eventio {
-        submissions
-        id
-        name
-      }
-      metric_score
-      totalscore
-      id
-    }
-  }
-`;
+// export const EVAL1_QUERY = gql`
+//   query Teams {
+//     Team(where: { approved: { _eq: true } }) {
+//       id
+//       name
+//       feedbacks_from_idea(where: { Idea_USER: { for: { _eq: evaluation1 } } }) {
+//         id
+//         Idea_user_Id
+//         metric_score
+//         totalscore
+//       }
+//     }
+//   }
+// `;
+
+// export const EVAL2_QUERY = gql`
+//   query Teams {
+//     Team(where: { approved: { _eq: true } }) {
+//       id
+//       name
+//       feedbacks_from_idea(where: { Idea_USER: { for: { _eq: evaluation2 } } }) {
+//         id
+//         Idea_user_Id
+//         metric_score
+//         totalscore
+//       }
+//     }
+//   }
+// `;
 
 export const LOGIN_QUERY = gql`
   query Login($email: String, $password: String) {
@@ -26,15 +41,29 @@ export const LOGIN_QUERY = gql`
       password
       roles
       type
+      for
     }
   }
 `;
 
 export const APPROVED_TEAMS = gql`
-  query ApprovedTeams {
+  query Teams {
     Team(where: { approved: { _eq: true } }) {
       id
       name
+      domain: submissions(path: "domain")
+      feedbacks_from_idea {
+        id
+        Idea_user_Id
+        Idea_USER {
+          name
+          roles
+          for
+        }
+        metric_score
+        totalscore
+        remarks
+      }
     }
   }
 `;
@@ -56,6 +85,7 @@ export const INSERT_SCORES = gql`
     $metric_score: jsonb
     $totalscore: Int
     $user_Id: Int
+    $remarks: String
   ) {
     insert_feedbacks_one(
       object: {
@@ -63,6 +93,7 @@ export const INSERT_SCORES = gql`
         metric_score: $metric_score
         totalscore: $totalscore
         Idea_user_Id: $user_Id
+        remarks: $remarks
       }
     ) {
       id

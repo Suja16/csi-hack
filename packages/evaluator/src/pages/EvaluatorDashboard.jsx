@@ -15,8 +15,6 @@ import {
   Grid,
   Divider,
   Avatar,
-  Skeleton,
-  Alert,
   useTheme,
   Tabs,
   Tab,
@@ -31,12 +29,13 @@ import {
   Description as DescriptionIcon,
   Comment as CommentIcon,
 } from "@mui/icons-material";
-import { useQuery } from "@apollo/client";
 import UserDataContext from "../contexts/userDataContext";
+import TeamsContext from "../contexts/teamsContext";
 import { useNavigate } from "react-router";
-import { APPROVED_TEAMS } from "../queries";
 import { alpha } from "@mui/material/styles";
-import NewEvaluatorsInput from "../components/NewEevaluatorsInput";
+import Evaluation1 from "../components/Evaluation1";
+import Evaluation2 from "../components/Evaluation2";
+import Judge from "../components/Judge";
 
 const dropdownVariants = {
   open: (height = 1000) => ({
@@ -88,23 +87,31 @@ const itemVariants = {
   },
 };
 
-const JudgesDashboard = () => {
-  const { setUserData } = useContext(UserDataContext);
+const EvaluatorDashboard = () => {
+  const { userData, setUserData } = useContext(UserDataContext);
   const navigate = useNavigate();
   const theme = useTheme();
-  const { data, loading, error } = useQuery(APPROVED_TEAMS);
+  const { allTeams } = useContext(TeamsContext);
+  const allTeamsArray = Object.values(allTeams).sort((a, b) =>
+    a.name.localeCompare(b.name),
+  );
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [activeTab, setActiveTab] = useState(0);
   const scrollRef = useRef(null);
-  const [evaluatedTeams] = useState([
-    { id: 1, name: "penguin" },
-    { id: 2, name: "Euclidians" },
-  ]);
+  const evaluatedTeams = allTeamsArray.filter((team) =>
+    team.feedbacks_from_idea.find((feedback) =>
+      userData.for == "evaluation1"
+        ? feedback.Idea_USER.for == "evaluation1"
+        : userData.for == "evaluation2"
+          ? feedback.Idea_USER.for == "evaluation2"
+          : feedback.Idea_USER.roles == "judges",
+    ),
+  );
   const [showEvaluatedTeams, setShowEvaluatedTeams] = useState(false);
 
   const handleTeamChange = (_, newValue) => {
     if (newValue) {
-      const team = data.Team.find((team) => team.id === newValue.id);
+      const team = allTeamsArray.find((team) => team.id === newValue.id);
       setSelectedTeam(team);
       scrollToTeam(team.id);
     }
@@ -145,10 +152,10 @@ const JudgesDashboard = () => {
   };
 
   useEffect(() => {
-    if (data && data.Team && data.Team.length > 0 && !selectedTeam) {
-      setSelectedTeam(data.Team[0]);
+    if (allTeamsArray && allTeamsArray.length > 0 && !selectedTeam) {
+      setSelectedTeam(allTeamsArray[0]);
     }
-  }, [data, selectedTeam]);
+  }, [allTeamsArray, selectedTeam]);
 
   const handleLogout = () => {
     setUserData(null);
@@ -218,12 +225,20 @@ const JudgesDashboard = () => {
   );
 
   const TeamDetails = ({ team }) => {
-    const domains = ["FinTech", "Genai", "Cybersecurity"];
-    const domain = domains[team.id % domains.length];
+    const domain = team.domain;
+    const mentorFeedback = team?.feedbacks_from_idea.find(
+      (feedback) =>
+        userData.roles != "judges" &&
+        (userData.for == "evaluation1"
+          ? feedback.Idea_USER.roles == "mentor"
+          : feedback.Idea_USER.roles == "offline_evaluator" &&
+            feedback.remarks),
+    );
 
     const mentorReview = {
-      name: "Dr. Smith",
-      comment: "Very good project, but could have ben better",
+      role: userData.for == "evaluation1" ? "Mentor" : "Evaluator 1",
+      name: mentorFeedback ? mentorFeedback.Idea_USER.name : "",
+      comment: mentorFeedback ? mentorFeedback.remarks : "",
     };
 
     return (
@@ -299,38 +314,40 @@ const JudgesDashboard = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <Paper
-              variant="outlined"
-              sx={{
-                p: 2,
-                mt: 2,
-                mb: 3,
-                borderRadius: 1.5,
-                backgroundColor: alpha(theme.palette.info.light, 0.05),
-                borderColor: alpha(theme.palette.info.main, 0.2),
-              }}
-            >
-              <Box display="flex" alignItems="center" mb={1}>
-                <CommentIcon
-                  sx={{ fontSize: 18, color: theme.palette.info.main, mr: 1 }}
-                />
-                <Typography variant="subtitle2" color="info.main">
-                  Mentor Review
+            {mentorFeedback && (
+              <Paper
+                variant="outlined"
+                sx={{
+                  p: 2,
+                  mt: 2,
+                  mb: 3,
+                  borderRadius: 1.5,
+                  backgroundColor: alpha(theme.palette.info.light, 0.05),
+                  borderColor: alpha(theme.palette.info.main, 0.2),
+                }}
+              >
+                <Box display="flex" alignItems="center" mb={1}>
+                  <CommentIcon
+                    sx={{ fontSize: 18, color: theme.palette.info.main, mr: 1 }}
+                  />
+                  <Typography variant="subtitle2" color="info.main">
+                    {mentorReview.role} Review
+                  </Typography>
+                </Box>
+                <Typography
+                  variant="body2"
+                  sx={{ fontStyle: "italic", color: "text.secondary" }}
+                >
+                  "{mentorReview.comment}"
                 </Typography>
-              </Box>
-              <Typography
-                variant="body2"
-                sx={{ fontStyle: "italic", color: "text.secondary" }}
-              >
-                "{mentorReview.comment}"
-              </Typography>
-              <Typography
-                variant="caption"
-                sx={{ display: "block", mt: 1, textAlign: "right" }}
-              >
-                — {mentorReview.name}
-              </Typography>
-            </Paper>
+                <Typography
+                  variant="caption"
+                  sx={{ display: "block", mt: 1, textAlign: "right" }}
+                >
+                  — {mentorReview.name}
+                </Typography>
+              </Paper>
+            )}
           </motion.div>
 
           <Divider sx={{ my: 2 }} />
@@ -363,7 +380,13 @@ const JudgesDashboard = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
             >
-              <NewEvaluatorsInput teamId={selectedTeam.id} />
+              {userData.roles == "judges" ? (
+                <Judge teamId={selectedTeam.id} />
+              ) : userData.for == "evaluation1" ? (
+                <Evaluation1 teamId={selectedTeam.id} />
+              ) : (
+                <Evaluation2 teamId={selectedTeam.id} />
+              )}
             </motion.div>
           )}
 
@@ -400,7 +423,6 @@ const JudgesDashboard = () => {
                   Problem Statement
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {" "}
                   This problem statement is about fintech, cybersec, genai etc
                   etc
                 </Typography>
@@ -411,35 +433,6 @@ const JudgesDashboard = () => {
       </motion.div>
     );
   };
-
-  const LoadingState = () => (
-    <Box sx={{ width: "100%" }}>
-      <Skeleton
-        variant="rectangular"
-        height={50}
-        sx={{ mb: 2, borderRadius: 1 }}
-      />
-      <Skeleton variant="rectangular" height={300} sx={{ borderRadius: 2 }} />
-    </Box>
-  );
-
-  const ErrorState = () => (
-    <Alert
-      severity="error"
-      sx={{ mb: 2, borderRadius: 2 }}
-      action={
-        <Button
-          color="inherit"
-          size="small"
-          onClick={() => window.location.reload()}
-        >
-          RETRY
-        </Button>
-      }
-    >
-      Error loading teams: {error?.message}
-    </Alert>
-  );
 
   const TeamScrollbar = ({ teams }) => {
     const [isDragging, setIsDragging] = useState(false);
@@ -469,7 +462,7 @@ const JudgesDashboard = () => {
           });
         }
       }
-    }, [selectedTeam]);
+    }, []);
 
     const handleMouseDown = (e) => {
       setIsDragging(true);
@@ -550,6 +543,26 @@ const JudgesDashboard = () => {
           >
             {teams.map((team) => {
               const isSelected = selectedTeam && selectedTeam.id === team.id;
+              const evaluated = team.feedbacks_from_idea.some((feedback) =>
+                userData.for == "evaluation1"
+                  ? feedback.Idea_USER.for == "evaluation1"
+                  : userData.for == "evaluation2"
+                    ? feedback.Idea_USER.for == "evaluation2"
+                    : feedback.Idea_USER.roles == "judges",
+              );
+
+              // Set color values based on evaluation status
+              const colorValues = evaluated
+                ? {
+                    main: "#4CAF50", // Green hex color
+                    light: "#81C784", // Lighter green
+                    contrastText: "#FFFFFF", // White text for contrast
+                  }
+                : {
+                    main: theme.palette.primary.main,
+                    light: theme.palette.primary.light,
+                    contrastText: theme.palette.primary.contrastText,
+                  };
 
               return (
                 <motion.div
@@ -565,10 +578,10 @@ const JudgesDashboard = () => {
                     opacity: 1,
                     scale: isSelected ? 1.05 : 1,
                     backgroundColor: isSelected
-                      ? theme.palette.primary.main
-                      : alpha(theme.palette.primary.light, 0.1),
+                      ? colorValues.main
+                      : alpha(colorValues.light, 0.1),
                     color: isSelected
-                      ? theme.palette.primary.contrastText
+                      ? colorValues.contrastText
                       : theme.palette.text.primary,
                     boxShadow: isSelected
                       ? "0px 4px 8px rgba(0,0,0,0.15)"
@@ -591,7 +604,7 @@ const JudgesDashboard = () => {
                     cursor: "pointer",
                     borderRadius: 12,
                     padding: 12,
-                    border: `1px solid ${isSelected ? theme.palette.primary.main : "transparent"}`,
+                    border: `1px solid ${isSelected ? colorValues.main : "transparent"}`,
                   }}
                 >
                   <Box display="flex" alignItems="center">
@@ -602,9 +615,9 @@ const JudgesDashboard = () => {
                         mr: 1,
                         fontSize: "0.75rem",
                         bgcolor: isSelected
-                          ? alpha(theme.palette.primary.contrastText, 0.3)
-                          : theme.palette.primary.main,
-                        color: theme.palette.primary.contrastText,
+                          ? alpha(colorValues.contrastText, 0.3)
+                          : colorValues.main,
+                        color: colorValues.contrastText,
                       }}
                     >
                       {team.name.charAt(0)}
@@ -644,17 +657,14 @@ const JudgesDashboard = () => {
   };
 
   const renderContent = () => {
-    if (loading) return <LoadingState />;
-    if (error) return <ErrorState />;
-
-    const teamOptions = data.Team.map((team) => ({
+    const teamOptions = allTeamsArray.map((team) => ({
       label: team.name,
       id: team.id,
     }));
 
     return (
       <>
-        <TeamScrollbar teams={data.Team} />
+        <TeamScrollbar teams={allTeamsArray} />
 
         <Paper
           elevation={1}
@@ -745,7 +755,12 @@ const JudgesDashboard = () => {
                 display: { xs: "none", sm: "block" },
               }}
             >
-              Judges Dashboard
+              {userData.roles == "judges"
+                ? "Judge"
+                : userData.for == "evaluation1"
+                  ? "Evaluator 1"
+                  : "Evaluator 2"}{" "}
+              Dashboard
             </Typography>
           </Box>
           <Box sx={{ flexGrow: 1 }} />
@@ -790,7 +805,7 @@ const JudgesDashboard = () => {
               style={{
                 position: "absolute",
                 top: "70px",
-                right: "50%",
+                right: "20%",
                 transform: "translateX(50%)",
                 zIndex: 1000,
               }}
@@ -815,9 +830,7 @@ const JudgesDashboard = () => {
                     <AssessmentIcon
                       sx={{ fontSize: 16, mr: 1, color: "primary.main" }}
                     />
-                    <Typography variant="subtitle2">
-                      Evaluated Teams (dummy)
-                    </Typography>
+                    <Typography variant="subtitle2">Evaluated Teams</Typography>
                   </Box>
                 </motion.div>
 
@@ -925,4 +938,4 @@ const JudgesDashboard = () => {
   );
 };
 
-export default JudgesDashboard;
+export default EvaluatorDashboard;

@@ -1,8 +1,8 @@
 import { createContext } from "react";
 
 const data = {
-  evaluatedTeams: {},
-  nonEvaluatedTeams: {},
+  evaluation1: {},
+  evaluation2: {},
   allTeams: {},
   refetch: () => {},
 };

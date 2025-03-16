@@ -10,24 +10,15 @@ import {
 import UserDataContext from "./contexts/userDataContext";
 
 import LoginLayout from "./layouts/LoginLayout.jsx";
-import NavSideLayout from "./layouts/NavSideLayout.jsx";
 
-import TeamDetails from "./pages/TeamDetails.jsx";
-import AllDone from "./pages/AllDone.jsx";
 import Login from "./pages/Login.jsx";
-import JudgesDashboard from "./pages/JudgesDashboard.jsx";
-import OFEvaluatorDashboard from "./pages/OFEvaluatorDashboard.jsx";
+import EvaluatorDashboard from "./pages/EvaluatorDashboard.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route path="/" Component={LoginLayout}>
-        <Route Component={NavSideLayout}>
-          <Route index Component={AllDone} />
-          <Route path="teams/:id" Component={TeamDetails} />
-        </Route>
-        <Route path="judges-dashboard" Component={JudgesDashboard} />
-        <Route path="of-evaluator-dashboard" Component={OFEvaluatorDashboard} />
+        <Route index Component={EvaluatorDashboard} />
       </Route>
       <Route path="/login" Component={Login} />
     </Route>,
