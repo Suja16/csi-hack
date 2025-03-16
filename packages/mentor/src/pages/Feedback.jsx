@@ -13,17 +13,55 @@ function Feedback() {
   const navigate = useNavigate();
   const { userData } = useContext(UserDataContext);
   const { id } = useParams();
+
+  // Fetch team details
   const { data, loading, error } = useQuery(TEAM_QUERY, {
     variables: { id: parseInt(id) },
   });
+
+  // Mutation to submit feedback
   const [insertFeedback, { loading: mutationLoading }] = useMutation(
     INSERT_FEEDBACK,
     {
-      onCompleted: () => {
+      onCompleted: async (_, { variables }) => {
         success("Feedback submitted successfully");
+
+        // Send feedback email to the team leader
+        const team = data?.Team[0];
+        if (team) {
+          const leaderEmail = team.Leader.email;
+          const subject = `Feedback for Team ${team.name}`;
+          const html = `
+            <p>Dear ${team.name} Team Leader,</p>
+            <p>Your team has received feedback from the mentor:</p>
+            <blockquote>
+              "${variables.remarks}"
+            </blockquote>
+            <p>We hope this helps improve your project.</p>
+            <p>Sincerely,<br>CSI-KJSCE</p>
+          `;
+
+          
+          try {
+            await fetch("http://localhost:8000/api/v1/mailer/send-email", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                to: leaderEmail,
+                subject,
+                html,
+              }),
+            });
+          } catch (error) {
+            console.error("Failed to send feedback email:", error);
+          }
+        }
+
         navigate("/");
       },
-    },
+    }
   );
 
   const handleSubmit = (e) => {
@@ -33,6 +71,7 @@ function Feedback() {
       alert("Please enter feedback");
       return;
     }
+
     insertFeedback({
       variables: {
         team_id: parseInt(id),

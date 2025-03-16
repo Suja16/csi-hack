@@ -16,10 +16,13 @@ export const LOGIN_QUERY = gql`
 
 export const TEAM_QUERY = gql`
   query MyQuery4($id: Int!) {
-    Team(where: { Participants: { id: { _eq: $id } }, event_id: { _eq: 47 } }) {
-      name
+  Team(where: {Participants: {id: {_eq: $id}}, event_id: {_eq: 47}}) {
+    name
+    Leader {
+      email
     }
   }
+}
 `;
 
 export const INSERT_FEEDBACK = gql`
