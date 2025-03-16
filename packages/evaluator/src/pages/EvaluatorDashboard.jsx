@@ -92,7 +92,9 @@ const EvaluatorDashboard = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const { allTeams } = useContext(TeamsContext);
-  const allTeamsArray = Object.values(allTeams);
+  const allTeamsArray = Object.values(allTeams).sort((a, b) =>
+    a.name.localeCompare(b.name),
+  );
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [activeTab, setActiveTab] = useState(0);
   const scrollRef = useRef(null);
@@ -421,7 +423,6 @@ const EvaluatorDashboard = () => {
                   Problem Statement
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {" "}
                   This problem statement is about fintech, cybersec, genai etc
                   etc
                 </Typography>
@@ -542,6 +543,26 @@ const EvaluatorDashboard = () => {
           >
             {teams.map((team) => {
               const isSelected = selectedTeam && selectedTeam.id === team.id;
+              const evaluated = team.feedbacks_from_idea.some((feedback) =>
+                userData.for == "evaluation1"
+                  ? feedback.Idea_USER.for == "evaluation1"
+                  : userData.for == "evaluation2"
+                    ? feedback.Idea_USER.for == "evaluation2"
+                    : feedback.Idea_USER.roles == "judges",
+              );
+
+              // Set color values based on evaluation status
+              const colorValues = evaluated
+                ? {
+                    main: "#4CAF50", // Green hex color
+                    light: "#81C784", // Lighter green
+                    contrastText: "#FFFFFF", // White text for contrast
+                  }
+                : {
+                    main: theme.palette.primary.main,
+                    light: theme.palette.primary.light,
+                    contrastText: theme.palette.primary.contrastText,
+                  };
 
               return (
                 <motion.div
@@ -557,10 +578,10 @@ const EvaluatorDashboard = () => {
                     opacity: 1,
                     scale: isSelected ? 1.05 : 1,
                     backgroundColor: isSelected
-                      ? theme.palette.primary.main
-                      : alpha(theme.palette.primary.light, 0.1),
+                      ? colorValues.main
+                      : alpha(colorValues.light, 0.1),
                     color: isSelected
-                      ? theme.palette.primary.contrastText
+                      ? colorValues.contrastText
                       : theme.palette.text.primary,
                     boxShadow: isSelected
                       ? "0px 4px 8px rgba(0,0,0,0.15)"
@@ -583,7 +604,7 @@ const EvaluatorDashboard = () => {
                     cursor: "pointer",
                     borderRadius: 12,
                     padding: 12,
-                    border: `1px solid ${isSelected ? theme.palette.primary.main : "transparent"}`,
+                    border: `1px solid ${isSelected ? colorValues.main : "transparent"}`,
                   }}
                 >
                   <Box display="flex" alignItems="center">
@@ -594,9 +615,9 @@ const EvaluatorDashboard = () => {
                         mr: 1,
                         fontSize: "0.75rem",
                         bgcolor: isSelected
-                          ? alpha(theme.palette.primary.contrastText, 0.3)
-                          : theme.palette.primary.main,
-                        color: theme.palette.primary.contrastText,
+                          ? alpha(colorValues.contrastText, 0.3)
+                          : colorValues.main,
+                        color: colorValues.contrastText,
                       }}
                     >
                       {team.name.charAt(0)}
@@ -734,7 +755,12 @@ const EvaluatorDashboard = () => {
                 display: { xs: "none", sm: "block" },
               }}
             >
-              Judges Dashboard
+              {userData.roles == "judges"
+                ? "Judge"
+                : userData.for == "evaluation1"
+                  ? "Evaluator 1"
+                  : "Evaluator 2"}{" "}
+              Dashboard
             </Typography>
           </Box>
           <Box sx={{ flexGrow: 1 }} />

@@ -421,6 +421,7 @@ function Evalution1({ teamId }) {
                       }
                       variant="outlined"
                       type="number"
+                      onWheel={(e) => e.target.blur()}
                       inputProps={{
                         min: 0,
                         max: item.maxScore,
