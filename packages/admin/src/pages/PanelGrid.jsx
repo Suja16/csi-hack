@@ -70,9 +70,12 @@ export default function PanelGrid() {
 
     if (evaluationRound === "Round 1") {
       // Define the columns for Round 1
+      console.log("Round 1 data: ", round1Data);
       currentColumns = [
         { field: "panelName", headerName: "Panel", width: 120 },
+        { field: "id", headerName: "ID", width: 60 },
         { field: "teamName", headerName: "Team", width: 120 },
+        { field: "domain", headerName: "Domain", width: 120 },
         { field: "leaderName", headerName: "Leader", width: 150 },
         { field: "reqMatch", headerName: "Req", type: "number", width: 60 },
         { field: "clarity", headerName: "Clarity", type: "number", width: 60 },
@@ -95,7 +98,7 @@ export default function PanelGrid() {
       // Map Round 1 data to rows
       currentRows =
         round1Data?.feedbacks?.map((feedback, index) => ({
-          id: index + 1,
+          id: feedback.team_id,
           panelName: feedback.Idea_USER?.name || "Unknown Panel",
           teamName: feedback.team_info_from_eventio?.name || "Unknown Team",
           leaderName:
@@ -113,12 +116,15 @@ export default function PanelGrid() {
           impression: feedback.metric_score[7]?.score || 0,
           totalR1: feedback.totalscore || 0,
           teamType: determineTeamType(feedback.team_info_from_eventio),
+          domain : feedback.team_info_from_eventio?.submissions?.domain || "Unknown Domain",
         })) || [];
     } else {
       // Define the columns for Round 2
       currentColumns = [
         { field: "panelName", headerName: "Panel", width: 120 },
+        { field: "id", headerName: "ID", width: 60 },
         { field: "teamName", headerName: "Team", width: 120 },
+        { field: "domain", headerName: "Domain", width: 120 },
         { field: "leaderName", headerName: "Leader", width: 150 },
         { field: "originality", headerName: "Orig", type: "number", width: 60 },
         { field: "completion", headerName: "Compl", type: "number", width: 60 },
@@ -158,7 +164,7 @@ export default function PanelGrid() {
       // Map Round 2 data to rows
       currentRows =
         round2Data?.feedbacks?.map((feedback, index) => ({
-          id: index + 1,
+          id: feedback.team_id,
           panelName: feedback.Idea_USER?.name || "Unknown Panel",
           teamName: feedback.team_info_from_eventio?.name || "Unknown Team",
           leaderName:
@@ -178,6 +184,7 @@ export default function PanelGrid() {
           impression: feedback.metric_score[9]?.score || 0,
           totalR2: feedback.totalscore || 0,
           teamType: determineTeamType(feedback.team_info_from_eventio),
+          domain : feedback.team_info_from_eventio?.submissions?.domain || "Unknown Domain",
         })) || [];
     }
 

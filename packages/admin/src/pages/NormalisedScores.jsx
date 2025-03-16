@@ -90,12 +90,16 @@ export default function NormalisedScores() {
           team_name: feedback.team_info_from_eventio?.name || "Unknown",
           leader_name:
             feedback.team_info_from_eventio?.Leader?.name || "Unknown",
+            Sum : feedback.totalscore + eval2Score,
           average: (feedback.totalscore + normalizedEval2Score) / 2,
           totalScore: (feedback.totalscore + normalizedEval2Score) / 2,
           eval1Score: feedback.totalscore,
           eval2Score: eval2Score,
           college_name:
             feedback.team_info_from_eventio?.Leader?.college || "Unknown",
+            eval1panel : feedback.Idea_USER.name,
+            eval2panel : eval2Feedback?.Idea_USER.name || "Yet to be evaluated",
+            domain : feedback.team_info_from_eventio?.submissions?.domain || "Unknown"
         });
       });
 
@@ -113,9 +117,31 @@ export default function NormalisedScores() {
       align: "left",
     },
     {
+      field: "eval1panel",
+      headerName: "Eval1 panel",
+      width: 120,
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "eval2panel",
+      headerName: "Eval2 panel",
+      width: 120,
+      headerAlign: "left",
+      align: "left",
+    },
+
+    {
       field: "team_name",
       headerName: "Team Name",
       width: 150,
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "domain",
+      headerName: "Domain",
+      width: 120,
       headerAlign: "left",
       align: "left",
     },
@@ -145,6 +171,14 @@ export default function NormalisedScores() {
       field: "eval2Score",
       headerName: "Eval 2 Score",
       width: 150,
+      type: "number",
+      headerAlign: "left",
+      align: "left",
+    },
+    {
+      field: "Sum",
+      headerName: "Sum",
+      width: 60,
       type: "number",
       headerAlign: "left",
       align: "left",

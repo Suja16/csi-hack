@@ -216,6 +216,7 @@ export const PanelDataQueryEval1 = gql`
             name
           }
         }
+        submissions
       }
       metric_score
       totalscore
@@ -252,6 +253,7 @@ export const PanelDataQueryEval2 = gql`
             name
           }
         }
+        submissions
       }
       metric_score
       totalscore
@@ -281,6 +283,10 @@ export const Eval1Scores = gql`
           name
           college
         }
+        submissions
+      }
+      Idea_USER {
+        name
       }
     }
   }
@@ -304,6 +310,10 @@ export const Eval2Scores = gql`
           name
           college
         }
+        submissions
+      }
+      Idea_USER {
+        name
       }
     }
   }
