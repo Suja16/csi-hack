@@ -124,6 +124,7 @@ function Evalution1({ teamId }) {
       setTechnical(technicalCriteria);
       setScalability(scalabilityCriteria);
       setImpression(impressionCriteria);
+      setRemark("");
       setDisabled(false);
     }
   }, [allTeams, id]);
