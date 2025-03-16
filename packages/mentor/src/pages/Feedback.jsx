@@ -17,6 +17,11 @@ function Feedback() {
   // Fetch team details
   const { data, loading, error } = useQuery(TEAM_QUERY, {
     variables: { id: parseInt(id) },
+    onCompleted: (data) => {
+      if (!data.Team[0]) {
+        navigate("/");
+      }
+    },
   });
 
   // Mutation to submit feedback
@@ -41,7 +46,6 @@ function Feedback() {
             <p>Sincerely,<br>CSI-KJSCE</p>
           `;
 
-          
           try {
             await fetch("http://localhost:8000/api/v1/mailer/send-email", {
               method: "POST",
@@ -61,7 +65,7 @@ function Feedback() {
 
         navigate("/");
       },
-    }
+    },
   );
 
   const handleSubmit = (e) => {

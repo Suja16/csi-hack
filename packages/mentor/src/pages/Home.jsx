@@ -11,7 +11,10 @@ function AllDone() {
   const { userData } = useContext(UserDataContext);
 
   const handleScan = (result) => {
-    console.log(result);
+    if (isNaN(result[0].rawValue)) {
+      console.log("GAY");
+      return;
+    }
     navigate("/feedback/" + result[0].rawValue);
   };
 
