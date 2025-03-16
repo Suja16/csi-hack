@@ -15,7 +15,7 @@ export default function NormalisedScores() {
   const NormalisationFunc = (data) => {
     const allscores = [];
     for (let i = 0; i < data.length; i++) {
-      allscores.push(data[i].totalScore);
+      allscores.push(data[i]?.totalScore || 0);
     }
     const mean =
       allscores.reduce((sum, score) => sum + score, 0) / allscores.length;
@@ -31,14 +31,16 @@ export default function NormalisedScores() {
     const range = max - min;
 
     for (let i = 0; i < data.length; i++) {
-      data[i].totalScore = (data[i].totalScore - mean) / stdDev;
+      data[i].totalScore = (data[i]?.totalScore - mean) / stdDev;
     }
     for (let i = 0; i < data.length; i++) {
-      data[i].totalScore = (data[i].totalScore - min) / range;
+      data[i].totalScore = (data[i]?.totalScore - min) / range;
     }
     setAllData({ mean, stdDev });
   };
 
+  console.log("Eval2 data : ", eval2Data);
+  console.log("Eval1 data : ", eval1Data);
   useEffect(() => {
     if (eval1Data && eval2Data) {
       // Calculate mean and stdDev for eval1Scores
@@ -70,23 +72,27 @@ export default function NormalisedScores() {
       setEval2Stats({ mean: eval2Mean, stdDev: eval2StdDev });
 
       const all_data = [];
-      eval1Data.feedbacks.forEach((feedback, index) => {
+
+      eval1Data.feedbacks.forEach((feedback) => {
+        // Find matching team in eval2Data using team_id
+        const eval2Feedback = eval2Data.feedbacks.find(
+          (item) => item.team_id === feedback.team_id
+        );
+
+        // Calculate eval2 score (normalized to 100) if available, otherwise 0
+        const eval2Score = eval2Feedback ? eval2Feedback.totalscore : 0;
+        const normalizedEval2Score = eval2Score * (100 / 150);
+
         all_data.push({
           id: feedback.id,
           team_id: feedback.team_id,
           team_name: feedback.team_info_from_eventio?.name || "Unknown",
           leader_name:
             feedback.team_info_from_eventio?.Leader?.name || "Unknown",
-          average:
-            (feedback.totalscore +
-              eval2Data.feedbacks[index].totalscore * (100 / 150)) /
-            2,
-          totalScore:
-            (feedback.totalscore +
-              eval2Data.feedbacks[index].totalscore * (100 / 150)) /
-            2,
+          average: (feedback.totalscore + normalizedEval2Score) / 2,
+          totalScore: (feedback.totalscore + normalizedEval2Score) / 2,
           eval1Score: feedback.totalscore,
-          eval2Score: eval2Data.feedbacks[index].totalscore,
+          eval2Score: eval2Score,
           college_name:
             feedback.team_info_from_eventio?.Leader?.college || "Unknown",
         });
@@ -205,7 +211,7 @@ export default function NormalisedScores() {
           textAlign: "center",
         }}
       >
-        Union Bank - PSB Hackathon Normalised Scores
+        The Union Bank - PSB Hackathon Normalised Scores
       </Typography>
       <DataGrid
         rows={rows}

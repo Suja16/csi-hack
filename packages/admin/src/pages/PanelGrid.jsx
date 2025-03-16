@@ -102,14 +102,14 @@ export default function PanelGrid() {
           collegeName:
             feedback.team_info_from_eventio?.Leader?.college ||
             "Unknown College",
-          reqMatch: feedback.metric_score[0].score || 0,
-          clarity: feedback.metric_score[1].score || 0,
-          novelty: feedback.metric_score[2].score || 0,
-          feasibility: feedback.metric_score[3].score || 0,
-          techStack: feedback.metric_score[4].score || 0,
-          sustainability: feedback.metric_score[5].score || 0,
-          impact: feedback.metric_score[6].score || 0,
-          impression: feedback.metric_score[7].score || 0,
+          reqMatch: feedback.metric_score[0]?.score || 0,
+          clarity: feedback.metric_score[1]?.score || 0,
+          novelty: feedback.metric_score[2]?.score || 0,
+          feasibility: feedback.metric_score[3]?.score || 0,
+          techStack: feedback.metric_score[4]?.score || 0,
+          sustainability: feedback.metric_score[5]?.score || 0,
+          impact: feedback.metric_score[6]?.score || 0,
+          impression: feedback.metric_score[7]?.score || 0,
           totalR1: feedback.totalscore || 0,
           teamType: determineTeamType(feedback.team_info_from_eventio),
         })) || [];
@@ -165,16 +165,16 @@ export default function PanelGrid() {
           collegeName:
             feedback.team_info_from_eventio?.Leader?.college ||
             "Unknown College",
-          originality: feedback.metric_score[0].score || 0,
-          completion: feedback.metric_score[1].score || 0,
-          codeQuality: feedback.metric_score[2].score || 0,
-          ux: feedback.metric_score[3].score || 0,
-          commercialization: feedback.metric_score[4].score || 0,
-          marketReady: feedback.metric_score[5].score || 0,
-          scale: feedback.metric_score[6].score || 0,
-          futureWork: feedback.metric_score[7].score || 0,
-          incorpSug: feedback.metric_score[8].score || 0,
-          impression: feedback.metric_score[9].score || 0,
+          originality: feedback.metric_score[0]?.score || 0,
+          completion: feedback.metric_score[1]?.score || 0,
+          codeQuality: feedback.metric_score[2]?.score || 0,
+          ux: feedback.metric_score[3]?.score || 0,
+          commercialization: feedback.metric_score[4]?.score || 0,
+          marketReady: feedback.metric_score[5]?.score || 0,
+          scale: feedback.metric_score[6]?.score || 0,
+          futureWork: feedback.metric_score[7]?.score || 0,
+          incorpSug: feedback.metric_score[8]?.score || 0,
+          impression: feedback.metric_score[9]?.score || 0,
           totalR2: feedback.totalscore || 0,
           teamType: determineTeamType(feedback.team_info_from_eventio),
         })) || [];
@@ -294,14 +294,33 @@ export default function PanelGrid() {
             columns={columns}
             slots={{ toolbar: GridToolbar }}
             slotProps={{
-              toolbar: {
-                printOptions: { fileName: "PSB Hackathon Normalised Scores" },
-                csvOptions: {
-                  fileName: "PSB Hackathon Normalised Scores",
-                  utf8WithBom: true,
+                toolbar: {
+                  printOptions: {
+                    fileName: "PSB Hackathon Round Scores",
+                    pageStyle: `
+                      .MuiDataGrid-main::before {
+                        content: 'The Union Bank - PSB Hackathon Round ${evaluationRound=='Round 1'?1 : 2} Scores';
+                        display: block;
+                        font-size: 24px;
+                        font-weight: bold;
+                      margin-bottom: 10px;
+                      margin-top: 15px;
+                        text-align: center;
+                      }
+                        @media print {
+                  .MuiDataGrid-footerContainer {
+                    display: none !important; 
+                  }
+                }
+                    `,
+                  },
+                  csvOptions: {
+                    fileName: "PSB Hackathon Round Scores",
+                    utf8WithBom: true,
+                    allColumns: true,
+                  },
                 },
-              },
-            }}
+              }}
             initialState={{
               pagination: { paginationModel: { page: 0, pageSize: 5 } },
             }}
