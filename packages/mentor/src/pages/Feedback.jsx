@@ -47,7 +47,7 @@ function Feedback() {
           `;
 
           try {
-            await fetch("http://localhost:8000/api/v1/mailer/send-email", {
+            await fetch("https://api.csi-kjsce.org/api/v1/mailer/send-email", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
