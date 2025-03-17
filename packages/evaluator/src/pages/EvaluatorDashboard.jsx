@@ -548,7 +548,8 @@ const EvaluatorDashboard = () => {
                   ? feedback.Idea_USER.for == "evaluation1"
                   : userData.for == "evaluation2"
                     ? feedback.Idea_USER.for == "evaluation2"
-                    : feedback.Idea_USER.roles == "judges",
+                    : feedback.Idea_USER.roles == "judges" &&
+                      feedback.Idea_user_Id == userData.id,
               );
 
               // Set color values based on evaluation status

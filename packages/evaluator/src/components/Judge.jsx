@@ -92,7 +92,9 @@ function Judge({ teamId }) {
 
   useEffect(() => {
     const feedback = allTeams[id]?.feedbacks_from_idea.find(
-      (feedback) => feedback.Idea_USER.roles == "judges",
+      (feedback) =>
+        feedback.Idea_USER.roles == "judges" &&
+        feedback.Idea_user_Id == userData.id,
     );
     if (feedback) {
       const metricScores = feedback.metric_score;
