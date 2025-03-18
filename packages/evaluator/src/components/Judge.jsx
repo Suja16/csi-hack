@@ -209,7 +209,7 @@ function Judge({ teamId }) {
   const handleSubmit = () => {
     refetch();
     const feedback = allTeams[id]?.feedbacks_from_idea.find(
-      (feedback) => feedback.Idea_USER.for == "evaluation1",
+      (feedback) => feedback.Idea_USER.roles == "judges",
     );
     if (feedback) {
       return;
