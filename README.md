@@ -19,4 +19,4 @@ hello
 hello agian
 hiii
 probably last
-we fucked up
+we fucked up.
