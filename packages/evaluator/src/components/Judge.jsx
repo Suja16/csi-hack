@@ -208,12 +208,6 @@ function Judge({ teamId }) {
 
   const handleSubmit = () => {
     refetch();
-    const feedback = allTeams[id]?.feedbacks_from_idea.find(
-      (feedback) => feedback.Idea_USER.roles == "judges",
-    );
-    if (feedback) {
-      return;
-    }
     setIsOpen(false);
     const { totalScore } = calculateScores();
     const allScores = [
