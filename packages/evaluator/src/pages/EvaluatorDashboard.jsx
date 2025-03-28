@@ -1,5 +1,3 @@
-"use client";
-
 import { useContext, useRef, useEffect, useState } from "react";
 import { motion, animate } from "framer-motion";
 import {
@@ -232,7 +230,7 @@ const EvaluatorDashboard = () => {
         (userData.for == "evaluation1"
           ? feedback.Idea_USER.roles == "mentor"
           : feedback.Idea_USER.roles == "offline_evaluator" &&
-            feedback.remarks),
+          feedback.remarks),
     );
 
     const mentorReview = {
@@ -549,21 +547,21 @@ const EvaluatorDashboard = () => {
                   : userData.for == "evaluation2"
                     ? feedback.Idea_USER.for == "evaluation2"
                     : feedback.Idea_USER.roles == "judges" &&
-                      feedback.Idea_user_Id == userData.id,
+                    feedback.Idea_user_Id == userData.id,
               );
 
               // Set color values based on evaluation status
               const colorValues = evaluated
                 ? {
-                    main: "#4CAF50", // Green hex color
-                    light: "#81C784", // Lighter green
-                    contrastText: "#FFFFFF", // White text for contrast
-                  }
+                  main: "#4CAF50", // Green hex color
+                  light: "#81C784", // Lighter green
+                  contrastText: "#FFFFFF", // White text for contrast
+                }
                 : {
-                    main: theme.palette.primary.main,
-                    light: theme.palette.primary.light,
-                    contrastText: theme.palette.primary.contrastText,
-                  };
+                  main: theme.palette.primary.main,
+                  light: theme.palette.primary.light,
+                  contrastText: theme.palette.primary.contrastText,
+                };
 
               return (
                 <motion.div
